@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.events.GameStateChanged;
-import net.runelite.api.events.GameTick;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
@@ -19,11 +18,9 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.PluginInstantiationException;
 import net.runelite.client.plugins.PluginManager;
-import net.runelite.client.util.HotkeyListener;
 
 import javax.inject.Inject;
 import javax.swing.*;
-import java.lang.reflect.InvocationTargetException;
 
 @Slf4j
 @Singleton
@@ -93,7 +90,6 @@ public class PacketUtilsPlugin extends Plugin {
                 try {
                     pluginManager.setPluginEnabled(this, false);
                     pluginManager.stopPlugin(this);
-                    keyManager.registerKeyListener(prayerToggle);
                 } catch (PluginInstantiationException ignored) {
                 }
             });
@@ -106,32 +102,10 @@ public class PacketUtilsPlugin extends Plugin {
             }
         });
     }
-    private final HotkeyListener prayerToggle = new HotkeyListener(() -> config.toggle()) {
-        @Override
-        public void hotkeyPressed() {
-            System.out.println("hotkey pressed");
-            clientThread.invoke(() -> {
-                if (client.getGameState() != GameState.LOGGED_IN) {
-                    return;
-                }
-                System.out.println("queueing click");
-                mousePackets.queueClickPacket();
-                System.out.println("queueing movement");
-                movementPackets.queueMovement(client.getLocalPlayer().getWorldLocation().dx(1).dy(1));
-            });
-        }
-    };
-    @Subscribe
-    public void onGameTick(GameTick event) throws NoSuchFieldException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        if (client.getGameState() != GameState.LOGGED_IN) {
-            return;
-        }
-    }
 
     @Override
     public void shutDown() {
         log.info("Shutdown");
         loaded = false;
-        keyManager.unregisterKeyListener(prayerToggle);
     }
 }

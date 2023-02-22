@@ -41,7 +41,6 @@ public class MousePackets {
         long clientMs = Long.parseLong(ObfuscatedNames.ClientMouseHandlerGarbage)*(long)PacketReflection.clientMouseLastLastPressedTimeMillis.get(null);
         long mouseMs =System.currentTimeMillis();
         long deltaMs = mouseMs - clientMs;
-        System.out.println("DeltaMs:"+deltaMs);
         if (deltaMs < 0) {
             deltaMs = 0L;
         }
