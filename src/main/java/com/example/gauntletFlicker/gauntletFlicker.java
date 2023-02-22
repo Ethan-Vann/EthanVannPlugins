@@ -16,6 +16,7 @@ import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.GameTick;
+import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
@@ -238,6 +239,12 @@ public class gauntletFlicker extends Plugin {
             return true;
         }
         return false;
+    }
+    @Subscribe
+    public void onMenuOptionClicked(MenuOptionClicked event) {
+        if (event.getMenuOption().toLowerCase().contains("pass")){
+            isRange = true;
+        }
     }
     @Override
     protected void startUp(){
