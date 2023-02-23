@@ -150,6 +150,7 @@ public class SuperGlassMakerPlugin extends Plugin
 		}
 		mousePackets.queueClickPacket();
 		widgetPackets.queueWidgetAction(make_glass, "Cast");
+		timeout = 4;
 	}
 
 	TileObject findObject(String objectName)
