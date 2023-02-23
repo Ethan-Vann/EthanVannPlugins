@@ -131,7 +131,7 @@ public class SuperGlassMakerPlugin extends Plugin
 			widgetPackets.queueWidgetAction(glass, "Deposit-All");
 		}
 		mousePackets.queueClickPacket();
-		widgetPackets.queueWidgetAction(sand, "Withdraw-X");
+		widgetPackets.queueWidgetAction(sand, "Withdraw-18");
 		mousePackets.queueClickPacket();
 		widgetPackets.queueWidgetAction(seaweed, "Withdraw-1");
 		mousePackets.queueClickPacket();
