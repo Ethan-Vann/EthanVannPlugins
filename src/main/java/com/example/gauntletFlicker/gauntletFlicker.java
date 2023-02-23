@@ -34,7 +34,8 @@ import static net.runelite.api.Varbits.QUICK_PRAYER;
 
 @PluginDescriptor(
         name = "Gauntlet Flicker and Switcher",
-        description = ""
+        description = "",
+        tags = {"ethan"}
 )
 @Slf4j
 public class gauntletFlicker extends Plugin {
