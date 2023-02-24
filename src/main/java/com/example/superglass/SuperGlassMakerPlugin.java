@@ -164,7 +164,7 @@ public class SuperGlassMakerPlugin extends Plugin
 					if (tile1.getGameObjects().length != 0)
 					{
 						GameObject returnVal =
-								Arrays.stream(tile1.getGameObjects()).filter(gameObject -> gameObject != null && client.getObjectDefinition(gameObject.getId()).getName().toLowerCase().contains(objectName)).findFirst().orElse(null);
+								Arrays.stream(tile1.getGameObjects()).filter(gameObject -> gameObject != null && client.getObjectDefinition(gameObject.getId()).getName().toLowerCase().contains(objectName.toLowerCase())).findFirst().orElse(null);
 						if (returnVal != null)
 						{
 							return returnVal;

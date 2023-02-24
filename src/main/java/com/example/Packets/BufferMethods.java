@@ -15,7 +15,7 @@ public class BufferMethods
 		offsetField.setAccessible(true);
 		byte array[] = (byte[]) arrayField.get(var0);
 		int offset = offsetField.getInt(var0);
-		array[offset - 1] = (byte)(var1 + 128);
+		array[(offset += 1441360663) * -612074329 - 1] = (byte)(var1 + 128);
 		offsetField.setInt(var0, offset);
 		arrayField.set(var0, array);
 		arrayField.setAccessible(false);

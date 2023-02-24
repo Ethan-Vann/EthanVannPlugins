@@ -18,6 +18,10 @@ public final class ObfuscatedNames {
 		put("co","-2032694822");
 		put("cb","1152640181");
 	}};
+	//needs updating
+	public static final String ACTOR_PATH_LENGTH_FIELD = "ci";
+
+	//
 	public static final String bufferArrayField = "n";
 	public static final String bufferOffsetField = "l";
 	public static final String clientMouseLastLastPressedTimeMillis = "di";
