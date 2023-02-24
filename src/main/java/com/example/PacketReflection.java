@@ -97,6 +97,9 @@ public class PacketReflection
 			case "bl":
 				BufferMethods.bl(buffer, (Integer) input);
 				break;
+			case "cj":
+				BufferMethods.cj(buffer, (Integer) input);
+				break;
 		}
 	}
 
@@ -178,6 +181,7 @@ public class PacketReflection
 			{
 				if (params.contains(stringEntry.getKey()))
 				{
+
 					writeObject(stringEntry.getValue(), buffer, objects[params.indexOf(stringEntry.getKey())]);
 				}
 			}
