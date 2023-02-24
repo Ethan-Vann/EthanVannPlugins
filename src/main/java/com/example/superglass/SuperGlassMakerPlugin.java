@@ -162,6 +162,17 @@ public class SuperGlassMakerPlugin extends Plugin
 
 	TileObject findObject(String objectName)
 	{
+//		ArrayList<TileObject> validObjects = new ArrayList<>();
+//		Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(tile -> tile.getGameObjects() != null&&tile.getGameObjects().length != 0).forEach(tile -> {
+//			GameObject returnVal = Arrays.stream(tile.getGameObjects()).filter(gameObject -> gameObject != null && client.getObjectDefinition(gameObject.getId()).getName().toLowerCase().contains(objectName.toLowerCase())).findFirst().orElse(null);
+//			if (returnVal != null)
+//			{
+//				validObjects.add(returnVal);
+//			}
+//		});
+//		return validObjects.stream().min(Comparator.comparingInt(x->x.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()))).orElse(null);
+//
+//
 		ArrayList<TileObject> validObjects = new ArrayList<>();
 		for (Tile[][] tile : client.getScene().getTiles())
 		{
