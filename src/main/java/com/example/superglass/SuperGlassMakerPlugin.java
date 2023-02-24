@@ -23,7 +23,9 @@ import net.runelite.client.plugins.PluginInstantiationException;
 import net.runelite.client.plugins.PluginManager;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 @PluginDescriptor(
 		name = "Super Glass Maker",
@@ -71,7 +73,7 @@ public class SuperGlassMakerPlugin extends Plugin
 			return;
 		}
 		NPC banker =
-				client.getNpcs().stream().filter(npc -> npc.getName().toLowerCase().contains("bank")).findFirst().orElse(null);
+				client.getNpcs().stream().filter(npc -> npc.getName().toLowerCase().contains("bank")).sorted(Comparator.comparingInt(x->x.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()))).findFirst().orElse(null);
 		TileObject bank = findObject("bank");
 		if (bank == null && banker == null)
 		{
@@ -109,21 +111,26 @@ public class SuperGlassMakerPlugin extends Plugin
 			}
 			return;
 		}
-		Widget sand = getItem(ItemID.BUCKET_OF_SAND, WidgetInfo.BANK_CONTAINER);
+		Widget sand = getItem(ItemID.BUCKET_OF_SAND, WidgetInfo.BANK_ITEM_CONTAINER);
 		Widget glass = getItem(ItemID.MOLTEN_GLASS, WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER);
 		Widget astral = getItem(ItemID.ASTRAL_RUNE, WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER);
-		Widget seaweed = getItem(ItemID.GIANT_SEAWEED, WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER);
+		Widget seaweed = getItem(ItemID.GIANT_SEAWEED, WidgetInfo.BANK_ITEM_CONTAINER);
 		Widget make_glass = client.getWidget(14286966);
+		System.out.println(sand==null);
+		System.out.println(astral==null);
+		System.out.println(seaweed==null);
+		System.out.println(make_glass==null);
 		if (sand == null || astral == null || seaweed == null || make_glass == null)
 		{
 			try
 			{
 				pluginManager.stopPlugin(this);
 			}
-			catch (PluginInstantiationException e)
+			catch (AssertionError | PluginInstantiationException e)
 			{
-				e.printStackTrace();
+				//print stack trace
 			}
+			return;
 		}
 		if (glass != null)
 		{
@@ -150,28 +157,39 @@ public class SuperGlassMakerPlugin extends Plugin
 		}
 		mousePackets.queueClickPacket();
 		widgetPackets.queueWidgetAction(make_glass, "Cast");
-		timeout = 4;
+		timeout = 3;
 	}
 
 	TileObject findObject(String objectName)
 	{
+		ArrayList<TileObject> validObjects = new ArrayList<>();
 		for (Tile[][] tile : client.getScene().getTiles())
 		{
 			for (Tile[] tiles : tile)
 			{
 				for (Tile tile1 : tiles)
 				{
+					if(tile1==null){
+						continue;
+					}
+					if(tile1.getGameObjects()==null){
+						continue;
+					}
 					if (tile1.getGameObjects().length != 0)
 					{
 						GameObject returnVal =
 								Arrays.stream(tile1.getGameObjects()).filter(gameObject -> gameObject != null && client.getObjectDefinition(gameObject.getId()).getName().toLowerCase().contains(objectName.toLowerCase())).findFirst().orElse(null);
 						if (returnVal != null)
 						{
-							return returnVal;
+							validObjects.add(returnVal);
 						}
 					}
 				}
 			}
+		}
+		if(validObjects.size() > 0)
+		{
+			return validObjects.stream().sorted(Comparator.comparingInt(x->x.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()))).findFirst().orElse(null);
 		}
 		return null;
 	}
