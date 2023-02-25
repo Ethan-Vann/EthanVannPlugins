@@ -18,6 +18,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyManager;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.PluginInstantiationException;
 import net.runelite.client.plugins.PluginManager;
@@ -33,6 +34,7 @@ import java.lang.reflect.InvocationTargetException;
         tags = {"ethan"}
 )
 @Slf4j
+@PluginDependency(PacketUtilsPlugin.class)
 public class PrayerFlickerPlugin extends Plugin {
     public int timeout = 0;
     @Inject

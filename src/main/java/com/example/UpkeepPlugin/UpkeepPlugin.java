@@ -1,5 +1,6 @@
 package com.example.UpkeepPlugin;
 
+import com.example.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.NPCPackets;
 import com.example.Packets.ObjectPackets;
@@ -16,6 +17,7 @@ import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.PluginManager;
 
@@ -30,6 +32,7 @@ import java.util.stream.Collectors;
 		enabledByDefault = false,
 		tags = {"ethan"}
 )
+@PluginDependency(PacketUtilsPlugin.class)
 @Slf4j
 public class UpkeepPlugin extends Plugin
 {
@@ -75,7 +78,7 @@ public class UpkeepPlugin extends Plugin
 		int hitpoints = this.client.getBoostedSkillLevel(Skill.HITPOINTS);
 		int prayer = this.client.getBoostedSkillLevel(Skill.PRAYER);
 		int magic = this.client.getBoostedSkillLevel(Skill.MAGIC);
-		int stamina = client.getEnergy();
+		int stamina = client.getEnergy()/100;
 		int ranged = this.client.getBoostedSkillLevel(Skill.RANGED);
 		int strength = this.client.getBoostedSkillLevel(Skill.STRENGTH);
 		if(hitpoints<config.HealthLowAmount()){

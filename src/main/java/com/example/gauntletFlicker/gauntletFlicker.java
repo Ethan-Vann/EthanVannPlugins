@@ -1,5 +1,6 @@
 package com.example.gauntletFlicker;
 
+import com.example.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.NPCPackets;
 import com.example.Packets.WidgetPackets;
@@ -22,6 +23,7 @@ import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
@@ -37,6 +39,7 @@ import static net.runelite.api.Varbits.QUICK_PRAYER;
         description = "",
         tags = {"ethan"}
 )
+@PluginDependency(PacketUtilsPlugin.class)
 @Slf4j
 public class gauntletFlicker extends Plugin {
     @Inject

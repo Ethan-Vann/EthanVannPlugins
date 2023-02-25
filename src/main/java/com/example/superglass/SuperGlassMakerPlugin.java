@@ -1,5 +1,6 @@
 package com.example.superglass;
 
+import com.example.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.NPCPackets;
 import com.example.Packets.ObjectPackets;
@@ -18,6 +19,7 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.PluginInstantiationException;
 import net.runelite.client.plugins.PluginManager;
@@ -34,6 +36,7 @@ import java.util.Comparator;
 		tags = {"ethan"}
 )
 @Slf4j
+@PluginDependency(PacketUtilsPlugin.class)
 public class SuperGlassMakerPlugin extends Plugin
 {
 	public int timeout = 0;
