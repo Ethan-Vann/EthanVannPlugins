@@ -286,8 +286,6 @@ public class LavaRunecrafterPlugin extends Plugin
 				break;
 			}
 		}
-		mousePackets.queueClickPacket();
-
 	}
 
 	public int essenceInPouches()
