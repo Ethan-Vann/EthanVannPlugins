@@ -5,6 +5,7 @@ import com.example.Packets.MousePackets;
 import com.example.Packets.NPCPackets;
 import com.example.Packets.ObjectPackets;
 import com.example.Packets.WidgetPackets;
+import com.example.WidgetInfoExtended;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
 import lombok.SneakyThrows;
@@ -12,15 +13,16 @@ import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.EquipmentInventorySlot;
 import net.runelite.api.GameObject;
+import net.runelite.api.GameState;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
-import net.runelite.api.Player;
 import net.runelite.api.Skill;
 import net.runelite.api.Tile;
 import net.runelite.api.TileObject;
 import net.runelite.api.Varbits;
 import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.GameObjectSpawned;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.StatChanged;
 import net.runelite.api.widgets.Widget;
@@ -31,8 +33,10 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.plugins.PluginInstantiationException;
 import net.runelite.client.plugins.PluginManager;
 
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -78,34 +82,68 @@ public class LavaRunecrafterPlugin extends Plugin
 	public void startUp()
 	{
 		timeout = 0;
+		pouches = new HashMap<>();
 	}
 
 	@Override
 	public void shutDown()
 	{
-
+		timeout = 0;
+		pouches = new HashMap<>();
 	}
 
 
 	@Subscribe
-	protected void onStatChanged(StatChanged event) {
+	protected void onStatChanged(StatChanged event)
+	{
 		if (event.getSkill() == Skill.RUNECRAFT)
 		{
-			if(bindingCharges==-1||bindingCharges==0){
+			if (bindingCharges == -1 || bindingCharges == 0)
+			{
 				return;
 			}
 			bindingCharges--;
 		}
 	}
+
 	@Subscribe
+	@SneakyThrows
 	public void onGameTick(GameTick event)
 	{
+		Widget w_DialogNPCName = client.getWidget(231, 3);
+		Widget npcDialogOptions = client.getWidget(219, 1);
+		if (w_DialogNPCName != null || npcDialogOptions != null)
+		{
+			System.out.println("repairing pouches dialog");
+			mousePackets.queueClickPacket();
+			widgetPackets.queueResumePause(15138821, -1);
+			mousePackets.queueClickPacket();
+			widgetPackets.queueResumePause(14352385, 1);
+			mousePackets.queueClickPacket();
+			widgetPackets.queueResumePause(14221317, -1);
+			mousePackets.queueClickPacket();
+			PacketUtilsPlugin.invoke(-1, -1, 26, -1, -1, "", "", -1, -1);
+			timeout = 0;
+			return;
+		}
 		if (timeout > 0)
 		{
 			timeout--;
 			return;
 		}
-		Player player = client.getLocalPlayer();
+		if (client.getGameState() != GameState.LOGGED_IN)
+		{
+			return;
+		}
+		if (pouchesDegraded())
+		{
+			System.out.println("contacting old fuck");
+			mousePackets.queueClickPacket();
+			widgetPackets.queueWidgetActionPacket(2, WidgetInfoExtended.SPELL_NPC_CONTACT.getPackedId(),
+					-1, -1);
+			timeout = 15;
+			return;
+		}
 		TileObject bankChest = findObject("bank");
 		Item binding = null;
 		if (bankChest != null)
@@ -130,16 +168,17 @@ public class LavaRunecrafterPlugin extends Plugin
 						widgetPackets.queueWidgetActionPacket(2, 25362449, -1, -1);
 						return;
 					}
-					if(bindingCharges==1){
+					if (bindingCharges == 1)
+					{
 						System.out.println("breaking binding");
 						mousePackets.queueClickPacket();
 						widgetPackets.queueWidgetActionPacket(1, 25362449, -1, -1);
 						int space = getFirstFreeSlot(WidgetInfo.INVENTORY);
 						mousePackets.queueClickPacket();
-						widgetPackets.queueWidgetActionPacket(7,9764864,ItemID.BINDING_NECKLACE,space);
+						widgetPackets.queueWidgetActionPacket(7, 9764864, ItemID.BINDING_NECKLACE, space);
 						mousePackets.queueClickPacket();
 						widgetPackets.queueResumePause(38273024, 1);
-						bindingCharges =16;
+						bindingCharges = 16;
 						return;
 					}
 				}
@@ -162,23 +201,57 @@ public class LavaRunecrafterPlugin extends Plugin
 			{
 				//todo
 			}
-			if(binding==null){
+			if (binding == null)
+			{
 				System.out.println("new binding");
 				int freeSlot = getFirstFreeSlot(WidgetInfo.INVENTORY);
+				Widget bindingNeck = getItem(ItemID.BINDING_NECKLACE, WidgetInfo.BANK_ITEM_CONTAINER);
+				if (bindingNeck == null)
+				{
+					stopPlugin();
+					client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Out of binding necklaces",
+							"LavaRunecrafterPlugin");
+				}
 				mousePackets.queueClickPacket();
-				widgetPackets.queueWidgetAction(getItem(ItemID.BINDING_NECKLACE,
-						WidgetInfo.BANK_ITEM_CONTAINER), "Withdraw-1");
+				widgetPackets.queueWidgetAction(bindingNeck, "Withdraw-1");
 				mousePackets.queueClickPacket();
 				widgetPackets.queueWidgetActionPacket(9, WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER.getPackedId(), ItemID.BINDING_NECKLACE, freeSlot);
-				bindingCharges = bindingCharges==-1?bindingCharges:16;
+				bindingCharges = bindingCharges == -1 ? bindingCharges : 16;
+			}
+			if (getItem(ItemID.EARTH_RUNE, WidgetInfo.INVENTORY) == null)
+			{
+				stopPlugin();
+				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Out of earth runes", "LavaRunecrafterPlugin");
 			}
 			handleStamina();
 			handleDueling();
 			handlePouches();
+			if (!pluginManager.isPluginEnabled(this))
+			{
+				return;
+			}
 			System.out.println("teleporting");
-			mousePackets.queueClickPacket();
-			widgetPackets.queueWidgetActionPacket(2, 25362456, -1, -1);
-			timeout = 4;
+			switch (config.TeleMethod())
+			{
+				case RING_OF_ELEMENTS:
+					Widget ring = getItem(ItemID.RING_OF_THE_ELEMENTS_26818, WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER);
+					if (ring == null)
+					{
+						client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "ring of the elements tele enabled but" +
+										" ring not found",
+								"LavaRunecrafterPlugin");
+						stopPlugin();
+						return;
+					}
+					System.out.println("ring teleport");
+					mousePackets.queueClickPacket();
+					widgetPackets.queueWidgetActionPacket(6, 9764864, ItemID.RING_OF_THE_ELEMENTS_26818, ring.getIndex());
+					break;
+				case RING_OF_DUELING:
+					mousePackets.queueClickPacket();
+					widgetPackets.queueWidgetActionPacket(2, 25362456, -1, -1);
+			}
+			timeout = 5;
 			return;
 		}
 		TileObject ruins = findObject(34817);
@@ -186,7 +259,6 @@ public class LavaRunecrafterPlugin extends Plugin
 		{
 			if (isMoving())
 			{
-				System.out.println("moving");
 				return;
 			}
 			System.out.println("entering ruins");
@@ -199,12 +271,12 @@ public class LavaRunecrafterPlugin extends Plugin
 		Widget earthRunes = getItem(ItemID.EARTH_RUNE, WidgetInfo.INVENTORY);
 		if (altar != null && earthRunes != null)
 		{
-			if (isMoving()&&client.getLocalPlayer().getAnimation()!=791)
+			if (isMoving() && client.getLocalPlayer().getAnimation() != 791)
 			{
 				return;
 			}
 			System.out.println(client.getVarbitValue(Varbits.MAGIC_IMBUE));
-			if (getEssenceSlots(WidgetInfo.INVENTORY) > 0&&client.getVarbitValue(Varbits.MAGIC_IMBUE)==0)
+			if (getEssenceSlots(WidgetInfo.INVENTORY) > 0 && client.getVarbitValue(Varbits.MAGIC_IMBUE) == 0)
 			{
 				System.out.println("using spell");
 				mousePackets.queueClickPacket();
@@ -218,18 +290,31 @@ public class LavaRunecrafterPlugin extends Plugin
 			int essenceInPouches = essenceInPouches();
 			if (essenceInPouches > 0)
 			{
-				System.out.println(client.getTickCount() + ": withdrawing essence");
-				handleWithdraw();
-				mousePackets.queueClickPacket();
-				objectPackets.queueWidgetOnTileObject(earthRunes, altar);
-				//objectPackets.queueObjectAction(altar, false, "Craft-rune");
-				return;
+				if (getFirstFreeSlot(WidgetInfo.INVENTORY) != -1)
+				{
+					System.out.println(client.getTickCount() + ": withdrawing essence");
+					handleWithdraw();
+					mousePackets.queueClickPacket();
+					objectPackets.queueWidgetOnTileObject(earthRunes, altar);
+					//objectPackets.queueObjectAction(altar, false, "Craft-rune");
+					return;
+				}
+				else
+				{
+					System.out.println("weird shit");
+				}
 			}
 			mousePackets.queueClickPacket();
 			widgetPackets.queueWidgetActionPacket(3, 25362456, -1, -1);
-			timeout = 4;
+			timeout = 3;
 			System.out.println("Teleporting to bank");
 		}
+	}
+
+	public boolean pouchesDegraded()
+	{
+		return getItemFromList(new int[]{ItemID.MEDIUM_POUCH_5511, ItemID.LARGE_POUCH_5513, ItemID.GIANT_POUCH_5515,
+				ItemID.COLOSSAL_POUCH_26786}, WidgetInfo.INVENTORY) != null;
 	}
 
 	public void handleDueling()
@@ -260,6 +345,11 @@ public class LavaRunecrafterPlugin extends Plugin
 			return;
 		}
 		int freeSlot = getFirstFreeSlot(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER);
+		if (dueling == null)
+		{
+			stopPlugin();
+			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Out of dueling rings", "LavaRunecrafterPlugin");
+		}
 		mousePackets.queueClickPacket();
 		widgetPackets.queueWidgetAction(dueling, "Withdraw-1");
 		mousePackets.queueClickPacket();
@@ -278,6 +368,11 @@ public class LavaRunecrafterPlugin extends Plugin
 				freeSlots -= taken;
 				System.out.println("withdrawing: " + taken);
 				Widget realPouch = getItem(pouch.getItemId(), WidgetInfo.INVENTORY);
+				if (realPouch == null)
+				{
+					pouches.put(pouch, new int[]{0, pouches.get(pouch)[1]});
+					continue;
+				}
 				mousePackets.queueClickPacket();
 				widgetPackets.queueWidgetAction(realPouch, "Empty");
 			}
@@ -319,6 +414,23 @@ public class LavaRunecrafterPlugin extends Plugin
 		return -1;
 	}
 
+	@SneakyThrows
+	public void stopPlugin()
+	{
+		SwingUtilities.invokeAndWait(() ->
+		{
+			try
+			{
+				pluginManager.stopPlugin(this);
+				pluginManager.setPluginEnabled(this, false);
+			}
+			catch (PluginInstantiationException e)
+			{
+				throw new RuntimeException(e);
+			}
+		});
+	}
+
 	public Widget getItemFromList(int[] list, WidgetInfo container)
 	{
 		for (int i : list)
@@ -345,6 +457,16 @@ public class LavaRunecrafterPlugin extends Plugin
 		return -1;
 	}
 
+	@Subscribe
+	public void onGameObjectSpawned(GameObjectSpawned e)
+	{
+		if (e.getGameObject().getId() == 34817)
+		{
+			System.out.println("setting timeout 0");
+			timeout = 0;
+		}
+	}
+
 	public void handleStamina()
 	{
 		int freeSlot = getFirstFreeSlot(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER);
@@ -356,22 +478,16 @@ public class LavaRunecrafterPlugin extends Plugin
 		}
 		if (stamina == null || freeSlot == -1)
 		{
-			try
-			{
-				pluginManager.stopPlugin(this);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-			return;
+			stopPlugin();
+			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Out of stamina potions", "LavaRunecrafterPlugin");
 		}
 		System.out.println("drinking stam");
 		mousePackets.queueClickPacket();
 		widgetPackets.queueWidgetAction(stamina, "Withdraw-1");
 		mousePackets.queueClickPacket();
 		widgetPackets.queueWidgetActionPacket(9, WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER.getPackedId(), ItemID.STAMINA_POTION1, freeSlot);
-		if(config.VialSmasher()){
+		if (config.VialSmasher())
+		{
 			return;
 		}
 		mousePackets.queueClickPacket();
@@ -384,6 +500,11 @@ public class LavaRunecrafterPlugin extends Plugin
 		pouches = getPouches();
 		Widget essence = getItem(ItemID.PURE_ESSENCE, WidgetInfo.BANK_ITEM_CONTAINER);
 		essence = essence == null ? getItem(ItemID.RUNE_ESSENCE, WidgetInfo.BANK_ITEM_CONTAINER) : essence;
+		if (essence == null)
+		{
+			stopPlugin();
+			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Out of essence", "LavaRunecrafterPlugin");
+		}
 		int essenceSlots = getEmptySlots(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER) + getEssenceSlots(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER);
 		while (essenceNeeded() > 0)
 		{
@@ -402,8 +523,16 @@ public class LavaRunecrafterPlugin extends Plugin
 				essenceLeft -= transfered;
 				values[0] += transfered;
 				//System.out.println("filling pouch: " + pouch.getItemId() + "      with: " + transfered + "      " +"essence left: " + essenceLeft);
-				mousePackets.queueClickPacket();
-				widgetPackets.queueWidgetAction(pouch, "Fill");
+				if (getItem(getAlternative(pouch), WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER) != null)
+				{
+					mousePackets.queueClickPacket();
+					widgetPackets.queueWidgetAction(getItem(getAlternative(pouch), WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER), "Fill");
+				}
+				else
+				{
+					mousePackets.queueClickPacket();
+					widgetPackets.queueWidgetAction(pouch, "Fill");
+				}
 				pouches.put(pouch, values);
 				if (essenceLeft == 0)
 				{
@@ -420,6 +549,27 @@ public class LavaRunecrafterPlugin extends Plugin
 		}
 		mousePackets.queueClickPacket();
 		widgetPackets.queueWidgetAction(essence, "Withdraw-All");
+	}
+
+	public int getAlternative(Widget pouch)
+	{
+		int alternative = -1;
+		switch (pouch.getItemId())
+		{
+			case ItemID.MEDIUM_POUCH:
+				alternative = ItemID.MEDIUM_POUCH_5511;
+				break;
+			case ItemID.LARGE_POUCH:
+				alternative = ItemID.LARGE_POUCH_5513;
+				break;
+			case ItemID.GIANT_POUCH:
+				alternative = ItemID.GIANT_POUCH_5515;
+				break;
+			case ItemID.COLOSSAL_POUCH:
+				alternative = ItemID.COLOSSAL_POUCH_26786;
+				break;
+		}
+		return alternative;
 	}
 
 	public int essenceNeeded()
@@ -461,19 +611,11 @@ public class LavaRunecrafterPlugin extends Plugin
 	}
 
 
-	public boolean isMoving(){
+	public boolean isMoving()
+	{
 		return client.getLocalPlayer().getPoseAnimation()
 				!= client.getLocalPlayer().getIdlePoseAnimation();
 	}
-//	@SneakyThrows
-//	boolean isMoving(Player player)
-//	{
-//		Field pathLength = player.getClass().getSuperclass().getDeclaredField(ObfuscatedNames.ACTOR_PATH_LENGTH_FIELD);
-//		pathLength.setAccessible(true);
-//		int pathLengthVal = pathLength.getInt(player);
-//		pathLength.setAccessible(false);
-//		return pathLengthVal > 0;
-//	}
 
 	TileObject findObject(String objectName)
 	{
@@ -541,11 +683,12 @@ public class LavaRunecrafterPlugin extends Plugin
 		{
 			return;
 		}
-		if(e.getMessage().contains("disintegrated"))
+		if (e.getMessage().contains("disintegrated"))
 		{
 			bindingCharges = 16;
 		}
-		if(e.getMessage().equals("one charge left before your Binding necklace disintegrates.")){
+		if (e.getMessage().equals("one charge left before your Binding necklace disintegrates."))
+		{
 			bindingCharges = 1;
 			return;
 		}

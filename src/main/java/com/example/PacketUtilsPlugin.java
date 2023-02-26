@@ -22,6 +22,7 @@ import net.runelite.client.plugins.PluginManager;
 
 import javax.inject.Inject;
 import javax.swing.*;
+import java.lang.reflect.Method;
 
 @Slf4j
 @Singleton
@@ -39,6 +40,7 @@ public class PacketUtilsPlugin extends Plugin
 	ClientThread clientThread;
 	@Inject
 	Client client;
+	static Client staticClient;
 	@Inject
 	WidgetPackets widgetPacket;
 	@Inject
@@ -77,6 +79,18 @@ public class PacketUtilsPlugin extends Plugin
 		}
 	}
 
+	@SneakyThrows
+	public static void invoke(int var0, int var1, int var2, int var3, int var4, String var5, String var6, int var7,
+						  int var8)
+	{
+		Class invokeClass = staticClient.getClass().getClassLoader().loadClass("fw");
+		Method invoke = invokeClass.getDeclaredMethod("im", int.class, int.class, int.class, int.class, int.class,
+				String.class, String.class, int.class, int.class, byte.class);
+		invoke.setAccessible(true);
+		invoke.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, (byte) 1);
+		invoke.setAccessible(false);
+	}
+
 	public boolean isLoaded()
 	{
 		return loaded;
@@ -101,6 +115,7 @@ public class PacketUtilsPlugin extends Plugin
 	@SneakyThrows
 	public void startUp()
 	{
+		staticClient = client;
 		if (client.getRevision() != CLIENT_REV)
 		{
 			SwingUtilities.invokeLater(() ->
