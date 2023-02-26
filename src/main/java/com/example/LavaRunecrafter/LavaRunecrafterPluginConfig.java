@@ -16,7 +16,7 @@ public interface LavaRunecrafterPluginConfig extends Config {
 	}
 	@ConfigItem(
 			keyName = "VialSmasher",
-			name = "Vile Smasher Enabled",
+			name = "Vial Smasher Enabled",
 			description = "Does the account have vial smasher enabled?"
 	)
 	default boolean VialSmasher() {
