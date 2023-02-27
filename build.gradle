@@ -24,9 +24,23 @@ dependencies {
 }
 
 group = 'com.example'
-version = '2.0-SNAPSHOT'
+version = '2.0'
 sourceCompatibility = "11"
 
+tasks.withType(Jar) {
+	manifest {
+		attributes["Main-Class"] = "com.example.Main"
+	}
+}
+task FatJar(type: Jar) {
+	manifest {
+		attributes 'Main-Class': 'com.example.Main'
+	}
+	baseName = 'EthanVannPlugins'
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
+}
 tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 }

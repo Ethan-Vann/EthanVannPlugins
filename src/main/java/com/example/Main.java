@@ -14,7 +14,7 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
-public class Installer
+public class Main
 {
 	public static void main(String args[]) throws IOException
 	{
