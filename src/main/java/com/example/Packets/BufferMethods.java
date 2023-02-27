@@ -22,23 +22,23 @@ public class BufferMethods
 		offsetField.setAccessible(false);
 	}
 
-	public static void bl(Object var0, int var1) {
-		if ((var1 & -128) != 0) {
-			if ((var1 & -16384) != 0) {
-				if ((var1 & -2097152) != 0) {
-					if ((var1 & -268435456) != 0) {
-						ak(var0,var1 >>> 28 | 128);
-					}
-
-					ak(var0,var1 >>> 21 | 128);
-				}
-
-				ak(var0,var1 >>> 14 | 128);
-			}
-			ak(var0,var1 >>> 7 | 128);
-		}
-		ak(var0,var1 & 127);
-	}
+//	public static void bl(Object var0, int var1) {
+//		if ((var1 & -128) != 0) {
+//			if ((var1 & -16384) != 0) {
+//				if ((var1 & -2097152) != 0) {
+//					if ((var1 & -268435456) != 0) {
+//						ak(var0,var1 >>> 28 | 128);
+//					}
+//
+//					ak(var0,var1 >>> 21 | 128);
+//				}
+//
+//				ak(var0,var1 >>> 14 | 128);
+//			}
+//			ak(var0,var1 >>> 7 | 128);
+//		}
+//		ak(var0,var1 & 127);
+//	}
 	@SneakyThrows
 	public static void df(Object var0, int var1) {
 		Field arrayField = var0.getClass().getField(ObfuscatedNames.bufferArrayField);

@@ -17,7 +17,6 @@ public final class ObfuscatedNames {
 		put("ak","7663");
 		put("co","-2032694822");
 		put("cb","1152640181");
-		put("bl","needs updating");
 	}};
 	//needs updating
 	public static final String ACTOR_PATH_LENGTH_FIELD = "ci";

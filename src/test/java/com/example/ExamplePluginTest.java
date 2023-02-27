@@ -2,7 +2,8 @@ package com.example;
 
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.LavaRunecrafter.LavaRunecrafterPlugin;
-import com.example.PrayerFlicker.PrayerFlickerPlugin;
+import com.example.NightmareHelper.NightmareHelperPlugin;
+import com.example.PrayerFlicker.EthanPrayerFlickerPlugin;
 import com.example.UpkeepPlugin.UpkeepPlugin;
 import com.example.gauntletFlicker.gauntletFlicker;
 import com.example.superglass.SuperGlassMakerPlugin;
@@ -13,9 +14,9 @@ public class ExamplePluginTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(EthanApiPlugin.class,PacketUtilsPlugin.class,PrayerFlickerPlugin.class,
+		ExternalPluginManager.loadBuiltin(EthanApiPlugin.class,PacketUtilsPlugin.class, EthanPrayerFlickerPlugin.class,
 				gauntletFlicker.class,
-				SuperGlassMakerPlugin.class, UpkeepPlugin.class, LavaRunecrafterPlugin.class);
+				SuperGlassMakerPlugin.class, UpkeepPlugin.class, LavaRunecrafterPlugin.class, NightmareHelperPlugin.class);
 		RuneLite.main(args);
 	}
 }

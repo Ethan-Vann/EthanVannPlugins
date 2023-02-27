@@ -29,7 +29,7 @@ import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
 
 @PluginDescriptor(
-        name = "PrayerFlickerPlugin",
+        name = "Ethan PrayerFlickerPlugin",
         description = "prayer flicker for quick prayers",
         enabledByDefault = false,
         tags = {"ethan"}
@@ -37,7 +37,7 @@ import java.lang.reflect.InvocationTargetException;
 @Slf4j
 @PluginDependency(PacketUtilsPlugin.class)
 @PluginDependency(EthanApiPlugin.class)
-public class PrayerFlickerPlugin extends Plugin {
+public class EthanPrayerFlickerPlugin extends Plugin {
     public int timeout = 0;
     @Inject
     Client client;
