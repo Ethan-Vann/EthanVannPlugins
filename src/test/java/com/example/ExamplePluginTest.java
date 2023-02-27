@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.LavaRunecrafter.LavaRunecrafterPlugin;
 import com.example.PrayerFlicker.PrayerFlickerPlugin;
 import com.example.UpkeepPlugin.UpkeepPlugin;
@@ -12,7 +13,8 @@ public class ExamplePluginTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(PacketUtilsPlugin.class,PrayerFlickerPlugin.class, gauntletFlicker.class,
+		ExternalPluginManager.loadBuiltin(EthanApiPlugin.class,PacketUtilsPlugin.class,PrayerFlickerPlugin.class,
+				gauntletFlicker.class,
 				SuperGlassMakerPlugin.class, UpkeepPlugin.class, LavaRunecrafterPlugin.class);
 		RuneLite.main(args);
 	}

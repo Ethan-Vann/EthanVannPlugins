@@ -1,5 +1,6 @@
 package com.example.UpkeepPlugin;
 
+import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.NPCPackets;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 		tags = {"ethan"}
 )
 @PluginDependency(PacketUtilsPlugin.class)
+@PluginDependency(EthanApiPlugin.class)
 @Slf4j
 public class UpkeepPlugin extends Plugin
 {
@@ -82,7 +84,6 @@ public class UpkeepPlugin extends Plugin
 		int ranged = this.client.getBoostedSkillLevel(Skill.RANGED);
 		int strength = this.client.getBoostedSkillLevel(Skill.STRENGTH);
 		if(hitpoints<config.HealthLowAmount()){
-			System.out.println("triggered");
 			handleAction(config.HealthActions());
 		}
 		if(prayer<config.PrayerLowAmount()){
@@ -113,7 +114,6 @@ public class UpkeepPlugin extends Plugin
 			if(item==null){
 				continue;
 			}
-			System.out.println(Action.split(":")[0]+":"+Action.split(":")[1]);
 			mousePackets.queueClickPacket();
 			widgetPackets.queueWidgetAction(item,Action.split(":")[0]);
 		}

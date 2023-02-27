@@ -1,5 +1,6 @@
 package com.example.PrayerFlicker;
 
+import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
@@ -35,6 +36,7 @@ import java.lang.reflect.InvocationTargetException;
 )
 @Slf4j
 @PluginDependency(PacketUtilsPlugin.class)
+@PluginDependency(EthanApiPlugin.class)
 public class PrayerFlickerPlugin extends Plugin {
     public int timeout = 0;
     @Inject
