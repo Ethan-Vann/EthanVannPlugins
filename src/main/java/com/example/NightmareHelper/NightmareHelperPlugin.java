@@ -3,6 +3,7 @@ package com.example.NightmareHelper;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
+import com.example.Packets.MovementPackets;
 import com.example.Packets.WidgetPackets;
 import com.example.gauntletFlicker.QuickPrayer;
 import com.google.inject.Inject;
@@ -42,6 +43,8 @@ public class NightmareHelperPlugin extends Plugin
 	WidgetPackets widgetPackets;
 	@Inject
 	EthanApiPlugin api;
+	@Inject
+	MovementPackets movementPackets;
 	boolean forceTab = false;
 	QuickPrayer shouldPray;
 	boolean cursed = false;
@@ -150,6 +153,11 @@ public class NightmareHelperPlugin extends Plugin
 				widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 12); //quickPrayer magic
 			}
 		}
+
+
+
+
+		movementPackets.queueMovement(client.getLocalPlayer().getWorldLocation().dx(5).dy(10));
 	}
 	@Subscribe
 	public void onNpcSpawned(NpcSpawned e){
