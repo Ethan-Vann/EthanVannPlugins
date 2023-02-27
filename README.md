@@ -1,2 +1,1 @@
-# Example
-An example greeter plugin
+Plugins released by Ethan Vann
