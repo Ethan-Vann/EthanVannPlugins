@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import java.awt.event.KeyEvent;
 import java.math.BigInteger;
 import java.util.Random;
+import java.util.concurrent.Executors;
 
 public class MousePackets {
     @Inject
@@ -58,7 +59,8 @@ public class MousePackets {
         PacketReflection.clientMouseLastLastPressedTimeMillis.setAccessible(false);
         if(checkIdleLogout()){
             randomDelay = randomDelay();
-            pressKey();
+            Executors.newSingleThreadExecutor()
+                    .submit(this::pressKey);
         }
     }
 
