@@ -42,9 +42,10 @@ public class PacketReflection
 			Field isaac2 = PACKETWRITER.get(null).getClass().getDeclaredField(ObfuscatedNames.isaacCipherFieldName);
 			isaac2.setAccessible(true);
 			isaac = isaac2.get(PACKETWRITER.get(null));
+			isaac2.setAccessible(false);
+			PACKETWRITER.setAccessible(false);
 			isaacClass = isaac.getClass();
 			getPacketBufferNode = Arrays.stream(classWithgetPacketBufferNode.getDeclaredMethods()).filter(m -> m.getReturnType().equals(PacketBufferNode)).collect(Collectors.toList()).get(0);
-			getPacketBufferNode.setAccessible(true);
 			mouseHandlerLastPressedTime = client.getClass().getClassLoader().loadClass(ObfuscatedNames.MouseHandler_lastPressedTimeMillisClass).getDeclaredField(ObfuscatedNames.MouseHandler_lastPressedTimeMillisField);
 			clientMouseLastLastPressedTimeMillis = client.getClass().getDeclaredField(ObfuscatedNames.clientMouseLastLastPressedTimeMillis);
 		}
@@ -106,6 +107,7 @@ public class PacketReflection
 	public void sendPacket(PacketDef def, Object... objects)
 	{
 		Object packetBufferNode = null;
+		getPacketBufferNode.setAccessible(true);
 		long garbageValue = Math.abs(Long.parseLong(ObfuscatedNames.getPacketBufferNodeGarbageValue));
 		if (garbageValue < 256)
 		{
@@ -123,6 +125,7 @@ public class PacketReflection
 					isaac, Integer.parseInt(ObfuscatedNames.getPacketBufferNodeGarbageValue));
 		}
 		Object buffer = packetBufferNode.getClass().getDeclaredField(ObfuscatedNames.packetBufferFieldName).get(packetBufferNode);
+		getPacketBufferNode.setAccessible(false);
 		List<String> params = null;
 		if (def.type == PacketType.RESUME_PAUSEBUTTON)
 		{
@@ -189,11 +192,14 @@ public class PacketReflection
 					writeObject(stringEntry.getValue(), buffer, objects[params.indexOf(stringEntry.getKey())]);
 				}
 			}
+			PACKETWRITER.setAccessible(true);
 			Method addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod("je",
 					PACKETWRITER.get(null).getClass(), packetBufferNode.getClass(),byte.class);
 			addNode.setAccessible(true);
 			addNode.invoke(null, PACKETWRITER.get(null), packetBufferNode,
 					Byte.parseByte(ObfuscatedNames.addNodeGarbageValue));
+			addNode.setAccessible(false);
+			PACKETWRITER.setAccessible(false);
 		}
 	}
 
