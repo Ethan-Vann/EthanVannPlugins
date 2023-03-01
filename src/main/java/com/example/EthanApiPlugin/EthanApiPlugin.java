@@ -22,7 +22,6 @@ import net.runelite.client.plugins.PluginInstantiationException;
 import net.runelite.client.plugins.PluginManager;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
-
 import javax.swing.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -36,8 +35,7 @@ import static net.runelite.api.Varbits.QUICK_PRAYER;
 @PluginDescriptor(
 		name = "EthanApiPlugin",
 		description = "",
-		tags = {"ethan"},
-		hidden = true
+		tags = {"ethan"}
 )
 public class EthanApiPlugin extends Plugin
 {

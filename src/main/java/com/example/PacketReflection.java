@@ -149,6 +149,11 @@ public class PacketReflection
 		{
 			params = List.of("objectId", "worldPointX", "worldPointY", "ctrlDown");
 		}
+		if (def.type == PacketType.OPOBJT)
+		{
+			params = List.of("objectId", "worldPointX", "worldPointY", "slot", "itemId", "widgetId",
+					"ctrlDown");
+		}
 		if (def.type == PacketType.EVENT_MOUSE_CLICK)
 		{
 			params = List.of("mouseInfo", "mouseX", "mouseY");

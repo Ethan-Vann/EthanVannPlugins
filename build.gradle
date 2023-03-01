@@ -24,7 +24,7 @@ dependencies {
 }
 
 group = 'com.example'
-version = '2.0'
+version = '2.1'
 sourceCompatibility = "11"
 
 tasks.withType(Jar) {
