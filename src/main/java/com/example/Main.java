@@ -34,5 +34,6 @@ public class Main
 			Gson gson = new GsonBuilder().create();
 			gson.toJson(jsonObject, writer);
 		}
+		fileOutputStream.close();
 	}
 }

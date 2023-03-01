@@ -63,7 +63,6 @@ public class PacketReflection
 	{
 		switch (obfname)
 		{
-			//valid cases are: "ct","df","dv","au","cg","cz","ah","ak","co","cb"
 			case "ct":
 				BufferMethods.ct(buffer, (Integer) input);
 				break;
@@ -190,31 +189,6 @@ public class PacketReflection
 					writeObject(stringEntry.getValue(), buffer, objects[params.indexOf(stringEntry.getKey())]);
 				}
 			}
-//			long addNodeGarbage = Math.abs(Long.parseLong(ObfuscatedNames.addNodeGarbageValue));
-//			if (addNodeGarbage < 256)
-//			{
-//				Method addNode = PACKETWRITER.get(null).getClass().getMethod(ObfuscatedNames.addNodeMethodName,
-//						PacketBufferNode, byte.class);
-//				addNode.setAccessible(true);
-//				addNode.invoke(PACKETWRITER.get(null), packetBufferNode,
-//						Byte.parseByte(ObfuscatedNames.addNodeGarbageValue));
-//			}
-//			else if (addNodeGarbage < 32768)
-//			{
-//				Method addNode = PACKETWRITER.get(null).getClass().getMethod(ObfuscatedNames.addNodeMethodName,
-//						PacketBufferNode, short.class);
-//				addNode.setAccessible(true);
-//				addNode.invoke(PACKETWRITER.get(null), packetBufferNode,
-//						Short.parseShort(ObfuscatedNames.addNodeGarbageValue));
-//			}
-//			else if (addNodeGarbage < Integer.MAX_VALUE)
-//			{
-//				Method addNode = PACKETWRITER.get(null).getClass().getMethod(ObfuscatedNames.addNodeMethodName,
-//						PacketBufferNode, int.class);
-//				addNode.setAccessible(true);
-//				addNode.invoke(PACKETWRITER.get(null), packetBufferNode,
-//						Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
-//			}
 			Method addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod("je",
 					PACKETWRITER.get(null).getClass(), packetBufferNode.getClass(),byte.class);
 			addNode.setAccessible(true);
