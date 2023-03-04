@@ -16,7 +16,8 @@ public class ExamplePluginTest
 	{
 		ExternalPluginManager.loadBuiltin(EthanApiPlugin.class,PacketUtilsPlugin.class, EthanPrayerFlickerPlugin.class,
 				gauntletFlicker.class,
-				SuperGlassMakerPlugin.class, UpkeepPlugin.class, LavaRunecrafterPlugin.class, NightmareHelperPlugin.class);
+				SuperGlassMakerPlugin.class, UpkeepPlugin.class, LavaRunecrafterPlugin.class,
+				NightmareHelperPlugin.class);
 		RuneLite.main(args);
 	}
 }
