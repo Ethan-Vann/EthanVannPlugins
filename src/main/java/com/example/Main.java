@@ -1,19 +1,16 @@
 package com.example;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-
 public class Main
 {
 	public static void main(String args[]) throws IOException
@@ -22,18 +19,19 @@ public class Main
 		FileOutputStream fileOutputStream = new FileOutputStream(System.getProperty("user.home")+"\\AppData\\Local\\RuneLite\\EthanVannInstaller.jar");
 		fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
 		String file = System.getProperty("user.home")+"\\AppData\\Local\\RuneLite\\config.json";
-		JsonObject jsonObject = JsonParser.parseReader(new FileReader(file)).getAsJsonObject();
-		jsonObject.remove("mainClass");
-		jsonObject.addProperty("mainClass", "ca.arnah.runelite.LauncherHijack");
-		jsonObject.add("classPath",JsonParser.parseString("[\n" +
-				"    \"RuneLite.jar\",\n" +
-				"    \"EthanVannInstaller.jar\"\n" +
-				"  ]"));
-		try (Writer writer = new FileWriter(file))
-		{
-			Gson gson = new GsonBuilder().create();
-			gson.toJson(jsonObject, writer);
-		}
+		InputStream inputStream = new FileInputStream(file);
+		JSONTokener tokener = new JSONTokener(inputStream);
+		JSONObject object = new JSONObject(tokener);
+		inputStream.close();
+		object.remove("mainClass");
+		object.put("mainClass", "ca.arnah.runelite.LauncherHijack");
+		object.remove("classPath");
+		object.append("classPath","EthanVannInstaller.jar");
+		object.append("classPath","RuneLite.jar");
+		FileWriter fileWriter = new FileWriter(file);
+		fileWriter.write(object.toString());
+		fileWriter.flush();
+		fileWriter.close();
 		fileOutputStream.close();
 	}
 }
