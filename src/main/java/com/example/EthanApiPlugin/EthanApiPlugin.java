@@ -119,6 +119,10 @@ public class EthanApiPlugin extends Plugin
 	}
 	public Widget getItem(int id, WidgetInfo container)
 	{
+		if(client.getWidget(container)==null)
+		{
+			return null;
+		}
 		Widget[] items = client.getWidget(container).getDynamicChildren();
 		for (int i = 0; i < items.length; i++)
 		{

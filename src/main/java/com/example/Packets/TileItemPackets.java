@@ -21,16 +21,16 @@ public class TileItemPackets
 				packetReflection.sendPacket(PacketDef.OPOBJ1, objectId, worldPointX, worldPointY, ctrl);
 				break;
 			case 2:
-				packetReflection.sendPacket(PacketDef.OPLOC2, objectId, worldPointX, worldPointY, ctrl);
+				packetReflection.sendPacket(PacketDef.OPOBJ2, objectId, worldPointX, worldPointY, ctrl);
 				break;
 			case 3:
-				packetReflection.sendPacket(PacketDef.OPLOC3, objectId, worldPointX, worldPointY, ctrl);
+				packetReflection.sendPacket(PacketDef.OPOBJ3, objectId, worldPointX, worldPointY, ctrl);
 				break;
 			case 4:
-				packetReflection.sendPacket(PacketDef.OPLOC4, objectId, worldPointX, worldPointY, ctrl);
+				packetReflection.sendPacket(PacketDef.OPOBJ4, objectId, worldPointX, worldPointY, ctrl);
 				break;
 			case 5:
-				packetReflection.sendPacket(PacketDef.OPLOC5, objectId, worldPointX, worldPointY, ctrl);
+				packetReflection.sendPacket(PacketDef.OPOBJ5, objectId, worldPointX, worldPointY, ctrl);
 				break;
 		}
 	}

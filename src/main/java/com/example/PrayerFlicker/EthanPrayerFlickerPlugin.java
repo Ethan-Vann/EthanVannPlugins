@@ -101,7 +101,7 @@ public class EthanPrayerFlickerPlugin extends Plugin {
 
     public void switchAndUpdatePrayers(int i) {
         mousePackets.queueClickPacket();
-        widgetPackets.queueWidgetActionPacket(1, WidgetInfo.QUICK_PRAYER_PRAYERS.getId(), -1, i);
+       widgetPackets.queueWidgetActionPacket(1, 5046276, -1, i);
         togglePrayer();
         togglePrayer();
     }
@@ -114,7 +114,7 @@ public class EthanPrayerFlickerPlugin extends Plugin {
     @Subscribe
     public void onMenuOptionClicked(MenuOptionClicked event) {
         if (toggle) {
-            if (event.getParam1() == WidgetInfo.QUICK_PRAYER_PRAYERS.getId()) {
+            if (event.getParam1() == 5046276) {
                 if (event.getMenuOption().equals("Quick Prayer Update")) {
                     updatePrayers();
                     event.consume();

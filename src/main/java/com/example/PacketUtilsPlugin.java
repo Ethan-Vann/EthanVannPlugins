@@ -54,7 +54,7 @@ public class PacketUtilsPlugin extends Plugin
 	private KeyManager keyManager;
 	@Inject
 	MovementPackets movementPackets;
-	public static final int CLIENT_REV = 211;
+	public static final int CLIENT_REV = 212;
 	private static boolean loaded = false;
 	@Inject
 	private PluginManager pluginManager;

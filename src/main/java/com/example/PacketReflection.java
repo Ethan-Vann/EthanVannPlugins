@@ -64,41 +64,41 @@ public class PacketReflection
 	{
 		switch (obfname)
 		{
-			case "ct":
-				BufferMethods.ct(buffer, (Integer) input);
+			case "dd":
+				BufferMethods.dd(buffer, (Integer) input);
 				break;
-			case "df":
-				BufferMethods.df(buffer, (Integer) input);
+			case "bt":
+				BufferMethods.bt(buffer, (Integer) input);
 				break;
 			case "dv":
 				BufferMethods.dv(buffer, (Integer) input);
 				break;
-			case "au":
-				BufferMethods.au(buffer, (Integer) input);
+			case "bd":
+				BufferMethods.bd(buffer, (Integer) input);
 				break;
-			case "cg":
-				BufferMethods.cg(buffer, (Integer) input);
+			case "be":
+				BufferMethods.be(buffer, (Integer) input);
 				break;
-			case "cz":
-				BufferMethods.cz(buffer, (Integer) input);
+			case "dh":
+				BufferMethods.dh(buffer, (Integer) input);
 				break;
-			case "ah":
-				BufferMethods.ah(buffer, (Integer) input);
+			case "dz":
+				BufferMethods.dz(buffer, (Integer) input);
 				break;
-			case "ak":
-				BufferMethods.ak(buffer, (Integer) input);
+			case "dl":
+				BufferMethods.dl(buffer, (Integer) input);
 				break;
-			case "co":
-				BufferMethods.co(buffer, (Integer) input);
+			case "dm":
+				BufferMethods.dm(buffer, (Integer) input);
 				break;
-			case "cb":
-				BufferMethods.cb(buffer, (Integer) input);
+			case "ep":
+				BufferMethods.ep(buffer, (Integer) input);
 				break;
-//			case "bl":
-//				BufferMethods.bl(buffer, (Integer) input);
-//				break;
-			case "cj":
-				BufferMethods.cj(buffer, (Integer) input);
+			case "eb":
+				BufferMethods.eb(buffer, (Integer) input);
+				break;
+			case "er":
+				BufferMethods.er(buffer, (Integer) input);
 				break;
 		}
 	}
@@ -193,11 +193,10 @@ public class PacketReflection
 				}
 			}
 			PACKETWRITER.setAccessible(true);
-			Method addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod("je",
-					PACKETWRITER.get(null).getClass(), packetBufferNode.getClass(),byte.class);
+			Method addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName,packetBufferNode.getClass(),int.class);
 			addNode.setAccessible(true);
-			addNode.invoke(null, PACKETWRITER.get(null), packetBufferNode,
-					Byte.parseByte(ObfuscatedNames.addNodeGarbageValue));
+			addNode.invoke(PACKETWRITER.get(null), packetBufferNode,
+					Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
 			addNode.setAccessible(false);
 			PACKETWRITER.setAccessible(false);
 		}
