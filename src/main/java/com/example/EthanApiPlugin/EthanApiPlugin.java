@@ -13,6 +13,7 @@ import net.runelite.api.HeadIcon;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.NPC;
+import net.runelite.api.Prayer;
 import net.runelite.api.Point;
 import net.runelite.api.Tile;
 import net.runelite.api.TileObject;
@@ -55,6 +56,27 @@ public class EthanApiPlugin extends Plugin
 	@Inject
 	PluginManager pluginManager;
 	private int quickPrayerWidgetID = WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId();
+
+
+
+	public void toggleNormalPrayer(Prayer style){
+		mousePackets.queueClickPacket();
+		widgetPackets.queueWidgetActionPacket(1,convAPIToWidgetInfo(style).getPackedId(),-1,-1);
+	}
+
+
+	public void toggleNormalPrayers(List<Prayer> styles){
+		for(Prayer style: styles){
+			mousePackets.queueClickPacket();
+			widgetPackets.queueWidgetActionPacket(1,convAPIToWidgetInfo(style).getPackedId(),-1,-1);
+		}
+	}
+
+
+	private WidgetInfo convAPIToWidgetInfo(Prayer style){
+		return PrayerLocal.valueOf(style.name()).getWidgetInfo();
+	}
+
 
 	public boolean isQuickPrayerActive(QuickPrayer prayer)
 	{
