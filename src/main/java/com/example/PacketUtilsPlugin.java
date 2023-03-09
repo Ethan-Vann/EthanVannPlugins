@@ -84,11 +84,11 @@ public class PacketUtilsPlugin extends Plugin
 	public static void invoke(int var0, int var1, int var2, int var3, int var4, String var5, String var6, int var7,
 						  int var8)
 	{
-		Class invokeClass = staticClient.getClass().getClassLoader().loadClass("fw");
-		Method invoke = invokeClass.getDeclaredMethod("im", int.class, int.class, int.class, int.class, int.class,
-				String.class, String.class, int.class, int.class, byte.class);
+		Class invokeClass = staticClient.getClass().getClassLoader().loadClass("lk");
+		Method invoke = invokeClass.getDeclaredMethod("ku", int.class, int.class, int.class, int.class, int.class,
+				String.class, String.class, int.class, int.class, int.class);
 		invoke.setAccessible(true);
-		invoke.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, (byte) 1);
+		invoke.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, 1849187210);
 		invoke.setAccessible(false);
 	}
 
