@@ -16,6 +16,7 @@ import net.runelite.api.NPC;
 import net.runelite.api.Point;
 import net.runelite.api.Tile;
 import net.runelite.api.TileObject;
+import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.config.ConfigManager;
@@ -33,6 +34,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static net.runelite.api.Varbits.QUICK_PRAYER;
 
@@ -137,6 +139,9 @@ public class EthanApiPlugin extends Plugin
 			}
 		}
 		return null;
+	}
+	public List<WorldPoint> reachableTiles(){
+		return new ArrayList<>(Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(this::canPathToTile).map(Tile::getWorldLocation).filter(Objects::nonNull).collect(Collectors.toList()));
 	}
 	public Widget getItem(int id, WidgetInfo container)
 	{

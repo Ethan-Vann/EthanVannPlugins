@@ -17,8 +17,7 @@ import java.util.stream.Collectors;
 public class PacketReflection
 {
 	@Inject
-	Client client;
-	@Inject
+	Client clientInstance;
 	public static Class classWithgetPacketBufferNode = null;
 	public static Method getPacketBufferNode = null;
 	public static Class ClientPacket = null;
@@ -28,16 +27,16 @@ public class PacketReflection
 	public static Object isaac = null;
 	public static Field mouseHandlerLastPressedTime = null;
 	public static Field clientMouseLastLastPressedTimeMillis = null;
-
+	public static Client client = null;
 	@SneakyThrows
 	public boolean LoadPackets()
 	{
 		try
 		{
-			classWithgetPacketBufferNode = client.getClass().getClassLoader().loadClass(ObfuscatedNames.classContainingGetPacketBufferNodeName);
-			ClientPacket = client.getClass().getClassLoader().loadClass(ObfuscatedNames.clientPacketClassName);
-			PACKETWRITER = client.getClass().getDeclaredField(ObfuscatedNames.packetWriterFieldName);
-			PacketBufferNode = client.getClass().getClassLoader().loadClass(ObfuscatedNames.packetBufferNodeClassName);
+			classWithgetPacketBufferNode = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.classContainingGetPacketBufferNodeName);
+			ClientPacket = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.clientPacketClassName);
+			PACKETWRITER = clientInstance.getClass().getDeclaredField(ObfuscatedNames.packetWriterFieldName);
+			PacketBufferNode = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.packetBufferNodeClassName);
 			PACKETWRITER.setAccessible(true);
 			Field isaac2 = PACKETWRITER.get(null).getClass().getDeclaredField(ObfuscatedNames.isaacCipherFieldName);
 			isaac2.setAccessible(true);
@@ -46,8 +45,9 @@ public class PacketReflection
 			PACKETWRITER.setAccessible(false);
 			isaacClass = isaac.getClass();
 			getPacketBufferNode = Arrays.stream(classWithgetPacketBufferNode.getDeclaredMethods()).filter(m -> m.getReturnType().equals(PacketBufferNode)).collect(Collectors.toList()).get(0);
-			mouseHandlerLastPressedTime = client.getClass().getClassLoader().loadClass(ObfuscatedNames.MouseHandler_lastPressedTimeMillisClass).getDeclaredField(ObfuscatedNames.MouseHandler_lastPressedTimeMillisField);
-			clientMouseLastLastPressedTimeMillis = client.getClass().getDeclaredField(ObfuscatedNames.clientMouseLastLastPressedTimeMillis);
+			mouseHandlerLastPressedTime = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.MouseHandler_lastPressedTimeMillisClass).getDeclaredField(ObfuscatedNames.MouseHandler_lastPressedTimeMillisField);
+			clientMouseLastLastPressedTimeMillis = clientInstance.getClass().getDeclaredField(ObfuscatedNames.clientMouseLastLastPressedTimeMillis);
+			client = clientInstance;
 		}
 		catch (Exception e)
 		{
@@ -60,7 +60,7 @@ public class PacketReflection
 	}
 
 	@SneakyThrows
-	public void writeObject(String obfname, Object buffer, Object input)
+	public static void writeObject(String obfname, Object buffer, Object input)
 	{
 		switch (obfname)
 		{
@@ -104,7 +104,7 @@ public class PacketReflection
 	}
 
 	@SneakyThrows
-	public void sendPacket(PacketDef def, Object... objects)
+	public static void sendPacket(PacketDef def, Object... objects)
 	{
 		Object packetBufferNode = null;
 		getPacketBufferNode.setAccessible(true);
@@ -203,7 +203,7 @@ public class PacketReflection
 	}
 
 	@SneakyThrows
-	Field fetchPacketField(String name)
+	static Field fetchPacketField(String name)
 	{
 		return ClientPacket.getDeclaredField(name);
 	}

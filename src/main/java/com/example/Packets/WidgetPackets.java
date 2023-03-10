@@ -3,62 +3,51 @@ package com.example.Packets;
 import com.example.PacketDef;
 import com.example.PacketReflection;
 import lombok.SneakyThrows;
-import net.runelite.api.Client;
 import net.runelite.api.widgets.Widget;
 
-import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class WidgetPackets {
-    @Inject
-    Client client;
-    @Inject
-    PacketReflection packetReflection;
-
     @SneakyThrows
-    public void queueWidgetActionPacket(int actionFieldNo, int widgetId, int itemId, int childId) {
-        if (actionFieldNo == 1) {
-            packetReflection.sendPacket(PacketDef.IF_BUTTON1, widgetId, childId, itemId);
-            return;
-        }
+    public static void queueWidgetActionPacket(int actionFieldNo, int widgetId, int itemId, int childId) {
         switch (actionFieldNo) {
             case 1:
-                packetReflection.sendPacket(PacketDef.IF_BUTTON1, widgetId, childId, itemId);
+                PacketReflection.sendPacket(PacketDef.IF_BUTTON1, widgetId, childId, itemId);
                 break;
             case 2:
-                packetReflection.sendPacket(PacketDef.IF_BUTTON2, widgetId, childId, itemId);
+                PacketReflection.sendPacket(PacketDef.IF_BUTTON2, widgetId, childId, itemId);
                 break;
             case 3:
-                packetReflection.sendPacket(PacketDef.IF_BUTTON3, widgetId, childId, itemId);
+                PacketReflection.sendPacket(PacketDef.IF_BUTTON3, widgetId, childId, itemId);
                 break;
             case 4:
-                packetReflection.sendPacket(PacketDef.IF_BUTTON4, widgetId, childId, itemId);
+                PacketReflection.sendPacket(PacketDef.IF_BUTTON4, widgetId, childId, itemId);
                 break;
             case 5:
-                packetReflection.sendPacket(PacketDef.IF_BUTTON5, widgetId, childId, itemId);
+                PacketReflection.sendPacket(PacketDef.IF_BUTTON5, widgetId, childId, itemId);
                 break;
             case 6:
-                packetReflection.sendPacket(PacketDef.IF_BUTTON6, widgetId, childId, itemId);
+                PacketReflection.sendPacket(PacketDef.IF_BUTTON6, widgetId, childId, itemId);
                 break;
             case 7:
-                packetReflection.sendPacket(PacketDef.IF_BUTTON7, widgetId, childId, itemId);
+                PacketReflection.sendPacket(PacketDef.IF_BUTTON7, widgetId, childId, itemId);
                 break;
             case 8:
-                packetReflection.sendPacket(PacketDef.IF_BUTTON8, widgetId, childId, itemId);
+                PacketReflection.sendPacket(PacketDef.IF_BUTTON8, widgetId, childId, itemId);
                 break;
             case 9:
-                packetReflection.sendPacket(PacketDef.IF_BUTTON9, widgetId, childId, itemId);
+                PacketReflection.sendPacket(PacketDef.IF_BUTTON9, widgetId, childId, itemId);
                 break;
             case 10:
-                packetReflection.sendPacket(PacketDef.IF_BUTTON10, widgetId, childId, itemId);
+                PacketReflection.sendPacket(PacketDef.IF_BUTTON10, widgetId, childId, itemId);
                 break;
         }
     }
 
     @SneakyThrows
-    public void queueWidgetAction(Widget widget, String... actionlist) {
+    public static void queueWidgetAction(Widget widget, String... actionlist) {
         if(widget==null){
             System.out.println("call to queueWidgetAction with null widget");
             return;
@@ -79,15 +68,16 @@ public class WidgetPackets {
         queueWidgetActionPacket(num, widget.getId(), widget.getItemId(), widget.getIndex());
     }
 
-    public void queueWidgetOnWidget(Widget srcWidget, Widget destWidget) {
+    public static void queueWidgetOnWidget(Widget srcWidget, Widget destWidget) {
         queueWidgetOnWidget(srcWidget.getId(), srcWidget.getIndex(), srcWidget.getItemId(), destWidget.getId(), destWidget.getIndex(), destWidget.getItemId());
     }
-    public void queueWidgetOnWidget(int sourceWidgetId, int sourceSlot, int sourceItemId, int destinationWidgetId, int destinationSlot, int destinationItemId) {
-        packetReflection.sendPacket(PacketDef.IF_BUTTONT, sourceWidgetId, sourceSlot, sourceItemId, destinationWidgetId,
+    public static void queueWidgetOnWidget(int sourceWidgetId, int sourceSlot, int sourceItemId,
+                                           int destinationWidgetId, int destinationSlot, int destinationItemId) {
+        PacketReflection.sendPacket(PacketDef.IF_BUTTONT, sourceWidgetId, sourceSlot, sourceItemId, destinationWidgetId,
                 destinationSlot, destinationItemId);
     }
-    public void queueResumePause(int widgetId,int childId){
-        packetReflection.sendPacket(PacketDef.RESUME_PAUSEBUTTON,widgetId,childId);
+    public static void queueResumePause(int widgetId,int childId){
+        PacketReflection.sendPacket(PacketDef.RESUME_PAUSEBUTTON,widgetId,childId);
     }
 
 }

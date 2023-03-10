@@ -2,9 +2,7 @@ package com.example.Packets;
 
 import com.example.PacketDef;
 import com.example.PacketReflection;
-import com.google.inject.Inject;
 import lombok.SneakyThrows;
-import net.runelite.api.Client;
 import net.runelite.api.Player;
 import net.runelite.api.widgets.Widget;
 
@@ -12,39 +10,36 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PlayerPackets {
-    @Inject
-    Client client;
-    @Inject
-    PacketReflection packetReflection;
+import static com.example.PacketReflection.client;
 
+public class PlayerPackets {
     @SneakyThrows
     public void queuePlayerAction(int actionFieldNo, int playerIndex, boolean ctrlDown) {
         int ctrl = ctrlDown ? 1 : 0;
         switch (actionFieldNo) {
             case 1:
-                packetReflection.sendPacket(PacketDef.OPPLAYER1, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.OPPLAYER1, playerIndex, ctrl);
                 break;
             case 2:
-                packetReflection.sendPacket(PacketDef.OPPLAYER2, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.OPPLAYER2, playerIndex, ctrl);
                 break;
             case 3:
-                packetReflection.sendPacket(PacketDef.OPPLAYER3, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.OPPLAYER3, playerIndex, ctrl);
                 break;
             case 4:
-                packetReflection.sendPacket(PacketDef.OPPLAYER4, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.OPPLAYER4, playerIndex, ctrl);
                 break;
             case 5:
-                packetReflection.sendPacket(PacketDef.OPPLAYER5, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.OPPLAYER5, playerIndex, ctrl);
                 break;
             case 6:
-                packetReflection.sendPacket(PacketDef.OPPLAYER6, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.OPPLAYER6, playerIndex, ctrl);
                 break;
             case 7:
-                packetReflection.sendPacket(PacketDef.OPPLAYER7, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.OPPLAYER7, playerIndex, ctrl);
                 break;
             case 8:
-                packetReflection.sendPacket(PacketDef.OPPLAYER8, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.OPPLAYER8, playerIndex, ctrl);
                 break;
         }
     }
@@ -70,7 +65,7 @@ public class PlayerPackets {
     public void queueWidgetOnPlayer(int playerIndex, int sourceItemId, int sourceSlot, int sourceWidgetId,
                                     boolean ctrlDown) {
         int ctrl = ctrlDown ? 1 : 0;
-        packetReflection.sendPacket(PacketDef.OPPLAYERT, playerIndex, sourceItemId, sourceSlot, sourceWidgetId, ctrl);
+        PacketReflection.sendPacket(PacketDef.OPPLAYERT, playerIndex, sourceItemId, sourceSlot, sourceWidgetId, ctrl);
     }
 
     public void queueWidgetOnPlayer(Player player, Widget widget) {

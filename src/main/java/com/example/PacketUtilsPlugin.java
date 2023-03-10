@@ -1,8 +1,5 @@
 package com.example;
 
-import com.example.Packets.MousePackets;
-import com.example.Packets.MovementPackets;
-import com.example.Packets.WidgetPackets;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import lombok.SneakyThrows;
@@ -15,7 +12,6 @@ import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.input.KeyManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.PluginInstantiationException;
@@ -38,22 +34,12 @@ public class PacketUtilsPlugin extends Plugin
 	@Inject
 	PacketUtilsConfig config;
 	@Inject
-	ClientThread clientThread;
-	@Inject
 	Client client;
 	static Client staticClient;
-	@Inject
-	WidgetPackets widgetPacket;
 	@Inject
 	PacketReflection packetReflection;
 	@Inject
 	ClientThread thread;
-	@Inject
-	MousePackets mousePackets;
-	@Inject
-	private KeyManager keyManager;
-	@Inject
-	MovementPackets movementPackets;
 	public static final int CLIENT_REV = 212;
 	private static boolean loaded = false;
 	@Inject
