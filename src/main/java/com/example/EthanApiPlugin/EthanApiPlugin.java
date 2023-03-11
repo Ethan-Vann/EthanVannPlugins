@@ -82,7 +82,7 @@ public class EthanApiPlugin extends Plugin
 //	}
 
 
-	public boolean isQuickPrayerActive(QuickPrayer prayer)
+	public static boolean isQuickPrayerActive(QuickPrayer prayer)
 	{
 		RuneLite.getInjector().getInstance(Client.class);
 		if ((client.getVarbitValue(4102) & (int) Math.pow(2, prayer.getIndex())) == Math.pow(2, prayer.getIndex()))

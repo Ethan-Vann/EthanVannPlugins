@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 public class NPCs
 {
 	private static List<NPC> npcList = new ArrayList<>();
+
 	public static NPCQuery search(){
 		return new NPCQuery(npcList);
 	}

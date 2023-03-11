@@ -1,5 +1,8 @@
 package com.example;
 
+import com.example.PvPKeysUITesting.PvPKeys;
+import com.example.AutoLogger.AutoLogger;
+import com.example.AutoTele.AutoTele;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.LavaRunecrafter.LavaRunecrafterPlugin;
 import com.example.NightmareHelper.NightmareHelperPlugin;
@@ -17,7 +20,7 @@ public class ExamplePluginTest
 		ExternalPluginManager.loadBuiltin(EthanApiPlugin.class,PacketUtilsPlugin.class, EthanPrayerFlickerPlugin.class,
 				gauntletFlicker.class,
 				SuperGlassMakerPlugin.class, UpkeepPlugin.class, LavaRunecrafterPlugin.class,
-				NightmareHelperPlugin.class);
+				NightmareHelperPlugin.class, AutoTele.class, AutoLogger.class, PvPKeys.class);
 		RuneLite.main(args);
 	}
 }

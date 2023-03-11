@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 
 public class NPCQuery
 {
-	private List<NPC> npcs;
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
-	NPCQuery(List<NPC> items){
-		this.npcs = new ArrayList(items);
+	private List<NPC> npcs;
+	NPCQuery(List<NPC> npcs){
+		this.npcs = new ArrayList(npcs);
 	}
 	public NPCQuery filter(Predicate<? super NPC> predicate){
 		npcs = npcs.stream().filter(predicate).collect(Collectors.toList());
@@ -100,7 +100,6 @@ public class NPCQuery
 		return npcs.stream().min(Comparator.comparingInt(npc -> npc.getWorldLocation().distanceTo(point)));
 	}
 	public Optional<NPC> first(){
-		NPC returnWidget = null;
 		if(npcs.size()== 0){
 			return Optional.ofNullable(null);
 		}

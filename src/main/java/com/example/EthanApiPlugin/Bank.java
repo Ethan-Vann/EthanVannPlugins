@@ -66,6 +66,9 @@ public class Bank
 	public void onItemContainerChanged(ItemContainerChanged e){
 		switch(e.getContainerId()){
 			case 95:
+				if(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER)==null){
+					Bank.bankItems.clear();
+				}
 				Bank.bankItems =
 						Arrays.stream(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).collect(Collectors.toList());
 				break;
