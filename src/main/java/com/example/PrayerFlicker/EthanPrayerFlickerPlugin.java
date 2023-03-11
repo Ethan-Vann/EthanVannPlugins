@@ -49,10 +49,6 @@ public class EthanPrayerFlickerPlugin extends Plugin {
     private PrayerFlickerConfig config;
     @Inject
     PluginManager pluginManager;
-    @Inject
-    WidgetPackets widgetPackets;
-    @Inject
-    MousePackets mousePackets;
     private final int quickPrayerWidgetID = WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId();
 
     @Provides
@@ -61,8 +57,8 @@ public class EthanPrayerFlickerPlugin extends Plugin {
     }
 
     private void togglePrayer() {
-        mousePackets.queueClickPacket();
-        widgetPackets.queueWidgetActionPacket(1, quickPrayerWidgetID, -1, -1);
+        MousePackets.queueClickPacket();
+        WidgetPackets.queueWidgetActionPacket(1, quickPrayerWidgetID, -1, -1);
     }
 
     @Override
@@ -100,8 +96,8 @@ public class EthanPrayerFlickerPlugin extends Plugin {
     boolean toggle;
 
     public void switchAndUpdatePrayers(int i) {
-        mousePackets.queueClickPacket();
-       widgetPackets.queueWidgetActionPacket(1, 5046276, -1, i);
+        MousePackets.queueClickPacket();
+       WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, i);
         togglePrayer();
         togglePrayer();
     }

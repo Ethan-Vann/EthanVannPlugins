@@ -5,6 +5,7 @@ import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
 import com.example.gauntletFlicker.QuickPrayer;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import lombok.SneakyThrows;
 import net.runelite.api.Client;
 import net.runelite.api.CollisionData;
@@ -16,10 +17,13 @@ import net.runelite.api.NPC;
 import net.runelite.api.Point;
 import net.runelite.api.Tile;
 import net.runelite.api.TileObject;
+import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
+import net.runelite.client.RuneLite;
 import net.runelite.client.config.ConfigManager;
+import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.PluginInstantiationException;
@@ -44,10 +48,10 @@ import static net.runelite.api.Varbits.QUICK_PRAYER;
 		tags = {"ethan"},
 		hidden = true
 )
+@Singleton
 public class EthanApiPlugin extends Plugin
 {
-	@Inject
-	Client client;
+	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	@Inject
 	WidgetPackets widgetPackets;
 	@Inject
@@ -56,10 +60,9 @@ public class EthanApiPlugin extends Plugin
 	ConfigManager configManager;
 	@Inject
 	PluginManager pluginManager;
-	private int quickPrayerWidgetID = WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId();
-
-
-
+	@Inject
+	EventBus eventBus;
+	static private int quickPrayerWidgetID = WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId();
 //	public void toggleNormalPrayer(Prayer style){
 //		mousePackets.queueClickPacket();
 //		widgetPackets.queueWidgetActionPacket(1,convAPIToWidgetInfo(style).getPackedId(),-1,-1);
@@ -81,6 +84,7 @@ public class EthanApiPlugin extends Plugin
 
 	public boolean isQuickPrayerActive(QuickPrayer prayer)
 	{
+		RuneLite.getInjector().getInstance(Client.class);
 		if ((client.getVarbitValue(4102) & (int) Math.pow(2, prayer.getIndex())) == Math.pow(2, prayer.getIndex()))
 		{
 			return true;
@@ -115,6 +119,7 @@ public class EthanApiPlugin extends Plugin
 		}
 		return HeadIcon.values()[headIconArray[0]];
 	}
+	@Deprecated
 	public int countItem(String str,WidgetInfo container)
 	{
 		Widget[] items = client.getWidget(container).getDynamicChildren();
@@ -128,6 +133,7 @@ public class EthanApiPlugin extends Plugin
 		}
 		return count;
 	}
+	@Deprecated
 	public Widget getItem(String str)
 	{
 		Widget[] items = client.getWidget(WidgetInfo.INVENTORY).getDynamicChildren();
@@ -141,8 +147,9 @@ public class EthanApiPlugin extends Plugin
 		return null;
 	}
 	public List<WorldPoint> reachableTiles(){
-		return new ArrayList<>(Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(this::canPathToTile).map(Tile::getWorldLocation).filter(Objects::nonNull).collect(Collectors.toList()));
+		return new ArrayList<>(Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(x->canPathToTile(x.getWorldLocation())).map(Tile::getWorldLocation).filter(Objects::nonNull).collect(Collectors.toList()));
 	}
+	@Deprecated
 	public Widget getItem(int id, WidgetInfo container)
 	{
 		if(client.getWidget(container)==null)
@@ -181,6 +188,7 @@ public class EthanApiPlugin extends Plugin
 		return client.getLocalPlayer().getPoseAnimation()
 				!= client.getLocalPlayer().getIdlePoseAnimation();
 	}
+	@Deprecated
 	public TileObject findObject(String objectName)
 	{
 		ArrayList<TileObject> validObjects = new ArrayList<>();
@@ -214,6 +222,7 @@ public class EthanApiPlugin extends Plugin
 		}
 		return null;
 	}
+	@Deprecated
 	public TileObject findObject(int id)
 	{
 		ArrayList<TileObject> validObjects = new ArrayList<>();
@@ -227,6 +236,7 @@ public class EthanApiPlugin extends Plugin
 		});
 		return validObjects.stream().min(Comparator.comparingInt(x->x.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()))).orElse(null);
 	}
+	@Deprecated
 	public Widget getItemFromList(int[] list, WidgetInfo container)
 	{
 		for (int i : list)
@@ -241,6 +251,7 @@ public class EthanApiPlugin extends Plugin
 	}
 	public int checkIfWearing(int[] ids)
 	{
+
 		if (client.getItemContainer(InventoryID.EQUIPMENT) != null)
 		{
 			Item[] equipment = client.getItemContainer(InventoryID.EQUIPMENT).getItems();
@@ -257,7 +268,7 @@ public class EthanApiPlugin extends Plugin
 		}
 		return -1;
 	}
-	public boolean canPathToTile(Tile destinationTile){
+	public static boolean canPathToTile(WorldPoint destinationTile){
 		int z = client.getPlane();
 		if (z != destinationTile.getPlane())
 		{
@@ -289,7 +300,7 @@ public class EthanApiPlugin extends Plugin
 
 		int pSY = client.getLocalPlayer().getLocalLocation().getSceneY();
 		Point p1 = client.getScene().getTiles()[client.getPlane()][pSX][pSY].getSceneLocation();
-		Point p2 = destinationTile.getSceneLocation();
+		Point p2 = new Point(LocalPoint.fromWorld(client, destinationTile).getSceneX(),LocalPoint.fromWorld(client, destinationTile).getSceneY());
 
 		int middleX = p1.getX();
 		int middleY = p1.getY();
@@ -408,6 +419,7 @@ public class EthanApiPlugin extends Plugin
 	@SneakyThrows
 	public void stopPlugin(Plugin plugin)
 	{
+
 		SwingUtilities.invokeAndWait(() ->
 		{
 			try
@@ -420,5 +432,14 @@ public class EthanApiPlugin extends Plugin
 				throw new RuntimeException(e);
 			}
 		});
+	}
+	@Override
+	public void startUp() throws Exception
+	{
+		eventBus.register(RuneLite.getInjector().getInstance(Inventory.class));
+		eventBus.register(RuneLite.getInjector().getInstance(Bank.class));
+		eventBus.register(RuneLite.getInjector().getInstance(BankInventory.class));
+		eventBus.register(RuneLite.getInjector().getInstance(NPCs.class));
+		eventBus.register(RuneLite.getInjector().getInstance(TileObjects.class));
 	}
 }

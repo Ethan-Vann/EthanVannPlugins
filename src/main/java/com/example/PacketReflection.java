@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PacketReflection
 {
-	@Inject
-	Client clientInstance;
 	public static Class classWithgetPacketBufferNode = null;
 	public static Method getPacketBufferNode = null;
 	public static Class ClientPacket = null;
@@ -27,12 +25,19 @@ public class PacketReflection
 	public static Object isaac = null;
 	public static Field mouseHandlerLastPressedTime = null;
 	public static Field clientMouseLastLastPressedTimeMillis = null;
+
+
+	@Inject
+	Client clientInstance;
 	public static Client client = null;
 	@SneakyThrows
 	public boolean LoadPackets()
 	{
 		try
 		{
+			client = clientInstance;
+
+
 			classWithgetPacketBufferNode = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.classContainingGetPacketBufferNodeName);
 			ClientPacket = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.clientPacketClassName);
 			PACKETWRITER = clientInstance.getClass().getDeclaredField(ObfuscatedNames.packetWriterFieldName);
@@ -47,7 +52,6 @@ public class PacketReflection
 			getPacketBufferNode = Arrays.stream(classWithgetPacketBufferNode.getDeclaredMethods()).filter(m -> m.getReturnType().equals(PacketBufferNode)).collect(Collectors.toList()).get(0);
 			mouseHandlerLastPressedTime = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.MouseHandler_lastPressedTimeMillisClass).getDeclaredField(ObfuscatedNames.MouseHandler_lastPressedTimeMillisField);
 			clientMouseLastLastPressedTimeMillis = clientInstance.getClass().getDeclaredField(ObfuscatedNames.clientMouseLastLastPressedTimeMillis);
-			client = clientInstance;
 		}
 		catch (Exception e)
 		{

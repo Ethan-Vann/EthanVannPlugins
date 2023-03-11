@@ -18,7 +18,8 @@ import static com.example.PacketReflection.client;
 
 public class ObjectPackets {
     @SneakyThrows
-    public void queueObjectAction(int actionFieldNo, int objectId, int worldPointX, int worldPointY, boolean ctrlDown) {
+    public static void queueObjectAction(int actionFieldNo, int objectId, int worldPointX, int worldPointY,
+                                   boolean ctrlDown) {
         int ctrl = ctrlDown ? 1 : 0;
         switch (actionFieldNo) {
             case 1:
@@ -40,7 +41,7 @@ public class ObjectPackets {
     }
 
     @SneakyThrows
-    public void queueObjectAction(TileObject object, boolean ctrlDown, String... actionlist) {
+    public static void queueObjectAction(TileObject object, boolean ctrlDown, String... actionlist) {
         List<String> actions = Arrays.stream(client.getObjectDefinition(object.getId()).getActions()).collect(Collectors.toList());
         Point p;
         if (object instanceof GameObject) {
@@ -66,14 +67,14 @@ public class ObjectPackets {
         queueObjectAction(num, object.getId(), wp.getX(), wp.getY(), ctrlDown);
     }
 
-    public void queueWidgetOnTileObject(int objectId, int worldPointX, int worldPointY, int sourceSlot,
+    public static void queueWidgetOnTileObject(int objectId, int worldPointX, int worldPointY, int sourceSlot,
                                         int sourceItemId, int sourceWidgetId, boolean ctrlDown) {
         int ctrl = ctrlDown ? 1 : 0;
         PacketReflection.sendPacket(PacketDef.OPLOCT, objectId, worldPointX, worldPointY, sourceSlot, sourceItemId,
                 sourceWidgetId, ctrl);
     }
 
-    public void queueWidgetOnTileObject(Widget widget, TileObject object) {
+    public static void queueWidgetOnTileObject(Widget widget, TileObject object) {
         Point p;
         if (object instanceof GameObject) {
             GameObject gameObject = (GameObject) object;
