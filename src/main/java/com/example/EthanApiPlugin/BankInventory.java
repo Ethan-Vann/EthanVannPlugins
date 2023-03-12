@@ -70,9 +70,15 @@ public class BankInventory
 					Bank.bankItems.clear();
 					return;
 				}
-				Bank.bankItems =
-						Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).collect(Collectors.toList());
-				break;
+				try
+				{
+					Bank.bankItems =
+							Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).collect(Collectors.toList());
+					break;
+				}catch (NullPointerException err){
+					Bank.bankItems.clear();
+					break;
+				}
 		}
 	}
 }
