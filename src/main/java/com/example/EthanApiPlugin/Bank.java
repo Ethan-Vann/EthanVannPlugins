@@ -69,8 +69,15 @@ public class Bank
 				if(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER)==null){
 					Bank.bankItems.clear();
 				}
-				Bank.bankItems =
-						Arrays.stream(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).collect(Collectors.toList());
+				try
+				{
+					Bank.bankItems =
+							Arrays.stream(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).collect(Collectors.toList());
+				}
+				catch (NullPointerException ex)
+				{
+					Bank.bankItems.clear();
+				}
 				break;
 		}
 	}
