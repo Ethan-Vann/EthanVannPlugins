@@ -16,6 +16,7 @@ public class ItemQuery
 {
 	Query query = new Query();
 	private List<Widget> items;
+	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	ItemQuery(List<Widget> items){
 		this.items = new ArrayList(items);
 	}
@@ -47,6 +48,10 @@ public class ItemQuery
 		items = items.stream().filter(item -> item.getIndex() == index).collect(Collectors.toList());
 		return this;
 	}
+	public ItemQuery onlyNoted(){
+        items = items.stream().filter(this::isNoted).collect(Collectors.toList());
+        return this;
+    }
 	public boolean empty(){
 		return items.size() == 0;
 	}
@@ -64,4 +69,8 @@ public class ItemQuery
 		}
 		return Optional.ofNullable(items.get(0));
 	}
+	public boolean isNoted (Widget item){
+        ItemComposition itemComposition = client.itemManager.getItemComposition(item.getItemId());
+        return itemComposition.getNote() != -1;
+    }
 }
