@@ -63,23 +63,19 @@ public class EthanApiPlugin extends Plugin
 	@Inject
 	EventBus eventBus;
 	static private int quickPrayerWidgetID = WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId();
-//	public void toggleNormalPrayer(Prayer style){
-//		mousePackets.queueClickPacket();
-//		widgetPackets.queueWidgetActionPacket(1,convAPIToWidgetInfo(style).getPackedId(),-1,-1);
-//	}
-//
-//
-//	public void toggleNormalPrayers(List<Prayer> styles){
-//		for(Prayer style: styles){
-//			mousePackets.queueClickPacket();
-//			widgetPackets.queueWidgetActionPacket(1,convAPIToWidgetInfo(style).getPackedId(),-1,-1);
-//		}
-//	}
-//
-//
-//	private WidgetInfo convAPIToWidgetInfo(Prayer style){
-//		return PrayerLocal.valueOf(style.name()).getWidgetInfo();
-//	}
+
+	public void toggleNormalPrayer(int packedWidgID){
+		mousePackets.queueClickPacket();
+		widgetPackets.queueWidgetActionPacket(1,packedWidgID,-1,-1);
+	}
+
+
+	public void toggleNormalPrayers(List<Integer> packedWidgIDs ){
+		for(Integer packedWidgID: packedWidgIDs){
+			mousePackets.queueClickPacket();
+			widgetPackets.queueWidgetActionPacket(1,packedWidgID,-1,-1);
+		}
+	}
 
 
 	public static boolean isQuickPrayerActive(QuickPrayer prayer)
