@@ -1,6 +1,10 @@
 package com.example.EthanApiPlugin;
 
+import net.runelite.api.Client;
+import net.runelite.api.ItemComposition;
 import net.runelite.api.widgets.Widget;
+import net.runelite.client.RuneLite;
+import net.runelite.client.game.ItemManager;
 
 import javax.management.Query;
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ public class ItemQuery
 	Query query = new Query();
 	private List<Widget> items;
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
+	static ItemManager itemManager = RuneLite.getInjector().getInstance(ItemManager.class);
 	ItemQuery(List<Widget> items){
 		this.items = new ArrayList(items);
 	}
@@ -70,7 +75,7 @@ public class ItemQuery
 		return Optional.ofNullable(items.get(0));
 	}
 	public boolean isNoted (Widget item){
-        ItemComposition itemComposition = client.itemManager.getItemComposition(item.getItemId());
+        ItemComposition itemComposition = itemManager.getItemComposition(item.getItemId());
         return itemComposition.getNote() != -1;
     }
 }
