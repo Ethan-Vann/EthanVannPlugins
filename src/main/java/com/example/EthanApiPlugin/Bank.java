@@ -4,6 +4,7 @@ import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
 import com.google.inject.Singleton;
 import net.runelite.api.Client;
+import net.runelite.api.GameState;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
@@ -79,6 +80,12 @@ public class Bank
 					Bank.bankItems.clear();
 				}
 				break;
+		}
+	}
+	@Subscribe
+	public void onGameStateChanged(){
+		if(client.getGameState()!= GameState.LOGGED_IN){
+			Bank.bankItems.clear();
 		}
 	}
 }

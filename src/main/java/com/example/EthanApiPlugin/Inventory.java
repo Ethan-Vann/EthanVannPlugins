@@ -4,6 +4,7 @@ import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
 import com.google.inject.Singleton;
 import net.runelite.api.Client;
+import net.runelite.api.GameState;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
@@ -70,6 +71,12 @@ public class Inventory
 			case 93:
 				Inventory.inventoryItems = Arrays.stream(client.getWidget(WidgetInfo.INVENTORY).getDynamicChildren()).filter(Objects::nonNull).collect(Collectors.toList());
 				break;
+		}
+	}
+	@Subscribe
+	public void onGameStateChanged(){
+		if(client.getGameState()!= GameState.LOGGED_IN){
+			Inventory.inventoryItems.clear();
 		}
 	}
 }

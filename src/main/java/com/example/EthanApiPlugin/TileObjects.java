@@ -2,6 +2,8 @@ package com.example.EthanApiPlugin;
 
 import com.example.Packets.MousePackets;
 import com.example.Packets.ObjectPackets;
+import net.runelite.api.Client;
+import net.runelite.api.GameState;
 import net.runelite.api.TileObject;
 import net.runelite.api.events.DecorativeObjectDespawned;
 import net.runelite.api.events.DecorativeObjectSpawned;
@@ -11,6 +13,7 @@ import net.runelite.api.events.GroundObjectDespawned;
 import net.runelite.api.events.GroundObjectSpawned;
 import net.runelite.api.events.WallObjectDespawned;
 import net.runelite.api.events.WallObjectSpawned;
+import net.runelite.client.RuneLite;
 import net.runelite.client.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import java.util.Optional;
 
 public class TileObjects
 {
+	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	static List<TileObject> tileObjects = new ArrayList<>();
 
 	public static TileObjectQuery search()
@@ -103,5 +107,11 @@ public class TileObjects
 	public void onDecorativeObjectDespawned(DecorativeObjectDespawned event)
 	{
 		tileObjects.remove(event.getDecorativeObject());
+	}
+	@Subscribe
+	public void onGameStateChanged(){
+		if(client.getGameState()!= GameState.LOGGED_IN){
+			tileObjects.clear();
+		}
 	}
 }

@@ -3,6 +3,7 @@ package com.example.EthanApiPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
 import net.runelite.api.Client;
+import net.runelite.api.GameState;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
@@ -67,18 +68,24 @@ public class BankInventory
 		switch(e.getContainerId()){
 			case 93:
 				if(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER)==null){
-					Bank.bankItems.clear();
+					BankInventory.bankIventoryItems.clear();
 					return;
 				}
 				try
 				{
-					Bank.bankItems =
+					BankInventory.bankIventoryItems =
 							Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).collect(Collectors.toList());
 					break;
 				}catch (NullPointerException err){
-					Bank.bankItems.clear();
+					BankInventory.bankIventoryItems.clear();
 					break;
 				}
+		}
+	}
+	@Subscribe
+	public void onGameStateChanged(){
+		if(client.getGameState()!= GameState.LOGGED_IN){
+			BankInventory.bankIventoryItems.clear();
 		}
 	}
 }

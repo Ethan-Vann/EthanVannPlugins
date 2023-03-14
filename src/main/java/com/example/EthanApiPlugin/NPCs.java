@@ -2,9 +2,12 @@ package com.example.EthanApiPlugin;
 
 import com.example.Packets.MousePackets;
 import com.example.Packets.NPCPackets;
+import net.runelite.api.Client;
+import net.runelite.api.GameState;
 import net.runelite.api.NPC;
 import net.runelite.api.events.NpcDespawned;
 import net.runelite.api.events.NpcSpawned;
+import net.runelite.client.RuneLite;
 import net.runelite.client.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import java.util.function.Predicate;
 
 public class NPCs
 {
+	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	private static List<NPC> npcList = new ArrayList<>();
 
 	public static NPCQuery search(){
@@ -65,5 +69,11 @@ public class NPCs
 	public void onNpcDespawned(NpcDespawned event)
 	{
 		npcList.remove(event.getNpc());
+	}
+	@Subscribe
+	public void onGameStateChanged(){
+		if(client.getGameState()!= GameState.LOGGED_IN){
+			npcList.clear();
+		}
 	}
 }
