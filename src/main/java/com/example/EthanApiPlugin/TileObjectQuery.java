@@ -5,6 +5,7 @@ import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -19,7 +20,8 @@ public class TileObjectQuery
 
 	public TileObjectQuery(List<TileObject> tileObjects)
 	{
-		this.tileObjects = tileObjects;
+		this.tileObjects = new ArrayList(tileObjects);
+		;
 	}
 
 	public TileObjectQuery withName(String name)
@@ -62,24 +64,35 @@ public class TileObjectQuery
 				tileObjects.stream().filter(tileObject -> client.getObjectDefinition(tileObject.getId()).getName().contains(name)).collect(Collectors.toList());
 		return this;
 	}
-	public TileObjectQuery idInList(List<Integer> ids){
+
+	public TileObjectQuery idInList(List<Integer> ids)
+	{
 		tileObjects = tileObjects.stream().filter(tileObject -> ids.contains(tileObject.getId())).collect(Collectors.toList());
 		return this;
 	}
+
 	public boolean empty()
 	{
 		return tileObjects.size() == 0;
 	}
-	public List<TileObject> result(){
+
+	public List<TileObject> result()
+	{
 		return tileObjects;
 	}
-	public Optional<TileObject> first(){
+
+	public Optional<TileObject> first()
+	{
 		return tileObjects.stream().findFirst();
 	}
-	public Optional<TileObject> closestToPlayer(){
+
+	public Optional<TileObject> closestToPlayer()
+	{
 		return tileObjects.stream().min(Comparator.comparingInt(o -> client.getLocalPlayer().getWorldLocation().distanceTo(o.getWorldLocation())));
 	}
-	public Optional<TileObject> closestToPoint(WorldPoint point){
+
+	public Optional<TileObject> closestToPoint(WorldPoint point)
+	{
 		return tileObjects.stream().min(Comparator.comparingInt(o -> point.distanceTo(o.getWorldLocation())));
 	}
 }
