@@ -9,6 +9,7 @@ import net.runelite.api.events.DecorativeObjectDespawned;
 import net.runelite.api.events.DecorativeObjectSpawned;
 import net.runelite.api.events.GameObjectDespawned;
 import net.runelite.api.events.GameObjectSpawned;
+import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GroundObjectDespawned;
 import net.runelite.api.events.GroundObjectSpawned;
 import net.runelite.api.events.WallObjectDespawned;
@@ -64,6 +65,7 @@ public class TileObjects
 	@Subscribe
 	public void onGameObjectSpawned(GameObjectSpawned event)
 	{
+		System.out.println("Spawned: " + event.getGameObject().getId());
 		tileObjects.add(event.getGameObject());
 	}
 
@@ -109,8 +111,10 @@ public class TileObjects
 		tileObjects.remove(event.getDecorativeObject());
 	}
 	@Subscribe
-	public void onGameStateChanged(){
-		if(client.getGameState()!= GameState.LOGGED_IN){
+	public void onGameStateChanged(GameStateChanged gameStateChanged)
+	{
+		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
+		{
 			tileObjects.clear();
 		}
 	}

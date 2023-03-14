@@ -5,6 +5,7 @@ import com.example.Packets.NPCPackets;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.NPC;
+import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.NpcDespawned;
 import net.runelite.api.events.NpcSpawned;
 import net.runelite.client.RuneLite;
@@ -71,8 +72,10 @@ public class NPCs
 		npcList.remove(event.getNpc());
 	}
 	@Subscribe
-	public void onGameStateChanged(){
-		if(client.getGameState()!= GameState.LOGGED_IN){
+	public void onGameStateChanged(GameStateChanged gameStateChanged)
+	{
+		if (gameStateChanged.getGameState() == GameState.HOPPING|| gameStateChanged.getGameState() == GameState.LOGIN_SCREEN||gameStateChanged.getGameState()== GameState.CONNECTION_LOST)
+		{
 			npcList.clear();
 		}
 	}

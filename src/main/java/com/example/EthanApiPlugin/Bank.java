@@ -5,6 +5,7 @@ import com.example.Packets.WidgetPackets;
 import com.google.inject.Singleton;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
@@ -83,8 +84,10 @@ public class Bank
 		}
 	}
 	@Subscribe
-	public void onGameStateChanged(){
-		if(client.getGameState()!= GameState.LOGGED_IN){
+	public void onGameStateChanged(GameStateChanged gameStateChanged)
+	{
+		if (gameStateChanged.getGameState() == GameState.HOPPING|| gameStateChanged.getGameState() == GameState.LOGIN_SCREEN||gameStateChanged.getGameState()== GameState.CONNECTION_LOST)
+		{
 			Bank.bankItems.clear();
 		}
 	}
