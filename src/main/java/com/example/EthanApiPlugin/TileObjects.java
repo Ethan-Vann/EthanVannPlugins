@@ -65,7 +65,6 @@ public class TileObjects
 	@Subscribe
 	public void onGameObjectSpawned(GameObjectSpawned event)
 	{
-		System.out.println("Spawned: " + event.getGameObject().getId());
 		tileObjects.add(event.getGameObject());
 	}
 
