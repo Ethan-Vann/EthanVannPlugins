@@ -17,6 +17,7 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
@@ -99,7 +100,9 @@ public class UpkeepPlugin extends Plugin
 			String[] items = itemCSV.split(",");
 			for (String item : items)
 			{
-				Optional<Widget> itemBeingUsed = Inventory.search().matchesWildCardNoCase(item).first();
+				Optional<Widget> itemBeingUsed = StringUtils.isNumeric(item)?
+						Inventory.search().hasId(Integer.parseInt(item)).first():
+						Inventory.search().matchesWildCardNoCase(item).first();
 				if(itemBeingUsed.isPresent()){
 					InventoryInteraction.useItem(itemBeingUsed.get(),action);
 					break;
