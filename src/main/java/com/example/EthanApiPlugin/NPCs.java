@@ -26,6 +26,8 @@ public class NPCs
 		{
 			if(npc==null)
 				continue;
+			if(npc.getId()==-1)
+				continue;
 			npcList.add(npc);
 		}
 	}
