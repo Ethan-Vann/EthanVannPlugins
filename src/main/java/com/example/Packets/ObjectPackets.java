@@ -42,7 +42,14 @@ public class ObjectPackets {
 
     @SneakyThrows
     public static void queueObjectAction(TileObject object, boolean ctrlDown, String... actionlist) {
-        List<String> actions = Arrays.stream(client.getObjectDefinition(object.getId()).getActions()).collect(Collectors.toList());
+        List<String> actions =
+                Arrays.stream(client.getObjectDefinition(object.getId()).getActions()).collect(Collectors.toList());
+        for (int i = 0; i < actions.size(); i++)
+        {
+            if(actions.get(i) == null)
+                continue;
+            actions.set(i, actions.get(i).toLowerCase());
+        }
         Point p;
         if (object instanceof GameObject) {
             GameObject gameObject = (GameObject) object;
@@ -55,7 +62,7 @@ public class ObjectPackets {
         int num = -1;
         for (String action : actions) {
             for (String action2 : actionlist) {
-                if (action != null && action.equals(action2)) {
+                if (action != null && action.equalsIgnoreCase(action2.toLowerCase())) {
                     num = actions.indexOf(action) + 1;
                 }
             }

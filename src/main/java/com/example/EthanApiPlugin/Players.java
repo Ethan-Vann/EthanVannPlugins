@@ -1,7 +1,7 @@
 package com.example.EthanApiPlugin;
 
 import net.runelite.api.Client;
-import net.runelite.api.NPC;
+import net.runelite.api.Player;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.RuneLite;
 import net.runelite.client.eventbus.Subscribe;
@@ -9,24 +9,23 @@ import net.runelite.client.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NPCs
+public class Players
 {
+	static List<Player> players = new ArrayList<>();
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
-	private static List<NPC> npcList = new ArrayList<>();
-
-	public static NPCQuery search()
+	public static PlayerQuery search()
 	{
-		return new NPCQuery(npcList);
+		return new PlayerQuery(players);
 	}
-
-	@Subscribe(priority = 10000)
-	public void onGameTick(GameTick e){
-		npcList.clear();
-		for (NPC npc : client.getNpcs())
+	@Subscribe
+	public void onGameTick(GameTick e)
+	{
+		players.clear();
+		for (Player player : client.getPlayers())
 		{
-			if(npc==null)
+			if(player==null)
 				continue;
-			npcList.add(npc);
+			players.add(player);
 		}
 	}
 }

@@ -1,11 +1,12 @@
 package com.example.NightmareHelper;
 
 import com.example.EthanApiPlugin.EthanApiPlugin;
+import com.example.EthanApiPlugin.QuickPrayer;
+import com.example.InteractionApi.InteractionHelper;
 import com.example.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.MovementPackets;
 import com.example.Packets.WidgetPackets;
-import com.example.gauntletFlicker.QuickPrayer;
 import com.google.inject.Inject;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
@@ -21,9 +22,9 @@ import net.runelite.client.plugins.PluginDescriptor;
 
 import java.util.Arrays;
 
-import static com.example.gauntletFlicker.QuickPrayer.PROTECT_FROM_MAGIC;
-import static com.example.gauntletFlicker.QuickPrayer.PROTECT_FROM_MELEE;
-import static com.example.gauntletFlicker.QuickPrayer.PROTECT_FROM_MISSILES;
+import static com.example.EthanApiPlugin.QuickPrayer.PROTECT_FROM_MAGIC;
+import static com.example.EthanApiPlugin.QuickPrayer.PROTECT_FROM_MELEE;
+import static com.example.EthanApiPlugin.QuickPrayer.PROTECT_FROM_MISSILES;
 
 @PluginDependency(PacketUtilsPlugin.class)
 @PluginDependency(EthanApiPlugin.class)
@@ -69,11 +70,11 @@ public class NightmareHelperPlugin extends Plugin
 			forceTab = true;
 		}
 		handlePrayer();
-		if (api.isQuickPrayerEnabled())
+		if (EthanApiPlugin.isQuickPrayerEnabled())
 		{
-			api.togglePrayer();
+			InteractionHelper.togglePrayer();
 		}
-		api.togglePrayer();
+		InteractionHelper.togglePrayer();
 	}
 
 	@Override
