@@ -129,6 +129,16 @@ public class PacketUtilsPlugin extends Plugin
 				loaded = packetReflection.LoadPackets();
 			}
 		});
+		for (Plugin plugin : pluginManager.getPlugins())
+		{
+			if(plugin.getName().equals("EthanApiPlugin")){
+				if(pluginManager.isPluginEnabled(plugin)){
+					continue;
+				}
+				pluginManager.startPlugin(plugin);
+				pluginManager.setPluginEnabled(plugin, true);
+			}
+		}
 	}
 
 	@Override

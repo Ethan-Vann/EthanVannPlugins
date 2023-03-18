@@ -1,11 +1,9 @@
 package com.example.UpkeepPlugin;
 
 import com.example.EthanApiPlugin.EthanApiPlugin;
+import com.example.EthanApiPlugin.Inventory;
+import com.example.InteractionApi.InventoryInteraction;
 import com.example.PacketUtilsPlugin;
-import com.example.Packets.MousePackets;
-import com.example.Packets.NPCPackets;
-import com.example.Packets.ObjectPackets;
-import com.example.Packets.WidgetPackets;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
 import lombok.SneakyThrows;
@@ -14,18 +12,15 @@ import net.runelite.api.Client;
 import net.runelite.api.Skill;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
-import net.runelite.client.plugins.PluginManager;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @PluginDescriptor(
 		name = "Upkeep Plugin",
@@ -41,16 +36,6 @@ public class UpkeepPlugin extends Plugin
 	public int timeout = 0;
 	@Inject
 	Client client;
-	@Inject
-	PluginManager pluginManager;
-	@Inject
-	WidgetPackets widgetPackets;
-	@Inject
-	MousePackets mousePackets;
-	@Inject
-	NPCPackets npcPackets;
-	@Inject
-	ObjectPackets objectPackets;
 	@Inject
 	UpkeepPluginConfig config;
 
@@ -110,38 +95,19 @@ public class UpkeepPlugin extends Plugin
 			if(!Action.contains(":")){
 				continue;
 			}
-			Widget item = getItems(Action.split(":")[1],WidgetInfo.INVENTORY);
-			if(item==null){
-				continue;
-			}
-			mousePackets.queueClickPacket();
-			widgetPackets.queueWidgetAction(item,Action.split(":")[0]);
-		}
-	}
-	public Widget getItems(String itemcsv, WidgetInfo container)
-	{
-		List<Integer> itemsList = Arrays.stream(itemcsv.split(",")).map(Integer::parseInt).collect(Collectors.toList());
-		Widget[] items = client.getWidget(container).getDynamicChildren();
-		for (Integer s : itemsList)
-		{
-			Widget returnVal = Arrays.stream(items).filter(i->i.getItemId() == s).findFirst().orElse(null);
-			if(returnVal!=null){
-				return returnVal;
-			}
-		}
-		return null;
-	}
-	public Widget getItem(int id, WidgetInfo container)
-	{
-		Widget[] items = client.getWidget(container).getDynamicChildren();
-		for (int i = 0; i < items.length; i++)
-		{
-			if (items[i].getItemId() == id)
+			String action = Action.split(":")[0];
+			String itemCSV = Action.split(":")[1];
+			String[] items = itemCSV.split(",");
+			for (String item : items)
 			{
-				return items[i];
+				Optional<Widget> itemBeingUsed = StringUtils.isNumeric(item)?
+						Inventory.search().hasId(Integer.parseInt(item)).first():
+						Inventory.search().matchesWildCardNoCase(item).first();
+				if(itemBeingUsed.isPresent()){
+					InventoryInteraction.useItem(itemBeingUsed.get(),action);
+					break;
+				}
 			}
 		}
-		return null;
 	}
-
 }

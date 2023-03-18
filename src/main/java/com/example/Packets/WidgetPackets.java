@@ -53,11 +53,17 @@ public class WidgetPackets {
             return;
         }
         List<String> actions = Arrays.stream(widget.getActions()).collect(Collectors.toList());
+        for (int i = 0; i < actions.size(); i++)
+        {
+            if(actions.get(i) == null)
+                continue;
+            actions.set(i, actions.get(i).toLowerCase());
+        }
         int num = -1;
         for (String action : actions) {
             for (String action2 : actionlist) {
-                if (action != null && action.equals(action2)) {
-                    num = actions.indexOf(action) + 1;
+                if (action != null && action.equalsIgnoreCase(action2)) {
+                    num = actions.indexOf(action.toLowerCase()) + 1;
                 }
             }
         }

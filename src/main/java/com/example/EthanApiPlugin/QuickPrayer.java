@@ -1,4 +1,4 @@
-package com.example.gauntletFlicker;
+package com.example.EthanApiPlugin;
 
 public enum QuickPrayer {
     THICK_SKIN(0),

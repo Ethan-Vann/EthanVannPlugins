@@ -43,6 +43,30 @@ public class NPCQuery
 		npcs = npcs.stream().filter(npcs -> npcs.getName()!=null&&npcs.getName().contains(name)).collect(Collectors.toList());
 		return this;
 	}
+	public NPCQuery interactingWithLocal(){
+		List<NPC> filteredNPCs = new ArrayList<>();
+		for (NPC npc : npcs)
+		{
+			if(!npc.isInteracting())
+				continue;
+			if(npc.getInteracting()==client.getLocalPlayer())
+				filteredNPCs.add(npc);
+		}
+		npcs = filteredNPCs;
+		return this;
+	}
+	public NPCQuery interactingWith(Actor actor){
+		List<NPC> filteredNPCs = new ArrayList<>();
+		for (NPC npc : npcs)
+		{
+			if(!npc.isInteracting())
+				continue;
+			if(npc.getInteracting()==actor)
+				filteredNPCs.add(npc);
+		}
+		npcs = filteredNPCs;
+		return this;
+	}
 	public NPCQuery idInList(List<Integer> ids){
 		npcs = npcs.stream().filter(npcs -> ids.contains(npcs.getId())).collect(Collectors.toList());
 		return this;

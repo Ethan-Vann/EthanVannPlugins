@@ -1,11 +1,6 @@
 package com.example.EthanApiPlugin;
 
-
-import com.example.Packets.MousePackets;
-import com.example.Packets.WidgetPackets;
-import com.example.gauntletFlicker.QuickPrayer;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import lombok.SneakyThrows;
 import net.runelite.api.Client;
 import net.runelite.api.CollisionData;
@@ -48,34 +43,15 @@ import static net.runelite.api.Varbits.QUICK_PRAYER;
 		tags = {"ethan"},
 		hidden = true
 )
-@Singleton
 public class EthanApiPlugin extends Plugin
 {
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
-	@Inject
-	WidgetPackets widgetPackets;
-	@Inject
-	MousePackets mousePackets;
 	@Inject
 	ConfigManager configManager;
 	@Inject
 	PluginManager pluginManager;
 	@Inject
 	EventBus eventBus;
-	static private int quickPrayerWidgetID = WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId();
-
-	public void toggleNormalPrayer(int packedWidgID){
-		mousePackets.queueClickPacket();
-		widgetPackets.queueWidgetActionPacket(1,packedWidgID,-1,-1);
-	}
-
-
-	public void toggleNormalPrayers(List<Integer> packedWidgIDs ){
-		for(Integer packedWidgID: packedWidgIDs){
-			mousePackets.queueClickPacket();
-			widgetPackets.queueWidgetActionPacket(1,packedWidgID,-1,-1);
-		}
-	}
 
 
 	public static boolean isQuickPrayerActive(QuickPrayer prayer)
@@ -87,17 +63,12 @@ public class EthanApiPlugin extends Plugin
 		}
 		return false;
 	}
-	public boolean isQuickPrayerEnabled()
+	public static boolean isQuickPrayerEnabled()
 	{
 		return client.getVarbitValue(QUICK_PRAYER) == 1;
 	}
-	public void togglePrayer()
-	{
-		mousePackets.queueClickPacket(0, 0);
-		widgetPackets.queueWidgetActionPacket(1, quickPrayerWidgetID, -1, -1);
-	}
 	@SneakyThrows
-	public HeadIcon getHeadIcon(NPC npc) {
+	public static HeadIcon getHeadIcon(NPC npc) {
 		Method getHeadIconArrayMethod = null;
 		for (Method declaredMethod : npc.getComposition().getClass().getDeclaredMethods())
 		{
@@ -130,7 +101,7 @@ public class EthanApiPlugin extends Plugin
 		return count;
 	}
 	@Deprecated
-	public Widget getItem(String str)
+	public static Widget getItem(String str)
 	{
 		Widget[] items = client.getWidget(WidgetInfo.INVENTORY).getDynamicChildren();
 		for (int i = 0; i < items.length; i++)
@@ -146,7 +117,7 @@ public class EthanApiPlugin extends Plugin
 		return new ArrayList<>(Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(x->canPathToTile(x.getWorldLocation())).map(Tile::getWorldLocation).filter(Objects::nonNull).collect(Collectors.toList()));
 	}
 	@Deprecated
-	public Widget getItem(int id, WidgetInfo container)
+	public static Widget getItem(int id, WidgetInfo container)
 	{
 		if(client.getWidget(container)==null)
 		{
@@ -437,5 +408,6 @@ public class EthanApiPlugin extends Plugin
 		eventBus.register(RuneLite.getInjector().getInstance(BankInventory.class));
 		eventBus.register(RuneLite.getInjector().getInstance(NPCs.class));
 		eventBus.register(RuneLite.getInjector().getInstance(TileObjects.class));
+		eventBus.register(RuneLite.getInjector().getInstance(Players.class));
 	}
 }

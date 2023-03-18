@@ -14,7 +14,7 @@ import static com.example.PacketReflection.client;
 
 public class PlayerPackets {
     @SneakyThrows
-    public void queuePlayerAction(int actionFieldNo, int playerIndex, boolean ctrlDown) {
+    public static void queuePlayerAction(int actionFieldNo, int playerIndex, boolean ctrlDown) {
         int ctrl = ctrlDown ? 1 : 0;
         switch (actionFieldNo) {
             case 1:
@@ -45,13 +45,19 @@ public class PlayerPackets {
     }
 
     @SneakyThrows
-    public void queuePlayerAction(Player player, String... actionlist) {
+    public static void queuePlayerAction(Player player, String... actionlist) {
         List<String> actions = Arrays.stream(client.getPlayerOptions()).collect(Collectors.toList());
+        for (int i = 0; i < actions.size(); i++)
+        {
+            if(actions.get(i) == null)
+                continue;
+            actions.set(i, actions.get(i).toLowerCase());
+        }
         int num = -1;
         for (String action : actions) {
             for (String action2 : actionlist) {
-                if (action != null && action.equals(action2)) {
-                    num = actions.indexOf(action) + 1;
+                if (action != null && action.equalsIgnoreCase(action2)) {
+                    num = actions.indexOf(action.toLowerCase()) + 1;
                 }
             }
         }
@@ -62,13 +68,13 @@ public class PlayerPackets {
         queuePlayerAction(num, player.getId(), false);
     }
 
-    public void queueWidgetOnPlayer(int playerIndex, int sourceItemId, int sourceSlot, int sourceWidgetId,
+    public static void queueWidgetOnPlayer(int playerIndex, int sourceItemId, int sourceSlot, int sourceWidgetId,
                                     boolean ctrlDown) {
         int ctrl = ctrlDown ? 1 : 0;
         PacketReflection.sendPacket(PacketDef.OPPLAYERT, playerIndex, sourceItemId, sourceSlot, sourceWidgetId, ctrl);
     }
 
-    public void queueWidgetOnPlayer(Player player, Widget widget) {
+    public static void queueWidgetOnPlayer(Player player, Widget widget) {
         queueWidgetOnPlayer(player.getId(), widget.getItemId(), widget.getIndex(), widget.getId(), false);
     }
 }
