@@ -4,7 +4,9 @@ import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
+import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.RuneLite;
 import net.runelite.client.eventbus.Subscribe;
@@ -21,6 +23,18 @@ public class BankInventory
 	static List<Widget> bankIventoryItems = new ArrayList<>();
 	public static ItemQuery search(){
 		return new ItemQuery(bankIventoryItems);
+	}
+	@Subscribe
+	public void onWidgetLoaded(WidgetLoaded e){
+		if(e.getGroupId()== WidgetID.BANK_INVENTORY_GROUP_ID){
+			try
+			{
+				BankInventory.bankIventoryItems =
+						Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x->x.getItemId()!=6512&&x.getItemId()!=-1).collect(Collectors.toList());
+			}catch (NullPointerException err){
+				BankInventory.bankIventoryItems.clear();
+			}
+		}
 	}
 	@Subscribe
 	public void onItemContainerChanged(ItemContainerChanged e){
