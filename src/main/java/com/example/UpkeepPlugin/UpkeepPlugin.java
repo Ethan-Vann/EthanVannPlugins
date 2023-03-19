@@ -101,7 +101,7 @@ public class UpkeepPlugin extends Plugin
 			for (String item : items)
 			{
 				Optional<Widget> itemBeingUsed = StringUtils.isNumeric(item)?
-						Inventory.search().hasId(Integer.parseInt(item)).first():
+						Inventory.search().withId(Integer.parseInt(item)).first():
 						Inventory.search().matchesWildCardNoCase(item).first();
 				if(itemBeingUsed.isPresent()){
 					InventoryInteraction.useItem(itemBeingUsed.get(),action);

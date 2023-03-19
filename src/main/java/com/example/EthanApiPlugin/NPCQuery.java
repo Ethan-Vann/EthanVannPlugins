@@ -27,11 +27,11 @@ public class NPCQuery
 		return this;
 	}
 
-	public NPCQuery hasAction(String action){
+	public NPCQuery withAction(String action){
 		npcs = npcs.stream().filter(npc -> Arrays.asList(npc.getComposition().getActions()).contains(action)).collect(Collectors.toList());
 		return this;
 	}
-	public NPCQuery hasId(int id){
+	public NPCQuery withId(int id){
 		npcs = npcs.stream().filter(npc -> npc.getId() == id).collect(Collectors.toList());
 		return this;
 	}

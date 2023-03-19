@@ -36,13 +36,13 @@ public class ItemQuery
 		return this;
 	}
 
-	public ItemQuery hasAction(String action)
+	public ItemQuery withAction(String action)
 	{
 		items = items.stream().filter(item -> Arrays.asList(item.getActions()).contains(action)).collect(Collectors.toList());
 		return this;
 	}
 
-	public ItemQuery hasId(int id)
+	public ItemQuery withId(int id)
 	{
 		items = items.stream().filter(item -> item.getItemId() == id).collect(Collectors.toList());
 		return this;
