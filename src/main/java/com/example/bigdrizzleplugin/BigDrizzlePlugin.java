@@ -120,15 +120,12 @@ public class BigDrizzlePlugin extends Plugin
 				enqueue(KarambwanFishing.buildActions());
 			}
 		}
-
 		if (!actionQueue.isEmpty()){
 			globalTimeout = actionQueue.peek().getPostActionTickDelay();
 			event.consume();
 			invokeMenuAction(actionQueue.poll());
 		}
 	}
-
-
 
 	@Subscribe
 	public void onClientTick(ClientTick event) throws InvocationTargetException, IllegalAccessException {
@@ -140,23 +137,6 @@ public class BigDrizzlePlugin extends Plugin
 				return;
 			}
 		}
-
-		if (config.activityType() == BigDrizzleConfig.ActivityType.FISHING){
-
-		}
-	}
-
-	private void setRuneLiteEntry(MenuEntryMirror mirror) {
-		MenuEntry entry = client.getMenuEntries()[client.getMenuEntries().length - 1];
-		entry.setOption(mirror.getOption());
-		entry.setTarget("");
-		entry.setIdentifier(mirror.getIdentifier());
-		entry.setType(mirror.getMenuAction());
-		entry.setParam0(mirror.getParam0());
-		entry.setParam1(mirror.getParam1());
-		entry.setForceLeftClick(false);
-		entry.setDeprioritized(false);
-		setItemID(entry, mirror.getItemID());
 	}
 
 	private void enqueue(MenuEntryMirror mirror){
@@ -195,9 +175,6 @@ public class BigDrizzlePlugin extends Plugin
 	}
 
 
-
-
-
 	private void loadInvokeMethod() {
 		try {
 //			Field f = ClassLoader.class.getDeclaredField("classes");
@@ -226,15 +203,12 @@ public class BigDrizzlePlugin extends Plugin
 			assert invokeMenuAction != null;
 			invokeMenuAction.setAccessible(true);
 			//log.info(invokeMenuAction.getParameterTypes().toString());
-			System.out.println("successfully loaded invoke menu action method");
+			log.info("Successfully loaded invoke menu action method");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Failed to load menuaction class");
+			log.info("Failed to load menuaction class");
 		}
 	}
-
-
-
 
 	private void invokeMenuAction(int id, int opcode, int param0, int param1, int itemID, int xDraw, int yDraw) throws InvocationTargetException, IllegalAccessException {
 		//string values are option, target, irrelevant
@@ -252,38 +226,6 @@ public class BigDrizzlePlugin extends Plugin
 		int convertedGarbage = garbageValue; //garbageValue.byteValue();
 		invokeMenuAction.invoke(null,mirror.getParam0(),mirror.getParam1(),mirror.getMenuAction().getId(),mirror.getIdentifier(), mirror.getItemID(), "","",-1,-1,convertedGarbage);
 	}
-	private void maxCapePOHTele() {
-		MenuEntry entry = client.getMenuEntries()[client.getMenuEntries().length - 1];
-		entry.setOption("POH Tele");
-		entry.setTarget("");
-		entry.setIdentifier(5);
-		entry.setType(MenuAction.CC_OP);
-		entry.setParam0(-1);
-		entry.setParam1(25362448);
-		entry.setForceLeftClick(false);
-		entry.setDeprioritized(false);
-		setItemID(entry, -1);
-	}
-
-
-
-	private void useKarambwanOnRange(){
-		//2023-03-06 10:11:31 [Client] INFO  n.r.c.p.b.BigDrizzlePlugin - Top entry: MenuEntryImpl(getOption=Use, getTarget=<col=ff9040>Raw karambwan</col><col=ffffff> -> <col=ffff>Range,
-		// getIdentifier=31631, getType=WIDGET_TARGET_ON_GAME_OBJECT, getParam0=50, getParam1=48, getItemId=-1, isForceLeftClick=false, isDeprioritized=false)
-		MenuEntry entry = client.getMenuEntries()[client.getMenuEntries().length - 1];
-		entry.setOption("Use Karambwan on Range");
-		entry.setTarget("");
-		entry.setIdentifier(31631);
-		entry.setType(MenuAction.WIDGET_TARGET_ON_GAME_OBJECT);
-		entry.setParam0(50);
-		entry.setParam1(48);
-		entry.setForceLeftClick(false);
-		entry.setDeprioritized(false);
-		setItemID(entry, -1);
-		entry.onClick(e -> {
-			usedChisel = false;
-		});
-	}
 
 	public void setItemID(MenuEntry entry, int itemID){
 		try {
@@ -295,6 +237,7 @@ public class BigDrizzlePlugin extends Plugin
 			Method setItemIDMethod = entry.getClass().getDeclaredMethod("tn", int.class);
 			setItemIDMethod.invoke(entry, itemID);
 		} catch (Exception e) {
+			log.info("Failed to set itemID");
 			e.printStackTrace();
 		}
 	}

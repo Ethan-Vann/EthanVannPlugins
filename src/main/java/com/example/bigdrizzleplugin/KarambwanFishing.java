@@ -13,7 +13,6 @@ public class KarambwanFishing {
     private static WorldArea karambwanFishingArea = new WorldArea(2893, 3110, 14, 13, 0);
     public static LinkedList<MenuEntryMirror> buildActions(){
         LinkedList<MenuEntryMirror> actionList = new LinkedList<>();
-
         if (BDUtils.depositBoxOpen() &&  Inventory.search().result().size()==28){
             actionList.add(MenuEntryBuilder.depositAllItemToDepositBox(ItemID.RAW_KARAMBWAN));
             actionList.add(MenuEntryBuilder.clickItemInDepositBox(ItemID.OPEN_FISH_BARREL,9));
