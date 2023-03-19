@@ -18,7 +18,7 @@ public class InventoryInteraction
 		}).orElse(false);
 	}
 	public static boolean useItem(int id,String... actions){
-		return Inventory.search().hasId(id).first().flatMap(item -> {
+		return Inventory.search().withId(id).first().flatMap(item -> {
 			MousePackets.queueClickPacket();
 			WidgetPackets.queueWidgetAction(item,actions);
 			return Optional.of(true);

@@ -18,7 +18,7 @@ public class BankInteraction
 		}).orElse(false);
 	}
 	public static boolean useItem(int id,String... actions){
-		return Bank.search().hasId(id).first().flatMap(item -> {
+		return Bank.search().withId(id).first().flatMap(item -> {
 			MousePackets.queueClickPacket();
 			WidgetPackets.queueWidgetAction(item,actions);
 			return Optional.of(true);
