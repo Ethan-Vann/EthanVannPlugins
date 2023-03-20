@@ -22,7 +22,7 @@ public class NPCInteraction
 
 	public static boolean interact(int id, String... actions)
 	{
-		return NPCs.search().hasId(id).first().flatMap(npc ->
+		return NPCs.search().withId(id).first().flatMap(npc ->
 		{
 			MousePackets.queueClickPacket();
 			NPCPackets.queueNPCAction(npc, actions);

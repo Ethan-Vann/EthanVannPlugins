@@ -86,12 +86,12 @@ public class TileObjectQuery
 		return tileObjects.stream().findFirst();
 	}
 
-	public Optional<TileObject> closestToPlayer()
+	public Optional<TileObject> nearestToPlayer()
 	{
 		return tileObjects.stream().min(Comparator.comparingInt(o -> client.getLocalPlayer().getWorldLocation().distanceTo(o.getWorldLocation())));
 	}
 
-	public Optional<TileObject> closestToPoint(WorldPoint point)
+	public Optional<TileObject> nearestToPoint(WorldPoint point)
 	{
 		return tileObjects.stream().min(Comparator.comparingInt(o -> point.distanceTo(o.getWorldLocation())));
 	}
