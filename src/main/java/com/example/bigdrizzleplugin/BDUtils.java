@@ -35,6 +35,7 @@ public class BDUtils {
         return Inventory.search().withId(itemID).result().size();
     }
     public static int inventoryCount(String name){
+
         return Inventory.search().nameContains(name).result().size();
     }
     public static boolean bankOpen(){

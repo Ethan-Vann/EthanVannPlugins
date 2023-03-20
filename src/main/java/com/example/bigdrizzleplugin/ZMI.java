@@ -17,7 +17,7 @@ public class ZMI {
         LinkedList<MenuEntryMirror> actionList = new LinkedList<>();
         if (BDUtils.inPOH()){
             if (client.getEnergy() < 10000){
-                actionList.add(MenuEntryBuilder.clickGameObject("ornate pool"));
+                actionList.add(MenuEntryBuilder.drinkPool());
             }else{
                 actionList.add(ouraniaTele());
             }
@@ -35,7 +35,11 @@ public class ZMI {
         } else if (BDUtils.bankOpen() && inventoryReadyToLeaveBank()){
             actionList.add(MenuEntryBuilder.clickGameObject("Altar"));
         } else if (nearBank()){
-            actionList.add(MenuEntryBuilder.clickNPC("Eniola",2));
+            MenuEntryMirror eniolaClick = MenuEntryBuilder.clickNPC("Eniola");
+            eniolaClick.setBlockUntil(() -> {
+                return BDUtils.bankOpen();
+            });
+            actionList.add(eniolaClick);
         }else if (onCraftingTile()){
             MenuEntryMirror altarCLick = MenuEntryBuilder.clickGameObject("Altar");
             altarCLick.setBlockUntilXpDrop(Skill.RUNECRAFT);
@@ -52,7 +56,9 @@ public class ZMI {
             }
             essenceInPouch = 0;
         }else if (BDUtils.getGameObject("Ladder") != null && !inventoryReadyToLeaveBank()) {
-            actionList.add(MenuEntryBuilder.clickGameObject("Ladder"));
+            MenuEntryMirror clickLadder = MenuEntryBuilder.clickGameObject("Ladder");
+            clickLadder.setBlockUntil(() -> BDUtils.getNPC("Eniola") != null);
+            actionList.add(clickLadder);
         }else if (BDUtils.getGameObject("Altar") != null){
             actionList.add(MenuEntryBuilder.clickGameObject("Altar"));
         }
@@ -64,7 +70,7 @@ public class ZMI {
     }
 
     private static boolean shouldGoHome(){
-        return client.getEnergy() < 3000;
+        return client.getEnergy() < 3700;
     }
 
     private static MenuEntryMirror fillPouch(){
@@ -76,7 +82,9 @@ public class ZMI {
     }
 
     private static MenuEntryMirror ouraniaTele(){
-        return new MenuEntryMirror("Tele", 1, MenuAction.CC_OP, -1, 14286992, -1, 3);
+        MenuEntryMirror tele = new MenuEntryMirror("Tele", 1, MenuAction.CC_OP, -1, 14286992, -1);
+        tele.setBlockUntil(() -> BDUtils.getGameObject("Chaos altar") != null);
+        return tele;
     }
 
     private static boolean onCraftingTile(){

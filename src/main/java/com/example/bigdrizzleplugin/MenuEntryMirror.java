@@ -1,13 +1,11 @@
 package com.example.bigdrizzleplugin;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.runelite.api.MenuAction;
 import net.runelite.api.Skill;
 
-import java.awt.*;
+import java.util.concurrent.Callable;
 
 
 public class MenuEntryMirror {
@@ -23,6 +21,7 @@ public class MenuEntryMirror {
     @Getter @Setter private int itemID;
     @Getter @Setter private int postActionTickDelay;
     @Getter @Setter private Skill blockUntilXpDrop;
+    @Getter @Setter private Callable<Boolean> blockUntil = null;
 
     public MenuEntryMirror(String option, String target, int identifier, MenuAction menuAction, int param0, int param1, boolean leftClick, boolean deprioritized, int itemID, int postActionTickDelay){
         this.option = option;

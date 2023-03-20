@@ -81,4 +81,14 @@ public interface BigDrizzleConfig extends Config
     {
         return false;
     }
+    @ConfigItem(
+            position = 4,
+            keyName = "consumeClicks",
+            name = "Consume",
+            description = "consume"
+    )
+    default boolean consumeClicks()
+    {
+        return false;
+    }
 }

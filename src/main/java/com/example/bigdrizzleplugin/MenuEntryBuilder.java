@@ -158,8 +158,10 @@ public class MenuEntryBuilder {
 
 
     public static MenuEntryMirror maxCapePohTele(){
-        return new MenuEntryMirror("POH Tele ", 5, MenuAction.CC_OP,
-                -1, 25362448, -1, 4);
+        MenuEntryMirror tele = new MenuEntryMirror("POH Tele ", 5, MenuAction.CC_OP,
+                -1, 25362448, -1);
+        tele.setBlockUntil(() -> BDUtils.getGameObject(ObjectID.PORTAL_4525) != null);
+        return tele;
     }
     public static MenuEntryMirror maxCapeCraftingGuildTele(){
         return new MenuEntryMirror("Crafting Guild Tele ", 4, MenuAction.CC_OP,
@@ -170,5 +172,12 @@ public class MenuEntryBuilder {
                 51, 51, -1, 2);
     }
 
+    public static MenuEntryMirror drinkPool(){
+        MenuEntryMirror drinkPool = MenuEntryBuilder.clickGameObject("ornate pool");
+        drinkPool.setBlockUntil(() -> {
+            return client.getBoostedSkillLevel(Skill.HITPOINTS) >= 99 && client.getEnergy() == 10000 && client.getBoostedSkillLevel(Skill.PRAYER) >= 99;
+        });
+        return drinkPool;
+    }
 
 }

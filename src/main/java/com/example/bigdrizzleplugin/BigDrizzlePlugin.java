@@ -50,6 +50,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Queue;
+import java.util.concurrent.Callable;
 
 @PluginDescriptor(
 	name = "BigDrizzle",
@@ -71,6 +72,7 @@ public class BigDrizzlePlugin extends Plugin
 	private Class classWithInvokeMenuAction;
 	private Method invokeMenuAction;
 	private Skill blockingSkill;
+	private Callable<Boolean> blockUntil;
 
 	private Queue<MenuEntryMirror> actionQueue;
 
@@ -95,6 +97,7 @@ public class BigDrizzlePlugin extends Plugin
 		actionQueue.clear();
 		blockingSkill = null;
 		globalTimeout = 0;
+		blockUntil = null;
 	}
 
 	@Subscribe
@@ -104,18 +107,14 @@ public class BigDrizzlePlugin extends Plugin
 			logMenuEntries();
 		}
 	}
+
 	@SneakyThrows
 	@Subscribe
 	public void onMenuOptionClicked(MenuOptionClicked event){
-		if (globalTimeout > 0){
-			if (config.queueLog()){
-				log.info("Ignoring a click. Timeout = " + globalTimeout);
-			}
-			return;
-		}
-		if (blockingSkill != null){
-			if (config.queueLog()){
-				log.info("Ignoring a click. Blocking = " + blockingSkill.getName());
+		if(runBlockingChecks(event)){
+			if (config.consumeClicks()){
+				event.consume();
+				log.info("Consumed");
 			}
 			return;
 		}
@@ -127,12 +126,7 @@ public class BigDrizzlePlugin extends Plugin
 				case ZMI:			enqueue(ZMI.buildActions());				break;
 			}
 		}
-		if (!actionQueue.isEmpty()){
-			globalTimeout = actionQueue.peek().getPostActionTickDelay();
-			blockingSkill = actionQueue.peek().getBlockUntilXpDrop();
-			event.consume();
-			invokeMenuAction(actionQueue.poll());
-		}
+		dequeue(event);
 	}
 
 	@Subscribe
@@ -151,6 +145,42 @@ public class BigDrizzlePlugin extends Plugin
 				invokeMenuAction(0, MenuAction.WIDGET_TARGET.getId(), 27, 9764864, 3142, -1, -1);
 				return;
 			}
+		}
+	}
+
+	@SneakyThrows
+	private boolean runBlockingChecks(MenuOptionClicked event){
+		if (blockUntil != null){
+			if (!blockUntil.call()){
+				if (config.queueLog()) {
+					log.info("Blocking on callable");
+				}
+				return true;
+			}
+		}
+		if (globalTimeout > 0){
+			if (config.queueLog()){
+				log.info("Blocking on timeout = " + globalTimeout);
+			}
+			return true;
+		}
+		if (blockingSkill != null){
+			if (config.queueLog()){
+				log.info("Blocking on xp drop = " + blockingSkill.getName());
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@SneakyThrows
+	private void dequeue(MenuOptionClicked event){
+		if (!actionQueue.isEmpty()){
+			globalTimeout = actionQueue.peek().getPostActionTickDelay();
+			blockingSkill = actionQueue.peek().getBlockUntilXpDrop();
+			blockUntil = actionQueue.peek().getBlockUntil();
+			event.consume();
+			invokeMenuAction(actionQueue.poll());
 		}
 	}
 
@@ -211,7 +241,6 @@ public class BigDrizzlePlugin extends Plugin
 //
 //				}
 //			}
-
 			classWithInvokeMenuAction = client.getClass().getClassLoader().loadClass("lk");
 			invokeMenuAction = Arrays.stream(classWithInvokeMenuAction.getDeclaredMethods())
 					.filter(method -> method.getName().equals("ku")).findAny().orElse(null);
@@ -240,20 +269,5 @@ public class BigDrizzlePlugin extends Plugin
 		int garbageValue = 1849187210;
 		int convertedGarbage = garbageValue; //garbageValue.byteValue();
 		invokeMenuAction.invoke(null,mirror.getParam0(),mirror.getParam1(),mirror.getMenuAction().getId(),mirror.getIdentifier(), mirror.getItemID(), "","",-1,-1,convertedGarbage);
-	}
-
-	public void setItemID(MenuEntry entry, int itemID){
-		try {
-//			for (Method m : entry.getClass().getDeclaredMethods()){
-//				if (m.getParameterCount() == 1 && m.getParameterTypes()[0].getSimpleName().equals("int")){
-//					System.out.println(m.getName());
-//				}
-//			}
-			Method setItemIDMethod = entry.getClass().getDeclaredMethod("tn", int.class);
-			setItemIDMethod.invoke(entry, itemID);
-		} catch (Exception e) {
-			log.info("Failed to set itemID");
-			e.printStackTrace();
-		}
 	}
 }
