@@ -34,9 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.api.events.ClientTick;
-import net.runelite.api.events.GameTick;
-import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.events.*;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.config.ConfigManager;
@@ -72,6 +70,7 @@ public class BigDrizzlePlugin extends Plugin
 	private Client client;
 	private Class classWithInvokeMenuAction;
 	private Method invokeMenuAction;
+	private Skill blockingSkill;
 
 	private Queue<MenuEntryMirror> actionQueue;
 
@@ -94,6 +93,8 @@ public class BigDrizzlePlugin extends Plugin
 	protected void shutDown() {
 		log.info("ActionQueue cleared");
 		actionQueue.clear();
+		blockingSkill = null;
+		globalTimeout = 0;
 	}
 
 	@Subscribe
@@ -112,18 +113,32 @@ public class BigDrizzlePlugin extends Plugin
 			}
 			return;
 		}
-		if(actionQueue.isEmpty()){
-			if (config.activityType() == BigDrizzleConfig.ActivityType.NORMALCOOKING){
-				enqueue(NormalCooking.buildActions());
+		if (blockingSkill != null){
+			if (config.queueLog()){
+				log.info("Ignoring a click. Blocking = " + blockingSkill.getName());
 			}
-			if (config.activityType() == BigDrizzleConfig.ActivityType.FISHING){
-				enqueue(KarambwanFishing.buildActions());
+			return;
+		}
+		if(actionQueue.isEmpty()){
+			BigDrizzleConfig.ActivityType type = config.activityType();
+			switch (type){
+				case NORMALCOOKING: enqueue(NormalCooking.buildActions()); 		break;
+				case FISHING:		enqueue(KarambwanFishing.buildActions()); 	break;
+				case ZMI:			enqueue(ZMI.buildActions());				break;
 			}
 		}
 		if (!actionQueue.isEmpty()){
 			globalTimeout = actionQueue.peek().getPostActionTickDelay();
+			blockingSkill = actionQueue.peek().getBlockUntilXpDrop();
 			event.consume();
 			invokeMenuAction(actionQueue.poll());
+		}
+	}
+
+	@Subscribe
+	public void onStatChanged(StatChanged event){
+		if (event.getSkill().equals(blockingSkill)){
+			blockingSkill = null;
 		}
 	}
 

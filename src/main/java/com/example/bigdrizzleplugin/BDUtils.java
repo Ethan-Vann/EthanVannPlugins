@@ -1,10 +1,17 @@
 package com.example.bigdrizzleplugin;
 
 import com.example.EthanApiPlugin.Inventory;
+import com.example.EthanApiPlugin.NPCs;
+import com.example.EthanApiPlugin.TileObjects;
 import net.runelite.api.Client;
+import net.runelite.api.GameObject;
+import net.runelite.api.NPC;
+import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.RuneLite;
+
+import java.util.Optional;
 
 public class BDUtils {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
@@ -28,7 +35,7 @@ public class BDUtils {
         return Inventory.search().withId(itemID).result().size();
     }
     public static int inventoryCount(String name){
-        return Inventory.search().withName(name).result().size();
+        return Inventory.search().nameContains(name).result().size();
     }
     public static boolean bankOpen(){
         return client.getWidget(BANK_INTERFACE_WIDGET_ID) != null;
@@ -36,4 +43,40 @@ public class BDUtils {
     public static boolean depositBoxOpen(){
         return client.getWidget(DEPOSIT_BOX_WIDGET_ID) != null;
     }
+    public static GameObject getGameObject(int gameObjectID){
+        GameObject object = null;
+        Optional<TileObject> objectOpt = TileObjects.search().withId(gameObjectID).nearestToPlayer();
+        if (objectOpt.isPresent() && objectOpt.get() instanceof GameObject){
+            return (GameObject) objectOpt.get();
+        }
+        return null;
+    }
+    public static GameObject getGameObject(String gameObjectName){
+        GameObject object = null;
+        Optional<TileObject> objectOpt = TileObjects.search().nameContains(gameObjectName).nearestToPlayer();
+        if (objectOpt.isPresent() && objectOpt.get() instanceof GameObject){
+            return (GameObject) objectOpt.get();
+        }
+        return null;
+    }
+    public static NPC getNPC(String npcName){
+        NPC npc = null;
+        Optional<NPC> npcOpt = NPCs.search().withName(npcName).nearestToPlayer();
+        if (npcOpt.isPresent()){
+            return npcOpt.get();
+        }else{
+            return null;
+        }
+    }
+    public static NPC getNPC(int npcID){
+        NPC npc = null;
+        Optional<NPC> npcOpt = NPCs.search().withId(npcID).nearestToPlayer();
+        if (npcOpt.isPresent()){
+            return npcOpt.get();
+        }else{
+            return null;
+        }
+    }
+
+
 }

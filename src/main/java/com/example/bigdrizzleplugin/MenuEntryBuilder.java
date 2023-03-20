@@ -54,6 +54,23 @@ public class MenuEntryBuilder {
         }
         return new MenuEntryMirror("Withdraw All Item: " + bankItemWidget.getName(), identifier, MenuAction.CC_OP, bankItemWidget.getIndex(), bankItemWidget.getId(), itemID);
     }
+    public static MenuEntryMirror withdrawAll(String itemName){
+        Widget bankItemWidget = null;
+        Optional<Widget> bankItem = Bank.search().nameContains(itemName).first();
+        if (bankItem.isPresent()){
+            bankItemWidget = bankItem.get();
+        }else{
+            return null;
+        }
+        int identifier = 0;
+        for (int i = bankItemWidget.getActions().length - 1; i >= 0; i--) {
+            if (bankItemWidget.getActions()[i] != null && bankItemWidget.getActions()[i].equalsIgnoreCase("withdraw-all")){
+                identifier = i+1;
+                break;
+            }
+        }
+        return new MenuEntryMirror("Withdraw All Item: " + bankItemWidget.getName(), identifier, MenuAction.CC_OP, bankItemWidget.getIndex(), bankItemWidget.getId(), bankItemWidget.getItemId());
+    }
     public static MenuEntryMirror depositAllItemToDepositBox(int itemID){
         //This should really be depositBoxInventory
         Widget inventoryItemWidget = null;
@@ -97,8 +114,8 @@ public class MenuEntryBuilder {
         return clickGameObject(gameObjectID, 0);
     }
     public static MenuEntryMirror clickGameObject(String name, int postActionTickDelay){
-        if (TileObjects.search().withName(name).nearestToPlayer().isPresent()){
-            return clickGameObject(TileObjects.search().withName(name).nearestToPlayer().get().getId(), postActionTickDelay);
+        if (TileObjects.search().nameContains(name).nearestToPlayer().isPresent()){
+            return clickGameObject(TileObjects.search().nameContains(name).nearestToPlayer().get().getId(), postActionTickDelay);
         }
         return null;
     }
@@ -128,8 +145,10 @@ public class MenuEntryBuilder {
         return clickNPC(npcID, 0);
     }
     public static MenuEntryMirror clickNPC(String npcName, int postActionTickDelay){
-        if(NPCs.search().withName(npcName).nearestToPlayer().isPresent()){
-            return clickNPC(NPCs.search().withName(npcName).nearestToPlayer().get().getId());
+        if(NPCs.search().nameContains(npcName).nearestToPlayer().isPresent()){
+            MenuEntryMirror result = clickNPC(NPCs.search().nameContains(npcName).nearestToPlayer().get().getId());
+            result.setPostActionTickDelay(postActionTickDelay);
+            return result;
         }
        return null;
     }
@@ -140,14 +159,16 @@ public class MenuEntryBuilder {
 
     public static MenuEntryMirror maxCapePohTele(){
         return new MenuEntryMirror("POH Tele ", 5, MenuAction.CC_OP,
-                -1, 25362448, -1, 3);
+                -1, 25362448, -1, 4);
     }
     public static MenuEntryMirror maxCapeCraftingGuildTele(){
         return new MenuEntryMirror("Crafting Guild Tele ", 4, MenuAction.CC_OP,
-                -1, 25362448, -1, 1);
+                -1, 25362448, -1, 2);
     }
     public static MenuEntryMirror lastDestinationRing(){
         return new MenuEntryMirror("Last Destination ", 29229, MenuAction.GAME_OBJECT_FOURTH_OPTION,
                 51, 51, -1, 2);
     }
+
+
 }

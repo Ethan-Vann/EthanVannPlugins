@@ -38,6 +38,7 @@ public interface BigDrizzleConfig extends Config
         FISHING("Fishing"),
         TICKCOOKING("1T Cooking"),
         NORMALCOOKING("Normal Cooking"),
+        ZMI("ZMI"),
         OTHER("Other");
 
         private final String value;
