@@ -44,6 +44,8 @@ public class e3t4g extends Plugin
 	@Subscribe
 	public void onGameTick(GameTick e)
 	{
+		timeout = timeout == 0 ? 2 : timeout-1;
+		if(timeout!=2) return;
 		int sizeEmpty = Inventory.search().withId(ItemID.WATERSKIN0).result().size();
 		int sizeFilled = Inventory.search().nameContains("Waterskin").result().size();
 		if(sizeEmpty>0){
@@ -54,8 +56,6 @@ public class e3t4g extends Plugin
 				return;
 			}
 		}
-		timeout = timeout == 0 ? 2 : timeout-1;
-		if(timeout!=2) return;
 		Optional<Widget> guam = Inventory.search().withId(ItemID.GUAM_LEAF).first();
 		Optional<Widget> tar = Inventory.search().withId(ItemID.SWAMP_TAR).first();
 		if(guam.isEmpty() || tar.isEmpty()){
