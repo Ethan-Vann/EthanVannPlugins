@@ -130,6 +130,7 @@ public class BigDrizzlePlugin extends Plugin
 				case TICKCOOKING:	enqueue(TickCooking.buildActions());		break;
 				case CHAOSALTAR: 	enqueue(ChaosAltar.buildActions());			break;
 				case LAVARC:		enqueue(LavaRC.buildActions());				break;
+				case DAEYALTMINING:	enqueue(DaeyaltMining.buildActions());		break;
 			}
 		}
 		dequeue(event);

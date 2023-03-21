@@ -41,6 +41,7 @@ public interface BigDrizzleConfig extends Config
         ZMI("ZMI RC"),
         CHAOSALTAR("Chaos Altar"),
         LAVARC("Lava RC"),
+        DAEYALTMINING("Daeyalt Mining"),
         OTHER("Other");
 
         private final String value;
