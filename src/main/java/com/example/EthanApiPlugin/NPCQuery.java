@@ -8,6 +8,7 @@ import net.runelite.client.RuneLite;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -104,7 +105,8 @@ public class NPCQuery
 		meleeTiles.add(client.getLocalPlayer().getWorldLocation().dx(-1));
 		meleeTiles.add(client.getLocalPlayer().getWorldLocation().dy(1));
 		meleeTiles.add(client.getLocalPlayer().getWorldLocation().dy(-1));
-		npcs = npcs.stream().filter(npc -> meleeTiles.contains(npc.getWorldLocation())).collect(Collectors.toList());
+		npcs =
+				npcs.stream().filter(npc -> !Collections.disjoint(meleeTiles,npc.getWorldArea().toWorldPointList())&&npc.getWorldArea().distanceTo(client.getLocalPlayer().getWorldLocation())==1).collect(Collectors.toList());
 		return this;
 	}
 	public NPCQuery alive(){

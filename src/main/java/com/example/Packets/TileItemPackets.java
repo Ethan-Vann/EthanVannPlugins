@@ -7,7 +7,7 @@ import lombok.SneakyThrows;
 public class TileItemPackets
 {
 	@SneakyThrows
-	public void queueTileItemAction(int actionFieldNo, int objectId, int worldPointX, int worldPointY,
+	public static void queueTileItemAction(int actionFieldNo, int objectId, int worldPointX, int worldPointY,
 								   boolean ctrlDown) {
 		int ctrl = ctrlDown ? 1 : 0;
 		switch (actionFieldNo) {
@@ -28,7 +28,7 @@ public class TileItemPackets
 				break;
 		}
 	}
-	public void queueWidgetOnTileItem(int objectId, int worldPointX, int worldPointY, int sourceSlot,
+	public static void queueWidgetOnTileItem(int objectId, int worldPointX, int worldPointY, int sourceSlot,
 										int sourceItemId, int sourceWidgetId, boolean ctrlDown) {
 		int ctrl = ctrlDown ? 1 : 0;
 		PacketReflection.sendPacket(PacketDef.OPOBJT, objectId, worldPointX, worldPointY, sourceSlot, sourceItemId,

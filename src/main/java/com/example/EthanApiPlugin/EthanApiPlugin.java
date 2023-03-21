@@ -21,7 +21,6 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.RuneLite;
-import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -51,8 +50,6 @@ public class EthanApiPlugin extends Plugin
 {
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	@Inject
-	ConfigManager configManager;
-	@Inject
 	PluginManager pluginManager;
 	@Inject
 	EventBus eventBus;
@@ -70,7 +67,6 @@ public class EthanApiPlugin extends Plugin
 
 	public static boolean isQuickPrayerActive(QuickPrayer prayer)
 	{
-		RuneLite.getInjector().getInstance(Client.class);
 		if ((client.getVarbitValue(4102) & (int) Math.pow(2, prayer.getIndex())) == Math.pow(2, prayer.getIndex()))
 		{
 			return true;
