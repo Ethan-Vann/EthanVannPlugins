@@ -1,5 +1,8 @@
 package com.example.EthanApiPlugin;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.inject.Inject;
 import lombok.SneakyThrows;
 import net.runelite.api.Client;
@@ -8,6 +11,7 @@ import net.runelite.api.GameObject;
 import net.runelite.api.HeadIcon;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
+import net.runelite.api.ItemComposition;
 import net.runelite.api.NPC;
 import net.runelite.api.Point;
 import net.runelite.api.Tile;
@@ -52,6 +56,16 @@ public class EthanApiPlugin extends Plugin
 	PluginManager pluginManager;
 	@Inject
 	EventBus eventBus;
+	public static LoadingCache<Integer, ItemComposition> itemDefs = CacheBuilder.newBuilder()
+			.maximumSize(1000)
+			.build(
+					new CacheLoader<Integer, ItemComposition>()
+					{
+						public ItemComposition load(Integer key)
+						{
+							return client.getItemDefinition(key);
+						}
+					});
 
 
 	public static boolean isQuickPrayerActive(QuickPrayer prayer)
@@ -63,31 +77,38 @@ public class EthanApiPlugin extends Plugin
 		}
 		return false;
 	}
+
 	public static boolean isQuickPrayerEnabled()
 	{
 		return client.getVarbitValue(QUICK_PRAYER) == 1;
 	}
+
 	@SneakyThrows
-	public static HeadIcon getHeadIcon(NPC npc) {
+	public static HeadIcon getHeadIcon(NPC npc)
+	{
 		Method getHeadIconArrayMethod = null;
 		for (Method declaredMethod : npc.getComposition().getClass().getDeclaredMethods())
 		{
-			if(declaredMethod.getReturnType()== short[].class&&declaredMethod.getParameterTypes().length==0){
+			if (declaredMethod.getReturnType() == short[].class && declaredMethod.getParameterTypes().length == 0)
+			{
 				getHeadIconArrayMethod = declaredMethod;
 			}
 		}
-		if (getHeadIconArrayMethod == null) {
+		if (getHeadIconArrayMethod == null)
+		{
 			return null;
 		}
 		getHeadIconArrayMethod.setAccessible(true);
 		short[] headIconArray = (short[]) getHeadIconArrayMethod.invoke(npc.getComposition());
-		if (headIconArray == null || headIconArray.length == 0) {
+		if (headIconArray == null || headIconArray.length == 0)
+		{
 			return null;
 		}
 		return HeadIcon.values()[headIconArray[0]];
 	}
+
 	@Deprecated
-	public int countItem(String str,WidgetInfo container)
+	public int countItem(String str, WidgetInfo container)
 	{
 		Widget[] items = client.getWidget(container).getDynamicChildren();
 		int count = 0;
@@ -100,6 +121,7 @@ public class EthanApiPlugin extends Plugin
 		}
 		return count;
 	}
+
 	@Deprecated
 	public static Widget getItem(String str)
 	{
@@ -113,13 +135,16 @@ public class EthanApiPlugin extends Plugin
 		}
 		return null;
 	}
-	public List<WorldPoint> reachableTiles(){
-		return new ArrayList<>(Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(x->canPathToTile(x.getWorldLocation())).map(Tile::getWorldLocation).filter(Objects::nonNull).collect(Collectors.toList()));
+
+	public List<WorldPoint> reachableTiles()
+	{
+		return new ArrayList<>(Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(x -> canPathToTile(x.getWorldLocation())).map(Tile::getWorldLocation).filter(Objects::nonNull).collect(Collectors.toList()));
 	}
+
 	@Deprecated
 	public static Widget getItem(int id, WidgetInfo container)
 	{
-		if(client.getWidget(container)==null)
+		if (client.getWidget(container) == null)
 		{
 			return null;
 		}
@@ -133,6 +158,7 @@ public class EthanApiPlugin extends Plugin
 		}
 		return null;
 	}
+
 	public int getFirstFreeSlot(WidgetInfo container)
 	{
 		Widget[] items = client.getWidget(container).getDynamicChildren();
@@ -145,16 +171,19 @@ public class EthanApiPlugin extends Plugin
 		}
 		return -1;
 	}
+
 	public int getEmptySlots(WidgetInfo widgetInfo)
 	{
 		List<Widget> inventoryItems = Arrays.asList(client.getWidget(widgetInfo.getId()).getDynamicChildren());
 		return (int) inventoryItems.stream().filter(item -> item.getItemId() == 6512).count();
 	}
+
 	public boolean isMoving()
 	{
 		return client.getLocalPlayer().getPoseAnimation()
 				!= client.getLocalPlayer().getIdlePoseAnimation();
 	}
+
 	@Deprecated
 	public TileObject findObject(String objectName)
 	{
@@ -165,10 +194,12 @@ public class EthanApiPlugin extends Plugin
 			{
 				for (Tile tile1 : tiles)
 				{
-					if(tile1==null){
+					if (tile1 == null)
+					{
 						continue;
 					}
-					if(tile1.getGameObjects()==null){
+					if (tile1.getGameObjects() == null)
+					{
 						continue;
 					}
 					if (tile1.getGameObjects().length != 0)
@@ -183,26 +214,29 @@ public class EthanApiPlugin extends Plugin
 				}
 			}
 		}
-		if(validObjects.size() > 0)
+		if (validObjects.size() > 0)
 		{
-			return validObjects.stream().sorted(Comparator.comparingInt(x->x.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()))).findFirst().orElse(null);
+			return validObjects.stream().sorted(Comparator.comparingInt(x -> x.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()))).findFirst().orElse(null);
 		}
 		return null;
 	}
+
 	@Deprecated
 	public TileObject findObject(int id)
 	{
 		ArrayList<TileObject> validObjects = new ArrayList<>();
-		Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(tile -> tile.getGameObjects() != null&&tile.getGameObjects().length != 0).forEach(tile -> {
+		Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(tile -> tile.getGameObjects() != null && tile.getGameObjects().length != 0).forEach(tile ->
+		{
 			GameObject returnVal =
-					Arrays.stream(tile.getGameObjects()).filter(gameObject -> gameObject != null && gameObject.getId()==id).findFirst().orElse(null);
+					Arrays.stream(tile.getGameObjects()).filter(gameObject -> gameObject != null && gameObject.getId() == id).findFirst().orElse(null);
 			if (returnVal != null)
 			{
 				validObjects.add(returnVal);
 			}
 		});
-		return validObjects.stream().min(Comparator.comparingInt(x->x.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()))).orElse(null);
+		return validObjects.stream().min(Comparator.comparingInt(x -> x.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()))).orElse(null);
 	}
+
 	@Deprecated
 	public Widget getItemFromList(int[] list, WidgetInfo container)
 	{
@@ -216,6 +250,7 @@ public class EthanApiPlugin extends Plugin
 		}
 		return null;
 	}
+
 	public int checkIfWearing(int[] ids)
 	{
 
@@ -235,7 +270,9 @@ public class EthanApiPlugin extends Plugin
 		}
 		return -1;
 	}
-	public static boolean canPathToTile(WorldPoint destinationTile){
+
+	public static boolean canPathToTile(WorldPoint destinationTile)
+	{
 		int z = client.getPlane();
 		if (z != destinationTile.getPlane())
 		{
@@ -267,7 +304,7 @@ public class EthanApiPlugin extends Plugin
 
 		int pSY = client.getLocalPlayer().getLocalLocation().getSceneY();
 		Point p1 = client.getScene().getTiles()[client.getPlane()][pSX][pSY].getSceneLocation();
-		Point p2 = new Point(LocalPoint.fromWorld(client, destinationTile).getSceneX(),LocalPoint.fromWorld(client, destinationTile).getSceneY());
+		Point p2 = new Point(LocalPoint.fromWorld(client, destinationTile).getSceneX(), LocalPoint.fromWorld(client, destinationTile).getSceneY());
 
 		int middleX = p1.getX();
 		int middleY = p1.getY();
@@ -383,6 +420,7 @@ public class EthanApiPlugin extends Plugin
 		}
 		return isReachable;
 	}
+
 	@SneakyThrows
 	public void stopPlugin(Plugin plugin)
 	{
@@ -400,6 +438,7 @@ public class EthanApiPlugin extends Plugin
 			}
 		});
 	}
+
 	@Override
 	public void startUp() throws Exception
 	{
