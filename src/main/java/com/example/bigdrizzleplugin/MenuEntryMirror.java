@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.runelite.api.MenuAction;
 import net.runelite.api.Skill;
 
+import java.util.LinkedList;
 import java.util.concurrent.Callable;
 
 
@@ -22,6 +23,8 @@ public class MenuEntryMirror {
     @Getter @Setter private int postActionTickDelay;
     @Getter @Setter private Skill blockUntilXpDrop;
     @Getter @Setter private Callable<Boolean> blockUntil = null;
+    @Getter @Setter private LinkedList<MenuEntryMirror> preActions = new LinkedList<>();
+    @Getter @Setter private LinkedList<MenuEntryMirror> postActions = new LinkedList<>();
 
     public MenuEntryMirror(String option, String target, int identifier, MenuAction menuAction, int param0, int param1, boolean leftClick, boolean deprioritized, int itemID, int postActionTickDelay){
         this.option = option;

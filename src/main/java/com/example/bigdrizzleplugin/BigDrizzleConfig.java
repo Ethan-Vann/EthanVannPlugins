@@ -35,10 +35,12 @@ public interface BigDrizzleConfig extends Config
     @AllArgsConstructor
     enum ActivityType
     {
-        FISHING("Fishing"),
+        FISHING("Karambwan Fishing"),
         TICKCOOKING("1T Cooking"),
         NORMALCOOKING("Normal Cooking"),
-        ZMI("ZMI"),
+        ZMI("ZMI RC"),
+        CHAOSALTAR("Chaos Altar"),
+        LAVARC("Lava RC"),
         OTHER("Other");
 
         private final String value;

@@ -28,6 +28,7 @@ import com.example.EthanApiPlugin.Bank;
 import com.example.EthanApiPlugin.BankInventory;
 import com.example.EthanApiPlugin.Inventory;
 import com.example.EthanApiPlugin.TileObjects;
+import com.example.Packets.MousePackets;
 import com.google.inject.Provides;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -73,8 +74,10 @@ public class BigDrizzlePlugin extends Plugin
 	private Method invokeMenuAction;
 	private Skill blockingSkill;
 	private Callable<Boolean> blockUntil;
+	@Inject
+	MousePackets mousePackets;
 
-	private Queue<MenuEntryMirror> actionQueue;
+	private LinkedList<MenuEntryMirror> actionQueue;
 
 	@Inject
 	private BigDrizzleConfig config;
@@ -124,6 +127,9 @@ public class BigDrizzlePlugin extends Plugin
 				case NORMALCOOKING: enqueue(NormalCooking.buildActions()); 		break;
 				case FISHING:		enqueue(KarambwanFishing.buildActions()); 	break;
 				case ZMI:			enqueue(ZMI.buildActions());				break;
+				case TICKCOOKING:	enqueue(TickCooking.buildActions());		break;
+				case CHAOSALTAR: 	enqueue(ChaosAltar.buildActions());			break;
+				case LAVARC:		enqueue(LavaRC.buildActions());				break;
 			}
 		}
 		dequeue(event);
@@ -138,14 +144,6 @@ public class BigDrizzlePlugin extends Plugin
 
 	@Subscribe
 	public void onClientTick(ClientTick event) throws InvocationTargetException, IllegalAccessException {
-		ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
-		if (config.activityType() == BigDrizzleConfig.ActivityType.TICKCOOKING){
-			if (client.getSelectedWidget() == null && inventory.count(3142) > 1){
-				log.info("Selecting raw karambwan");
-				invokeMenuAction(0, MenuAction.WIDGET_TARGET.getId(), 27, 9764864, 3142, -1, -1);
-				return;
-			}
-		}
 	}
 
 	@SneakyThrows
@@ -179,8 +177,17 @@ public class BigDrizzlePlugin extends Plugin
 			globalTimeout = actionQueue.peek().getPostActionTickDelay();
 			blockingSkill = actionQueue.peek().getBlockUntilXpDrop();
 			blockUntil = actionQueue.peek().getBlockUntil();
+			while(!actionQueue.peek().getPreActions().isEmpty()){
+				mousePackets.queueClickPacket();
+				invokeMenuAction(actionQueue.peek().getPreActions().poll());
+			}
 			event.consume();
-			invokeMenuAction(actionQueue.poll());
+			invokeMenuAction(actionQueue.peek());
+			while(!actionQueue.peek().getPostActions().isEmpty()){
+				mousePackets.queueClickPacket();
+				invokeMenuAction(actionQueue.peek().getPostActions().poll());
+			}
+			actionQueue.poll();
 		}
 	}
 

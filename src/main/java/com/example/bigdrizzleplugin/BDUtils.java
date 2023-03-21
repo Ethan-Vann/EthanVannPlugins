@@ -39,13 +39,12 @@ public class BDUtils {
         return Inventory.search().nameContains(name).result().size();
     }
     public static boolean bankOpen(){
-        return client.getWidget(BANK_INTERFACE_WIDGET_ID) != null;
+        return client.getWidget(BANK_INTERFACE_WIDGET_ID) != null && !client.getWidget(BANK_INTERFACE_WIDGET_ID).isHidden();
     }
     public static boolean depositBoxOpen(){
         return client.getWidget(DEPOSIT_BOX_WIDGET_ID) != null;
     }
     public static GameObject getGameObject(int gameObjectID){
-        GameObject object = null;
         Optional<TileObject> objectOpt = TileObjects.search().withId(gameObjectID).nearestToPlayer();
         if (objectOpt.isPresent() && objectOpt.get() instanceof GameObject){
             return (GameObject) objectOpt.get();
@@ -53,7 +52,6 @@ public class BDUtils {
         return null;
     }
     public static GameObject getGameObject(String gameObjectName){
-        GameObject object = null;
         Optional<TileObject> objectOpt = TileObjects.search().nameContains(gameObjectName).nearestToPlayer();
         if (objectOpt.isPresent() && objectOpt.get() instanceof GameObject){
             return (GameObject) objectOpt.get();
@@ -61,8 +59,7 @@ public class BDUtils {
         return null;
     }
     public static NPC getNPC(String npcName){
-        NPC npc = null;
-        Optional<NPC> npcOpt = NPCs.search().withName(npcName).nearestToPlayer();
+        Optional<NPC> npcOpt = NPCs.search().nameContains(npcName).nearestToPlayer();
         if (npcOpt.isPresent()){
             return npcOpt.get();
         }else{
@@ -70,13 +67,26 @@ public class BDUtils {
         }
     }
     public static NPC getNPC(int npcID){
-        NPC npc = null;
         Optional<NPC> npcOpt = NPCs.search().withId(npcID).nearestToPlayer();
         if (npcOpt.isPresent()){
             return npcOpt.get();
         }else{
             return null;
         }
+    }
+    public static TileObject getTileObject(int tileObjectID){
+        Optional<TileObject> objectOpt = TileObjects.search().withId(tileObjectID).nearestToPlayer();
+        if (objectOpt.isPresent()){
+            return objectOpt.get();
+        }
+        return null;
+    }
+    public static TileObject getTileObject(String tileObjectName){
+        Optional<TileObject> objectOpt = TileObjects.search().nameContains(tileObjectName).nearestToPlayer();
+        if (objectOpt.isPresent()){
+            return objectOpt.get();
+        }
+        return null;
     }
 
 
