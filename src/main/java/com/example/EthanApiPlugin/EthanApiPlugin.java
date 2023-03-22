@@ -1,8 +1,5 @@
 package com.example.EthanApiPlugin;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 import com.google.inject.Inject;
 import lombok.SneakyThrows;
 import net.runelite.api.Client;
@@ -11,7 +8,6 @@ import net.runelite.api.GameObject;
 import net.runelite.api.HeadIcon;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
-import net.runelite.api.ItemComposition;
 import net.runelite.api.NPC;
 import net.runelite.api.Point;
 import net.runelite.api.Tile;
@@ -44,7 +40,7 @@ import static net.runelite.api.Varbits.QUICK_PRAYER;
 		name = "EthanApiPlugin",
 		description = "",
 		tags = {"ethan"},
-		hidden = true
+		hidden = false
 )
 public class EthanApiPlugin extends Plugin
 {
@@ -53,16 +49,6 @@ public class EthanApiPlugin extends Plugin
 	PluginManager pluginManager;
 	@Inject
 	EventBus eventBus;
-	public static LoadingCache<Integer, ItemComposition> itemDefs = CacheBuilder.newBuilder()
-			.maximumSize(1000)
-			.build(
-					new CacheLoader<Integer, ItemComposition>()
-					{
-						public ItemComposition load(Integer key)
-						{
-							return client.getItemDefinition(key);
-						}
-					});
 
 
 	public static boolean isQuickPrayerActive(QuickPrayer prayer)
@@ -174,7 +160,7 @@ public class EthanApiPlugin extends Plugin
 		return (int) inventoryItems.stream().filter(item -> item.getItemId() == 6512).count();
 	}
 
-	public boolean isMoving()
+	public static boolean isMoving()
 	{
 		return client.getLocalPlayer().getPoseAnimation()
 				!= client.getLocalPlayer().getIdlePoseAnimation();
@@ -444,5 +430,6 @@ public class EthanApiPlugin extends Plugin
 		eventBus.register(RuneLite.getInjector().getInstance(NPCs.class));
 		eventBus.register(RuneLite.getInjector().getInstance(TileObjects.class));
 		eventBus.register(RuneLite.getInjector().getInstance(Players.class));
+		eventBus.register(RuneLite.getInjector().getInstance(Equipment.class));
 	}
 }
