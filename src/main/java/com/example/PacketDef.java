@@ -185,12 +185,12 @@ public class PacketDef
 		}, PacketType.OPOBJT);
 		IF_BUTTONT = new PacketDef(ObfuscatedNames.IF_BUTTONT_OBFUSCATEDNAME, new LinkedHashMap<String,String>(){
 			{
-				put(ObfuscatedNames.IF_BUTTONT_WRITE6,ObfuscatedNames.IF_BUTTONT_METHOD_NAME1);
+				put(ObfuscatedNames.IF_BUTTONT_WRITE1,ObfuscatedNames.IF_BUTTONT_METHOD_NAME1);
 				put(ObfuscatedNames.IF_BUTTONT_WRITE2,ObfuscatedNames.IF_BUTTONT_METHOD_NAME2);
 				put(ObfuscatedNames.IF_BUTTONT_WRITE3,ObfuscatedNames.IF_BUTTONT_METHOD_NAME3);
 				put(ObfuscatedNames.IF_BUTTONT_WRITE4,ObfuscatedNames.IF_BUTTONT_METHOD_NAME4);
 				put(ObfuscatedNames.IF_BUTTONT_WRITE5,ObfuscatedNames.IF_BUTTONT_METHOD_NAME5);
-				put(ObfuscatedNames.IF_BUTTONT_WRITE1,ObfuscatedNames.IF_BUTTONT_METHOD_NAME6);
+				put(ObfuscatedNames.IF_BUTTONT_WRITE6,ObfuscatedNames.IF_BUTTONT_METHOD_NAME6);
 			}
 		}, PacketType.IF_BUTTONT);
 		OPNPC2 = new PacketDef(ObfuscatedNames.OPNPC2_OBFUSCATEDNAME, new LinkedHashMap<String,String>(){

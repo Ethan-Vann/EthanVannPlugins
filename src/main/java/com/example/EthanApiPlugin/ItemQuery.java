@@ -8,7 +8,6 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
 
-import javax.management.Query;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 
 public class ItemQuery
 {
-	Query query = new Query();
 	private List<Widget> items;
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	static ItemManager itemManager = RuneLite.getInjector().getInstance(ItemManager.class);
