@@ -3,6 +3,8 @@ package com.example.bigdrizzleplugin;
 import com.example.EthanApiPlugin.Inventory;
 import com.example.EthanApiPlugin.NPCs;
 import com.example.EthanApiPlugin.TileObjects;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameObject;
 import net.runelite.api.NPC;
@@ -11,13 +13,19 @@ import net.runelite.api.coords.WorldArea;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.RuneLite;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Optional;
 
+@Slf4j
 public class BDUtils {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
     private static final WorldArea craftingGuildArea = new WorldArea(2923, 3273, 22, 23, 0);
     private static final int BANK_INTERFACE_WIDGET_ID = 786474;
     private final static int DEPOSIT_BOX_WIDGET_ID = 12582914;
+    private static Class classWithInvokeMenuAction;
+    private static Method invokeMenuAction;
 
     public static boolean inPOH() {
         return client.getMapRegions()[0] == 7769;
@@ -44,6 +52,7 @@ public class BDUtils {
     public static boolean depositBoxOpen(){
         return client.getWidget(DEPOSIT_BOX_WIDGET_ID) != null;
     }
+
     public static GameObject getGameObject(int gameObjectID){
         Optional<TileObject> objectOpt = TileObjects.search().withId(gameObjectID).nearestToPlayer();
         if (objectOpt.isPresent() && objectOpt.get() instanceof GameObject){
@@ -89,5 +98,31 @@ public class BDUtils {
         return null;
     }
 
+    private static void loadInvokeMethod() {
+        try {
+            classWithInvokeMenuAction = client.getClass().getClassLoader().loadClass("lk");
+            invokeMenuAction = Arrays.stream(classWithInvokeMenuAction.getDeclaredMethods())
+                    .filter(method -> method.getName().equals("ku")).findAny().orElse(null);
+            assert invokeMenuAction != null;
+            invokeMenuAction.setAccessible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to load menuaction class");
+        }
+    }
 
+    @SneakyThrows
+    public static boolean invokeMenuAction(MenuEntryMirror action) {
+        loadInvokeMethod();
+        if (action == null){
+            System.out.println("Tried to invoke a null action!");
+            return false;
+        }
+        log.info("Invoking: " + action.toString());
+        //string values are option, target, irrelevant
+        int garbageValue = 1849187210;
+        int convertedGarbage = garbageValue; //garbageValue.byteValue();
+        invokeMenuAction.invoke(null,action.getParam0(),action.getParam1(),action.getMenuAction().getId(),action.getIdentifier(), action.getItemID(), "","",-1,-1,convertedGarbage);
+        return true;
+    }
 }

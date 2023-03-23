@@ -13,85 +13,85 @@ public class ZMI {
     private static final String essenceName = "Pure essence";
     static Client client = RuneLite.getInjector().getInstance(Client.class);
 
-    public static LinkedList<MenuEntryMirror> buildActions() {
-        LinkedList<MenuEntryMirror> actionList = new LinkedList<>();
-        if (BDUtils.inPOH()){
-            if (client.getEnergy() < 10000){
-                actionList.add(MenuEntryBuilder.drinkPool());
-            }else{
-                actionList.add(ouraniaTele());
-            }
-        } else if (BDUtils.bankOpen() && !inventoryReadyToLeaveBank()){
-            actionList.add(MenuEntryBuilder.depositAllInventoryToBank());
-            actionList.add(MenuEntryBuilder.withdrawAll(essenceName));
-            actionList.add(fillPouch());
-            actionList.add(MenuEntryBuilder.withdrawAll(essenceName));
-            actionList.add(fillPouch());
-            actionList.add(MenuEntryBuilder.withdrawAll(essenceName));
-            MenuEntryMirror altarCLick = MenuEntryBuilder.clickGameObject("Altar");
-            altarCLick.setBlockUntilXpDrop(Skill.RUNECRAFT);
-            actionList.add(altarCLick);
-            essenceInPouch = 40;
-        } else if (BDUtils.bankOpen() && inventoryReadyToLeaveBank()){
-            actionList.add(MenuEntryBuilder.clickGameObject("Altar"));
-        } else if (nearBank()){
-            MenuEntryMirror eniolaClick = MenuEntryBuilder.clickNPC("Eniola");
-            eniolaClick.setBlockUntil(() -> {
-                return BDUtils.bankOpen();
-            });
-            actionList.add(eniolaClick);
-        }else if (onCraftingTile()){
-            MenuEntryMirror altarCLick = MenuEntryBuilder.clickGameObject("Altar");
-            altarCLick.setBlockUntilXpDrop(Skill.RUNECRAFT);
-            actionList.add(emptyPouch());
-            actionList.add(altarCLick);
-            actionList.add(emptyPouch());
-            actionList.add(altarCLick);
-            actionList.add(emptyPouch());
-            actionList.add(altarCLick);
-            if(shouldGoHome()){
-                actionList.add(MenuEntryBuilder.maxCapePohTele());
-            }else{
-                actionList.add(ouraniaTele());
-            }
-            essenceInPouch = 0;
-        }else if (BDUtils.getGameObject("Ladder") != null && !inventoryReadyToLeaveBank()) {
-            MenuEntryMirror clickLadder = MenuEntryBuilder.clickGameObject("Ladder");
-            clickLadder.setBlockUntil(() -> BDUtils.getNPC("Eniola") != null);
-            actionList.add(clickLadder);
-        }else if (BDUtils.getGameObject("Altar") != null){
-            actionList.add(MenuEntryBuilder.clickGameObject("Altar"));
-        }
-        return actionList;
-    }
-
-    private static boolean inventoryReadyToLeaveBank(){
-        return essenceInPouch == 40 && BDUtils.inventoryCount(essenceName) == 26;
-    }
-
-    private static boolean shouldGoHome(){
-        return client.getEnergy() < 3700;
-    }
-
-    private static MenuEntryMirror fillPouch(){
-        return new MenuEntryMirror("Fill pouch", 9, MenuAction.CC_OP, 0, 983043, ItemID.COLOSSAL_POUCH);
-    }
-
-    private static MenuEntryMirror emptyPouch(){
-        return new MenuEntryMirror("Empty pouch", 3, MenuAction.CC_OP, 0, 9764864, ItemID.COLOSSAL_POUCH);
-    }
-
-    private static MenuEntryMirror ouraniaTele(){
-        MenuEntryMirror tele = new MenuEntryMirror("Tele", 1, MenuAction.CC_OP, -1, 14286992, -1);
-        tele.setBlockUntil(() -> BDUtils.getGameObject("Chaos altar") != null);
-        return tele;
-    }
-
-    private static boolean onCraftingTile(){
-        return client.getLocalPlayer().getWorldLocation().getX() == 3058;
-    }
-
-    private static boolean nearBank(){
-        return client.getLocalPlayer().getWorldLocation().getX() == 3015 && client.getLocalPlayer().getWorldLocation().getY() == 5629;
-    }
+//    public static LinkedList<MenuEntryMirror> buildActions() {
+//        LinkedList<MenuEntryMirror> actionList = new LinkedList<>();
+//        if (BDUtils.inPOH()){
+//            if (client.getEnergy() < 10000){
+//                actionList.add(MenuEntryBuilder.drinkPool());
+//            }else{
+//                actionList.add(ouraniaTele());
+//            }
+//        } else if (BDUtils.bankOpen() && !inventoryReadyToLeaveBank()){
+//            actionList.add(MenuEntryBuilder.depositAllInventoryToBank());
+//            actionList.add(MenuEntryBuilder.withdrawAll(essenceName));
+//            actionList.add(fillPouch());
+//            actionList.add(MenuEntryBuilder.withdrawAll(essenceName));
+//            actionList.add(fillPouch());
+//            actionList.add(MenuEntryBuilder.withdrawAll(essenceName));
+//            MenuEntryMirror altarCLick = MenuEntryBuilder.clickGameObject("Altar");
+//            altarCLick.setBlockUntilXpDrop(Skill.RUNECRAFT);
+//            actionList.add(altarCLick);
+//            essenceInPouch = 40;
+//        } else if (BDUtils.bankOpen() && inventoryReadyToLeaveBank()){
+//            actionList.add(MenuEntryBuilder.clickGameObject("Altar"));
+//        } else if (nearBank()){
+//            MenuEntryMirror eniolaClick = MenuEntryBuilder.clickNPC("Eniola");
+//            eniolaClick.setBlockUntil(() -> {
+//                return BDUtils.bankOpen();
+//            });
+//            actionList.add(eniolaClick);
+//        }else if (onCraftingTile()){
+//            MenuEntryMirror altarCLick = MenuEntryBuilder.clickGameObject("Altar");
+//            altarCLick.setBlockUntilXpDrop(Skill.RUNECRAFT);
+//            actionList.add(emptyPouch());
+//            actionList.add(altarCLick);
+//            actionList.add(emptyPouch());
+//            actionList.add(altarCLick);
+//            actionList.add(emptyPouch());
+//            actionList.add(altarCLick);
+//            if(shouldGoHome()){
+//                actionList.add(MenuEntryBuilder.maxCapePohTele());
+//            }else{
+//                actionList.add(ouraniaTele());
+//            }
+//            essenceInPouch = 0;
+//        }else if (BDUtils.getGameObject("Ladder") != null && !inventoryReadyToLeaveBank()) {
+//            MenuEntryMirror clickLadder = MenuEntryBuilder.clickGameObject("Ladder");
+//            clickLadder.setBlockUntil(() -> BDUtils.getNPC("Eniola") != null);
+//            actionList.add(clickLadder);
+//        }else if (BDUtils.getGameObject("Altar") != null){
+//            actionList.add(MenuEntryBuilder.clickGameObject("Altar"));
+//        }
+//        return actionList;
+//    }
+//
+//    private static boolean inventoryReadyToLeaveBank(){
+//        return essenceInPouch == 40 && BDUtils.inventoryCount(essenceName) == 26;
+//    }
+//
+//    private static boolean shouldGoHome(){
+//        return client.getEnergy() < 3700;
+//    }
+//
+//    private static MenuEntryMirror fillPouch(){
+//        return new MenuEntryMirror("Fill pouch", 9, MenuAction.CC_OP, 0, 983043, ItemID.COLOSSAL_POUCH);
+//    }
+//
+//    private static MenuEntryMirror emptyPouch(){
+//        return new MenuEntryMirror("Empty pouch", 3, MenuAction.CC_OP, 0, 9764864, ItemID.COLOSSAL_POUCH);
+//    }
+//
+//    private static MenuEntryMirror ouraniaTele(){
+//        MenuEntryMirror tele = new MenuEntryMirror("Tele", 1, MenuAction.CC_OP, -1, 14286992, -1);
+//        tele.setBlockUntil(() -> BDUtils.getGameObject("Chaos altar") != null);
+//        return tele;
+//    }
+//
+//    private static boolean onCraftingTile(){
+//        return client.getLocalPlayer().getWorldLocation().getX() == 3058;
+//    }
+//
+//    private static boolean nearBank(){
+//        return client.getLocalPlayer().getWorldLocation().getX() == 3015 && client.getLocalPlayer().getWorldLocation().getY() == 5629;
+//    }
 }

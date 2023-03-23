@@ -56,8 +56,7 @@ public interface BigDrizzleConfig extends Config
     @ConfigItem(
             keyName = "activity",
             name = "Activity",
-            description = "Activity",
-            position = 1
+            description = "Activity"
     )
     default ActivityType activityType()
     {
@@ -65,7 +64,6 @@ public interface BigDrizzleConfig extends Config
     }
 
     @ConfigItem(
-            position = 2,
             keyName = "debugLog",
             name = "Debug Log",
             description = "Debug Log"
@@ -75,23 +73,15 @@ public interface BigDrizzleConfig extends Config
         return false;
     }
     @ConfigItem(
-            position = 3,
-            keyName = "queueLog",
-            name = "Queue Log",
-            description = "Queue Log"
+            keyName = "extraDebugLogs",
+            name = "Extra Log",
+            description = "Extra Debug Log"
     )
-    default boolean queueLog()
-    {
-        return false;
-    }
+    default boolean extraDebugLog() { return false; }
     @ConfigItem(
-            position = 4,
             keyName = "consumeClicks",
             name = "Consume",
             description = "consume"
     )
-    default boolean consumeClicks()
-    {
-        return false;
-    }
+    default boolean consumeClicks() { return false; }
 }
