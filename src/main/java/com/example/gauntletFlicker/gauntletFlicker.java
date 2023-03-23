@@ -261,6 +261,16 @@ public class gauntletFlicker extends Plugin
 		{
 			return;
 		}
+		if (!(e.getActor() instanceof NPC))
+		{
+			return;
+		}
+
+		NPC npc = (NPC) e.getActor();
+		if (!HUNLLEF_IDS.contains(npc.getId()))
+		{
+			return;
+		}
 		if (e.getActor().getAnimation() == 8754)
 		{
 			isRange = false;
@@ -271,8 +281,8 @@ public class gauntletFlicker extends Plugin
 		}
 	}
 
-	private boolean isHunllefVarbitSet()
-	{
-		return client.getVarbitValue(9177) == 1;
+		private boolean isHunllefVarbitSet ()
+		{
+			return client.getVarbitValue(9177) == 1;
+		}
 	}
-}
