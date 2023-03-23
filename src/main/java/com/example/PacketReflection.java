@@ -59,7 +59,6 @@ public class PacketReflection
 			log.warn("Failed to load Packets Into Client");
 			return false;
 		}
-		log.warn("Successfully loaded Packets Into Client");
 		return true;
 	}
 

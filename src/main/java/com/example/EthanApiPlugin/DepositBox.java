@@ -17,23 +17,22 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class BankInventory
+public class DepositBox
 {
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
-	static List<Widget> bankIventoryItems = new ArrayList<>();
+	static List<Widget> depositBoxItems = new ArrayList<>();
 	public static ItemQuery search(){
-		return new ItemQuery(bankIventoryItems);
+		return new ItemQuery(depositBoxItems);
 	}
 	@Subscribe
 	public void onWidgetLoaded(WidgetLoaded e){
-		if(e.getGroupId()== WidgetID.BANK_INVENTORY_GROUP_ID){
+		if(e.getGroupId()== WidgetID.DEPOSIT_BOX_GROUP_ID){
 			try
 			{
-				client.runScript(6009, WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER.getPackedId(), 28, 1, -1);
-				BankInventory.bankIventoryItems =
-						Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x->x.getItemId()!=6512&&x.getItemId()!=-1).collect(Collectors.toList());
+				DepositBox.depositBoxItems =
+						Arrays.stream(client.getWidget(WidgetInfo.DEPOSIT_BOX_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x->x.getItemId()!=6512&&x.getItemId()!=-1).collect(Collectors.toList());
 			}catch (NullPointerException err){
-				BankInventory.bankIventoryItems.clear();
+				DepositBox.depositBoxItems.clear();
 			}
 		}
 	}
@@ -41,18 +40,17 @@ public class BankInventory
 	public void onItemContainerChanged(ItemContainerChanged e){
 		switch(e.getContainerId()){
 			case 93:
-				client.runScript(6009, WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER.getPackedId(), 28, 1, -1);
-				if(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER)==null){
-					BankInventory.bankIventoryItems.clear();
+				if(client.getWidget(WidgetInfo.DEPOSIT_BOX_INVENTORY_ITEMS_CONTAINER)==null){
+					DepositBox.depositBoxItems.clear();
 					return;
 				}
 				try
 				{
-					BankInventory.bankIventoryItems =
-							Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x->x.getItemId()!=6512&&x.getItemId()!=-1).collect(Collectors.toList());
+					DepositBox.depositBoxItems =
+							Arrays.stream(client.getWidget(WidgetInfo.DEPOSIT_BOX_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x->x.getItemId()!=6512&&x.getItemId()!=-1).collect(Collectors.toList());
 					break;
 				}catch (NullPointerException err){
-					BankInventory.bankIventoryItems.clear();
+					DepositBox.depositBoxItems.clear();
 					break;
 				}
 		}
@@ -62,7 +60,7 @@ public class BankInventory
 	{
 		if (gameStateChanged.getGameState() == GameState.HOPPING|| gameStateChanged.getGameState() == GameState.LOGIN_SCREEN||gameStateChanged.getGameState()== GameState.CONNECTION_LOST)
 		{
-			BankInventory.bankIventoryItems.clear();
+			DepositBox.depositBoxItems.clear();
 		}
 	}
 }

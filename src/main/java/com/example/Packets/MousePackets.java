@@ -4,16 +4,19 @@ import com.example.ObfuscatedNames;
 import com.example.PacketDef;
 import com.example.PacketReflection;
 import lombok.SneakyThrows;
+import net.runelite.api.Client;
+import net.runelite.client.RuneLite;
 
 import java.awt.event.KeyEvent;
 import java.math.BigInteger;
 import java.util.Random;
 import java.util.concurrent.Executors;
 
-import static com.example.PacketReflection.client;
+import static java.awt.event.InputEvent.BUTTON1_DOWN_MASK;
 
 public class MousePackets {
 
+    static Client client = RuneLite.getInjector().getInstance(Client.class);
     private static Random random = new Random();
     private static long randomDelay =randomDelay();
 
@@ -81,14 +84,19 @@ public class MousePackets {
                 Math.round(random.nextGaussian() * 8000)
         );
     }
+
     private static double clamp(double val)
     {
         return Math.max(1, Math.min(13000, val));
     }
+
     private static void pressKey()
     {
-        client.getCanvas().dispatchEvent(new KeyEvent(client.getCanvas(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_BACK_SPACE));
-        client.getCanvas().dispatchEvent(new KeyEvent(client.getCanvas(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_BACK_SPACE));
-        client.getCanvas().dispatchEvent(new KeyEvent(client.getCanvas(), KeyEvent.KEY_TYPED, System.currentTimeMillis(), 0, KeyEvent.VK_BACK_SPACE));
+        KeyEvent keyPress = new KeyEvent(client.getCanvas(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), BUTTON1_DOWN_MASK, KeyEvent.VK_BACK_SPACE);
+        client.getCanvas().dispatchEvent(keyPress);
+        KeyEvent keyRelease = new KeyEvent(client.getCanvas(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_BACK_SPACE);
+        client.getCanvas().dispatchEvent(keyRelease);
+        KeyEvent keyTyped = new KeyEvent(client.getCanvas(), KeyEvent.KEY_TYPED, System.currentTimeMillis(), 0, KeyEvent.VK_BACK_SPACE);
+        client.getCanvas().dispatchEvent(keyTyped);
     }
 }

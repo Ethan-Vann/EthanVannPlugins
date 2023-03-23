@@ -48,21 +48,9 @@ public class PacketUtilsPlugin extends Plugin
 	@Subscribe
 	public void onGameStateChanged(GameStateChanged event)
 	{
-		if (event.getGameState() == GameState.LOGGED_IN && !loaded)
+		if (event.getGameState() == GameState.LOGGED_IN)
 		{
 			loaded = packetReflection.LoadPackets();
-		}
-		if (event.getGameState() == GameState.LOGIN_SCREEN)
-		{
-			loaded = false;
-		}
-		if (event.getGameState() == GameState.HOPPING)
-		{
-			loaded = false;
-		}
-		if (event.getGameState() == GameState.CONNECTION_LOST)
-		{
-			loaded = false;
 		}
 	}
 
@@ -129,16 +117,28 @@ public class PacketUtilsPlugin extends Plugin
 				loaded = packetReflection.LoadPackets();
 			}
 		});
-		for (Plugin plugin : pluginManager.getPlugins())
-		{
-			if(plugin.getName().equals("EthanApiPlugin")){
-				if(pluginManager.isPluginEnabled(plugin)){
-					continue;
-				}
-				pluginManager.startPlugin(plugin);
-				pluginManager.setPluginEnabled(plugin, true);
-			}
-		}
+		SwingUtilities.invokeLater(() ->
+				{
+					for (Plugin plugin : pluginManager.getPlugins())
+					{
+						if (plugin.getName().equals("EthanApiPlugin"))
+						{
+							if (pluginManager.isPluginEnabled(plugin))
+							{
+								continue;
+							}
+							try
+							{
+								pluginManager.setPluginEnabled(plugin, true);
+								pluginManager.startPlugin(plugin);
+							}
+							catch (PluginInstantiationException e)
+							{
+								//e.printStackTrace();
+							}
+						}
+					}
+				});
 	}
 
 	@Override

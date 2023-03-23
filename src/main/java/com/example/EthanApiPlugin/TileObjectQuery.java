@@ -21,7 +21,6 @@ public class TileObjectQuery
 	public TileObjectQuery(List<TileObject> tileObjects)
 	{
 		this.tileObjects = new ArrayList(tileObjects);
-		;
 	}
 
 	public TileObjectQuery withName(String name)
