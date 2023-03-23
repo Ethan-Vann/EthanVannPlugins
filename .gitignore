@@ -4,7 +4,6 @@ build
 .project
 .settings/
 .classpath
-src/test/
 nbactions.xml
 nb-configuration.xml
 nbproject/
