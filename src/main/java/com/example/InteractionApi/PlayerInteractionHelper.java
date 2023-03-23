@@ -20,6 +20,7 @@ public class PlayerInteractionHelper
 		PlayerPackets.queuePlayerAction(player, actions);
 		return true;
 	}
+
 	public static boolean interact(String name, String... actions)
 	{
 		return Players.search().withName(name).first().flatMap(Player ->

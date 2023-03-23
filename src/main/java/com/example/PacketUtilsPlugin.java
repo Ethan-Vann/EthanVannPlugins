@@ -56,7 +56,7 @@ public class PacketUtilsPlugin extends Plugin
 
 	@SneakyThrows
 	public static void invoke(int var0, int var1, int var2, int var3, int var4, String var5, String var6, int var7,
-						  int var8)
+							  int var8)
 	{
 		Class invokeClass = staticClient.getClass().getClassLoader().loadClass("lk");
 		Method invoke = invokeClass.getDeclaredMethod("ku", int.class, int.class, int.class, int.class, int.class,
@@ -82,7 +82,7 @@ public class PacketUtilsPlugin extends Plugin
 	{
 		if (config.debug())
 		{
-			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "Packet Utils",e.toString(), null);
+			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "Packet Utils", e.toString(), null);
 			System.out.println(e);
 		}
 	}
@@ -118,27 +118,27 @@ public class PacketUtilsPlugin extends Plugin
 			}
 		});
 		SwingUtilities.invokeLater(() ->
+		{
+			for (Plugin plugin : pluginManager.getPlugins())
+			{
+				if (plugin.getName().equals("EthanApiPlugin"))
 				{
-					for (Plugin plugin : pluginManager.getPlugins())
+					if (pluginManager.isPluginEnabled(plugin))
 					{
-						if (plugin.getName().equals("EthanApiPlugin"))
-						{
-							if (pluginManager.isPluginEnabled(plugin))
-							{
-								continue;
-							}
-							try
-							{
-								pluginManager.setPluginEnabled(plugin, true);
-								pluginManager.startPlugin(plugin);
-							}
-							catch (PluginInstantiationException e)
-							{
-								//e.printStackTrace();
-							}
-						}
+						continue;
 					}
-				});
+					try
+					{
+						pluginManager.setPluginEnabled(plugin, true);
+						pluginManager.startPlugin(plugin);
+					}
+					catch (PluginInstantiationException e)
+					{
+						//e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 
 	@Override

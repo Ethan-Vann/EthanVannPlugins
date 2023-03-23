@@ -49,11 +49,12 @@ public class NightmareHelperPlugin extends Plugin
 	boolean forceTab = false;
 	QuickPrayer shouldPray;
 	boolean cursed = false;
-	int i =10;
+	int i = 10;
+
 	@Subscribe
 	public void onGameTick(GameTick event)
 	{
-		if(!inFight())
+		if (!inFight())
 		{
 			return;
 		}
@@ -82,6 +83,7 @@ public class NightmareHelperPlugin extends Plugin
 	{
 		forceTab = false;
 	}
+
 	@Subscribe
 	public void onAnimationChanged(AnimationChanged e)
 	{
@@ -102,71 +104,86 @@ public class NightmareHelperPlugin extends Plugin
 			}
 		}
 	}
-	public boolean inFight(){
-		return Arrays.stream(client.getMapRegions()).anyMatch(x->x==15258);
+
+	public boolean inFight()
+	{
+		return Arrays.stream(client.getMapRegions()).anyMatch(x -> x == 15258);
 	}
-	public void handlePrayer(){
-		if(shouldPray==null){
+
+	public void handlePrayer()
+	{
+		if (shouldPray == null)
+		{
 			return;
 		}
-		if (shouldPray == PROTECT_FROM_MAGIC) {
-			if (!cursed) {
-				if(!api.isQuickPrayerActive(PROTECT_FROM_MAGIC)){
+		if (shouldPray == PROTECT_FROM_MAGIC)
+		{
+			if (!cursed)
+			{
+				if (!api.isQuickPrayerActive(PROTECT_FROM_MAGIC))
+				{
 					mousePackets.queueClickPacket();
 					widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 12); //quickPrayer magic
 				}
 				return;
 			}
-			if(!api.isQuickPrayerActive(PROTECT_FROM_MELEE))
+			if (!api.isQuickPrayerActive(PROTECT_FROM_MELEE))
 			{
 				mousePackets.queueClickPacket();
 				widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 14); //quickPrayer melee
 			}
 			return;
 		}
-		if (shouldPray == PROTECT_FROM_MELEE) {
-			if (!cursed) {
-				if(!api.isQuickPrayerActive(PROTECT_FROM_MELEE))
+		if (shouldPray == PROTECT_FROM_MELEE)
+		{
+			if (!cursed)
+			{
+				if (!api.isQuickPrayerActive(PROTECT_FROM_MELEE))
 				{
 					mousePackets.queueClickPacket();
 					widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 14); //quickPrayer melee
 				}
 				return;
 			}
-			if(!api.isQuickPrayerActive(PROTECT_FROM_MISSILES))
+			if (!api.isQuickPrayerActive(PROTECT_FROM_MISSILES))
 			{
 				mousePackets.queueClickPacket();
 				widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 13); //quickPrayer range
 			}
 			return;
 		}
-		if (shouldPray == PROTECT_FROM_MISSILES) {
-			if (!cursed) {
-				if(!api.isQuickPrayerActive(PROTECT_FROM_MISSILES))
+		if (shouldPray == PROTECT_FROM_MISSILES)
+		{
+			if (!cursed)
+			{
+				if (!api.isQuickPrayerActive(PROTECT_FROM_MISSILES))
 				{
 					mousePackets.queueClickPacket();
 					widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 13); //quickPrayer range
 				}
 				return;
 			}
-			if(!api.isQuickPrayerActive(PROTECT_FROM_MAGIC)){
+			if (!api.isQuickPrayerActive(PROTECT_FROM_MAGIC))
+			{
 				mousePackets.queueClickPacket();
 				widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 12); //quickPrayer magic
 			}
 		}
 
 
-
-
 		movementPackets.queueMovement(client.getLocalPlayer().getWorldLocation().dx(5).dy(10));
 	}
+
 	@Subscribe
-	public void onNpcSpawned(NpcSpawned e){
-		if(!inFight()){
+	public void onNpcSpawned(NpcSpawned e)
+	{
+		if (!inFight())
+		{
 			return;
 		}
-		
+
 	}
+
 	@Subscribe
 	public void onChatMessage(ChatMessage e)
 	{

@@ -19,20 +19,26 @@ public class Bank
 {
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	static List<Widget> bankItems = new ArrayList<>();
-	public static ItemQuery search(){
+
+	public static ItemQuery search()
+	{
 		return new ItemQuery(bankItems);
 	}
+
 	@Subscribe
-	public void onItemContainerChanged(ItemContainerChanged e){
-		switch(e.getContainerId()){
+	public void onItemContainerChanged(ItemContainerChanged e)
+	{
+		switch (e.getContainerId())
+		{
 			case 95:
-				if(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER)==null){
+				if (client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER) == null)
+				{
 					Bank.bankItems.clear();
 				}
 				try
 				{
 					Bank.bankItems =
-							Arrays.stream(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x->x.getItemId()!=6512&&x.getItemId()!=-1).collect(Collectors.toList());
+							Arrays.stream(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
 				}
 				catch (NullPointerException ex)
 				{
@@ -41,10 +47,11 @@ public class Bank
 				break;
 		}
 	}
+
 	@Subscribe
 	public void onGameStateChanged(GameStateChanged gameStateChanged)
 	{
-		if (gameStateChanged.getGameState() == GameState.HOPPING|| gameStateChanged.getGameState() == GameState.LOGIN_SCREEN||gameStateChanged.getGameState()== GameState.CONNECTION_LOST)
+		if (gameStateChanged.getGameState() == GameState.HOPPING || gameStateChanged.getGameState() == GameState.LOGIN_SCREEN || gameStateChanged.getGameState() == GameState.CONNECTION_LOST)
 		{
 			Bank.bankItems.clear();
 		}

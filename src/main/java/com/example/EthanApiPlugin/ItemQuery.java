@@ -51,6 +51,7 @@ public class ItemQuery
 		items = items.stream().filter(item -> item.getName().equals(name)).collect(Collectors.toList());
 		return this;
 	}
+
 	public ItemQuery quantityGreaterThan(int quanity)
 	{
 		items = items.stream().filter(item -> item.getItemQuantity() > quanity).collect(Collectors.toList());
@@ -62,6 +63,7 @@ public class ItemQuery
 		items = items.stream().filter(item -> item.getName().contains(name)).collect(Collectors.toList());
 		return this;
 	}
+
 	public ItemQuery nonPlaceHolder()
 	{
 		return quantityGreaterThan(0);

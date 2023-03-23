@@ -30,6 +30,7 @@ public class PacketReflection
 	@Inject
 	Client clientInstance;
 	public static Client client = null;
+
 	@SneakyThrows
 	public boolean LoadPackets()
 	{
@@ -196,7 +197,7 @@ public class PacketReflection
 				}
 			}
 			PACKETWRITER.setAccessible(true);
-			Method addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName,packetBufferNode.getClass(),int.class);
+			Method addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
 			addNode.setAccessible(true);
 			addNode.invoke(PACKETWRITER.get(null), packetBufferNode,
 					Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));

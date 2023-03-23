@@ -2,13 +2,16 @@ package com.example.NightmareHelper;
 
 import java.util.HashMap;
 
-public class WeaponMap {
+public class WeaponMap
+{
 	public static HashMap<Integer, WeaponStyle> StyleMap = new HashMap();
 
-	public WeaponMap() {
+	public WeaponMap()
+	{
 	}
 
-	static {
+	static
+	{
 		StyleMap.put(20011, WeaponStyle.MELEE);
 		StyleMap.put(12426, WeaponStyle.MELEE);
 		StyleMap.put(20014, WeaponStyle.MELEE);

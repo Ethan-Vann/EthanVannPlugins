@@ -1,6 +1,7 @@
 package com.example.NightmareHelper;
 
-public enum WeaponStyle {
+public enum WeaponStyle
+{
 	MAGIC,
 	RANGE,
 	MELEE,

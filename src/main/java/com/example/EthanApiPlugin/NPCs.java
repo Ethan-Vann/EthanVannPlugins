@@ -20,13 +20,14 @@ public class NPCs
 	}
 
 	@Subscribe(priority = 10000)
-	public void onGameTick(GameTick e){
+	public void onGameTick(GameTick e)
+	{
 		npcList.clear();
 		for (NPC npc : client.getNpcs())
 		{
-			if(npc==null)
+			if (npc == null)
 				continue;
-			if(npc.getId()==-1)
+			if (npc.getId() == -1)
 				continue;
 			npcList.add(npc);
 		}

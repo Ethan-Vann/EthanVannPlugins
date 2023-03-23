@@ -76,11 +76,16 @@ public class SuperGlassMakerPlugin extends Plugin
 		Optional<TileObject> bank = TileObjects.search().withAction("Bank").nearestToPlayer();
 		if (client.getWidget(WidgetInfo.BANK_CONTAINER) == null)
 		{
-			if(banker.isPresent()){
-				NPCInteraction.interact(banker.get(),"Bank");
-			}else if(bank.isPresent()){
-				TileObjectInteraction.interact(bank.get(),"Bank");
-			}else{
+			if (banker.isPresent())
+			{
+				NPCInteraction.interact(banker.get(), "Bank");
+			}
+			else if (bank.isPresent())
+			{
+				TileObjectInteraction.interact(bank.get(), "Bank");
+			}
+			else
+			{
 				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "couldn't find bank or banker", null);
 				api.stopPlugin(this);
 				return;
@@ -91,18 +96,22 @@ public class SuperGlassMakerPlugin extends Plugin
 		Optional<Widget> astral = BankInventory.search().withId(ItemID.ASTRAL_RUNE).first();
 		Optional<Widget> secondary = Bank.search().withId(config.secondary().getId()).first();
 		Widget make_glass = client.getWidget(14286966);
-		if (sand.isEmpty()||astral.isEmpty()||secondary.isEmpty()|| make_glass == null)
+		if (sand.isEmpty() || astral.isEmpty() || secondary.isEmpty() || make_glass == null)
 		{
-			if(sand.isEmpty()){
+			if (sand.isEmpty())
+			{
 				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "no sand", null);
 			}
-			if(astral.isEmpty()){
+			if (astral.isEmpty())
+			{
 				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "no astral", null);
 			}
-			if(secondary.isEmpty()){
+			if (secondary.isEmpty())
+			{
 				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "no secondary", null);
 			}
-			if(make_glass == null){
+			if (make_glass == null)
+			{
 				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "spell was null", null);
 			}
 			api.stopPlugin(this);
@@ -116,16 +125,22 @@ public class SuperGlassMakerPlugin extends Plugin
 		MousePackets.queueClickPacket();
 		WidgetPackets.queueWidgetAction(sand.get(), "Withdraw-" + config.secondary().getSandAmount());
 		boolean secondaryWithdrawn = handleSecondary();
-		if(!secondaryWithdrawn){
+		if (!secondaryWithdrawn)
+		{
 			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "no secondary stop plugin", null);
 			api.stopPlugin(this);
 			return;
 		}
-		if(banker.isPresent()){
-			NPCInteraction.interact(banker.get(),"Bank");
-		}else if(bank.isPresent()){
-			TileObjectInteraction.interact(bank.get(),"Bank");
-		}else{
+		if (banker.isPresent())
+		{
+			NPCInteraction.interact(banker.get(), "Bank");
+		}
+		else if (bank.isPresent())
+		{
+			TileObjectInteraction.interact(bank.get(), "Bank");
+		}
+		else
+		{
 			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "couldn't find bank or banker try 2", null);
 			api.stopPlugin(this);
 			return;
@@ -154,7 +169,7 @@ public class SuperGlassMakerPlugin extends Plugin
 			return true;
 		}
 		MousePackets.queueClickPacket();
-		WidgetPackets.queueWidgetAction(secondary.get(), "Withdraw-"+config.secondary().getSandAmount());
+		WidgetPackets.queueWidgetAction(secondary.get(), "Withdraw-" + config.secondary().getSandAmount());
 		return true;
 	}
 

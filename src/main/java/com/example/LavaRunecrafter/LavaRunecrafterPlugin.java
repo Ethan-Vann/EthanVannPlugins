@@ -396,8 +396,6 @@ public class LavaRunecrafterPlugin extends Plugin
 	}
 
 
-	
-
 	@Subscribe
 	public void onGameObjectSpawned(GameObjectSpawned e)
 	{
@@ -545,8 +543,7 @@ public class LavaRunecrafterPlugin extends Plugin
 		return (int) inventoryItems.stream().filter(item -> item.getItemId() == ItemID.PURE_ESSENCE || item.getItemId()
 				== ItemID.RUNE_ESSENCE).count();
 	}
-	
-	
+
 
 	@Subscribe
 	public void onChatMessage(ChatMessage e)

@@ -21,44 +21,58 @@ public class DepositBox
 {
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	static List<Widget> depositBoxItems = new ArrayList<>();
-	public static ItemQuery search(){
+
+	public static ItemQuery search()
+	{
 		return new ItemQuery(depositBoxItems);
 	}
+
 	@Subscribe
-	public void onWidgetLoaded(WidgetLoaded e){
-		if(e.getGroupId()== WidgetID.DEPOSIT_BOX_GROUP_ID){
+	public void onWidgetLoaded(WidgetLoaded e)
+	{
+		if (e.getGroupId() == WidgetID.DEPOSIT_BOX_GROUP_ID)
+		{
 			try
 			{
 				DepositBox.depositBoxItems =
-						Arrays.stream(client.getWidget(WidgetInfo.DEPOSIT_BOX_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x->x.getItemId()!=6512&&x.getItemId()!=-1).collect(Collectors.toList());
-			}catch (NullPointerException err){
+						Arrays.stream(client.getWidget(WidgetInfo.DEPOSIT_BOX_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
+			}
+			catch (NullPointerException err)
+			{
 				DepositBox.depositBoxItems.clear();
 			}
 		}
 	}
+
 	@Subscribe
-	public void onItemContainerChanged(ItemContainerChanged e){
-		switch(e.getContainerId()){
+	public void onItemContainerChanged(ItemContainerChanged e)
+	{
+		switch (e.getContainerId())
+		{
 			case 93:
-				if(client.getWidget(WidgetInfo.DEPOSIT_BOX_INVENTORY_ITEMS_CONTAINER)==null){
+				if (client.getWidget(WidgetInfo.DEPOSIT_BOX_INVENTORY_ITEMS_CONTAINER) == null)
+				{
 					DepositBox.depositBoxItems.clear();
 					return;
 				}
 				try
 				{
 					DepositBox.depositBoxItems =
-							Arrays.stream(client.getWidget(WidgetInfo.DEPOSIT_BOX_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x->x.getItemId()!=6512&&x.getItemId()!=-1).collect(Collectors.toList());
+							Arrays.stream(client.getWidget(WidgetInfo.DEPOSIT_BOX_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
 					break;
-				}catch (NullPointerException err){
+				}
+				catch (NullPointerException err)
+				{
 					DepositBox.depositBoxItems.clear();
 					break;
 				}
 		}
 	}
+
 	@Subscribe
 	public void onGameStateChanged(GameStateChanged gameStateChanged)
 	{
-		if (gameStateChanged.getGameState() == GameState.HOPPING|| gameStateChanged.getGameState() == GameState.LOGIN_SCREEN||gameStateChanged.getGameState()== GameState.CONNECTION_LOST)
+		if (gameStateChanged.getGameState() == GameState.HOPPING || gameStateChanged.getGameState() == GameState.LOGIN_SCREEN || gameStateChanged.getGameState() == GameState.CONNECTION_LOST)
 		{
 			DepositBox.depositBoxItems.clear();
 		}

@@ -281,8 +281,8 @@ public class gauntletFlicker extends Plugin
 		}
 	}
 
-		private boolean isHunllefVarbitSet ()
-		{
-			return client.getVarbitValue(9177) == 1;
-		}
+	private boolean isHunllefVarbitSet()
+	{
+		return client.getVarbitValue(9177) == 1;
 	}
+}

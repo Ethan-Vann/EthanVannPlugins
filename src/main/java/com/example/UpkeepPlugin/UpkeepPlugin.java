@@ -45,7 +45,7 @@ public class UpkeepPlugin extends Plugin
 	{
 		return configManager.getConfig(UpkeepPluginConfig.class);
 	}
-	
+
 	@Override
 	@SneakyThrows
 	public void startUp()
@@ -65,34 +65,42 @@ public class UpkeepPlugin extends Plugin
 		int hitpoints = this.client.getBoostedSkillLevel(Skill.HITPOINTS);
 		int prayer = this.client.getBoostedSkillLevel(Skill.PRAYER);
 		int magic = this.client.getBoostedSkillLevel(Skill.MAGIC);
-		int stamina = client.getEnergy()/100;
+		int stamina = client.getEnergy() / 100;
 		int ranged = this.client.getBoostedSkillLevel(Skill.RANGED);
 		int strength = this.client.getBoostedSkillLevel(Skill.STRENGTH);
-		if(hitpoints<config.HealthLowAmount()){
+		if (hitpoints < config.HealthLowAmount())
+		{
 			handleAction(config.HealthActions());
 		}
-		if(prayer<config.PrayerLowAmount()){
+		if (prayer < config.PrayerLowAmount())
+		{
 			handleAction(config.PrayerActions());
 		}
-		if(magic<config.MagicLowAmount()){
+		if (magic < config.MagicLowAmount())
+		{
 			handleAction(config.MagicActions());
 		}
-		if(stamina<config.StaminaLowAmount()){
+		if (stamina < config.StaminaLowAmount())
+		{
 			handleAction(config.StaminaActions());
 		}
-		if(ranged<config.RangeLowAmount()){
+		if (ranged < config.RangeLowAmount())
+		{
 			handleAction(config.RangeActions());
 		}
-		if(strength<config.StrengthLowAmount()){
+		if (strength < config.StrengthLowAmount())
+		{
 			handleAction(config.StrengthActions());
 		}
 	}
 
-	public void handleAction(String actionParam){
+	public void handleAction(String actionParam)
+	{
 		String[] Actions = actionParam.split("\n");
 		for (String Action : Actions)
 		{
-			if(!Action.contains(":")){
+			if (!Action.contains(":"))
+			{
 				continue;
 			}
 			String action = Action.split(":")[0];
@@ -100,11 +108,12 @@ public class UpkeepPlugin extends Plugin
 			String[] items = itemCSV.split(",");
 			for (String item : items)
 			{
-				Optional<Widget> itemBeingUsed = StringUtils.isNumeric(item)?
-						Inventory.search().withId(Integer.parseInt(item)).first():
+				Optional<Widget> itemBeingUsed = StringUtils.isNumeric(item) ?
+						Inventory.search().withId(Integer.parseInt(item)).first() :
 						Inventory.search().matchesWildCardNoCase(item).first();
-				if(itemBeingUsed.isPresent()){
-					InventoryInteraction.useItem(itemBeingUsed.get(),action);
+				if (itemBeingUsed.isPresent())
+				{
+					InventoryInteraction.useItem(itemBeingUsed.get(), action);
 					break;
 				}
 			}

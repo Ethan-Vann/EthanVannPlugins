@@ -8,9 +8,11 @@ public class TileItemPackets
 {
 	@SneakyThrows
 	public static void queueTileItemAction(int actionFieldNo, int objectId, int worldPointX, int worldPointY,
-								   boolean ctrlDown) {
+										   boolean ctrlDown)
+	{
 		int ctrl = ctrlDown ? 1 : 0;
-		switch (actionFieldNo) {
+		switch (actionFieldNo)
+		{
 			case 1:
 				PacketReflection.sendPacket(PacketDef.OPOBJ1, objectId, worldPointX, worldPointY, ctrl);
 				break;
@@ -28,8 +30,10 @@ public class TileItemPackets
 				break;
 		}
 	}
+
 	public static void queueWidgetOnTileItem(int objectId, int worldPointX, int worldPointY, int sourceSlot,
-										int sourceItemId, int sourceWidgetId, boolean ctrlDown) {
+											 int sourceItemId, int sourceWidgetId, boolean ctrlDown)
+	{
 		int ctrl = ctrlDown ? 1 : 0;
 		PacketReflection.sendPacket(PacketDef.OPOBJT, objectId, worldPointX, worldPointY, sourceSlot, sourceItemId,
 				sourceWidgetId, ctrl);

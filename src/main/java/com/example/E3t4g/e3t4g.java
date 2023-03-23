@@ -37,31 +37,35 @@ public class e3t4g extends Plugin
 	@Inject
 	WidgetPackets widgetPackets;
 	int[][] rockPos = new int[][]{{3165, 2908}, {3165, 2909}, {3165, 2910}, {3167, 2911}};
-	int timeout=0;
+	int timeout = 0;
 	int rock = 0;
 	@Inject
 	EthanApiPlugin api;
+
 	@Subscribe
 	public void onGameTick(GameTick e)
 	{
-		timeout = timeout == 0 ? 2 : timeout-1;
-		if(timeout!=2) return;
+		timeout = timeout == 0 ? 2 : timeout - 1;
+		if (timeout != 2) return;
 		int sizeEmpty = Inventory.search().withId(ItemID.WATERSKIN0).result().size();
 		int sizeFilled = Inventory.search().nameContains("Waterskin").result().size();
-		if(sizeEmpty>0){
-			if(sizeEmpty==sizeFilled){
+		if (sizeEmpty > 0)
+		{
+			if (sizeEmpty == sizeFilled)
+			{
 				MousePackets.queueClickPacket();
-				WidgetPackets.queueWidgetAction(client.getWidget(WidgetInfoExtended.SPELL_HUMIDIFY.getPackedId()),"Cast");
+				WidgetPackets.queueWidgetAction(client.getWidget(WidgetInfoExtended.SPELL_HUMIDIFY.getPackedId()), "Cast");
 				timeout = 10;
 				return;
 			}
 		}
 		Optional<Widget> guam = Inventory.search().withId(ItemID.GUAM_LEAF).first();
 		Optional<Widget> tar = Inventory.search().withId(ItemID.SWAMP_TAR).first();
-		if(guam.isEmpty() || tar.isEmpty()){
+		if (guam.isEmpty() || tar.isEmpty())
+		{
 			api.stopPlugin(this);
 			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "please make sure you have guam leaf and swamp tar" +
-					" before starting",	null);
+					" before starting", null);
 			return;
 		}
 		MousePackets.queueClickPacket();

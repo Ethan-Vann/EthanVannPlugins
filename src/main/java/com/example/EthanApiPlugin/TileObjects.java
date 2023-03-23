@@ -15,10 +15,12 @@ public class TileObjects
 {
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	static List<TileObject> tileObjects = new ArrayList<>();
+
 	public static TileObjectQuery search()
 	{
 		return new TileObjectQuery(tileObjects);
 	}
+
 	@Subscribe(priority = 10000)
 	public void onGameTick(GameTick e)
 	{
