@@ -71,6 +71,7 @@ public class EthanApiPlugin extends Plugin
 		try
 		{
 			var1 = skullField.getInt(player) * -2104357805;
+			skullField.setAccessible(false);
 		}
 		catch (IllegalAccessException | NullPointerException e)
 		{
