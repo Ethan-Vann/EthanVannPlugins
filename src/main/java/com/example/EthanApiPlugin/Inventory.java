@@ -25,6 +25,21 @@ public class Inventory
 		return new ItemQuery(inventoryItems);
 	}
 
+	public static int getEmptySlots()
+	{
+		return 28 - search().result().size();
+	}
+
+	public static int getItemAmount(int itemId)
+	{
+		return search().withId(itemId).result().size();
+	}
+
+	public static int getItemAmount(String itemName)
+	{
+		return search().withName(itemName).result().size();
+	}
+
 	@Subscribe
 	public void onItemContainerChanged(ItemContainerChanged e)
 	{
