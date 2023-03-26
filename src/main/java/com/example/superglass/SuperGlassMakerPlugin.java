@@ -51,7 +51,7 @@ public class SuperGlassMakerPlugin extends Plugin
 	{
 		timeout = 0;
 	}
-
+	int timesFailed = 0;
 	@Override
 	public void shutDown()
 	{
@@ -114,8 +114,28 @@ public class SuperGlassMakerPlugin extends Plugin
 			{
 				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "spell was null", null);
 			}
-			api.stopPlugin(this);
+			timesFailed++;
+			if(timesFailed>2){
+				api.stopPlugin(this);
+			}else{
+				if (banker.isPresent())
+				{
+					NPCInteraction.interact(banker.get(), "Bank");
+				}
+				else if (bank.isPresent())
+				{
+					TileObjectInteraction.interact(bank.get(), "Bank");
+				}
+				else
+				{
+					client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "couldn't find bank or banker", null);
+					api.stopPlugin(this);
+					return;
+				}
+			}
 			return;
+		}else{
+			timesFailed = 0;
 		}
 		if (glass.isPresent())
 		{

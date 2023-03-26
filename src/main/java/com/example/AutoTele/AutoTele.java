@@ -145,6 +145,7 @@ public class AutoTele extends Plugin
 				{
 					teleported = true;
 					InventoryInteraction.useItem(row.get(), "Rub");
+					MousePackets.queueClickPacket();
 					WidgetPackets.queueResumePause(14352385, 2);
 				}
 				if (rowEquipment != null && !teleported)

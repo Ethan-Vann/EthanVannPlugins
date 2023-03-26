@@ -48,8 +48,7 @@ import static net.runelite.api.Varbits.QUICK_PRAYER;
 public class EthanApiPlugin extends Plugin
 {
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
-	@Inject
-	PluginManager pluginManager;
+	static PluginManager pluginManager = RuneLite.getInjector().getInstance(PluginManager.class);
 	@Inject
 	EventBus eventBus;
 
@@ -457,7 +456,7 @@ public class EthanApiPlugin extends Plugin
 	}
 
 	@SneakyThrows
-	public void stopPlugin(Plugin plugin)
+	public static void stopPlugin(Plugin plugin)
 	{
 
 		SwingUtilities.invokeAndWait(() ->
