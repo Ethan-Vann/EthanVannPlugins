@@ -85,6 +85,14 @@ public class AutoTele extends Plugin
 			previousLevel = -1;
 		}
 		Item rowEquipment = null;
+		if (client.getItemContainer(InventoryID.EQUIPMENT) != null)
+		{
+			rowEquipment = client.getItemContainer(InventoryID.EQUIPMENT).getItem(EquipmentInventorySlot.RING.getSlotIdx());
+		}
+		if ((rowEquipment != null && !RING_OF_WEALTH_ITEM_IDS.contains(rowEquipment.getId())))
+		{
+			rowEquipment = null;
+		}
 		if (level > -1)
 		{
 			if (previousLevel == -1)
@@ -92,15 +100,6 @@ public class AutoTele extends Plugin
 				previousLevel = level;
 				Optional<Widget> royal_seed_pod = Inventory.search().withId(ItemID.ROYAL_SEED_POD).first();
 				Optional<Widget> ring_of_wealth = Inventory.search().nameContains("Ring of wealth (").first();
-				try
-				{
-					rowEquipment =
-							client.getItemContainer(InventoryID.EQUIPMENT).getItem(EquipmentInventorySlot.RING.getSlotIdx());
-				}
-				catch (NullPointerException ignored)
-				{
-
-				}
 				if (config.alert())
 				{
 					if (royal_seed_pod.isPresent() || ring_of_wealth.isPresent() || (rowEquipment != null && RING_OF_WEALTH_ITEM_IDS.contains(rowEquipment.getId())))
@@ -116,10 +115,6 @@ public class AutoTele extends Plugin
 								"teleport possible mistake?", null);
 					}
 				}
-			}
-			if ((rowEquipment != null && !RING_OF_WEALTH_ITEM_IDS.contains(rowEquipment.getId())))
-			{
-				rowEquipment = null;
 			}
 		}
 		for (Player player : client.getPlayers())
