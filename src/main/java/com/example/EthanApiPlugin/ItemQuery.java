@@ -1,5 +1,6 @@
 package com.example.EthanApiPlugin;
 
+import lombok.SneakyThrows;
 import net.runelite.api.Client;
 import net.runelite.api.ItemComposition;
 import net.runelite.api.widgets.Widget;
@@ -122,9 +123,10 @@ public class ItemQuery
 		return Optional.ofNullable(items.get(0));
 	}
 
+	@SneakyThrows
 	public boolean isNoted(Widget item)
 	{
-		ItemComposition itemComposition = itemManager.getItemComposition(item.getItemId());
+		ItemComposition itemComposition = EthanApiPlugin.itemDefs.get(item.getItemId());
 		return itemComposition.getNote() != -1;
 	}
 }

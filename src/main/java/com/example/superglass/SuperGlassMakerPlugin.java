@@ -29,6 +29,7 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.Optional;
 
 @PluginDescriptor(name = "Super Glass Maker", description = "", enabledByDefault = false, tags = {"ethan"})
@@ -79,10 +80,12 @@ public class SuperGlassMakerPlugin extends Plugin
 			if (banker.isPresent())
 			{
 				NPCInteraction.interact(banker.get(), "Bank");
+				return;
 			}
 			else if (bank.isPresent())
 			{
 				TileObjectInteraction.interact(bank.get(), "Bank");
+				return;
 			}
 			else
 			{

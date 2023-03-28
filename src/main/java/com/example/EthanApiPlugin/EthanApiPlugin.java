@@ -1,5 +1,8 @@
 package com.example.EthanApiPlugin;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.inject.Inject;
 import lombok.SneakyThrows;
 import net.runelite.api.Client;
@@ -8,6 +11,7 @@ import net.runelite.api.GameObject;
 import net.runelite.api.HeadIcon;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
+import net.runelite.api.ItemComposition;
 import net.runelite.api.NPC;
 import net.runelite.api.Player;
 import net.runelite.api.Point;
@@ -20,6 +24,7 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.RuneLite;
 import net.runelite.client.eventbus.EventBus;
+import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.PluginInstantiationException;
@@ -35,6 +40,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static net.runelite.api.Varbits.QUICK_PRAYER;
@@ -49,10 +55,23 @@ public class EthanApiPlugin extends Plugin
 {
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	static PluginManager pluginManager = RuneLite.getInjector().getInstance(PluginManager.class);
+	static ItemManager itemManager = RuneLite.getInjector().getInstance(ItemManager.class);
 	@Inject
 	EventBus eventBus;
+	public static LoadingCache<Integer, ItemComposition> itemDefs= CacheBuilder.newBuilder()
+		.maximumSize(1000)
+       .expireAfterWrite(20, TimeUnit.MINUTES)
+       .build(
+           new CacheLoader<Integer, ItemComposition>() {
+	@Override
+	public ItemComposition load(Integer itemId){
+		return itemManager.getItemComposition(itemId);
+	}
+	});
 
-
+	public static boolean testBit(int a,int b){
+		return (a & 1 << b) != 0;
+	}
 	public static SkullIcon getSkullIcon(Player player)
 	{
 		Field skullField = null;
