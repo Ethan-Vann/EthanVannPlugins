@@ -12,7 +12,9 @@ import net.runelite.client.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class Bank
 {
@@ -21,7 +23,7 @@ public class Bank
 	boolean bankUpdate = true;
 	public static ItemQuery search()
 	{
-		return new ItemQuery(bankItems);
+		return new ItemQuery(bankItems.stream().filter(Objects::nonNull).collect(Collectors.toList()));
 	}
 
 	@Subscribe

@@ -7,15 +7,12 @@ import net.runelite.api.ItemComposition;
 import net.runelite.api.ItemID;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.ItemContainerChanged;
-import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.RuneLite;
 import net.runelite.client.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -28,24 +25,7 @@ public class BankInventory
 
 	public static ItemQuery search()
 	{
-		return new ItemQuery(bankIventoryItems);
-	}
-
-	@Subscribe
-	public void onWidgetLoaded(WidgetLoaded e)
-	{
-		if (e.getGroupId() == WidgetID.BANK_INVENTORY_GROUP_ID)
-		{
-			try
-			{
-				BankInventory.bankIventoryItems =
-						Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
-			}
-			catch (NullPointerException err)
-			{
-				BankInventory.bankIventoryItems.clear();
-			}
-		}
+		return new ItemQuery(bankIventoryItems.stream().filter(Objects::nonNull).collect(Collectors.toList()));
 	}
 
 	@Subscribe
@@ -53,6 +33,7 @@ public class BankInventory
 	{
 		switch (e.getContainerId())
 		{
+			case 95:
 			case 93:
 				BankInventory.bankIventoryItems.clear();
 				int counter = 0;
