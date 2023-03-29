@@ -33,7 +33,6 @@ public class BankInventory
 	{
 		switch (e.getContainerId())
 		{
-			case 95:
 			case 93:
 				BankInventory.bankIventoryItems.clear();
 				int counter = 0;
