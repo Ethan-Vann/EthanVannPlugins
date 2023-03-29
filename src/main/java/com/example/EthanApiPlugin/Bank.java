@@ -1,9 +1,8 @@
 package com.example.EthanApiPlugin;
 
 import net.runelite.api.Client;
-import net.runelite.api.Item;
-import net.runelite.api.ItemComposition;
-import net.runelite.api.events.GameTick;
+import net.runelite.api.GameState;
+import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
@@ -11,9 +10,9 @@ import net.runelite.client.RuneLite;
 import net.runelite.client.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class Bank
@@ -25,44 +24,66 @@ public class Bank
 	{
 		return new ItemQuery(bankItems.stream().filter(Objects::nonNull).collect(Collectors.toList()));
 	}
-
 	@Subscribe
-	public void onGameTick(GameTick e){
-		if(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER) != null){
-			if(bankUpdate){
-				bankUpdate = false;
-			}
-		}
-	}
-	@Subscribe
-	public void onItemContainerChanged(ItemContainerChanged e) throws ExecutionException
+	public void onItemContainerChanged(ItemContainerChanged e)
 	{
 		switch (e.getContainerId())
 		{
 			case 95:
-				Bank.bankItems.clear();
-				int counter = 0;
-				for(Item item: e.getItemContainer().getItems()){
-					if(item==null){
-						counter++;
-						continue;
-					}
-					if(item.getId() == -1){
-						counter++;
-						continue;
-					}
-					if(item.getId() == 6512){
-						counter++;
-						continue;
-					}
-					ItemComposition tempComp = EthanApiPlugin.itemDefs.get(item.getId());
-					String withdrawCustom = "Withdraw-" + client.getVarbitValue(3960);
-					String[] actions = new String[]{"", "Withdraw-1", "Withdraw-5", "Withdraw-10", withdrawCustom, "Withdraw-X", "Withdraw-All", "Withdraw-All-but-1", null, "Examine"};
-					Bank.bankItems.add(new MinimalItemWidget(counter,
-							WidgetInfo.BANK_ITEM_CONTAINER.getPackedId(), item.getId(),
-							tempComp.getName(), item.getQuantity(), actions));
-					counter++;
+				if (client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER) == null)
+				{
+					Bank.bankItems.clear();
 				}
+				try
+				{
+					Bank.bankItems =
+							Arrays.stream(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
+				}
+				catch (NullPointerException ex)
+				{
+					Bank.bankItems.clear();
+				}
+				break;
+		}
+	}
+
+	@Subscribe
+	public void onGameStateChanged(GameStateChanged gameStateChanged)
+	{
+		if (gameStateChanged.getGameState() == GameState.HOPPING || gameStateChanged.getGameState() == GameState.LOGIN_SCREEN || gameStateChanged.getGameState() == GameState.CONNECTION_LOST)
+		{
+			Bank.bankItems.clear();
+		}
+	}
+//	@Subscribe
+//	public void onItemContainerChanged(ItemContainerChanged e) throws ExecutionException
+//	{
+//		switch (e.getContainerId())
+//		{
+//			case 95:
+//				Bank.bankItems.clear();
+//				int counter = 0;
+//				for(Item item: e.getItemContainer().getItems()){
+//					if(item==null){
+//						counter++;
+//						continue;
+//					}
+//					if(item.getId() == -1){
+//						counter++;
+//						continue;
+//					}
+//					if(item.getId() == 6512){
+//						counter++;
+//						continue;
+//					}
+//					ItemComposition tempComp = EthanApiPlugin.itemDefs.get(item.getId());
+//					String withdrawCustom = "Withdraw-" + client.getVarbitValue(3960);
+//					String[] actions = new String[]{"", "Withdraw-1", "Withdraw-5", "Withdraw-10", withdrawCustom, "Withdraw-X", "Withdraw-All", "Withdraw-All-but-1", null, "Examine"};
+//					Bank.bankItems.add(new MinimalItemWidget(counter,
+//							WidgetInfo.BANK_ITEM_CONTAINER.getPackedId(), item.getId(),
+//							tempComp.getName(), item.getQuantity(), actions));
+//					counter++;
+//				}
 //				if (client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER) == null)
 //				{
 //					Bank.bankItems.clear();
@@ -77,6 +98,6 @@ public class Bank
 //					Bank.bankItems.clear();
 //				}
 //				break;
-		}
-	}
+//		}
+//	}
 }
