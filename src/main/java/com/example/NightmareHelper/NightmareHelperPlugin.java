@@ -169,9 +169,6 @@ public class NightmareHelperPlugin extends Plugin
 				widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 12); //quickPrayer magic
 			}
 		}
-
-
-		movementPackets.queueMovement(client.getLocalPlayer().getWorldLocation().dx(5).dy(10));
 	}
 
 	@Subscribe
@@ -191,11 +188,11 @@ public class NightmareHelperPlugin extends Plugin
 		{
 			return;
 		}
-		if (e.getMessage().contains("the nightmare has cursed you, shuffling your prayers!"))
+		if (e.getMessage().toLowerCase().contains("the nightmare has cursed you, shuffling your prayers!"))
 		{
 			cursed = true;
 		}
-		if (e.getMessage().contains("you feel the effects of the nightmare's curse wear off."))
+		if (e.getMessage().toLowerCase().contains("you feel the effects of the nightmare's curse wear off."))
 		{
 			cursed = false;
 		}
