@@ -191,11 +191,11 @@ public class NightmareHelperPlugin extends Plugin
 		{
 			return;
 		}
-		if (e.getMessage().contains("the nightmare has cursed you, shuffling your prayers!"))
+		if (e.getMessage().toLowerCase().contains("the nightmare has cursed you, shuffling your prayers!"))
 		{
 			cursed = true;
 		}
-		if (e.getMessage().contains("you feel the effects of the nightmare's curse wear off."))
+		if (e.getMessage().toLowerCase().contains("you feel the effects of the nightmare's curse wear off."))
 		{
 			cursed = false;
 		}
