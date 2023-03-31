@@ -115,7 +115,7 @@ public class NPCQuery
 
 	public NPCQuery walkable()
 	{
-		npcs = npcs.stream().filter(npc -> EthanApiPlugin.canPathToTile(npc.getWorldLocation())).collect(Collectors.toList());
+		npcs = npcs.stream().filter(npc -> EthanApiPlugin.canPathToTile(npc.getWorldLocation()).isReachable()).collect(Collectors.toList());
 		return this;
 	}
 

@@ -191,7 +191,7 @@ public class EthanApiPlugin extends Plugin
 
 	public List<WorldPoint> reachableTiles()
 	{
-		return new ArrayList<>(Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(x -> canPathToTile(x.getWorldLocation())).map(Tile::getWorldLocation).filter(Objects::nonNull).collect(Collectors.toList()));
+		return new ArrayList<>(Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(x -> canPathToTile(x.getWorldLocation()).isReachable()).map(Tile::getWorldLocation).filter(Objects::nonNull).collect(Collectors.toList()));
 	}
 
 	@Deprecated
@@ -324,18 +324,18 @@ public class EthanApiPlugin extends Plugin
 		return -1;
 	}
 
-	public static boolean canPathToTile(WorldPoint destinationTile)
+	public static PathResult canPathToTile(WorldPoint destinationTile)
 	{
 		int z = client.getPlane();
 		if (z != destinationTile.getPlane())
 		{
-			return false;
+			return new PathResult(false, Integer.MAX_VALUE);
 		}
 
 		CollisionData[] collisionData = client.getCollisionMaps();
 		if (collisionData == null)
 		{
-			return false;
+			return new PathResult(false, Integer.MAX_VALUE);
 		}
 
 		int[][] directions = new int[128][128];
@@ -374,6 +374,7 @@ public class EthanApiPlugin extends Plugin
 		bufferY[0] = currentY;
 		int[][] collisionDataFlags = collisionData[z].getFlags();
 
+		int currentDistance = Integer.MAX_VALUE;
 		boolean isReachable = false;
 
 		while (index1 != index2)
@@ -390,7 +391,7 @@ public class EthanApiPlugin extends Plugin
 				break;
 			}
 
-			int currentDistance = distances[currentMapX][currentMapY] + 1;
+			currentDistance = distances[currentMapX][currentMapY] + 1;
 			if (currentMapX > 0 && directions[currentMapX - 1][currentMapY] == 0 && (collisionDataFlags[currentX - 1][currentY] & 19136776) == 0)
 			{
 				// Able to move 1 tile west
@@ -471,7 +472,27 @@ public class EthanApiPlugin extends Plugin
 				distances[currentMapX + 1][currentMapY + 1] = currentDistance;
 			}
 		}
-		return isReachable;
+		return new PathResult(isReachable, currentDistance);
+	}
+
+	static class PathResult {
+		private final boolean reachable;
+		private final int distance;
+
+		public PathResult(boolean reachable, int distance)
+		{
+			this.reachable = reachable;
+			this.distance = distance;
+		}
+
+		public boolean isReachable()
+		{
+			return reachable;
+		}
+
+		public int getDistance() {
+			return distance;
+		}
 	}
 
 	@SneakyThrows
