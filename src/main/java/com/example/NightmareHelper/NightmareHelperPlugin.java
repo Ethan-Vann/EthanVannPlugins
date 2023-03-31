@@ -169,9 +169,6 @@ public class NightmareHelperPlugin extends Plugin
 				widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 12); //quickPrayer magic
 			}
 		}
-
-
-		movementPackets.queueMovement(client.getLocalPlayer().getWorldLocation().dx(5).dy(10));
 	}
 
 	@Subscribe
