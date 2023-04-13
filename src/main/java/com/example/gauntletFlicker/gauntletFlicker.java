@@ -16,6 +16,7 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemComposition;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
+import net.runelite.api.Skill;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.MenuOptionClicked;
@@ -200,17 +201,21 @@ public class gauntletFlicker extends Plugin
 				if (pietyUnlocked() && !EthanApiPlugin.isQuickPrayerActive(QuickPrayer.PIETY))
 				{
 					MousePackets.queueClickPacket();
-					WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 26); //quickPrayer augury
+					WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 26);
 				}
 				else if (!pietyUnlocked() && !EthanApiPlugin.isQuickPrayerActive(QuickPrayer.ULTIMATE_STRENGTH))
 				{
 					MousePackets.queueClickPacket();
-					WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 10); //quickPrayer mystic might
+					WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 10);
 					if (!EthanApiPlugin.isQuickPrayerActive(QuickPrayer.INCREDIBLE_REFLEXES))
 					{
 						MousePackets.queueClickPacket();
-						WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 11); //quickPrayer augury
+						WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 11);
 					}
+				}else if(!pietyUnlocked() && !EthanApiPlugin.isQuickPrayerActive(QuickPrayer.STEEL_SKIN))
+				{
+					MousePackets.queueClickPacket();
+					WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, QuickPrayer.STEEL_SKIN.getIndex());
 				}
 			}
 		}
@@ -223,17 +228,17 @@ public class gauntletFlicker extends Plugin
 
 	public boolean rigourUnlocked()
 	{
-		return !(client.getVarbitValue(5451) == 0);
+		return !(client.getVarbitValue(5451) == 0)&&client.getRealSkillLevel(Skill.PRAYER)>=74&&client.getRealSkillLevel(Skill.DEFENCE)>=70;
 	}
 
 	public boolean pietyUnlocked()
 	{
-		return client.getVarbitValue(3909) == 8;
+		return client.getVarbitValue(3909) == 8&&client.getRealSkillLevel(Skill.PRAYER)>=70&&client.getRealSkillLevel(Skill.DEFENCE)>=70;
 	}
 
 	public boolean auguryUnlucked()
 	{
-		return !(client.getVarbitValue(5452) == 0);
+		return !(client.getVarbitValue(5452) == 0)&&client.getRealSkillLevel(Skill.PRAYER)>=77&&client.getRealSkillLevel(Skill.DEFENCE)>=70;
 	}
 
 

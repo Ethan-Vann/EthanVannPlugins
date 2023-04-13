@@ -197,10 +197,9 @@ public class PacketReflection
 				}
 			}
 			PACKETWRITER.setAccessible(true);
-			Method addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
+			Method addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName,PACKETWRITER.get(null).getClass(),packetBufferNode.getClass(), int.class);
 			addNode.setAccessible(true);
-			addNode.invoke(PACKETWRITER.get(null), packetBufferNode,
-					Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
+			addNode.invoke(null,PACKETWRITER.get(null),packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
 			addNode.setAccessible(false);
 			PACKETWRITER.setAccessible(false);
 		}
