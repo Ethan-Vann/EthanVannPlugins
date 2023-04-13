@@ -1,7 +1,5 @@
 package com.example;
 
-import com.example.AmethystMiner.AmethystMiner;
-import com.example.AutoCalvarion.AutoCalvarion;
 import com.example.AutoTele.AutoTele;
 import com.example.E3t4g.e3t4g;
 import com.example.EthanApiPlugin.EthanApiPlugin;
@@ -9,7 +7,6 @@ import com.example.LavaRunecrafter.LavaRunecrafterPlugin;
 import com.example.NightmareHelper.NightmareHelperPlugin;
 import com.example.PrayerFlicker.EthanPrayerFlickerPlugin;
 import com.example.UpkeepPlugin.UpkeepPlugin;
-import com.example.developertools.ToolsPlugin;
 import com.example.gauntletFlicker.gauntletFlicker;
 import com.example.harpoon2ticker.SwordFish2Tick;
 import com.example.superglass.SuperGlassMakerPlugin;
@@ -24,7 +21,7 @@ public class ExamplePluginTest
 				gauntletFlicker.class,
 				SuperGlassMakerPlugin.class, UpkeepPlugin.class, LavaRunecrafterPlugin.class,
 				NightmareHelperPlugin.class, SwordFish2Tick.class
-				, e3t4g.class, AutoTele.class, AutoCalvarion.class, AmethystMiner.class, ToolsPlugin.class);
+				, e3t4g.class, AutoTele.class);
 		RuneLite.main(args);
 	}
 }
