@@ -3,6 +3,7 @@ package com.example.AutoTele;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.EthanApiPlugin.Inventory;
 import com.example.InteractionApi.InventoryInteraction;
+import com.example.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
 import com.google.inject.Inject;
@@ -20,7 +21,9 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 
 import java.util.Optional;
@@ -32,6 +35,8 @@ import java.util.Set;
 		enabledByDefault = false,
 		tags = {"ethan"}
 )
+@PluginDependency(EthanApiPlugin.class)
+@PluginDependency(PacketUtilsPlugin.class)
 public class AutoTele extends Plugin
 {
 	@Inject
@@ -41,6 +46,8 @@ public class AutoTele extends Plugin
 	static final int SEED_POD = 4544;
 	int previousLevel = -1;
 	public static boolean teleportedFromSkulledPlayer = false;
+	@Inject
+	ItemManager itemManager;
 	@Inject
 	AutoTeleConfig config;
 	static final Set<Integer> RING_OF_WEALTH_ITEM_IDS = Set.of(ItemID.RING_OF_WEALTH_1, ItemID.RING_OF_WEALTH_2, ItemID.RING_OF_WEALTH_3, ItemID.RING_OF_WEALTH_4, ItemID.RING_OF_WEALTH_5, ItemID.RING_OF_WEALTH_I1, ItemID.RING_OF_WEALTH_I2, ItemID.RING_OF_WEALTH_I3, ItemID.RING_OF_WEALTH_I4, ItemID.RING_OF_WEALTH_I5);
@@ -119,7 +126,6 @@ public class AutoTele extends Plugin
 		}
 		for (Player player : client.getPlayers())
 		{
-
 			int lowRange = client.getLocalPlayer().getCombatLevel() - level;
 			int highRange = client.getLocalPlayer().getCombatLevel() + level;
 			if (player.equals(client.getLocalPlayer()))
@@ -128,6 +134,62 @@ public class AutoTele extends Plugin
 			}
 			if (player.getCombatLevel() >= lowRange && player.getCombatLevel() <= highRange || !config.combatrange())
 			{
+//				boolean hadMage = false;
+//				boolean skippableWeapon = false;
+//				if (config.mageFilter())
+//				{
+//					int mageBonus = 0;
+//					for (int equipmentId : player.getPlayerComposition().getEquipmentIds())
+//					{
+//						if (equipmentId == -1)
+//						{
+//							continue;
+//						}
+//						if (equipmentId == 6512)
+//						{
+//							continue;
+//						}
+//						if (equipmentId >= 512)
+//						{
+//							return;
+//						}
+//						int realId = equipmentId - 512;
+//						ItemEquipmentStats itemStats = itemManager.getItemStats(realId, false).getEquipment();
+//						if (itemStats == null)
+//						{
+//							continue;
+//						}
+//						mageBonus += itemStats.getAmagic();
+//					}
+//					if (mageBonus > 0)
+//					{
+//						hadMage = true;
+//					}
+//				}
+//				if (!config.weaponFilter().equals(""))
+//				{
+//					List<String> filteredWeapons = getFilteredWeapons();
+//					for (int equipment : player.getPlayerComposition().getEquipmentIds())
+//					{
+//						int equipmentId = equipment - 512;
+//						if (equipmentId > 0)
+//						{
+//							ItemComposition equipmentComp = itemManager.getItemComposition(equipmentId);
+//							if (filteredWeapons.stream().anyMatch(item -> WildcardMatcher.matches(item.toLowerCase(),
+//									Text.removeTags(equipmentComp.getName().toLowerCase()))))
+//							{
+//								skippableWeapon = true;
+//							}
+//						}
+//					}
+//				}
+//				if (skippableWeapon)
+//				{
+//					if (!hadMage)
+//					{
+//						continue;
+//					}
+//				}
 				boolean teleported = false;
 				Optional<Widget> widget = Inventory.search().withId(ItemID.ROYAL_SEED_POD).first();
 				if (widget.isPresent())
@@ -165,6 +227,23 @@ public class AutoTele extends Plugin
 			}
 		}
 	}
+
+//	public List<String> getFilteredWeapons()
+//	{
+//		List<String> itemNames = new ArrayList<>();
+//		for (String s : config.weaponFilter().split(","))
+//		{
+//			if (StringUtils.isNumeric(s))
+//			{
+//				itemNames.add(Text.removeTags(itemManager.getItemComposition(Integer.parseInt(s)).getName()));
+//			}
+//			else
+//			{
+//				itemNames.add(s);
+//			}
+//		}
+//		return itemNames;
+//	}
 
 	@Subscribe
 	public void onAnimationChanged(AnimationChanged e)

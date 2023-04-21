@@ -122,7 +122,7 @@ public class LavaRunecrafterPlugin extends Plugin
 			mousePackets.queueClickPacket();
 			widgetPackets.queueResumePause(14221317, -1);
 			mousePackets.queueClickPacket();
-			PacketUtilsPlugin.invoke(-1, -1, 26, -1, -1, "", "", -1, -1);
+			EthanApiPlugin.invoke(-1, -1, 26, -1, -1, "", "", -1, -1);
 			timeout = 0;
 			return;
 		}

@@ -68,41 +68,38 @@ public class PacketReflection
 	{
 		switch (obfname)
 		{
-			case "dd":
-				BufferMethods.dd(buffer, (Integer) input);
+			case "du":
+				BufferMethods.du(buffer, (Integer) input);
 				break;
-			case "bt":
-				BufferMethods.bt(buffer, (Integer) input);
-				break;
-			case "dv":
-				BufferMethods.dv(buffer, (Integer) input);
-				break;
-			case "bd":
-				BufferMethods.bd(buffer, (Integer) input);
-				break;
-			case "be":
-				BufferMethods.be(buffer, (Integer) input);
+			case "bu":
+				BufferMethods.bu(buffer, (Integer) input);
 				break;
 			case "dh":
 				BufferMethods.dh(buffer, (Integer) input);
 				break;
-			case "dz":
-				BufferMethods.dz(buffer, (Integer) input);
+			case "bf":
+				BufferMethods.bf(buffer, (Integer) input);
 				break;
-			case "dl":
-				BufferMethods.dl(buffer, (Integer) input);
+			case "dy":
+				BufferMethods.dy(buffer, (Integer) input);
 				break;
-			case "dm":
-				BufferMethods.dm(buffer, (Integer) input);
+			case "el":
+				BufferMethods.el(buffer, (Integer) input);
 				break;
-			case "ep":
-				BufferMethods.ep(buffer, (Integer) input);
+			case "dn":
+				BufferMethods.dn(buffer, (Integer) input);
+				break;
+			case "dp":
+				BufferMethods.dp(buffer, (Integer) input);
 				break;
 			case "eb":
 				BufferMethods.eb(buffer, (Integer) input);
 				break;
-			case "er":
-				BufferMethods.er(buffer, (Integer) input);
+			case "ds":
+				BufferMethods.ds(buffer, (Integer) input);
+				break;
+			case "ba":
+				BufferMethods.ba(buffer, (Integer) input);
 				break;
 		}
 	}

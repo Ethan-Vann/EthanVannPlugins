@@ -53,25 +53,26 @@ import static net.runelite.api.Varbits.QUICK_PRAYER;
 )
 public class EthanApiPlugin extends Plugin
 {
+
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	static PluginManager pluginManager = RuneLite.getInjector().getInstance(PluginManager.class);
 	static ItemManager itemManager = RuneLite.getInjector().getInstance(ItemManager.class);
 	@Inject
 	EventBus eventBus;
-	public static LoadingCache<Integer, ItemComposition> itemDefs= CacheBuilder.newBuilder()
-		.maximumSize(1000)
-       .expireAfterWrite(20, TimeUnit.MINUTES)
-       .build(
-           new CacheLoader<Integer, ItemComposition>() {
-	@Override
-	public ItemComposition load(Integer itemId){
-		return itemManager.getItemComposition(itemId);
-	}
-	});
+	public static LoadingCache<Integer, ItemComposition> itemDefs = CacheBuilder.newBuilder()
+			.maximumSize(1000)
+			.expireAfterWrite(20, TimeUnit.MINUTES)
+			.build(
+					new CacheLoader<Integer, ItemComposition>()
+					{
+						@Override
+						public ItemComposition load(Integer itemId)
+						{
+							return itemManager.getItemComposition(itemId);
+						}
+					});
 
-	public static boolean testBit(int a,int b){
-		return (a & 1 << b) != 0;
-	}
+
 	public static SkullIcon getSkullIcon(Player player)
 	{
 		Field skullField = null;
@@ -272,6 +273,18 @@ public class EthanApiPlugin extends Plugin
 			return validObjects.stream().sorted(Comparator.comparingInt(x -> x.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()))).findFirst().orElse(null);
 		}
 		return null;
+	}
+
+	@SneakyThrows
+	public static void invoke(int var0, int var1, int var2, int var3, int var4, String var5, String var6, int var7,
+							  int var8)
+	{
+		Class invokeClass = client.getClass().getClassLoader().loadClass("ar");
+		Method invoke = invokeClass.getDeclaredMethod("ke", int.class, int.class, int.class, int.class, int.class,
+				String.class, String.class, int.class, int.class, int.class);
+		invoke.setAccessible(true);
+		invoke.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, 1849187210);
+		invoke.setAccessible(false);
 	}
 
 	@Deprecated
@@ -475,7 +488,8 @@ public class EthanApiPlugin extends Plugin
 		return new PathResult(isReachable, currentDistance);
 	}
 
-	static class PathResult {
+	static class PathResult
+	{
 		private final boolean reachable;
 		private final int distance;
 
@@ -490,7 +504,8 @@ public class EthanApiPlugin extends Plugin
 			return reachable;
 		}
 
-		public int getDistance() {
+		public int getDistance()
+		{
 			return distance;
 		}
 	}
