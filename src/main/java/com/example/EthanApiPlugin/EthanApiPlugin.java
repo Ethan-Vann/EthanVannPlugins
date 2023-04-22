@@ -89,7 +89,7 @@ public class EthanApiPlugin extends Plugin
 		int var1 = -1;
 		try
 		{
-			var1 = skullField.getInt(player) * -2104357805;
+			var1 = skullField.getInt(player) * -1875167049;
 			skullField.setAccessible(false);
 		}
 		catch (IllegalAccessException | NullPointerException e)
@@ -190,7 +190,7 @@ public class EthanApiPlugin extends Plugin
 		return null;
 	}
 
-	public List<WorldPoint> reachableTiles()
+	public static List<WorldPoint> reachableTiles()
 	{
 		return new ArrayList<>(Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(x -> canPathToTile(x.getWorldLocation()).isReachable()).map(Tile::getWorldLocation).filter(Objects::nonNull).collect(Collectors.toList()));
 	}
@@ -274,7 +274,6 @@ public class EthanApiPlugin extends Plugin
 		}
 		return null;
 	}
-
 	@SneakyThrows
 	public static void invoke(int var0, int var1, int var2, int var3, int var4, String var5, String var6, int var7,
 							  int var8)
