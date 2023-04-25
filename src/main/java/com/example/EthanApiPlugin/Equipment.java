@@ -1,98 +1,71 @@
 package com.example.EthanApiPlugin;
 
+import lombok.SneakyThrows;
 import net.runelite.api.Client;
+import net.runelite.api.InventoryID;
+import net.runelite.api.Item;
 import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.widgets.Widget;
+import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.RuneLite;
 import net.runelite.client.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Equipment
 {
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
-	static ArrayList<EquipmentPiece> equipment = new ArrayList<>();
+	static List<EquipmentItemWidget> equipment = new ArrayList<>();
+	static HashMap<Integer, Integer> equipmentSlotWidgetMapping = new HashMap<>();
 
-	public static EquipmentQuery search()
+	static
 	{
-		System.out.println("beginning size: " + equipment.size());
-		return new EquipmentQuery(equipment);
+		equipmentSlotWidgetMapping.put(0, 15);
+		equipmentSlotWidgetMapping.put(1, 16);
+		equipmentSlotWidgetMapping.put(2, 17);
+		equipmentSlotWidgetMapping.put(3, 18);
+		equipmentSlotWidgetMapping.put(4, 19);
+		equipmentSlotWidgetMapping.put(5, 20);
+		equipmentSlotWidgetMapping.put(7, 21);
+		equipmentSlotWidgetMapping.put(9, 22);
+		equipmentSlotWidgetMapping.put(10, 23);
+		equipmentSlotWidgetMapping.put(12, 24);
+		equipmentSlotWidgetMapping.put(13, 25);
 	}
 
+	public static EquipmentItemQuery search()
+	{
+		return new EquipmentItemQuery(equipment);
+	}
+
+	@SneakyThrows
 	@Subscribe
 	public void onItemContainerChanged(ItemContainerChanged e)
 	{
-		//		if (e.getContainerId() == 94)
-		//		{
-		//			System.out.println("equipment update");
-		//			equipment.clear();
-		//			Widget helmet = client.getWidget(387, 15);
-		//			if (!helmet.getDynamicChildren()[1].isHidden())
-		//			{
-		//				System.out.println("helmet");
-		//				equipment.add(new EquipmentPiece(helmet, helmet.getDynamicChildren()[1], EquipmentInventorySlot.HEAD));
-		//			}
-		//			Widget cape = client.getWidget(387, 16);
-		//			if (!cape.getDynamicChildren()[1].isHidden())
-		//			{
-		//				System.out.println("cape");
-		//				equipment.add(new EquipmentPiece(cape, cape.getDynamicChildren()[1], EquipmentInventorySlot.CAPE));
-		//			}
-		//			Widget amulet = client.getWidget(387, 17);
-		//			if (!amulet.getDynamicChildren()[1].isHidden())
-		//			{
-		//				System.out.println("amulet");
-		//				equipment.add(new EquipmentPiece(amulet, amulet.getDynamicChildren()[1], EquipmentInventorySlot.AMULET));
-		//			}
-		//			Widget weapon = client.getWidget(387, 18);
-		//			if (!weapon.getDynamicChildren()[1].isHidden())
-		//			{
-		//				System.out.println("weapon");
-		//				equipment.add(new EquipmentPiece(weapon, weapon.getDynamicChildren()[1], EquipmentInventorySlot.WEAPON));
-		//			}
-		//			Widget chest = client.getWidget(387, 19);
-		//			if (!chest.getDynamicChildren()[1].isHidden())
-		//			{
-		//				System.out.println("chest");
-		//				equipment.add(new EquipmentPiece(chest, chest.getDynamicChildren()[1],
-		//						EquipmentInventorySlot.BODY));
-		//			}
-		//			Widget shield = client.getWidget(387, 20);
-		//			if (!shield.getDynamicChildren()[1].isHidden())
-		//			{
-		//				System.out.println("shield");
-		//				equipment.add(new EquipmentPiece(shield, shield.getDynamicChildren()[1], EquipmentInventorySlot.SHIELD));
-		//			}
-		//			Widget legs = client.getWidget(387, 21);
-		//			if (!legs.getDynamicChildren()[1].isHidden())
-		//			{
-		//				System.out.println("legs");
-		//				equipment.add(new EquipmentPiece(legs, legs.getDynamicChildren()[1], EquipmentInventorySlot.LEGS));
-		//			}
-		//			Widget gloves = client.getWidget(387, 22);
-		//			if (!gloves.getDynamicChildren()[1].isHidden())
-		//			{
-		//				System.out.println("gloves");
-		//				equipment.add(new EquipmentPiece(gloves, gloves.getDynamicChildren()[1], EquipmentInventorySlot.GLOVES));
-		//			}
-		//			Widget boots = client.getWidget(387, 23);
-		//			if (!boots.getDynamicChildren()[1].isHidden())
-		//			{
-		//				System.out.println("boots");
-		//				equipment.add(new EquipmentPiece(boots, boots.getDynamicChildren()[1], EquipmentInventorySlot.BOOTS));
-		//			}
-		//			Widget ring = client.getWidget(387, 24);
-		//			if (!ring.getDynamicChildren()[1].isHidden())
-		//			{
-		//				System.out.println("ring");
-		//				equipment.add(new EquipmentPiece(ring, ring.getDynamicChildren()[1], EquipmentInventorySlot.RING));
-		//			}
-		//			Widget ammo = client.getWidget(387, 25);
-		//			if (!ammo.getDynamicChildren()[1].isHidden())
-		//			{
-		//				System.out.println("ammo");
-		//				equipment.add(new EquipmentPiece(ammo, ammo.getDynamicChildren()[1], EquipmentInventorySlot.AMMO));
-		//			}
-		//		}
+		if (e.getContainerId() == InventoryID.EQUIPMENT.getId())
+		{
+			equipment.clear();
+			int i = -1;
+			for (Item item : e.getItemContainer().getItems())
+			{
+				i++;
+				if (item == null)
+				{
+					continue;
+				}
+				if (item.getId() == 6512 || item.getId() == -1)
+				{
+					continue;
+				}
+				Widget w = client.getWidget(WidgetInfo.EQUIPMENT.getGroupId(), equipmentSlotWidgetMapping.get(i));
+				if(w==null||w.getActions()==null){
+					continue;
+				}
+				equipment.add(new EquipmentItemWidget(w.getName(),item.getId(),w.getId(),i,w.getActions()));
+			}
+		}
 	}
 }
 

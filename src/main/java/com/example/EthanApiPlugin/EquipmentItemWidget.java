@@ -1,5 +1,7 @@
 package com.example.EthanApiPlugin;
 
+import com.example.Packets.MousePackets;
+import com.example.Packets.WidgetPackets;
 import net.runelite.api.FontTypeFace;
 import net.runelite.api.Point;
 import net.runelite.api.widgets.Widget;
@@ -7,23 +9,36 @@ import net.runelite.api.widgets.Widget;
 import javax.annotation.Nullable;
 import java.awt.*;
 
-public class MinimalItemWidget implements Widget
+public class EquipmentItemWidget implements Widget
 {
-	int index;
-	int packedId;
-	int itemId;
 	String name;
-	int quantity;
 	String[] actions;
+	int packedId;
+	static final int EQUIPMENT_INVENTORY_ITEMS_CONTAINER = 25362449;
+	int equipmentItemId;
+	int index;
 
-	MinimalItemWidget(int index, int packedId, int itemId, String name, int quantity, String[] actions)
+	EquipmentItemWidget(String name, int itemId, int packedId, int index, String[] actions)
 	{
-		this.index = index;
-		this.packedId = packedId;
-		this.itemId = itemId;
+		this.equipmentItemId = itemId;
 		this.name = name;
-		this.quantity = quantity;
 		this.actions = actions;
+		this.packedId = packedId;
+		this.index = index;
+	}
+
+
+	public void interact(String... actions){
+		MousePackets.queueClickPacket();
+		WidgetPackets.queueWidgetAction(EthanApiPlugin.client.getWidget(packedId), actions);
+	}
+	public int getEquipmentItemId()
+	{
+		return equipmentItemId;
+	}
+	public int getEquipmentIndex()
+	{
+		return index;
 	}
 	@Override
 	public int getId()
@@ -237,31 +252,31 @@ public class MinimalItemWidget implements Widget
 	}
 
 	@Override
-	public Widget setRotationX( int modelX)
+	public Widget setRotationX(int modelX)
 	{
 		return null;
 	}
 
 	@Override
-	public  int getRotationY()
+	public int getRotationY()
 	{
 		return 0;
 	}
 
 	@Override
-	public Widget setRotationY( int modelY)
+	public Widget setRotationY(int modelY)
 	{
 		return null;
 	}
 
 	@Override
-	public  int getRotationZ()
+	public int getRotationZ()
 	{
 		return 0;
 	}
 
 	@Override
-	public Widget setRotationZ( int modelZ)
+	public Widget setRotationZ(int modelZ)
 	{
 		return null;
 	}
@@ -323,7 +338,7 @@ public class MinimalItemWidget implements Widget
 	@Override
 	public int getIndex()
 	{
-		return index;
+		return -1;
 	}
 
 	@Override
@@ -365,7 +380,7 @@ public class MinimalItemWidget implements Widget
 	@Override
 	public int getItemId()
 	{
-		return itemId;
+		return -1;
 	}
 
 	@Override
@@ -377,7 +392,7 @@ public class MinimalItemWidget implements Widget
 	@Override
 	public int getItemQuantity()
 	{
-		return quantity;
+		return 1;
 	}
 
 	@Override
