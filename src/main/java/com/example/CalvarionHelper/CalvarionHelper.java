@@ -17,7 +17,7 @@ import java.util.HashMap;
 @PluginDescriptor(
 		name = "CalvarionHelper",
 		enabledByDefault = false,
-		tags = {"ethan"}
+		tags = {"ethan","pajau"}
 )
 public class CalvarionHelper extends Plugin
 {

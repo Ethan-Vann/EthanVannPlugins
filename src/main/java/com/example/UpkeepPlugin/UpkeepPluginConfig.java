@@ -3,14 +3,25 @@ package com.example.UpkeepPlugin;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
+import net.runelite.client.config.ConfigSection;
 
 @ConfigGroup("UpkeepPlugin")
 public interface UpkeepPluginConfig extends Config
 {
+	@ConfigSection(
+			name = "Vida",
+			description = "",
+			position = -10,
+			closedByDefault = false
+	)
+	String Vidita = "HP";
+
 	@ConfigItem(
 			keyName = "HealthLowAmount",
-			name = "Health Low Amount",
-			description = "Health low actions will fire when health falls below this value"
+			name = "HP critica",
+			description = "Vida critica",
+			position = -2,
+			section = Vidita
 	)
 	default int HealthLowAmount()
 	{
@@ -19,18 +30,28 @@ public interface UpkeepPluginConfig extends Config
 
 	@ConfigItem(
 			keyName = "HealthLowActions",
-			name = "Health Low Actions",
-			description = "List of item actions to use when health falls below value"
+			name = "Vida accion",
+			description = "Que hacer al bajar de la vida critica",
+			position = -3,
+			section = Vidita
 	)
 	default String HealthActions()
 	{
 		return "";
 	}
 
+	@ConfigSection(
+			name = "Run Energy",
+			description = "",
+			position = 9
+	) String runEnergy = "RunEnergy";
+
 	@ConfigItem(
 			keyName = "StaminaLowAmount",
-			name = "Stamina Low Amount",
-			description = "Health low actions will fire when stamina falls below this value"
+			name = "Run Energy",
+			description = "Run critico",
+			position = -6,
+			section = runEnergy
 	)
 	default int StaminaLowAmount()
 	{
@@ -39,8 +60,10 @@ public interface UpkeepPluginConfig extends Config
 
 	@ConfigItem(
 			keyName = "StaminaLowActions",
-			name = "Stamina Low Actions",
-			description = "List of item actions to use when stamina falls below value"
+			name = "Run Energy Accion",
+			description = "Que hacer al bajar del Run critico",
+			position = -7,
+			section = runEnergy
 	)
 	default String StaminaActions()
 	{
@@ -49,8 +72,8 @@ public interface UpkeepPluginConfig extends Config
 
 	@ConfigItem(
 			keyName = "RangeLowAmount",
-			name = "Range Low Amount",
-			description = "Health low actions will fire when range falls below this value"
+			name = "Ranged critico",
+			description = "Ranged Critico"
 	)
 	default int RangeLowAmount()
 	{
@@ -59,18 +82,26 @@ public interface UpkeepPluginConfig extends Config
 
 	@ConfigItem(
 			keyName = "RangeLowActions",
-			name = "Range Low Actions",
-			description = "List of item actions to use when range falls below value"
+			name = "Range critico acciones",
+			description = "Acciones Ranged critico"
 	)
 	default String RangeActions()
 	{
 		return "";
 	}
 
+	@ConfigSection(
+			name = "Prayer",
+			description = "",
+			position = -8
+	) String Prayercito = "Prayercito";
+
 	@ConfigItem(
 			keyName = "PrayerLowAmount",
-			name = "Prayer Low Amount",
-			description = "Health low actions will fire when prayer falls below this value"
+			name = "Prayer critico",
+			description = "Prayer critico",
+			position = 3,
+			section = Prayercito
 	)
 	default int PrayerLowAmount()
 	{
@@ -79,8 +110,10 @@ public interface UpkeepPluginConfig extends Config
 
 	@ConfigItem(
 			keyName = "PrayerLowActions",
-			name = "Prayer Low Actions",
-			description = "List of item actions to use when prayer falls below value"
+			name = "Prayer critico Acciones",
+			description = "Prayer critico Acciones",
+			position = 4,
+			section = Prayercito
 	)
 	default String PrayerActions()
 	{
@@ -89,8 +122,8 @@ public interface UpkeepPluginConfig extends Config
 
 	@ConfigItem(
 			keyName = "MagicLowAmount",
-			name = "Magic Low Amount",
-			description = "Health low actions will fire when magic falls below this value"
+			name = "Magic critico",
+			description = "Magic critico"
 	)
 	default int MagicLowAmount()
 	{
@@ -99,8 +132,8 @@ public interface UpkeepPluginConfig extends Config
 
 	@ConfigItem(
 			keyName = "MagicLowActions",
-			name = "Magic Low Actions",
-			description = "List of item actions to use when magic falls below value"
+			name = "Magic critico acciones",
+			description = "Magic critico acciones"
 	)
 	default String MagicActions()
 	{
@@ -109,8 +142,8 @@ public interface UpkeepPluginConfig extends Config
 
 	@ConfigItem(
 			keyName = "StrengthLowAmount",
-			name = "Strength Low Amount",
-			description = "Health low actions will fire when strength falls below this value"
+			name = "Strength critico",
+			description = "Strength critico"
 	)
 	default int StrengthLowAmount()
 	{
@@ -119,8 +152,8 @@ public interface UpkeepPluginConfig extends Config
 
 	@ConfigItem(
 			keyName = "StrengthLowActions",
-			name = "Strength Low Actions",
-			description = "List of item actions to use when strength falls below value"
+			name = "Strength critico Aciones",
+			description = "Strength critico Aciones"
 	)
 	default String StrengthActions()
 	{

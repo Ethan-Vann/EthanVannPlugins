@@ -32,9 +32,9 @@ import javax.inject.Inject;
 import java.util.Set;
 
 @PluginDescriptor(
-		name = "Gauntlet Flicker and Switcher",
-		description = "",
-		tags = {"ethan"}
+		name = "Gauntlet Pichulong",
+		description = "Cambia los prayers y el arma en Hunlef",
+		tags = {"ethan","pajau"}
 )
 @PluginDependency(EthanApiPlugin.class)
 @PluginDependency(PacketUtilsPlugin.class)

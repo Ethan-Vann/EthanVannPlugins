@@ -33,7 +33,7 @@ import java.util.Set;
 @PluginDescriptor(
 		name = "AutoTele",
 		enabledByDefault = false,
-		tags = {"ethan"}
+		tags = {"ethan","pajau"}
 )
 @PluginDependency(EthanApiPlugin.class)
 @PluginDependency(PacketUtilsPlugin.class)

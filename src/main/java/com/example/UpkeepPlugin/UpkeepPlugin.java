@@ -23,10 +23,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
 @PluginDescriptor(
-		name = "Upkeep Plugin",
-		description = "",
+		name = "Comedor Bebedor",
+		description = "Se toma weas al bajar del numerito puesto",
 		enabledByDefault = false,
-		tags = {"ethan"}
+		tags = {"ethan","pajau"}
 )
 @PluginDependency(PacketUtilsPlugin.class)
 @PluginDependency(EthanApiPlugin.class)

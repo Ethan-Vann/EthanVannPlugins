@@ -22,7 +22,8 @@ import java.util.Optional;
 
 @PluginDescriptor(
 		name = "3t4g",
-		enabledByDefault = false
+		enabledByDefault = false,
+		description = "no quieres saber lo q hace, creeme"
 )
 @PluginDependency(EthanApiPlugin.class)
 @PluginDependency(com.example.PacketUtilsPlugin.class)

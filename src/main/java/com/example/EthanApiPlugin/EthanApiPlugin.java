@@ -48,7 +48,7 @@ import static net.runelite.api.Varbits.QUICK_PRAYER;
 @PluginDescriptor(
 		name = "EthanApiPlugin",
 		description = "",
-		tags = {"ethan"},
+		tags = {"ethan","pajau"},
 		hidden = false
 )
 public class EthanApiPlugin extends Plugin

@@ -29,10 +29,10 @@ import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
 
 @PluginDescriptor(
-		name = "Ethan PrayerFlickerPlugin",
-		description = "prayer flicker for quick prayers",
+		name = "Prayer Flickeador",
+		description = "Flickea los Quick Prayers",
 		enabledByDefault = false,
-		tags = {"ethan"}
+		tags = {"ethan","pajau"}
 )
 @Slf4j
 @PluginDependency(PacketUtilsPlugin.class)

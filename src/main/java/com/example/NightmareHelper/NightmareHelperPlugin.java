@@ -29,10 +29,10 @@ import static com.example.EthanApiPlugin.QuickPrayer.PROTECT_FROM_MISSILES;
 @PluginDependency(PacketUtilsPlugin.class)
 @PluginDependency(EthanApiPlugin.class)
 @PluginDescriptor(
-		name = "NightmareHelper",
-		description = "",
+		name = "Nightmare Ayuda",
+		description = "Flickea los prayers del nightmare sin gastar pray pot",
 		enabledByDefault = false,
-		tags = {"ethan"}
+		tags = {"ethan","pajau"}
 )
 public class NightmareHelperPlugin extends Plugin
 {
