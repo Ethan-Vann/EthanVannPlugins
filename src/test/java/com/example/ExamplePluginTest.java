@@ -9,6 +9,7 @@ import com.example.PrayerFlicker.EthanPrayerFlickerPlugin;
 import com.example.UpkeepPlugin.UpkeepPlugin;
 import com.example.gauntletFlicker.gauntletFlicker;
 import com.example.harpoon2ticker.SwordFish2Tick;
+import com.example.hidden.HotKeyCodeTest.HotKeyCodeTest;
 import com.example.superglass.SuperGlassMakerPlugin;
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;

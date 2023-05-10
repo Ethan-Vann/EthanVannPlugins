@@ -128,6 +128,7 @@ public class PacketUtilsPlugin extends Plugin
 			}
 		});
 	}
+
 	@Override
 	public void shutDown()
 	{
@@ -138,7 +139,7 @@ public class PacketUtilsPlugin extends Plugin
 	@Inject
 	private void init()
 	{
-		if (config.alwaysOn()&&client.getRevision() == CLIENT_REV)
+		if (config.alwaysOn() && client.getRevision() == CLIENT_REV)
 		{
 			SwingUtilities.invokeLater(() ->
 			{
