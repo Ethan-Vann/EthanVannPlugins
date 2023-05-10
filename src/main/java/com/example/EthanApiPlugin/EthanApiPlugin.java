@@ -39,13 +39,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -614,163 +610,163 @@ public class EthanApiPlugin extends Plugin
 	}
 
 
-	public static List<WorldPoint> pathTo(WorldPoint goal, HashSet<WorldPoint> impassible,
-										  HashSet<WorldPoint> dangerous,
-										  HashSet<WorldPoint> walkable)
-	{
-		HashMap<WorldPoint, List<WorldPoint>> paths = new HashMap<>();
-		paths.put(client.getLocalPlayer().getWorldLocation(), List.of(client.getLocalPlayer().getWorldLocation()));
-		return pathToGoal(goal, paths, impassible, dangerous, walkable);
-	}
-
-	@SneakyThrows
-	public static List<WorldPoint> pathToGoal(WorldPoint goal, HashMap<WorldPoint, List<WorldPoint>> paths,
-											  HashSet<WorldPoint> impassible, HashSet<WorldPoint> dangerous,
-											  HashSet<WorldPoint> walkable)
-	{
-		HashMap<WorldPoint, List<WorldPoint>> paths2 = new HashMap<>(paths);
-		if (!walkable.contains(goal))
-		{
-			return null;
-		}
-		for (Map.Entry<WorldPoint, List<WorldPoint>> worldPointListEntry : paths.entrySet())
-		{
-			//			int counter = 1;
-			for (int x = -2; x < 3; x++)
-			{
-				b:
-				for (int y = -2; y < 3; y++)
-				{
-					if (x == 0 && y == 0)
-					{
-						continue;
-					}
-
-					//L movement banned
-					if (Math.abs(x) + Math.abs(y) == 3)
-					{
-						continue;
-					}
-					//L movement banned
-					WorldPoint point = worldPointListEntry.getKey().dy(x).dx(y);
-					if (!walkable.contains(point) || impassible.contains(point) || dangerous.contains(point))
-					{
-						//						System.out.println("rejecting 1");
-						continue;
-					}
-
-					if (x == -2 && y == -2)
-					{
-						if (farSWObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					if (x == -2 && y == 2)
-					{
-						if (farNWObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					if (x == 2 && y == -2)
-					{
-						if (farSEObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					if (x == 2 && y == 2)
-					{
-						if (farNEObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					if (x == -2 && y == 0)
-					{
-						if (farWObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					if (x == 2 && y == 0)
-					{
-						if (farEObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					if (x == 0 && y == -2)
-					{
-						if (farSObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					if (x == 0 && y == 2)
-					{
-						if (farNObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					if (x == -1 && y == -1)
-					{
-						if (swObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					if (x == -1 && y == 1)
-					{
-						if (nwObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					if (x == 1 && y == -1)
-					{
-						if (seObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					if (x == 1 && y == 1)
-					{
-						if (neObstructed(worldPointListEntry.getKey(), impassible, walkable))
-						{
-							continue;
-						}
-					}
-					for (Map.Entry<WorldPoint, List<WorldPoint>> worldPointListEntry2 : paths.entrySet())
-					{
-						if (worldPointListEntry2.getValue().contains(point))
-						{
-							continue b;
-						}
-					}
-					List<WorldPoint> newPath = new ArrayList<>(worldPointListEntry.getValue());
-					//					System.out.println("adding: "+counter);
-					//					counter++;
-					newPath.add(point);
-					if (point.getX() == goal.getX() && point.getY() == goal.getY())
-					{
-						return newPath;
-					}
-					paths2.put(point, newPath);
-				}
-			}
-			paths2.put(worldPointListEntry.getKey(), null);
-		}
-		paths2.entrySet().removeIf(x -> x.getValue() == null);
-		if (paths2.isEmpty())
-		{
-			System.out.println("path not possible");
-			return null;
-		}
-		return pathToGoal(goal, paths2, impassible, dangerous, walkable);
-	}
+//	public static List<WorldPoint> pathTo(WorldPoint goal, HashSet<WorldPoint> impassible,
+//										  HashSet<WorldPoint> dangerous,
+//										  HashSet<WorldPoint> walkable)
+//	{
+//		HashMap<WorldPoint, List<WorldPoint>> paths = new HashMap<>();
+//		paths.put(client.getLocalPlayer().getWorldLocation(), List.of(client.getLocalPlayer().getWorldLocation()));
+//		return pathToGoal(goal, paths, impassible, dangerous, walkable);
+//	}
+//
+//	@SneakyThrows
+//	public static List<WorldPoint> pathToGoal(WorldPoint goal, HashMap<WorldPoint, List<WorldPoint>> paths,
+//											  HashSet<WorldPoint> impassible, HashSet<WorldPoint> dangerous,
+//											  HashSet<WorldPoint> walkable)
+//	{
+//		HashMap<WorldPoint, List<WorldPoint>> paths2 = new HashMap<>(paths);
+//		if (!walkable.contains(goal))
+//		{
+//			return null;
+//		}
+//		for (Map.Entry<WorldPoint, List<WorldPoint>> worldPointListEntry : paths.entrySet())
+//		{
+//			//			int counter = 1;
+//			for (int x = -2; x < 3; x++)
+//			{
+//				b:
+//				for (int y = -2; y < 3; y++)
+//				{
+//					if (x == 0 && y == 0)
+//					{
+//						continue;
+//					}
+//
+//					//L movement banned
+//					if (Math.abs(x) + Math.abs(y) == 3)
+//					{
+//						continue;
+//					}
+//					//L movement banned
+//					WorldPoint point = worldPointListEntry.getKey().dy(x).dx(y);
+//					if (!walkable.contains(point) || impassible.contains(point) || dangerous.contains(point))
+//					{
+//						//						System.out.println("rejecting 1");
+//						continue;
+//					}
+//
+//					if (x == -2 && y == -2)
+//					{
+//						if (farSWObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					if (x == -2 && y == 2)
+//					{
+//						if (farNWObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					if (x == 2 && y == -2)
+//					{
+//						if (farSEObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					if (x == 2 && y == 2)
+//					{
+//						if (farNEObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					if (x == -2 && y == 0)
+//					{
+//						if (farWObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					if (x == 2 && y == 0)
+//					{
+//						if (farEObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					if (x == 0 && y == -2)
+//					{
+//						if (farSObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					if (x == 0 && y == 2)
+//					{
+//						if (farNObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					if (x == -1 && y == -1)
+//					{
+//						if (swObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					if (x == -1 && y == 1)
+//					{
+//						if (nwObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					if (x == 1 && y == -1)
+//					{
+//						if (seObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					if (x == 1 && y == 1)
+//					{
+//						if (neObstructed(worldPointListEntry.getKey(), impassible, walkable))
+//						{
+//							continue;
+//						}
+//					}
+//					for (Map.Entry<WorldPoint, List<WorldPoint>> worldPointListEntry2 : paths.entrySet())
+//					{
+//						if (worldPointListEntry2.getValue().contains(point))
+//						{
+//							continue b;
+//						}
+//					}
+//					List<WorldPoint> newPath = new ArrayList<>(worldPointListEntry.getValue());
+//					//					System.out.println("adding: "+counter);
+//					//					counter++;
+//					newPath.add(point);
+//					if (point.getX() == goal.getX() && point.getY() == goal.getY())
+//					{
+//						return newPath;
+//					}
+//					paths2.put(point, newPath);
+//				}
+//			}
+//			paths2.put(worldPointListEntry.getKey(), null);
+//		}
+//		paths2.entrySet().removeIf(x -> x.getValue() == null);
+//		if (paths2.isEmpty())
+//		{
+//			System.out.println("path not possible");
+//			return null;
+//		}
+//		return pathToGoal(goal, paths2, impassible, dangerous, walkable);
+//	}
 
 	static boolean nwObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
 	{
