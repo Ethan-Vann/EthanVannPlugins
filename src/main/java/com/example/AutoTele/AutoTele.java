@@ -134,62 +134,62 @@ public class AutoTele extends Plugin
 			}
 			if (player.getCombatLevel() >= lowRange && player.getCombatLevel() <= highRange || !config.combatrange())
 			{
-//				boolean hadMage = false;
-//				boolean skippableWeapon = false;
-//				if (config.mageFilter())
-//				{
-//					int mageBonus = 0;
-//					for (int equipmentId : player.getPlayerComposition().getEquipmentIds())
-//					{
-//						if (equipmentId == -1)
-//						{
-//							continue;
-//						}
-//						if (equipmentId == 6512)
-//						{
-//							continue;
-//						}
-//						if (equipmentId >= 512)
-//						{
-//							return;
-//						}
-//						int realId = equipmentId - 512;
-//						ItemEquipmentStats itemStats = itemManager.getItemStats(realId, false).getEquipment();
-//						if (itemStats == null)
-//						{
-//							continue;
-//						}
-//						mageBonus += itemStats.getAmagic();
-//					}
-//					if (mageBonus > 0)
-//					{
-//						hadMage = true;
-//					}
-//				}
-//				if (!config.weaponFilter().equals(""))
-//				{
-//					List<String> filteredWeapons = getFilteredWeapons();
-//					for (int equipment : player.getPlayerComposition().getEquipmentIds())
-//					{
-//						int equipmentId = equipment - 512;
-//						if (equipmentId > 0)
-//						{
-//							ItemComposition equipmentComp = itemManager.getItemComposition(equipmentId);
-//							if (filteredWeapons.stream().anyMatch(item -> WildcardMatcher.matches(item.toLowerCase(),
-//									Text.removeTags(equipmentComp.getName().toLowerCase()))))
-//							{
-//								skippableWeapon = true;
-//							}
-//						}
-//					}
-//				}
-//				if (skippableWeapon)
-//				{
-//					if (!hadMage)
-//					{
-//						continue;
-//					}
-//				}
+				//				boolean hadMage = false;
+				//				boolean skippableWeapon = false;
+				//				if (config.mageFilter())
+				//				{
+				//					int mageBonus = 0;
+				//					for (int equipmentId : player.getPlayerComposition().getEquipmentIds())
+				//					{
+				//						if (equipmentId == -1)
+				//						{
+				//							continue;
+				//						}
+				//						if (equipmentId == 6512)
+				//						{
+				//							continue;
+				//						}
+				//						if (equipmentId >= 512)
+				//						{
+				//							return;
+				//						}
+				//						int realId = equipmentId - 512;
+				//						ItemEquipmentStats itemStats = itemManager.getItemStats(realId, false).getEquipment();
+				//						if (itemStats == null)
+				//						{
+				//							continue;
+				//						}
+				//						mageBonus += itemStats.getAmagic();
+				//					}
+				//					if (mageBonus > 0)
+				//					{
+				//						hadMage = true;
+				//					}
+				//				}
+				//				if (!config.weaponFilter().equals(""))
+				//				{
+				//					List<String> filteredWeapons = getFilteredWeapons();
+				//					for (int equipment : player.getPlayerComposition().getEquipmentIds())
+				//					{
+				//						int equipmentId = equipment - 512;
+				//						if (equipmentId > 0)
+				//						{
+				//							ItemComposition equipmentComp = itemManager.getItemComposition(equipmentId);
+				//							if (filteredWeapons.stream().anyMatch(item -> WildcardMatcher.matches(item.toLowerCase(),
+				//									Text.removeTags(equipmentComp.getName().toLowerCase()))))
+				//							{
+				//								skippableWeapon = true;
+				//							}
+				//						}
+				//					}
+				//				}
+				//				if (skippableWeapon)
+				//				{
+				//					if (!hadMage)
+				//					{
+				//						continue;
+				//					}
+				//				}
 				boolean teleported = false;
 				Optional<Widget> widget = Inventory.search().withId(ItemID.ROYAL_SEED_POD).first();
 				if (widget.isPresent())
@@ -228,22 +228,22 @@ public class AutoTele extends Plugin
 		}
 	}
 
-//	public List<String> getFilteredWeapons()
-//	{
-//		List<String> itemNames = new ArrayList<>();
-//		for (String s : config.weaponFilter().split(","))
-//		{
-//			if (StringUtils.isNumeric(s))
-//			{
-//				itemNames.add(Text.removeTags(itemManager.getItemComposition(Integer.parseInt(s)).getName()));
-//			}
-//			else
-//			{
-//				itemNames.add(s);
-//			}
-//		}
-//		return itemNames;
-//	}
+	//	public List<String> getFilteredWeapons()
+	//	{
+	//		List<String> itemNames = new ArrayList<>();
+	//		for (String s : config.weaponFilter().split(","))
+	//		{
+	//			if (StringUtils.isNumeric(s))
+	//			{
+	//				itemNames.add(Text.removeTags(itemManager.getItemComposition(Integer.parseInt(s)).getName()));
+	//			}
+	//			else
+	//			{
+	//				itemNames.add(s);
+	//			}
+	//		}
+	//		return itemNames;
+	//	}
 
 	@Subscribe
 	public void onAnimationChanged(AnimationChanged e)

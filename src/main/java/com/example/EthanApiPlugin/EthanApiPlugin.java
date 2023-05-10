@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import lombok.SneakyThrows;
 import net.runelite.api.Client;
 import net.runelite.api.CollisionData;
+import net.runelite.api.CollisionDataFlag;
 import net.runelite.api.GameObject;
 import net.runelite.api.HeadIcon;
 import net.runelite.api.InventoryID;
@@ -38,8 +39,13 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -190,10 +196,89 @@ public class EthanApiPlugin extends Plugin
 		return null;
 	}
 
+//	public static List<WorldPoint> reachableTiles()
+//	{
+//		HashSet<Tile> retPoints = new HashSet<>();
+//		Tile[][] tiles = client.getScene().getTiles()[client.getPlane()];
+//		Tile firstPoint = tiles[client.getLocalPlayer().getWorldLocation().getX() - client.getBaseX()][client.getLocalPlayer().getWorldLocation().getY() - client.getBaseY()];
+//		Queue<Tile> queue = new LinkedList<>();
+//		int[][] flags = client.getCollisionMaps()[client.getPlane()].getFlags();
+//		queue.add(firstPoint);
+//		while (!queue.isEmpty())
+//		{
+//			Tile tile = queue.poll();
+//			int x = tile.getSceneLocation().getX();
+//			int y = tile.getSceneLocation().getY();
+//
+//			if (y > 0 && canMoveSouth(flags[x][y]) && canMoveTo(flags[x][y - 1]) && !retPoints.contains(tiles[x][y - 1]))
+//			{
+//				queue.add(tiles[x][y - 1]);
+//				retPoints.add(tiles[x][y - 1]);
+//			}
+//			if (y < 127 && canMoveNorth(flags[x][y]) && canMoveTo(flags[x][y + 1]) && !retPoints.contains(tiles[x][y + 1]))
+//			{
+//				queue.add(tiles[x][y + 1]);
+//				retPoints.add(tiles[x][y + 1]);
+//			}
+//			if (x > 0 && canMoveWest(flags[x][y]) && canMoveTo(flags[x - 1][y]) && !retPoints.contains(tiles[x - 1][y]))
+//			{
+//				queue.add(tiles[x - 1][y]);
+//				retPoints.add(tiles[x - 1][y]);
+//			}
+//			if (x < 127 && canMoveEast(flags[x][y]) && canMoveTo(flags[x + 1][y]) && !retPoints.contains(tiles[x + 1][y]))
+//			{
+//				queue.add(tiles[x + 1][y]);
+//				retPoints.add(tiles[x + 1][y]);
+//			}
+//		}
+//		return retPoints.stream().map(Tile::getWorldLocation).collect(Collectors.toList());
+//	}
+
 	public static List<WorldPoint> reachableTiles()
 	{
 		return new ArrayList<>(Arrays.stream(client.getScene().getTiles()).flatMap(Arrays::stream).flatMap(Arrays::stream).filter(Objects::nonNull).filter(x -> canPathToTile(x.getWorldLocation()).isReachable()).map(Tile::getWorldLocation).filter(Objects::nonNull).collect(Collectors.toList()));
 	}
+	static boolean canMoveWest(int flag)
+	{
+		return (flag & CollisionDataFlag.BLOCK_MOVEMENT_WEST) != CollisionDataFlag.BLOCK_MOVEMENT_WEST;
+	}
+
+	static boolean canMoveEast(int flag)
+	{
+		return (flag & CollisionDataFlag.BLOCK_MOVEMENT_EAST) != CollisionDataFlag.BLOCK_MOVEMENT_EAST;
+	}
+
+	static boolean canMoveNorth(int flag)
+	{
+		return (flag & CollisionDataFlag.BLOCK_MOVEMENT_NORTH) != CollisionDataFlag.BLOCK_MOVEMENT_NORTH;
+	}
+
+	static boolean canMoveSouth(int flag)
+	{
+		return (flag & CollisionDataFlag.BLOCK_MOVEMENT_SOUTH) != CollisionDataFlag.BLOCK_MOVEMENT_SOUTH;
+	}
+
+	static boolean canMoveTo(int flag)
+	{
+		if ((flag & CollisionDataFlag.BLOCK_MOVEMENT_FULL) == CollisionDataFlag.BLOCK_MOVEMENT_FULL)
+		{
+			return false;
+		}
+		if ((flag & CollisionDataFlag.BLOCK_MOVEMENT_FLOOR) == CollisionDataFlag.BLOCK_MOVEMENT_FLOOR)
+		{
+			return false;
+		}
+		if ((flag & CollisionDataFlag.BLOCK_MOVEMENT_OBJECT) == CollisionDataFlag.BLOCK_MOVEMENT_OBJECT)
+		{
+			return false;
+		}
+		if ((flag & CollisionDataFlag.BLOCK_MOVEMENT_FLOOR_DECORATION) == CollisionDataFlag.BLOCK_MOVEMENT_FLOOR_DECORATION)
+		{
+			return false;
+		}
+		return true;
+	}
+
 
 	@Deprecated
 	public static Widget getItem(int id, WidgetInfo container)
@@ -274,6 +359,7 @@ public class EthanApiPlugin extends Plugin
 		}
 		return null;
 	}
+
 	@SneakyThrows
 	public static void invoke(int var0, int var1, int var2, int var3, int var4, String var5, String var6, int var7,
 							  int var8)
@@ -525,6 +611,337 @@ public class EthanApiPlugin extends Plugin
 				throw new RuntimeException(e);
 			}
 		});
+	}
+
+
+	public static List<WorldPoint> pathTo(WorldPoint goal, HashSet<WorldPoint> impassible,
+										  HashSet<WorldPoint> dangerous,
+										  HashSet<WorldPoint> walkable)
+	{
+		HashMap<WorldPoint, List<WorldPoint>> paths = new HashMap<>();
+		paths.put(client.getLocalPlayer().getWorldLocation(), List.of(client.getLocalPlayer().getWorldLocation()));
+		return pathToGoal(goal, paths, impassible, dangerous, walkable);
+	}
+
+	@SneakyThrows
+	public static List<WorldPoint> pathToGoal(WorldPoint goal, HashMap<WorldPoint, List<WorldPoint>> paths,
+											  HashSet<WorldPoint> impassible, HashSet<WorldPoint> dangerous,
+											  HashSet<WorldPoint> walkable)
+	{
+		HashMap<WorldPoint, List<WorldPoint>> paths2 = new HashMap<>(paths);
+		if (!walkable.contains(goal))
+		{
+			return null;
+		}
+		for (Map.Entry<WorldPoint, List<WorldPoint>> worldPointListEntry : paths.entrySet())
+		{
+			//			int counter = 1;
+			for (int x = -2; x < 3; x++)
+			{
+				b:
+				for (int y = -2; y < 3; y++)
+				{
+					if (x == 0 && y == 0)
+					{
+						continue;
+					}
+
+					//L movement banned
+					if (Math.abs(x) + Math.abs(y) == 3)
+					{
+						continue;
+					}
+					//L movement banned
+					WorldPoint point = worldPointListEntry.getKey().dy(x).dx(y);
+					if (!walkable.contains(point) || impassible.contains(point) || dangerous.contains(point))
+					{
+						//						System.out.println("rejecting 1");
+						continue;
+					}
+
+					if (x == -2 && y == -2)
+					{
+						if (farSWObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					if (x == -2 && y == 2)
+					{
+						if (farNWObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					if (x == 2 && y == -2)
+					{
+						if (farSEObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					if (x == 2 && y == 2)
+					{
+						if (farNEObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					if (x == -2 && y == 0)
+					{
+						if (farWObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					if (x == 2 && y == 0)
+					{
+						if (farEObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					if (x == 0 && y == -2)
+					{
+						if (farSObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					if (x == 0 && y == 2)
+					{
+						if (farNObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					if (x == -1 && y == -1)
+					{
+						if (swObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					if (x == -1 && y == 1)
+					{
+						if (nwObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					if (x == 1 && y == -1)
+					{
+						if (seObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					if (x == 1 && y == 1)
+					{
+						if (neObstructed(worldPointListEntry.getKey(), impassible, walkable))
+						{
+							continue;
+						}
+					}
+					for (Map.Entry<WorldPoint, List<WorldPoint>> worldPointListEntry2 : paths.entrySet())
+					{
+						if (worldPointListEntry2.getValue().contains(point))
+						{
+							continue b;
+						}
+					}
+					List<WorldPoint> newPath = new ArrayList<>(worldPointListEntry.getValue());
+					//					System.out.println("adding: "+counter);
+					//					counter++;
+					newPath.add(point);
+					if (point.getX() == goal.getX() && point.getY() == goal.getY())
+					{
+						return newPath;
+					}
+					paths2.put(point, newPath);
+				}
+			}
+			paths2.put(worldPointListEntry.getKey(), null);
+		}
+		paths2.entrySet().removeIf(x -> x.getValue() == null);
+		if (paths2.isEmpty())
+		{
+			System.out.println("path not possible");
+			return null;
+		}
+		return pathToGoal(goal, paths2, impassible, dangerous, walkable);
+	}
+
+	static boolean nwObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		if (impassible.contains(starting.dx(-1).dy(0)) || !walkable.contains(starting.dx(-1).dy(0)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(0).dy(1)) || !walkable.contains(starting.dx(0).dy(1)))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	static boolean neObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		if (impassible.contains(starting.dx(1).dy(0)) || !walkable.contains(starting.dx(1).dy(0)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(0).dy(1)) || !walkable.contains(starting.dx(0).dy(1)))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	static boolean seObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		if (impassible.contains(starting.dx(1).dy(0)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(0).dy(-1)))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	static boolean swObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		if (impassible.contains(starting.dx(-1).dy(0)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(0).dy(-1)))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	static boolean farNObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		return impassible.contains(starting.dx(0).dy(1)) || !walkable.contains(starting.dx(0).dy(1));
+	}
+
+	static boolean farSObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		return impassible.contains(starting.dx(0).dy(-1)) || !walkable.contains(starting.dx(0).dy(-1));
+	}
+
+	static boolean farEObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		return impassible.contains(starting.dx(1).dy(0)) || !walkable.contains(starting.dx(1).dy(0));
+	}
+
+	static boolean farWObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		return impassible.contains(starting.dx(-1).dy(0)) || !walkable.contains(starting.dx(-1).dy(0));
+	}
+
+	static boolean farSWObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		if (impassible.contains(starting.dx(-1).dy(-2)) || !walkable.contains(starting.dx(-1).dy(-2)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(-2).dy(-1)) || !walkable.contains(starting.dx(-2).dy(-1)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(0).dy(-1)) || !walkable.contains(starting.dx(0).dy(-1)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(-1).dy(0)) || !walkable.contains(starting.dx(-1).dy(0)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(-1).dy(-1)) || !walkable.contains(starting.dx(-1).dy(-1)))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	static boolean farNWObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		if (impassible.contains(starting.dx(-1).dy(2)) || !walkable.contains(starting.dx(-1).dy(2)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(-2).dy(1)) || !walkable.contains(starting.dx(-2).dy(1)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(0).dy(1)) || !walkable.contains(starting.dx(0).dy(1)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(-1).dy(0)) || !walkable.contains(starting.dx(-1).dy(0)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(-1).dy(1)) || !walkable.contains(starting.dx(-1).dy(1)))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	static boolean farNEObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		if (impassible.contains(starting.dx(1).dy(2)) || !walkable.contains(starting.dx(1).dy(2)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(2).dy(1)) || !walkable.contains(starting.dx(2).dy(1)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(0).dy(1)) || !walkable.contains(starting.dx(0).dy(1)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(1).dy(0)) || !walkable.contains(starting.dx(1).dy(0)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(1).dy(1)) || !walkable.contains(starting.dx(1).dy(1)))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	static boolean farSEObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable)
+	{
+		if (impassible.contains(starting.dx(1).dy(-2)) || !walkable.contains(starting.dx(1).dy(-2)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(2).dy(-1)) || !walkable.contains(starting.dx(2).dy(-1)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(0).dy(-1)) || !walkable.contains(starting.dx(0).dy(-1)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(1).dy(0)) || !walkable.contains(starting.dx(1).dy(0)))
+		{
+			return true;
+		}
+		if (impassible.contains(starting.dx(1).dy(-1)) || !walkable.contains(starting.dx(1).dy(-1)))
+		{
+			return true;
+		}
+		return false;
 	}
 
 	@Override
