@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.AgroReset.agroReset;
 import com.example.Neverlogout.neverlogout;
 import com.example.pathmarker.PathMarkerPlugin;
 import com.example.AggroReset.aggroReset;
@@ -27,9 +28,10 @@ public class ExamplePluginTest
 		ExternalPluginManager.loadBuiltin(EthanApiPlugin.class, PacketUtilsPlugin.class, EthanPrayerFlickerPlugin.class,
 				gauntletFlicker.class,
 				SuperGlassMakerPlugin.class, UpkeepPlugin.class, LavaRunecrafterPlugin.class,
-				NightmareHelperPlugin.class, SwordFish2Tick.class
-				, e3t4g.class, AutoTele.class,
-				GorilasPlugin.class, ToacitoPlugin.class, TheatrePlugin.class, FaldaPlugin.class, aggroReset.class, neverlogout.class);
+				NightmareHelperPlugin.class, SwordFish2Tick.class, e3t4g.class, AutoTele.class,
+				GorilasPlugin.class, ToacitoPlugin.class, TheatrePlugin.class, FaldaPlugin.class, aggroReset.class, neverlogout.class,
+				agroReset.class
+		);
 		RuneLite.main(args);
 	}
 }

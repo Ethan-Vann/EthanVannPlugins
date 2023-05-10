@@ -18,7 +18,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 import javax.inject.Inject;
 
 @Slf4j
-@PluginDescriptor(name = "PaJau Toacito", description = "weas de toa",tags = {"pajau","toa"})
+@PluginDescriptor(name = "<html><font color=\"#ff6961\">Chupalo Guru</font></html>", description = "weas de toa",tags = {"pajau","toa"})
 public class ToacitoPlugin extends Plugin {
 	@Inject
 	private Client client;

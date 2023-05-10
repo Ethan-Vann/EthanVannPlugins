@@ -1,4 +1,4 @@
-package com.example.AggroReset;
+package com.example.Crabs;
 
 import com.example.Packets.MousePackets;
 import com.example.Packets.MovementPackets;
@@ -30,11 +30,11 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Slf4j
-@PluginDescriptor(name = "<html><font color=\"#ff6961\">Aggro Reset</font></html>",
+@PluginDescriptor(name = "<html><font color=\"#ff6961\">PaJau Crabs</font></html>",
     tags = {"pajau"}
 )
 @PluginDependency(NpcAggroAreaPlugin.class)
-public class  aggroReset extends Plugin {
+public class crabs extends Plugin {
 
     @Inject
     private Client client;
@@ -56,6 +56,7 @@ public class  aggroReset extends Plugin {
     private int contador=0;
     private int llave;
     private final Color pint=Color.magenta;
+    private int estado=0;
 
     @Override
     protected void startUp() throws Exception {
@@ -85,10 +86,12 @@ public class  aggroReset extends Plugin {
                 enAccion=!enAccion;
                 if (!enAccion) {
                     tilePelea = null;
+                    estado=0;
                     log.info("Se apago la wea");
                     client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", ColorUtil.wrapWithColorTag("Apagado", pint), "");
                 } else {
                     tilePelea=client.getLocalPlayer().getWorldLocation();
+                    estado=5;
                     log.info("Se prendio la wea");
                     client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", ColorUtil.wrapWithColorTag("Prendido", pint), "");
                 }
@@ -112,10 +115,12 @@ public class  aggroReset extends Plugin {
             timeout--;
             return;
         }
+        AreaSafe = npcAggroAreaPlugin.getLinesToDisplay()[client.getPlane()];
         if (AreaSafe == null) {
             return;
         }
-        AreaSafe = npcAggroAreaPlugin.getLinesToDisplay()[client.getPlane()];
+
+
         CollisionData[] collisionData=client.getCollisionMaps();
         assert collisionData != null;
         CollisionData collActual = collisionData[client.getPlane()];
@@ -129,73 +134,79 @@ public class  aggroReset extends Plugin {
         int baseX = client.getBaseX();
         int baseY = client.getBaseY();
 
-        if(playerPoint.equals(tilePelea)
-                && npcAggroAreaPlugin.getEndTime().isBefore(Instant.now())
-                && !InCombat(jugador)
-                && !reseteando)
-        {
-            reseteando=true;
-            timeout=5;
-            return;
+        if (estado == 5) {
+            revisarTiles();
         }
 
-        if (Instant.now().isAfter(npcAggroAreaPlugin.getEndTime()) && reseteando && choosen==null) {
-            for (int i = 1; i < 22; i++) {
-                if (isWalkable(collActual,ScenePlayerX+i,ScenePlayerY+i) && !InsideSafe(playerPoint.dx(i).dy(i)) ) {
-                    choosen = new WorldPoint(baseX+ScenePlayerX+i,baseY+ScenePlayerY+i,client.getPlane());
-                    break;
-                } else if (isWalkable(collActual,ScenePlayerX-i,ScenePlayerY+i) && !InsideSafe(playerPoint.dx(-i).dy(i)) ) {
-                    choosen = new WorldPoint(baseX+ScenePlayerX-i,baseY+ScenePlayerY+i,client.getPlane());
-                    break;
-                } else if (isWalkable(collActual,ScenePlayerX-i,ScenePlayerY-i) && !InsideSafe(playerPoint.dx(-i).dy(-i))) {
-                    choosen = new WorldPoint(baseX+ScenePlayerX-i,baseY+ScenePlayerY-i,client.getPlane());
-                    break;
-                } else if (isWalkable(collActual,ScenePlayerX+i,ScenePlayerY-i) && !InsideSafe(playerPoint.dx(i).dy(-i))) {
-                    choosen = new WorldPoint(baseX+ScenePlayerX+i,baseY+ScenePlayerY-i,client.getPlane());
-                    break;
+        if (estado==10) {
+            if (!InCombat(jugador)
+                    && npcAggroAreaPlugin.getEndTime().isBefore(Instant.now())
+                    && playerPoint.equals(tilePelea)) {
+                log.info("Se acabo el tiempo de aggro, se procede a resetear");
+                estado=20;
+                timeout=5;
+            }
+        } else if (estado == 20) {
+            if (Instant.now().isAfter(npcAggroAreaPlugin.getEndTime()) ) {
+                choosen=null;
+                for (int i = 1; i < 22; i++) {
+                    if (isWalkable(collActual,ScenePlayerX+i,ScenePlayerY+i) && !InsideSafe(playerPoint.dx(i).dy(i)) ) {
+                        choosen = new WorldPoint(baseX+ScenePlayerX+i,baseY+ScenePlayerY+i,client.getPlane());
+                        break;
+                    } else if (isWalkable(collActual,ScenePlayerX-i,ScenePlayerY+i) && !InsideSafe(playerPoint.dx(-i).dy(i)) ) {
+                        choosen = new WorldPoint(baseX+ScenePlayerX-i,baseY+ScenePlayerY+i,client.getPlane());
+                        break;
+                    } else if (isWalkable(collActual,ScenePlayerX-i,ScenePlayerY-i) && !InsideSafe(playerPoint.dx(-i).dy(-i))) {
+                        choosen = new WorldPoint(baseX+ScenePlayerX-i,baseY+ScenePlayerY-i,client.getPlane());
+                        break;
+                    } else if (isWalkable(collActual,ScenePlayerX+i,ScenePlayerY-i) && !InsideSafe(playerPoint.dx(i).dy(-i))) {
+                        choosen = new WorldPoint(baseX+ScenePlayerX+i,baseY+ScenePlayerY-i,client.getPlane());
+                        break;
+                    }
+                }
+                if (choosen == null) {
+                    log.info("No se encontro un safetile");
+                    enAccion = false;
+                    estado = 0;
+                    return;
+                } else {
+                    log.info("Moviendo hacia un Tile reseteador");
+                    MousePackets.queueClickPacket();
+                    MovementPackets.queueMovement(choosen);
+                    estado=30;
+                    if (choosen != null) {
+                        log.info("Tile escogido: {}",choosen);
+                    }
+                    return;
                 }
             }
-            if (choosen==null) {
-                log.info("No se encontro un safetile");
-                enAccion=false;
-                return;
-            }
-            log.info("Moviendo hacia un Tile reseteador");
-            MousePackets.queueClickPacket();
-            MovementPackets.queueMovement(choosen);
-            if (choosen != null) {
-                log.info("Tile escogido: {}",choosen);
-            }
-        }
-        if (playerPoint.equals(choosen)) {  //llego al tile reseteador
-            if (llave == 0) {
+        } else if (estado==30) {
+            if (playerPoint.equals(choosen)) {  //llego al tile reseteador
                 log.info("En el tile reseteador");
                 timeout = 4;
                 llave = 1;
-            } else if (llave==1) {
-                llave = 2;
-                timeout = 3;
-                MousePackets.queueClickPacket();
-                MovementPackets.queueMovement(tilePelea);
-                log.info("Moviendo hacia el tilePelea");
+                estado=40;
             }
-        }
-        if(llave==2){
+        } else if (estado==40) {
             if (playerPoint.equals(tilePelea)) {
-                log.info("se llego");
-                llave=0;
-                timeout=2;
-                reseteando=false;
+                estado=10;
                 choosen=null;
+                log.info("se llego");
+                return;
             }
+            timeout = 3;
+            MousePackets.queueClickPacket();
+            MovementPackets.queueMovement(tilePelea);
+            log.info("Moviendo hacia el tilePelea");
+
         }
-
-
-
 
         /*if (client.getGameState() == GameState.LOGGED_IN && AreaSafe != null) {
             log.info("Yo dentro del SafeArea: {}", InsideSafe());
         }*/
+    }
+
+    private void revisarTiles() {
     }
 
     public boolean InCombat(Player yo){
