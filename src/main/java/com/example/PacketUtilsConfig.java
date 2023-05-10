@@ -16,4 +16,15 @@ public interface PacketUtilsConfig extends Config
 	{
 		return false;
 	}
+
+	@ConfigItem(
+			keyName = "alwaysOn",
+			name = "Always enabled.",
+			description = "Makes this plugin always enabled on startup if the revision matches."
+	)
+	default boolean alwaysOn()
+	{
+		return false;
+	}
+
 }

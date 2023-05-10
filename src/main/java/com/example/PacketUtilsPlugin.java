@@ -9,6 +9,7 @@ import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.client.RuneLite;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
@@ -133,5 +134,25 @@ public class PacketUtilsPlugin extends Plugin
 	{
 		log.info("Shutdown");
 		loaded = false;
+	}
+
+	@Inject
+	private void init()
+	{
+		if (config.alwaysOn() && client.getRevision() == CLIENT_REV)
+		{
+			SwingUtilities.invokeLater(() ->
+			{
+				try
+				{
+					RuneLite.getInjector().getInstance(PluginManager.class).setPluginEnabled(this, true);
+					RuneLite.getInjector().getInstance(PluginManager.class).startPlugin(this);
+				}
+				catch (PluginInstantiationException e)
+				{
+					e.printStackTrace();
+				}
+			});
+		}
 	}
 }

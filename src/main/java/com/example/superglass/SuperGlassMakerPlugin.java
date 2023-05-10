@@ -29,7 +29,6 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 import java.util.Optional;
 
 @PluginDescriptor(name = "Super Glass Maker", description = "", enabledByDefault = false, tags = {"ethan"})
@@ -52,7 +51,9 @@ public class SuperGlassMakerPlugin extends Plugin
 	{
 		timeout = 0;
 	}
+
 	int timesFailed = 0;
+
 	@Override
 	public void shutDown()
 	{
@@ -118,9 +119,12 @@ public class SuperGlassMakerPlugin extends Plugin
 				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "spell was null", null);
 			}
 			timesFailed++;
-			if(timesFailed>2){
+			if (timesFailed > 2)
+			{
 				api.stopPlugin(this);
-			}else{
+			}
+			else
+			{
 				if (banker.isPresent())
 				{
 					NPCInteraction.interact(banker.get(), "Bank");
@@ -137,7 +141,9 @@ public class SuperGlassMakerPlugin extends Plugin
 				}
 			}
 			return;
-		}else{
+		}
+		else
+		{
 			timesFailed = 0;
 		}
 		if (glass.isPresent())
