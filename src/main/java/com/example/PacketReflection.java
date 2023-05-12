@@ -8,6 +8,7 @@ import net.runelite.api.Client;
 import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -201,10 +202,86 @@ public class PacketReflection
 			PACKETWRITER.setAccessible(false);
 		}
 	}
+	//	static Object getPacketBufferNode(Object clientPacket, Object isaacCipher){
+	//		//ClientPacket var0
+	//		//IsaacCipher var1
+	//		Object var3 = method3844();
+	//		Field clientPacketField = ObfuscatedNames.packetBufferNodeClientPacketField;
+	//		Field isaacCipherField = ObfuscatedNames.packetBufferNodeIsaacCipherField;
+	//		Field length = ObfuscatedNames.clientPacketLengthField;
+	//		var3.af = var0;
+	//		var3.an = -474143459 * var0.dd;
+	//		if (-1 == var3.an * -1245059367) {
+	//			if (var2 >= 1132) {
+	//				throw new IllegalStateException();
+	//			}
+	//
+	//			var3.aw = new sq(260);
+	//		} else if (var3.an * -1245059367 == -2) {
+	//			var3.aw = new sq(10000);
+	//		} else if (var3.an * -1245059367 <= 18) {
+	//			var3.aw = new sq(20);
+	//		} else if (-1245059367 * var3.an <= 98) {
+	//			if (var2 >= 1132) {
+	//				throw new IllegalStateException();
+	//			}
+	//
+	//			var3.aw = new sq(100);
+	//		} else {
+	//			var3.aw = new sq(260);
+	//		}
+	//
+	//		var3.aw.an(var1, -1962868632);
+	//		var3.aw.aw(1546470819 * var3.af.dq, (byte)-107);
+	//		var3.ac = 0;
+	//		return var3;
+	//	}
+	//	@SneakyThrows
+	//	static Object method3844() {
+	//		Field nodeCount = PacketBufferNode.getDeclaredField(ObfuscatedNames.packetBufferNodeCountFieldName);
+	//		Field nodeArray = null;
+	//		for (Field declaredField : PacketBufferNode.getDeclaredFields())
+	//		{
+	//			if(declaredField.getType().isArray()&&declaredField.getType().getComponentType()==PacketBufferNode)
+	//			{
+	//				nodeArray = declaredField;
+	//			}
+	//		}
+	//		if(nodeArray==null){
+	//			throw new RuntimeException("Could not find nodeArray");
+	//		}
+	//		nodeCount.setAccessible(true);
+	//		nodeArray.setAccessible(true);
+	//		if (nodeCount.getInt(null) * ObfuscatedNames.nodeCountMultiplier == 0) {
+	//			nodeArray.setAccessible(false);
+	//			nodeCount.setAccessible(false);
+	//			return PacketBufferNode.newInstance();
+	//		} else {
+	//			int nodeCountValueMinusOne = (nodeCount.getInt(null) * ObfuscatedNames.nodeCountMultiplier)-1;
+	//			int realNodeCodeValueAfterMultiplier = nodeCountValueMinusOne*modInverse(ObfuscatedNames.nodeCountMultiplier);
+	//			nodeCount.setInt(null,realNodeCodeValueAfterMultiplier);
+	//			Object[] nodeArrayValue = (Object[]) nodeArray.get(null);
+	//			nodeArray.setAccessible(false);
+	//			nodeCount.setAccessible(false);
+	//			return nodeArrayValue[realNodeCodeValueAfterMultiplier];
+	//		}
+	//	}
 
 	@SneakyThrows
 	static Field fetchPacketField(String name)
 	{
 		return ClientPacket.getDeclaredField(name);
+	}
+
+
+	private static BigInteger modInverse(BigInteger val)
+	{
+		BigInteger shift = BigInteger.ONE.shiftLeft(32);
+		return val.modInverse(shift);
+	}
+
+	private static int modInverse(int val)
+	{
+		return modInverse(BigInteger.valueOf(val)).intValue();
 	}
 }
