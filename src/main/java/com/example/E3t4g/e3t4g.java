@@ -61,11 +61,27 @@ public class e3t4g extends Plugin
 		}
 		Optional<Widget> guam = Inventory.search().withId(ItemID.GUAM_LEAF).first();
 		Optional<Widget> tar = Inventory.search().withId(ItemID.SWAMP_TAR).first();
-		if (guam.isEmpty() || tar.isEmpty())
+		Optional<Widget> pestle = Inventory.search().withId(ItemID.PESTLE_AND_MORTAR).first();
+		if (guam.isEmpty() || tar.isEmpty() || pestle.isEmpty())
 		{
-			api.stopPlugin(this);
+			EthanApiPlugin.stopPlugin(this);
 			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "please make sure you have guam leaf and swamp tar" +
-					" before starting", null);
+					" and a pestle and mortar before starting", null);
+			return;
+		}
+
+		if (Inventory.search().withId(ItemID.GUAM_LEAF).onlyUnnoted().result().size() > 1)
+		{
+			EthanApiPlugin.stopPlugin(this);
+			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "plugin not able to work with more than one " +
+					"cleaned guam in inventory", null);
+			return;
+		}
+		if (tar.get().getItemQuantity() <= 15)
+		{
+			EthanApiPlugin.stopPlugin(this);
+			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "plugin not able to work with less than 15 swamp tar" +
+					" in inventory", null);
 			return;
 		}
 		MousePackets.queueClickPacket();

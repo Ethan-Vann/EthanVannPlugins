@@ -97,6 +97,12 @@ public class ItemQuery
 		return this;
 	}
 
+	public ItemQuery onlyUnnoted()
+	{
+		items = items.stream().filter(item -> !isNoted(item)).collect(Collectors.toList());
+		return this;
+	}
+
 	public boolean empty()
 	{
 		return items.size() == 0;

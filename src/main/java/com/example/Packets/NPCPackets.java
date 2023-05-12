@@ -37,8 +37,41 @@ public class NPCPackets
 		}
 	}
 
+	public static void tryWithTransformation(NPC npc, String... actionList)
+	{
+		if (npc.getComposition().getConfigs() == null)
+		{
+			return;
+		}
+		List<String> actions =
+				Arrays.stream(npc.getComposition().transform().getActions()).collect(Collectors.toList());
+		for (int i = 0; i < actions.size(); i++)
+		{
+			if (actions.get(i) == null)
+				continue;
+			actions.set(i, actions.get(i).toLowerCase());
+		}
+		int num = -1;
+		for (String action : actions)
+		{
+			for (String action2 : actionList)
+			{
+				if (action != null && action.equalsIgnoreCase(action2))
+				{
+					num = actions.indexOf(action.toLowerCase()) + 1;
+				}
+			}
+		}
+
+		if (num < 1 || num > 10)
+		{
+			return;
+		}
+		queueNPCAction(num, npc.getIndex(), false);
+	}
+
 	@SneakyThrows
-	public static void queueNPCAction(NPC npc, String... actionlist)
+	public static void queueNPCAction(NPC npc, String... actionList)
 	{
 		List<String> actions = Arrays.stream(npc.getComposition().getActions()).collect(Collectors.toList());
 		for (int i = 0; i < actions.size(); i++)
@@ -50,7 +83,7 @@ public class NPCPackets
 		int num = -1;
 		for (String action : actions)
 		{
-			for (String action2 : actionlist)
+			for (String action2 : actionList)
 			{
 				if (action != null && action.equalsIgnoreCase(action2))
 				{
@@ -61,6 +94,7 @@ public class NPCPackets
 
 		if (num < 1 || num > 10)
 		{
+			tryWithTransformation(npc, actionList);
 			return;
 		}
 		queueNPCAction(num, npc.getIndex(), false);
