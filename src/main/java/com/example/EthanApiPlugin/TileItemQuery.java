@@ -101,6 +101,74 @@ public class TileItemQuery
 						collect(Collectors.toList());
 		return this;
 	}
+	//the 3 methods below are ugly af and might not work
+	public TileItemQuery doesNotMatchWildCardNoCase(String input)
+	{
+		tileItems =
+				tileItems.stream().
+						filter(item ->
+						{
+							try
+							{
+								return !WildcardMatcher.matches(input.toLowerCase(),
+										Text.removeTags(EthanApiPlugin.itemDefs.get(item.tileItem.getId()).getName().toLowerCase()));
+							}
+							catch (ExecutionException e)
+							{
+								throw new RuntimeException(e);
+							}
+						}).
+						collect(Collectors.toList());
+		return this;
+	}
+
+	public TileItemQuery itemsMatchingWildcardsNoCase(String... input)
+	{
+		List<ETileItem> tileItemsTemp = new ArrayList<>();
+		for (String s : input)
+		{
+			tileItemsTemp.addAll(tileItems.stream().
+					filter(item ->
+					{
+						try
+						{
+							return WildcardMatcher.matches(s.toLowerCase(),
+									Text.removeTags(EthanApiPlugin.itemDefs.get(item.tileItem.getId()).getName().toLowerCase()));
+						}
+						catch (ExecutionException e)
+						{
+							throw new RuntimeException(e);
+						}
+					}).
+					collect(Collectors.toList()));
+		}
+		tileItems = tileItemsTemp;
+		return this;
+	}
+	public TileItemQuery itemsExcludingMatchingWildcardsNoCase(String... input)
+	{
+		List<ETileItem> tileItemsTemp = new ArrayList<>();
+		for (String s : input)
+		{
+			tileItemsTemp.addAll(tileItems.stream().
+					filter(item ->
+					{
+						try
+						{
+							return WildcardMatcher.matches(s.toLowerCase(),
+									Text.removeTags(EthanApiPlugin.itemDefs.get(item.tileItem.getId()).getName().toLowerCase()));
+						}
+						catch (ExecutionException e)
+						{
+							throw new RuntimeException(e);
+						}
+					}).
+					collect(Collectors.toList()));
+		}
+		tileItems.removeAll(tileItemsTemp);
+		return this;
+	}
+
 
 	public boolean empty()
 	{
