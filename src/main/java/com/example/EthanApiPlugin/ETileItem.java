@@ -15,16 +15,20 @@ public class ETileItem
 		this.location = worldLocation;
 		this.tileItem = tileItem;
 	}
+
 	public WorldPoint getLocation()
 	{
 		return location;
 	}
+
 	public TileItem getTileItem()
 	{
 		return tileItem;
 	}
-	public void interact(boolean ctrlDown){
+
+	public void interact(boolean ctrlDown)
+	{
 		MousePackets.queueClickPacket();
-		TileItemPackets.queueTileItemAction(this,ctrlDown);
+		TileItemPackets.queueTileItemAction(this, ctrlDown);
 	}
 }
