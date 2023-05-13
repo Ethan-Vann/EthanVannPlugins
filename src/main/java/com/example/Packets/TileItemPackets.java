@@ -1,8 +1,10 @@
 package com.example.Packets;
 
+import com.example.EthanApiPlugin.ETileItem;
 import com.example.PacketDef;
 import com.example.PacketReflection;
 import lombok.SneakyThrows;
+import net.runelite.api.widgets.Widget;
 
 public class TileItemPackets
 {
@@ -37,5 +39,18 @@ public class TileItemPackets
 		int ctrl = ctrlDown ? 1 : 0;
 		PacketReflection.sendPacket(PacketDef.OPOBJT, objectId, worldPointX, worldPointY, sourceSlot, sourceItemId,
 				sourceWidgetId, ctrl);
+	}
+
+	public static void queueTileItemAction(ETileItem item, boolean ctrlDown)
+	{
+		queueTileItemAction(3, item.getTileItem().getId(), item.getLocation().getX(), item.getLocation().getY(),
+				ctrlDown);
+	}
+
+	public static void queueWidgetOnTileItem(ETileItem item, Widget w,
+											 boolean ctrlDown)
+	{
+		queueWidgetOnTileItem(item.getTileItem().getId(), item.getLocation().getX(), item.getLocation().getY(),
+				w.getIndex(), w.getItemId(), w.getId(), ctrlDown);
 	}
 }
