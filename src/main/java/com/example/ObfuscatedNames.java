@@ -757,7 +757,7 @@ public final class ObfuscatedNames
 	public static final String bufferClassName = "sg";
 	public static final String packetWriterFieldName = "in";
 	public static final String packetWriterClassName = "eq";
-	public static final String addNodeMethodName = "bq";
+	public static final String addNodeMethodName = "aw";
 	public static final String addNodeGarbageValue = "414135591";
 	public static final String isaacCipherFieldName = "au";
 	public static final String packetBufferNodeClassName = "lg";
