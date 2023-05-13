@@ -51,6 +51,20 @@ public class TileObjectQuery
 		return this;
 	}
 
+	public TileObjectQuery atLocation(WorldPoint location)
+	{
+		tileObjects = tileObjects.stream().filter(tileObject -> tileObject.getWorldLocation().equals(location)).collect(Collectors.toList());
+		return this;
+	}
+
+	public TileObjectQuery atLocation(int x, int y, int plane)
+	{
+		WorldPoint p = new WorldPoint(x, y, plane);
+		tileObjects =
+				tileObjects.stream().filter(tileObject -> tileObject.getWorldLocation().equals(p)).collect(Collectors.toList());
+		return this;
+	}
+
 	public TileObjectQuery filter(Predicate<? super TileObject> predicate)
 	{
 		tileObjects = tileObjects.stream().filter(predicate).collect(Collectors.toList());
