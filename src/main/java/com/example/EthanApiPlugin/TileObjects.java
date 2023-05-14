@@ -3,6 +3,7 @@ package com.example.EthanApiPlugin;
 import net.runelite.api.Client;
 import net.runelite.api.GameObject;
 import net.runelite.api.Tile;
+import net.runelite.api.TileItem;
 import net.runelite.api.TileObject;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.RuneLite;
@@ -25,6 +26,7 @@ public class TileObjects
 	public void onGameTick(GameTick e)
 	{
 		tileObjects.clear();
+		TileItems.tileItems.clear();
 		for (Tile[] tiles : client.getScene().getTiles()[client.getPlane()])
 		{
 			if (tiles == null)
@@ -36,6 +38,17 @@ public class TileObjects
 				if (tile == null)
 				{
 					continue;
+				}
+				if (tile.getGroundItems() != null)
+				{
+					for (TileItem groundItem : tile.getGroundItems())
+					{
+						if (groundItem == null)
+						{
+							continue;
+						}
+						TileItems.tileItems.add(new ETileItem(tile.getWorldLocation(), groundItem));
+					}
 				}
 				for (GameObject gameObject : tile.getGameObjects())
 				{

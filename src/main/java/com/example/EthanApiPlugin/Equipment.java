@@ -19,6 +19,7 @@ public class Equipment
 	static Client client = RuneLite.getInjector().getInstance(Client.class);
 	static List<EquipmentItemWidget> equipment = new ArrayList<>();
 	static HashMap<Integer, Integer> equipmentSlotWidgetMapping = new HashMap<>();
+	static HashMap<Integer, Integer> mappingToIterableIntegers = new HashMap<>();
 
 	static
 	{
@@ -33,6 +34,19 @@ public class Equipment
 		equipmentSlotWidgetMapping.put(10, 23);
 		equipmentSlotWidgetMapping.put(12, 24);
 		equipmentSlotWidgetMapping.put(13, 25);
+
+
+		mappingToIterableIntegers.put(0, 0);
+		mappingToIterableIntegers.put(1, 1);
+		mappingToIterableIntegers.put(2, 2);
+		mappingToIterableIntegers.put(3, 3);
+		mappingToIterableIntegers.put(4, 4);
+		mappingToIterableIntegers.put(5, 5);
+		mappingToIterableIntegers.put(6, 7);
+		mappingToIterableIntegers.put(7, 9);
+		mappingToIterableIntegers.put(8, 10);
+		mappingToIterableIntegers.put(9, 12);
+		mappingToIterableIntegers.put(10, 13);
 	}
 
 	public static EquipmentItemQuery search()
@@ -46,6 +60,11 @@ public class Equipment
 	{
 		if (e.getContainerId() == InventoryID.EQUIPMENT.getId())
 		{
+			int x = 25362447;
+			for (int i = 0; i < 11; i++)
+			{
+				client.runScript(545, (x + i), mappingToIterableIntegers.get(i), 1, 1, 2);
+			}
 			equipment.clear();
 			int i = -1;
 			for (Item item : e.getItemContainer().getItems())

@@ -9,6 +9,7 @@ import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.events.ScriptPreFired;
 import net.runelite.client.RuneLite;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
@@ -72,6 +73,23 @@ public class PacketUtilsPlugin extends Plugin
 		{
 			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "Packet Utils", e.toString(), null);
 			System.out.println(e);
+		}
+	}
+
+	@Subscribe
+	public void onScriptPreFired(ScriptPreFired e)
+	{
+		if (config.debug())
+		{
+			if (e.getScriptId() == 1121)
+			{
+				System.out.print("resume pause");
+				for (int i = 1; i < e.getScriptEvent().getArguments().length; i++)
+				{
+					System.out.print(":" + e.getScriptEvent().getArguments()[i]);
+				}
+				System.out.println();
+			}
 		}
 	}
 

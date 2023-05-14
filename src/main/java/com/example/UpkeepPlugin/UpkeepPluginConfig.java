@@ -159,26 +159,26 @@ public interface UpkeepPluginConfig extends Config
 	{
 		return "";
 	}
-//
-//	@ConfigItem(
-//			keyName = "AntiFireActions",
-//			name = "AntiFire Actions",
-//			description = "List of item actions to use when not antifired",
-//			position = 200
-//	)
-//	default String AntiFireActions()
-//	{
-//		return "";
-//	}
-//
-//	@ConfigItem(
-//			keyName = "AntiPoisonActions",
-//			name = "AntiPoison Actions",
-//			description = "List of item actions to use when not antipoisoned/antivenomed",
-//			position = 201
-//	)
-//	default String AntiPoisonActions()
-//	{
-//		return "";
-//	}
+	//
+	//	@ConfigItem(
+	//			keyName = "AntiFireActions",
+	//			name = "AntiFire Actions",
+	//			description = "List of item actions to use when not antifired",
+	//			position = 200
+	//	)
+	//	default String AntiFireActions()
+	//	{
+	//		return "";
+	//	}
+	//
+	//	@ConfigItem(
+	//			keyName = "AntiPoisonActions",
+	//			name = "AntiPoison Actions",
+	//			description = "List of item actions to use when not antipoisoned/antivenomed",
+	//			position = 201
+	//	)
+	//	default String AntiPoisonActions()
+	//	{
+	//		return "";
+	//	}
 }

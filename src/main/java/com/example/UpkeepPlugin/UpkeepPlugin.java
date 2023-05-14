@@ -92,14 +92,14 @@ public class UpkeepPlugin extends Plugin
 		{
 			handleAction(config.StrengthActions());
 		}
-//		if (client.getVarbitValue(102) == 0 && !config.AntiPoisonActions().trim().isEmpty())
-//		{
-//			handleAction(config.AntiPoisonActions());
-//		}
-//		if (client.getVarbitValue(Varbits.ANTIFIRE) == 0 && client.getVarbitValue(Varbits.SUPER_ANTIFIRE) == 0 && !config.AntiFireActions().trim().isEmpty())
-//		{
-//			handleAction(config.AntiFireActions());
-//		}
+		//		if (client.getVarbitValue(102) == 0 && !config.AntiPoisonActions().trim().isEmpty())
+		//		{
+		//			handleAction(config.AntiPoisonActions());
+		//		}
+		//		if (client.getVarbitValue(Varbits.ANTIFIRE) == 0 && client.getVarbitValue(Varbits.SUPER_ANTIFIRE) == 0 && !config.AntiFireActions().trim().isEmpty())
+		//		{
+		//			handleAction(config.AntiFireActions());
+		//		}
 	}
 
 	public void handleAction(String actionParam)
