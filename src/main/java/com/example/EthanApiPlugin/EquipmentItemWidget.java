@@ -28,18 +28,22 @@ public class EquipmentItemWidget implements Widget
 	}
 
 
-	public void interact(String... actions){
+	public void interact(String... actions)
+	{
 		MousePackets.queueClickPacket();
 		WidgetPackets.queueWidgetAction(EthanApiPlugin.client.getWidget(packedId), actions);
 	}
+
 	public int getEquipmentItemId()
 	{
 		return equipmentItemId;
 	}
+
 	public int getEquipmentIndex()
 	{
 		return index;
 	}
+
 	@Override
 	public int getId()
 	{

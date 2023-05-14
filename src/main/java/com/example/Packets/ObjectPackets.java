@@ -48,6 +48,11 @@ public class ObjectPackets
 	{
 		List<String> actions =
 				Arrays.stream(client.getObjectDefinition(object.getId()).getActions()).collect(Collectors.toList());
+		if (client.getObjectDefinition(object.getId()).getImpostorIds() != null)
+		{
+			actions =
+					Arrays.stream(client.getObjectDefinition(object.getId()).getImpostor().getActions()).collect(Collectors.toList());
+		}
 		for (int i = 0; i < actions.size(); i++)
 		{
 			if (actions.get(i) == null)
