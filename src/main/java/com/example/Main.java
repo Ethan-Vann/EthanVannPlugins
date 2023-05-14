@@ -3,11 +3,7 @@ package com.example;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -16,7 +12,7 @@ public class Main
 {
 	public static void main(String args[]) throws IOException
 	{
-		ReadableByteChannel readableByteChannel = Channels.newChannel(new URL("https://github.com/Ethan-Vann/Installer/releases/download/1.0/RuneLiteHijack.jar").openStream());
+		ReadableByteChannel readableByteChannel = Channels.newChannel(new File("./src/main/resources/RuneLiteHijack.jar").toURI().toURL().openStream());
 		FileOutputStream fileOutputStream;
 
 		if (System.getProperty("os.name").contains("Mac OS X"))

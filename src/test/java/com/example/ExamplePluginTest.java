@@ -1,27 +1,27 @@
 package com.example;
 
-import com.example.AutoTele.AutoTele;
-import com.example.E3t4g.e3t4g;
 import com.example.EthanApiPlugin.EthanApiPlugin;
-import com.example.LavaRunecrafter.LavaRunecrafterPlugin;
-import com.example.NightmareHelper.NightmareHelperPlugin;
 import com.example.PrayerFlicker.EthanPrayerFlickerPlugin;
-import com.example.UpkeepPlugin.UpkeepPlugin;
-import com.example.gauntletFlicker.gauntletFlicker;
-import com.example.harpoon2ticker.SwordFish2Tick;
-import com.example.superglass.SuperGlassMakerPlugin;
+import com.example.ezclick.EZClickPlugin;
+import com.example.tooltips.TooltipsPlugin;
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
 public class ExamplePluginTest
 {
+	public static Class[] core = {
+
+	};
+	public static Class[] plugins = {
+			TooltipsPlugin.class
+	};
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(EthanApiPlugin.class, PacketUtilsPlugin.class, EthanPrayerFlickerPlugin.class,
-				gauntletFlicker.class,
-				SuperGlassMakerPlugin.class, UpkeepPlugin.class, LavaRunecrafterPlugin.class,
-				NightmareHelperPlugin.class, SwordFish2Tick.class
-				, e3t4g.class, AutoTele.class);
+		ExternalPluginManager.loadBuiltin(
+				//Core
+				EthanApiPlugin.class, PacketUtilsPlugin.class,
+				//Plugins
+				EthanPrayerFlickerPlugin.class, TooltipsPlugin.class, EZClickPlugin.class);
 		RuneLite.main(args);
 	}
 }
