@@ -8,6 +8,7 @@ import net.runelite.api.Client;
 import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
@@ -35,8 +36,6 @@ public class PacketReflection {
     public boolean LoadPackets() {
         try {
             client = clientInstance;
-
-
             classWithgetPacketBufferNode = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.classContainingGetPacketBufferNodeName);
             ClientPacket = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.clientPacketClassName);
             PACKETWRITER = clientInstance.getClass().getDeclaredField(ObfuscatedNames.packetWriterFieldName);
@@ -166,77 +165,183 @@ public class PacketReflection {
                 }
             }
             PACKETWRITER.setAccessible(true);
-            Method addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
-            addNode.setAccessible(true);
-            addNode.invoke(PACKETWRITER.get(null), packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
+            Method addNode = null;
+            for (Method declaredMethod : PACKETWRITER.get(null).getClass().getDeclaredMethods()) {
+                int modifiers = declaredMethod.getModifiers();
+                if (!Modifier.isStatic(modifiers) || !Modifier.isPublic(modifiers) || !declaredMethod.getReturnType().equals(void.class) ||declaredMethod.getParameterCount() != 2 ||
+                        !declaredMethod.getParameterTypes()[0].equals(PACKETWRITER.get(null).getClass()) || !declaredMethod.getParameterTypes()[1].equals(packetBufferNode.getClass())) {
+                    continue;
+                }
+                addNode = declaredMethod;
+                addNode.setAccessible(true);
+            }
+            if (addNode == null) {
+                addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
+                addNode.setAccessible(true);
+                addNode.invoke(PACKETWRITER.get(null), packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
+            } else {
+                addNode.invoke(null, PACKETWRITER.get(null), packetBufferNode);
+            }
             addNode.setAccessible(false);
             PACKETWRITER.setAccessible(false);
         }
     }
-	//	static Object getPacketBufferNode(Object clientPacket, Object isaacCipher){
-	//		//ClientPacket var0
-	//		//IsaacCipher var1
-	//		Object var3 = method3844();
-	//		Field clientPacketField = ObfuscatedNames.packetBufferNodeClientPacketField;
-	//		Field isaacCipherField = ObfuscatedNames.packetBufferNodeIsaacCipherField;
-	//		Field length = ObfuscatedNames.clientPacketLengthField;
-	//		var3.af = var0;
-	//		var3.an = -474143459 * var0.dd;
-	//		if (-1 == var3.an * -1245059367) {
-	//			if (var2 >= 1132) {
-	//				throw new IllegalStateException();
-	//			}
-    //
-	//			var3.aw = new sq(260);
-	//		} else if (var3.an * -1245059367 == -2) {
-	//			var3.aw = new sq(10000);
-	//		} else if (var3.an * -1245059367 <= 18) {
-	//			var3.aw = new sq(20);
-	//		} else if (-1245059367 * var3.an <= 98) {
-	//			if (var2 >= 1132) {
-	//				throw new IllegalStateException();
-	//			}
-    //
-	//			var3.aw = new sq(100);
-	//		} else {
-	//			var3.aw = new sq(260);
-	//		}
-    //
-	//		var3.aw.an(var1, -1962868632);
-	//		var3.aw.aw(1546470819 * var3.af.dq, (byte)-107);
-	//		var3.ac = 0;
-	//		return var3;
-	//	}
-	//	@SneakyThrows
-	//	static Object method3844() {
-	//		Field nodeCount = PacketBufferNode.getDeclaredField(ObfuscatedNames.packetBufferNodeCountFieldName);
-	//		Field nodeArray = null;
-	//		for (Field declaredField : PacketBufferNode.getDeclaredFields())
-	//		{
-	//			if(declaredField.getType().isArray()&&declaredField.getType().getComponentType()==PacketBufferNode)
-	//			{
-	//				nodeArray = declaredField;
-	//			}
-	//		}
-	//		if(nodeArray==null){
-	//			throw new RuntimeException("Could not find nodeArray");
-	//		}
-	//		nodeCount.setAccessible(true);
-	//		nodeArray.setAccessible(true);
-	//		if (nodeCount.getInt(null) * ObfuscatedNames.nodeCountMultiplier == 0) {
-	//			nodeArray.setAccessible(false);
-	//			nodeCount.setAccessible(false);
-	//			return PacketBufferNode.newInstance();
-	//		} else {
-	//			int nodeCountValueMinusOne = (nodeCount.getInt(null) * ObfuscatedNames.nodeCountMultiplier)-1;
-	//			int realNodeCodeValueAfterMultiplier = nodeCountValueMinusOne*modInverse(ObfuscatedNames.nodeCountMultiplier);
-	//			nodeCount.setInt(null,realNodeCodeValueAfterMultiplier);
-	//			Object[] nodeArrayValue = (Object[]) nodeArray.get(null);
-	//			nodeArray.setAccessible(false);
-	//			nodeCount.setAccessible(false);
-	//			return nodeArrayValue[realNodeCodeValueAfterMultiplier];
-	//		}
-	//	}
+
+//    @SneakyThrows
+//    static Object getPacketBufferNode(Object clientPacket, Object isaacCipher) {
+//        //ClientPacket var0
+//        //IsaacCipher var1
+//        Object packetBufferNode = method3844();
+//        Field clientPacketField = PacketBufferNode.getDeclaredField(ObfuscatedNames.packetBufferNodeClientPacketField);
+//        Field clientPacketClassLengthField = ClientPacket.getDeclaredField(ObfuscatedNames.clientPacketClassLengthField);
+//        Field isaacCipherField = PacketBufferNode.getDeclaredField(ObfuscatedNames.packetBufferNodeIsaacCipherField);
+//        Field length = PacketBufferNode.getDeclaredField(ObfuscatedNames.clientPacketLengthField);
+//        Field packetBuffer = PacketBufferNode.getDeclaredField(ObfuscatedNames.packetBufferFieldName);
+//        Field clientPacketId = ClientPacket.getDeclaredField(ObfuscatedNames.clientPacketIdField);
+//        Field index = PacketBufferNode.getDeclaredField(ObfuscatedNames.packetBufferNodeIndexField);
+//        clientPacketField.set(packetBufferNode, clientPacket);
+//        int temp = length.getInt(clientPacket) * Integer.parseInt(ObfuscatedNames.clientPacketLengthFieldMultiplier);
+//        temp = temp * modInverse(Integer.parseInt(ObfuscatedNames.clientPacketClassLengthFieldMultiplier));
+//        clientPacketClassLengthField.set(packetBufferNode, temp);
+//        if (-1 == clientPacketClassLengthField.getInt(packetBufferNode) * Integer.parseInt(ObfuscatedNames.clientPacketLengthFieldMultiplier)) {
+//            Object tempBuffer = client.getClass().getClassLoader().loadClass(ObfuscatedNames.packetBufferClass).getConstructor(int.class).newInstance(260);
+//            packetBuffer.set(packetBufferNode, tempBuffer);
+//        } else if (clientPacketClassLengthField.getInt(packetBufferNode) * Integer.parseInt(ObfuscatedNames.clientPacketLengthFieldMultiplier) == -2) {
+//            Object tempBuffer = client.getClass().getClassLoader().loadClass(ObfuscatedNames.packetBufferClass).getConstructor(int.class).newInstance(10000);
+//            packetBuffer.set(packetBufferNode, tempBuffer);
+//        } else if (clientPacketClassLengthField.getInt(packetBufferNode) * Integer.parseInt(ObfuscatedNames.clientPacketLengthFieldMultiplier) <= 18) {
+//            Object tempBuffer = client.getClass().getClassLoader().loadClass(ObfuscatedNames.packetBufferClass).getConstructor(int.class).newInstance(20);
+//            packetBuffer.set(packetBufferNode, tempBuffer);
+//        } else if (clientPacketClassLengthField.getInt(packetBufferNode) * Integer.parseInt(ObfuscatedNames.clientPacketLengthFieldMultiplier) <= 98) {
+//            Object tempBuffer = client.getClass().getClassLoader().loadClass(ObfuscatedNames.packetBufferClass).getConstructor(int.class).newInstance(100);
+//            packetBuffer.set(packetBufferNode, tempBuffer);
+//        } else {
+//            Object tempBuffer = client.getClass().getClassLoader().loadClass(ObfuscatedNames.packetBufferClass).getConstructor(int.class).newInstance(260);
+//            packetBuffer.set(packetBufferNode, tempBuffer);
+//        }
+//        Object buffer = packetBufferNode.getClass().getDeclaredField(ObfuscatedNames.packetBufferFieldName).get(packetBufferNode);
+//        isaacCipherField.set(packetBufferNode, isaacCipher);
+//        BufferMethods.writeByteIsaac(buffer, clientPacketId.get(clientPacket));
+//        index.setInt(packetBufferNode, 0);
+//        return packetBuffer;
+//    }
+//
+//    @SneakyThrows
+//    static void addNode(Object packetBufferNode) {
+//        Object packetWriter = PACKETWRITER.get(null);
+//        Field index = packetBufferNode.getClass().getDeclaredField(ObfuscatedNames.packetBufferNodeIndexField);
+//        Field packetBuffer = packetBufferNode.getClass().getDeclaredField(ObfuscatedNames.packetBufferFieldName);
+//        Field packetBufferNodes = packetWriter.getClass().getDeclaredField(ObfuscatedNames.packetBufferNodesField);
+//        Field offset = packetBuffer.get(packetBufferNode).getClass().getDeclaredField(ObfuscatedNames.packetBufferOffsetField);
+//        Field bufferSize = packetWriter.getClass().getDeclaredField(ObfuscatedNames.packetWriterBufferSizeField);
+//        addFirst(packetBufferNodes.get(packetWriter), packetBufferNode);
+//        index.setInt(packetBufferNode, offset.getInt(packetBuffer.get(packetBufferNode)));
+//        offset.setInt(packetBuffer.get(packetBufferNode), 0);
+//        bufferSize.setInt(packetBufferNode,(bufferSize.getInt(packetBufferNode)+index.getInt(packetBufferNode)));
+//    }
+//
+//    @SneakyThrows
+//    static void addFirst(Object packetBufferNodesQueue, Object packetBufferNode) {
+//        if (var1.next != null) {
+//            remove(var1);
+//        }
+//        var1.next = this.sentinel.next;
+//        var1.previous = this.sentinel;
+//        var1.next.previous = var1;
+//        var1.previous.next = var1;
+//    }
+//
+//    public static void remove(Object var1Node) {
+//        Field next = var1Node.getClass().getDeclaredField(ObfuscatedNames.packetBufferNodeNextField);
+//        Field previous = var1Node.getClass().getDeclaredField(ObfuscatedNames.packetBufferNodePreviousField);
+//        Object nextObject= next.get(var1Node);
+//        Object previousObject = previous.get(var1Node);
+//        if (nextObject != null) {
+//            previous.set(nextObject, previous.get(var1Node));
+//            next.set(previousObject, nextObject);
+//            next.set(var1Node, null);
+//            previous.set(var1Node, null);
+//        }
+//    }
+//
+//    @SneakyThrows
+//    static Object method3844() {
+//        Field nodeCount = PacketBufferNode.getDeclaredField(ObfuscatedNames.packetBufferNodeCountFieldName);
+//        Field nodeArray = null;
+//        for (Field declaredField : PacketBufferNode.getDeclaredFields()) {
+//            if (declaredField.getType().isArray() && declaredField.getType().getComponentType() == PacketBufferNode) {
+//                nodeArray = declaredField;
+//            }
+//        }
+//        if (nodeArray == null) {
+//            throw new RuntimeException("Could not find nodeArray");
+//        }
+//        nodeCount.setAccessible(true);
+//        nodeArray.setAccessible(true);
+//        if (nodeCount.getInt(null) * ObfuscatedNames.nodeCountMultiplier == 0) {
+//            nodeArray.setAccessible(false);
+//            nodeCount.setAccessible(false);
+//            return PacketBufferNode.newInstance();
+//        } else {
+//            int nodeCountValueMinusOne = (nodeCount.getInt(null) * ObfuscatedNames.nodeCountMultiplier) - 1;
+//            int realNodeCodeValueAfterMultiplier = nodeCountValueMinusOne * modInverse(ObfuscatedNames.nodeCountMultiplier);
+//            nodeCount.setInt(null, realNodeCodeValueAfterMultiplier);
+//            Object[] nodeArrayValue = (Object[]) nodeArray.get(null);
+//            nodeArray.setAccessible(false);
+//            nodeCount.setAccessible(false);
+//            return nodeArrayValue[realNodeCodeValueAfterMultiplier];
+//        }
+//    }
+
+//    public static void doDecompilation() {
+//        Runnable myRunnable =
+//                new Runnable() {
+//                    public void run() {
+//                        File f = RuneLite.CACHE_DIR.getAbsoluteFile().toPath().resolve("patched.cache").toFile();
+//                        JarFile myJar = null;
+//                        try {
+//                            myJar = new JarFile(f);
+//                        } catch (IOException e) {
+//                            throw new RuntimeException(e);
+//                        }
+//                        DecompilerSettings settings = new DecompilerSettings();
+//                        settings.setTypeLoader(new JarTypeLoader(myJar));
+//                        StringWriter output = new StringWriter();
+//                        Decompiler.decompile("do", new PlainTextOutput(output), settings);
+//                        String[] lines = output.toString().replaceAll("@Named\\(.*\\)", "").split("\n");
+//                        List<String> methodLines = new ArrayList<>();
+//                        int count = 0;
+//                        boolean foundFirst = false;
+//                        for (String line : lines) {
+//                            if (foundFirst && count == 0) {
+//                                break;
+//                            }
+//                            if (line.contains("static void " + ObfuscatedNames.RESUME_PAUSE_METHOD_NAME)) {
+//                                foundFirst = true;
+//                            }
+//                            if (foundFirst) {
+//                                if (line.contains("}")) {
+//                                    count--;
+//                                    continue;
+//                                }
+//                                if (line.contains("{")) {
+//                                    count++;
+//                                    continue;
+//                                }
+//                                if (line.contains("throw")) {
+//                                    continue;
+//                                }
+//                                methodLines.add(line);
+//                            }
+//                        }
+//                        for (String methodLine : methodLines) {
+//                            System.out.println(methodLine);
+//                        }
+//                    }
+//                };
+//        Thread thread = new Thread(myRunnable);
+//        thread.start();
+//    }
 
     @SneakyThrows
     static Field fetchPacketField(String name) {
