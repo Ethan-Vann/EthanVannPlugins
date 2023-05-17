@@ -25,152 +25,123 @@ import javax.swing.*;
 @Slf4j
 @Singleton
 @PluginDescriptor(
-		name = "Packet Utils",
-		description = "Packet Utils for Plugins",
-		enabledByDefault = true,
-		tags = {"ethan"}
+        name = "Packet Utils",
+        description = "Packet Utils for Plugins",
+        enabledByDefault = true,
+        tags = {"ethan"}
 )
-public class PacketUtilsPlugin extends Plugin
-{
-	@Inject
-	PacketUtilsConfig config;
-	@Inject
-	Client client;
-	static Client staticClient;
-	@Inject
-	PacketReflection packetReflection;
-	@Inject
-	ClientThread thread;
-	public static final int CLIENT_REV = 213;
-	private static boolean loaded = false;
-	@Inject
-	private PluginManager pluginManager;
+public class PacketUtilsPlugin extends Plugin {
+    @Inject
+    PacketUtilsConfig config;
+    @Inject
+    Client client;
+    static Client staticClient;
+    @Inject
+    PacketReflection packetReflection;
+    @Inject
+    ClientThread thread;
+    public static final int CLIENT_REV = 213;
+    private static boolean loaded = false;
+    @Inject
+    private PluginManager pluginManager;
 
-	@Subscribe
-	public void onGameStateChanged(GameStateChanged event)
-	{
-		if (event.getGameState() == GameState.LOGGED_IN)
-		{
-			loaded = packetReflection.LoadPackets();
-		}
-	}
+    @Subscribe
+    public void onGameStateChanged(GameStateChanged event) {
+        if (event.getGameState() == GameState.LOGGED_IN) {
+            loaded = packetReflection.LoadPackets();
+        }
+    }
 
-	public boolean isLoaded()
-	{
-		return loaded;
-	}
+    public boolean isLoaded() {
+        return loaded;
+    }
 
-	@Provides
-	public PacketUtilsConfig getConfig(ConfigManager configManager)
-	{
-		return configManager.getConfig(PacketUtilsConfig.class);
-	}
+    @Provides
+    public PacketUtilsConfig getConfig(ConfigManager configManager) {
+        return configManager.getConfig(PacketUtilsConfig.class);
+    }
 
-	@Subscribe
-	public void onMenuOptionClicked(MenuOptionClicked e)
-	{
-		if (config.debug())
-		{
-			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "Packet Utils", e.toString(), null);
-			System.out.println(e);
-		}
-	}
+    @Subscribe
+    public void onMenuOptionClicked(MenuOptionClicked e) {
+        if (config.debug()) {
+            client.addChatMessage(ChatMessageType.GAMEMESSAGE, "Packet Utils", e.toString(), null);
+            System.out.println(e);
+        }
+    }
 
-	@Subscribe
-	public void onScriptPreFired(ScriptPreFired e)
-	{
-		if (config.debug())
-		{
-			if (e.getScriptId() == 1121)
-			{
-				System.out.print("resume pause");
-				for (int i = 1; i < e.getScriptEvent().getArguments().length; i++)
-				{
-					System.out.print(":" + e.getScriptEvent().getArguments()[i]);
-				}
-				System.out.println();
-			}
-		}
-	}
+    @Subscribe
+    public void onScriptPreFired(ScriptPreFired e) {
+        if (config.debug()) {
+            if (e.getScriptId() == 1121) {
+                System.out.print("resume pause");
+                for (int i = 1; i < e.getScriptEvent().getArguments().length; i++) {
+                    System.out.print(":" + e.getScriptEvent().getArguments()[i]);
+                }
+                System.out.println();
+            }
+        }
+    }
 
-	@Override
-	@SneakyThrows
-	public void startUp()
-	{
-		staticClient = client;
-		if (client.getRevision() != CLIENT_REV)
-		{
-			SwingUtilities.invokeLater(() ->
-			{
-				JOptionPane.showMessageDialog(null, "PacketUtils not updated for this rev please " +
-						"wait for " +
-						"plugin update");
-				try
-				{
-					pluginManager.setPluginEnabled(this, false);
-					pluginManager.stopPlugin(this);
-				}
-				catch (PluginInstantiationException ignored)
-				{
-				}
-			});
-			return;
-		}
-		thread.invoke(() ->
-		{
-			if (client.getGameState() != null && client.getGameState() == GameState.LOGGED_IN)
-			{
-				loaded = packetReflection.LoadPackets();
-			}
-		});
-		SwingUtilities.invokeLater(() ->
-		{
-			for (Plugin plugin : pluginManager.getPlugins())
-			{
-				if (plugin.getName().equals("EthanApiPlugin"))
-				{
-					if (pluginManager.isPluginEnabled(plugin))
-					{
-						continue;
-					}
-					try
-					{
-						pluginManager.setPluginEnabled(plugin, true);
-						pluginManager.startPlugin(plugin);
-					}
-					catch (PluginInstantiationException e)
-					{
-						//e.printStackTrace();
-					}
-				}
-			}
-		});
-	}
+    @Override
+    @SneakyThrows
+    public void startUp() {
+        staticClient = client;
+        if (client.getRevision() != CLIENT_REV) {
+            SwingUtilities.invokeLater(() ->
+            {
+                JOptionPane.showMessageDialog(null, "PacketUtils not updated for this rev please " +
+                        "wait for " +
+                        "plugin update");
+                try {
+                    pluginManager.setPluginEnabled(this, false);
+                    pluginManager.stopPlugin(this);
+                } catch (PluginInstantiationException ignored) {
+                }
+            });
+            return;
+        }
+        thread.invoke(() ->
+        {
+            if (client.getGameState() != null && client.getGameState() == GameState.LOGGED_IN) {
+                loaded = packetReflection.LoadPackets();
+            }
+        });
+        SwingUtilities.invokeLater(() ->
+        {
+            for (Plugin plugin : pluginManager.getPlugins()) {
+                if (plugin.getName().equals("EthanApiPlugin")) {
+                    if (pluginManager.isPluginEnabled(plugin)) {
+                        continue;
+                    }
+                    try {
+                        pluginManager.setPluginEnabled(plugin, true);
+                        pluginManager.startPlugin(plugin);
+                    } catch (PluginInstantiationException e) {
+                        //e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
 
-	@Override
-	public void shutDown()
-	{
-		log.info("Shutdown");
-		loaded = false;
-	}
+    @Override
+    public void shutDown() {
+        log.info("Shutdown");
+        loaded = false;
+    }
 
-	@Inject
-	private void init()
-	{
-		if (config.alwaysOn() && client.getRevision() == CLIENT_REV)
-		{
-			SwingUtilities.invokeLater(() ->
-			{
-				try
-				{
-					RuneLite.getInjector().getInstance(PluginManager.class).setPluginEnabled(this, true);
-					RuneLite.getInjector().getInstance(PluginManager.class).startPlugin(this);
-				}
-				catch (PluginInstantiationException e)
-				{
-					e.printStackTrace();
-				}
-			});
-		}
-	}
+    @Inject
+    private void init() {
+        if (config.alwaysOn() && client.getRevision() == CLIENT_REV) {
+            SwingUtilities.invokeLater(() ->
+            {
+                try {
+                    RuneLite.getInjector().getInstance(PluginManager.class).setPluginEnabled(this, true);
+                    RuneLite.getInjector().getInstance(PluginManager.class).startPlugin(this);
+                } catch (PluginInstantiationException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+    }
 }

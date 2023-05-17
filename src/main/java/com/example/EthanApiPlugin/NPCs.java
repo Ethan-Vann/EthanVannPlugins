@@ -9,27 +9,23 @@ import net.runelite.client.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NPCs
-{
-	static Client client = RuneLite.getInjector().getInstance(Client.class);
-	private static List<NPC> npcList = new ArrayList<>();
+public class NPCs {
+    static Client client = RuneLite.getInjector().getInstance(Client.class);
+    private static List<NPC> npcList = new ArrayList<>();
 
-	public static NPCQuery search()
-	{
-		return new NPCQuery(npcList);
-	}
+    public static NPCQuery search() {
+        return new NPCQuery(npcList);
+    }
 
-	@Subscribe(priority = 10000)
-	public void onGameTick(GameTick e)
-	{
-		npcList.clear();
-		for (NPC npc : client.getNpcs())
-		{
-			if (npc == null)
-				continue;
-			if (npc.getId() == -1)
-				continue;
-			npcList.add(npc);
-		}
-	}
+    @Subscribe(priority = 10000)
+    public void onGameTick(GameTick e) {
+        npcList.clear();
+        for (NPC npc : client.getNpcs()) {
+            if (npc == null)
+                continue;
+            if (npc.getId() == -1)
+                continue;
+            npcList.add(npc);
+        }
+    }
 }

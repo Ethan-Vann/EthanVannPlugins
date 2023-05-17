@@ -168,7 +168,7 @@ public class PacketReflection {
             Method addNode = null;
             for (Method declaredMethod : PACKETWRITER.get(null).getClass().getDeclaredMethods()) {
                 int modifiers = declaredMethod.getModifiers();
-                if (!Modifier.isStatic(modifiers) || !Modifier.isPublic(modifiers) || !declaredMethod.getReturnType().equals(void.class) ||declaredMethod.getParameterCount() != 2 ||
+                if (!Modifier.isStatic(modifiers) || !Modifier.isPublic(modifiers) || !declaredMethod.getReturnType().equals(void.class) || declaredMethod.getParameterCount() != 2 ||
                         !declaredMethod.getParameterTypes()[0].equals(PACKETWRITER.get(null).getClass()) || !declaredMethod.getParameterTypes()[1].equals(packetBufferNode.getClass())) {
                     continue;
                 }
