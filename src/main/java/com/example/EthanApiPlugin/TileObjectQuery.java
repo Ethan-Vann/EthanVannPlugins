@@ -38,7 +38,10 @@ public class TileObjectQuery {
                     } else {
                         actions = client.getObjectDefinition(tileObject.getId()).getActions();
                     }
-                    return Arrays.stream(actions).anyMatch(a -> a.equalsIgnoreCase(action));
+                    if (actions == null) {
+                        return false;
+                    }
+                    return Arrays.stream(actions).filter(Objects::nonNull).anyMatch(a -> a.equalsIgnoreCase(action));
                 }).collect(Collectors.toList());
         return this;
     }

@@ -31,7 +31,10 @@ public class NPCQuery {
             } else {
                 actions = npc.getComposition().getActions();
             }
-            return Arrays.stream(actions).anyMatch(a -> a.equalsIgnoreCase(action));
+            if (actions == null) {
+                return false;
+            }
+            return Arrays.stream(actions).filter(Objects::nonNull).anyMatch(a -> a.equalsIgnoreCase(action));
         }).collect(Collectors.toList());
         return this;
     }
