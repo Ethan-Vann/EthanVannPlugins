@@ -19,7 +19,7 @@ public class ExamplePluginTest {
                 gauntletFlicker.class,
                 SuperGlassMakerPlugin.class, UpkeepPlugin.class, LavaRunecrafterPlugin.class,
                 NightmareHelperPlugin.class, SwordFish2Tick.class
-                , e3t4g.class, AutoTele.class, BasicSwitcher.class);
+                , e3t4g.class, AutoTele.class);
         RuneLite.main(args);
     }
 }
