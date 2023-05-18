@@ -1,6 +1,7 @@
 package com.example.EthanApiPlugin;
 
 import net.runelite.api.Client;
+import net.runelite.api.ObjectComposition;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
@@ -19,7 +20,7 @@ public class TileObjectQuery {
 
     public TileObjectQuery withName(String name) {
         tileObjects =
-                tileObjects.stream().filter(tileObject -> client.getObjectDefinition(tileObject.getId()).getName().equals(name)).collect(Collectors.toList());
+                tileObjects.stream().filter(tileObject -> getObjectComposition(tileObject).getName().equals(name)).collect(Collectors.toList());
         return this;
     }
 
@@ -32,16 +33,7 @@ public class TileObjectQuery {
         tileObjects =
                 tileObjects.stream().filter(tileObject ->
                 {
-                    String[] actions = null;
-
-                    if (client.getObjectDefinition(tileObject.getId()).getImpostorIds() != null && client.getObjectDefinition(tileObject.getId()).getImpostor() != null) {
-                        actions = client.getObjectDefinition(tileObject.getId()).getImpostor().getActions();
-                    } else {
-                        actions = client.getObjectDefinition(tileObject.getId()).getActions();
-                    }
-                    if (actions == null) {
-                        return false;
-                    }
+                    String[] actions = getObjectComposition(tileObject).getActions();
                     return Arrays.stream(actions).filter(Objects::nonNull).anyMatch(a -> a.equalsIgnoreCase(action));
                 }).collect(Collectors.toList());
         return this;
@@ -66,7 +58,7 @@ public class TileObjectQuery {
 
     public TileObjectQuery nameContains(String name) {
         tileObjects =
-                tileObjects.stream().filter(tileObject -> client.getObjectDefinition(tileObject.getId()).getName().contains(name)).collect(Collectors.toList());
+                tileObjects.stream().filter(tileObject -> getObjectComposition(tileObject).getName().contains(name)).collect(Collectors.toList());
         return this;
     }
 
@@ -93,5 +85,12 @@ public class TileObjectQuery {
 
     public Optional<TileObject> nearestToPoint(WorldPoint point) {
         return tileObjects.stream().min(Comparator.comparingInt(o -> point.distanceTo(o.getWorldLocation())));
+    }
+
+    static ObjectComposition getObjectComposition(TileObject tileObject) {
+        if(client.getObjectDefinition(tileObject.getId()).getImpostorIds()==null||client.getObjectDefinition(tileObject.getId()).getImpostor()==null){
+            return client.getObjectDefinition(tileObject.getId());
+        }
+        return client.getObjectDefinition(tileObject.getId()).getImpostor();
     }
 }

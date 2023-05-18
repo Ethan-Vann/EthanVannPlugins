@@ -1,8 +1,6 @@
 package com.example.EthanApiPlugin;
 
-import net.runelite.api.Actor;
-import net.runelite.api.Client;
-import net.runelite.api.NPC;
+import net.runelite.api.*;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
 
@@ -25,15 +23,7 @@ public class NPCQuery {
 
     public NPCQuery withAction(String action) {
         npcs = npcs.stream().filter(npc -> {
-            String[] actions = null;
-            if (npc.getComposition().getConfigs() != null && npc.getTransformedComposition() != null) {
-                actions = npc.getTransformedComposition().getActions();
-            } else {
-                actions = npc.getComposition().getActions();
-            }
-            if (actions == null) {
-                return false;
-            }
+            String[] actions = getNPCComposition(npc).getActions();
             return Arrays.stream(actions).filter(Objects::nonNull).anyMatch(a -> a.equalsIgnoreCase(action));
         }).collect(Collectors.toList());
         return this;
@@ -152,5 +142,11 @@ public class NPCQuery {
             return Optional.ofNullable(null);
         }
         return Optional.ofNullable(npcs.get(0));
+    }
+    static NPCComposition getNPCComposition(NPC npc) {
+        if(npc.getComposition().getConfigs()==null||npc.getTransformedComposition()==null){
+            return npc.getComposition();
+        }
+        return npc.getTransformedComposition();
     }
 }
