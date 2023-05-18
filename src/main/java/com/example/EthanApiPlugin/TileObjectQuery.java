@@ -33,7 +33,8 @@ public class TileObjectQuery {
                 tileObjects.stream().filter(tileObject ->
                 {
                     String[] actions = null;
-                    if (client.getObjectDefinition(tileObject.getId()).getImpostorIds() != null) {
+
+                    if (client.getObjectDefinition(tileObject.getId()).getImpostorIds() != null && client.getObjectDefinition(tileObject.getId()).getImpostor() != null) {
                         actions = client.getObjectDefinition(tileObject.getId()).getImpostor().getActions();
                     } else {
                         actions = client.getObjectDefinition(tileObject.getId()).getActions();

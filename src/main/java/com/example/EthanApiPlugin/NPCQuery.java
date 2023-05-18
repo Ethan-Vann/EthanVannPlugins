@@ -26,7 +26,7 @@ public class NPCQuery {
     public NPCQuery withAction(String action) {
         npcs = npcs.stream().filter(npc -> {
             String[] actions = null;
-            if (npc.getComposition().getConfigs() != null) {
+            if (npc.getComposition().getConfigs() != null && npc.getTransformedComposition() != null) {
                 actions = npc.getTransformedComposition().getActions();
             } else {
                 actions = npc.getComposition().getActions();

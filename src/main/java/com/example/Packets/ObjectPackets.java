@@ -44,7 +44,7 @@ public class ObjectPackets {
     public static void queueObjectAction(TileObject object, boolean ctrlDown, String... actionlist) {
         List<String> actions =
                 Arrays.stream(client.getObjectDefinition(object.getId()).getActions()).collect(Collectors.toList());
-        if (client.getObjectDefinition(object.getId()).getImpostorIds() != null) {
+        if (client.getObjectDefinition(object.getId()).getImpostorIds() != null && client.getObjectDefinition(object.getId()).getImpostor() != null) {
             actions =
                     Arrays.stream(client.getObjectDefinition(object.getId()).getImpostor().getActions()).collect(Collectors.toList());
         }

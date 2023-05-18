@@ -37,7 +37,7 @@ public class NPCPackets {
     @SneakyThrows
     public static void queueNPCAction(NPC npc, String... actionList) {
         List<String> actions = Arrays.stream(npc.getComposition().getActions()).collect(Collectors.toList());
-        if (npc.getComposition().getConfigs() != null) {
+        if (npc.getComposition().getConfigs() != null && npc.getComposition().transform() != null) {
             actions = Arrays.stream(npc.getComposition().transform().getActions()).collect(Collectors.toList());
         }
         for (int i = 0; i < actions.size(); i++) {
