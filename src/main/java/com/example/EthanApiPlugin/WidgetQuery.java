@@ -35,6 +35,11 @@ public class WidgetQuery {
         return this;
     }
 
+    public WidgetQuery withId(int id) {
+        widgets = widgets.stream().filter(widget -> widget.getId() == id).collect(java.util.stream.Collectors.toList());
+        return this;
+    }
+
     public WidgetQuery withItemId(int itemId) {
         widgets = widgets.stream().filter(widget -> widget.getItemId() == itemId).collect(java.util.stream.Collectors.toList());
         return this;

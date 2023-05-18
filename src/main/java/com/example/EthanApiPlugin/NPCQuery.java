@@ -1,6 +1,9 @@
 package com.example.EthanApiPlugin;
 
-import net.runelite.api.*;
+import net.runelite.api.Actor;
+import net.runelite.api.Client;
+import net.runelite.api.NPC;
+import net.runelite.api.NPCComposition;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
 
@@ -143,8 +146,9 @@ public class NPCQuery {
         }
         return Optional.ofNullable(npcs.get(0));
     }
+
     static NPCComposition getNPCComposition(NPC npc) {
-        if(npc.getComposition().getConfigs()==null||npc.getTransformedComposition()==null){
+        if (npc.getComposition().getConfigs() == null || npc.getTransformedComposition() == null) {
             return npc.getComposition();
         }
         return npc.getTransformedComposition();
