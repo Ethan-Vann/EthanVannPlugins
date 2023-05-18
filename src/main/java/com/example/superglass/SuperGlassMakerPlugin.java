@@ -3,7 +3,7 @@ package com.example.superglass;
 import com.example.EthanApiPlugin.*;
 import com.example.InteractionApi.NPCInteraction;
 import com.example.InteractionApi.TileObjectInteraction;
-import com.example.PacketUtilsPlugin;
+import com.example.PacketUtils.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
 import com.google.inject.Inject;

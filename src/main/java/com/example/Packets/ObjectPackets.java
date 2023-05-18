@@ -1,9 +1,11 @@
 package com.example.Packets;
 
-import com.example.PacketDef;
-import com.example.PacketReflection;
+import com.example.EthanApiPlugin.TileObjectQuery;
+import com.example.PacketUtils.PacketDef;
+import com.example.PacketUtils.PacketReflection;
 import lombok.SneakyThrows;
 import net.runelite.api.GameObject;
+import net.runelite.api.ObjectComposition;
 import net.runelite.api.Point;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.LocalPoint;
@@ -14,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.PacketReflection.client;
+import static com.example.PacketUtils.PacketReflection.client;
 
 public class ObjectPackets {
     @SneakyThrows
@@ -42,12 +44,17 @@ public class ObjectPackets {
 
     @SneakyThrows
     public static void queueObjectAction(TileObject object, boolean ctrlDown, String... actionlist) {
-        List<String> actions =
-                Arrays.stream(client.getObjectDefinition(object.getId()).getActions()).collect(Collectors.toList());
-        if (client.getObjectDefinition(object.getId()).getImpostorIds() != null && client.getObjectDefinition(object.getId()).getImpostor() != null) {
-            actions =
-                    Arrays.stream(client.getObjectDefinition(object.getId()).getImpostor().getActions()).collect(Collectors.toList());
+        if (object == null) {
+            return;
         }
+        ObjectComposition comp = TileObjectQuery.getObjectComposition(object);
+        if (comp == null) {
+            return;
+        }
+        if (comp.getActions() == null) {
+            return;
+        }
+        List<String> actions = Arrays.stream(comp.getActions()).collect(Collectors.toList());
         for (int i = 0; i < actions.size(); i++) {
             if (actions.get(i) == null)
                 continue;

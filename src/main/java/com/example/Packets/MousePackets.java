@@ -1,8 +1,8 @@
 package com.example.Packets;
 
-import com.example.ObfuscatedNames;
-import com.example.PacketDef;
-import com.example.PacketReflection;
+import com.example.PacketUtils.ObfuscatedNames;
+import com.example.PacketUtils.PacketDef;
+import com.example.PacketUtils.PacketReflection;
 import lombok.SneakyThrows;
 import net.runelite.api.Client;
 import net.runelite.client.RuneLite;

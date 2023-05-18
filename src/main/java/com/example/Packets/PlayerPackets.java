@@ -1,7 +1,7 @@
 package com.example.Packets;
 
-import com.example.PacketDef;
-import com.example.PacketReflection;
+import com.example.PacketUtils.PacketDef;
+import com.example.PacketUtils.PacketReflection;
 import lombok.SneakyThrows;
 import net.runelite.api.Player;
 import net.runelite.api.widgets.Widget;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.PacketReflection.client;
+import static com.example.PacketUtils.PacketReflection.client;
 
 public class PlayerPackets {
     @SneakyThrows

@@ -1,4 +1,4 @@
-package com.example;
+package com.example.PacketUtils;
 
 import java.util.HashMap;
 

@@ -3,10 +3,11 @@ package com.example.E3t4g;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.EthanApiPlugin.Inventory;
 import com.example.InteractionApi.InventoryInteraction;
+import com.example.PacketUtils.PacketUtilsPlugin;
+import com.example.PacketUtils.WidgetInfoExtended;
 import com.example.Packets.MousePackets;
 import com.example.Packets.ObjectPackets;
 import com.example.Packets.WidgetPackets;
-import com.example.WidgetInfoExtended;
 import com.google.inject.Inject;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
@@ -25,7 +26,7 @@ import java.util.Optional;
         enabledByDefault = false
 )
 @PluginDependency(EthanApiPlugin.class)
-@PluginDependency(com.example.PacketUtilsPlugin.class)
+@PluginDependency(PacketUtilsPlugin.class)
 public class e3t4g extends Plugin {
     @Inject
     MousePackets mousePackets;

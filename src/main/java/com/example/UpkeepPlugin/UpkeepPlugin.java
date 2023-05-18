@@ -3,7 +3,7 @@ package com.example.UpkeepPlugin;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.EthanApiPlugin.Inventory;
 import com.example.InteractionApi.InventoryInteraction;
-import com.example.PacketUtilsPlugin;
+import com.example.PacketUtils.PacketUtilsPlugin;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
 import lombok.SneakyThrows;

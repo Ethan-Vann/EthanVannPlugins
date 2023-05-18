@@ -147,7 +147,7 @@ public class NPCQuery {
         return Optional.ofNullable(npcs.get(0));
     }
 
-    static NPCComposition getNPCComposition(NPC npc) {
+    public static NPCComposition getNPCComposition(NPC npc) {
         if (npc.getComposition().getConfigs() == null || npc.getTransformedComposition() == null) {
             return npc.getComposition();
         }

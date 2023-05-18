@@ -1,9 +1,11 @@
 package com.example.Packets;
 
-import com.example.PacketDef;
-import com.example.PacketReflection;
+import com.example.EthanApiPlugin.NPCQuery;
+import com.example.PacketUtils.PacketDef;
+import com.example.PacketUtils.PacketReflection;
 import lombok.SneakyThrows;
 import net.runelite.api.NPC;
+import net.runelite.api.NPCComposition;
 import net.runelite.api.widgets.Widget;
 
 import java.util.Arrays;
@@ -36,10 +38,17 @@ public class NPCPackets {
 
     @SneakyThrows
     public static void queueNPCAction(NPC npc, String... actionList) {
-        List<String> actions = Arrays.stream(npc.getComposition().getActions()).collect(Collectors.toList());
-        if (npc.getComposition().getConfigs() != null && npc.getComposition().transform() != null) {
-            actions = Arrays.stream(npc.getComposition().transform().getActions()).collect(Collectors.toList());
+        if (npc == null) {
+            return;
         }
+        NPCComposition comp = NPCQuery.getNPCComposition(npc);
+        if (comp == null) {
+            return;
+        }
+        if (comp.getActions() == null) {
+            return;
+        }
+        List<String> actions = Arrays.stream(comp.getActions()).collect(Collectors.toList());
         for (int i = 0; i < actions.size(); i++) {
             if (actions.get(i) == null)
                 continue;

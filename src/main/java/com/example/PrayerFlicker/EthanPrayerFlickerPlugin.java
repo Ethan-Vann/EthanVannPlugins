@@ -1,7 +1,7 @@
 package com.example.PrayerFlicker;
 
 import com.example.EthanApiPlugin.EthanApiPlugin;
-import com.example.PacketUtilsPlugin;
+import com.example.PacketUtils.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
 import com.google.inject.Inject;

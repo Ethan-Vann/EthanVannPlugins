@@ -1,4 +1,4 @@
-package com.example;
+package com.example.PacketUtils;
 
 public enum PacketType {
     RESUME_PAUSEBUTTON,

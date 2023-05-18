@@ -3,7 +3,7 @@ package com.example.gauntletFlicker;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.EthanApiPlugin.QuickPrayer;
 import com.example.InteractionApi.InteractionHelper;
-import com.example.PacketUtilsPlugin;
+import com.example.PacketUtils.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
 import lombok.extern.slf4j.Slf4j;

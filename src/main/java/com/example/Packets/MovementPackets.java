@@ -1,7 +1,7 @@
 package com.example.Packets;
 
-import com.example.PacketDef;
-import com.example.PacketReflection;
+import com.example.PacketUtils.PacketDef;
+import com.example.PacketUtils.PacketReflection;
 import net.runelite.api.coords.WorldPoint;
 
 public class MovementPackets {

@@ -1,4 +1,4 @@
-package com.example;
+package com.example.PacketUtils;
 
 import com.google.inject.Provides;
 import com.google.inject.Singleton;

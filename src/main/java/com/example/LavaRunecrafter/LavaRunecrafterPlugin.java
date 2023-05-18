@@ -1,12 +1,12 @@
 package com.example.LavaRunecrafter;
 
 import com.example.EthanApiPlugin.EthanApiPlugin;
-import com.example.PacketUtilsPlugin;
+import com.example.PacketUtils.PacketUtilsPlugin;
+import com.example.PacketUtils.WidgetInfoExtended;
 import com.example.Packets.MousePackets;
 import com.example.Packets.NPCPackets;
 import com.example.Packets.ObjectPackets;
 import com.example.Packets.WidgetPackets;
-import com.example.WidgetInfoExtended;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
 import lombok.SneakyThrows;

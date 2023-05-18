@@ -1,6 +1,6 @@
 package com.example.Packets;
 
-import com.example.ObfuscatedNames;
+import com.example.PacketUtils.ObfuscatedNames;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;

@@ -1,4 +1,4 @@
-package com.example;
+package com.example.PacketUtils;
 
 import com.example.Packets.BufferMethods;
 import lombok.SneakyThrows;
@@ -166,22 +166,31 @@ public class PacketReflection {
             }
             PACKETWRITER.setAccessible(true);
             Method addNode = null;
-            for (Method declaredMethod : PACKETWRITER.get(null).getClass().getDeclaredMethods()) {
-                int modifiers = declaredMethod.getModifiers();
-                if (!Modifier.isStatic(modifiers) || !Modifier.isPublic(modifiers) || !declaredMethod.getReturnType().equals(void.class) || declaredMethod.getParameterCount() != 2 ||
-                        !declaredMethod.getParameterTypes()[0].equals(PACKETWRITER.get(null).getClass()) || !declaredMethod.getParameterTypes()[1].equals(packetBufferNode.getClass())) {
-                    continue;
+            try {
+                for (Method declaredMethod : PACKETWRITER.get(null).getClass().getDeclaredMethods()) {
+                    int modifiers = declaredMethod.getModifiers();
+                    if (!Modifier.isStatic(modifiers) || !Modifier.isPublic(modifiers) || !declaredMethod.getReturnType().equals(void.class) || declaredMethod.getParameterCount() != 2 ||
+                            !declaredMethod.getParameterTypes()[0].equals(PACKETWRITER.get(null).getClass()) || !declaredMethod.getParameterTypes()[1].equals(packetBufferNode.getClass())) {
+                        continue;
+                    }
+                    addNode = declaredMethod;
+                    addNode.setAccessible(true);
                 }
-                addNode = declaredMethod;
-                addNode.setAccessible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            if (addNode == null) {
-                addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
-                addNode.setAccessible(true);
-                addNode.invoke(PACKETWRITER.get(null), packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
-            } else {
-                addNode.invoke(null, PACKETWRITER.get(null), packetBufferNode);
+            try {
+                if (addNode == null) {
+                    addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
+                    addNode.setAccessible(true);
+                    addNode.invoke(PACKETWRITER.get(null), packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
+                } else {
+                    addNode.invoke(null, PACKETWRITER.get(null), packetBufferNode);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
             addNode.setAccessible(false);
             PACKETWRITER.setAccessible(false);
         }

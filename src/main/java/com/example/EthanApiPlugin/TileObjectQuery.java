@@ -87,8 +87,8 @@ public class TileObjectQuery {
         return tileObjects.stream().min(Comparator.comparingInt(o -> point.distanceTo(o.getWorldLocation())));
     }
 
-    static ObjectComposition getObjectComposition(TileObject tileObject) {
-        if(client.getObjectDefinition(tileObject.getId()).getImpostorIds()==null||client.getObjectDefinition(tileObject.getId()).getImpostor()==null){
+    public static ObjectComposition getObjectComposition(TileObject tileObject) {
+        if (client.getObjectDefinition(tileObject.getId()).getImpostorIds() == null || client.getObjectDefinition(tileObject.getId()).getImpostor() == null) {
             return client.getObjectDefinition(tileObject.getId());
         }
         return client.getObjectDefinition(tileObject.getId()).getImpostor();
