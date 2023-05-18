@@ -20,7 +20,12 @@ public class TileObjectQuery {
 
     public TileObjectQuery withName(String name) {
         tileObjects =
-                tileObjects.stream().filter(tileObject -> getObjectComposition(tileObject).getName().equals(name)).collect(Collectors.toList());
+                tileObjects.stream().filter(tileObject -> {
+                    ObjectComposition objectComposition = getObjectComposition(tileObject);
+                    if (objectComposition == null)
+                        return false;
+                    return objectComposition.getName().equals(name);
+                }).collect(Collectors.toList());
         return this;
     }
 
@@ -33,6 +38,9 @@ public class TileObjectQuery {
         tileObjects =
                 tileObjects.stream().filter(tileObject ->
                 {
+                    ObjectComposition objectComposition = getObjectComposition(tileObject);
+                    if (objectComposition == null)
+                        return false;
                     String[] actions = getObjectComposition(tileObject).getActions();
                     return Arrays.stream(actions).filter(Objects::nonNull).anyMatch(a -> a.equalsIgnoreCase(action));
                 }).collect(Collectors.toList());
@@ -58,7 +66,12 @@ public class TileObjectQuery {
 
     public TileObjectQuery nameContains(String name) {
         tileObjects =
-                tileObjects.stream().filter(tileObject -> getObjectComposition(tileObject).getName().contains(name)).collect(Collectors.toList());
+                tileObjects.stream().filter(tileObject -> {
+                    ObjectComposition comp = getObjectComposition(tileObject);
+                    if (comp == null)
+                        return false;
+                    return comp.getName().contains(name);
+                }).collect(Collectors.toList());
         return this;
     }
 

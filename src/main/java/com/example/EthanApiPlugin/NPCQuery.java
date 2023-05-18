@@ -26,9 +26,12 @@ public class NPCQuery {
 
     public NPCQuery withAction(String action) {
         npcs = npcs.stream().filter(npc -> {
+            NPCComposition npcComposition = getNPCComposition(npc);
+            if (npcComposition == null)
+                return false;
             String[] actions = getNPCComposition(npc).getActions();
             return Arrays.stream(actions).filter(Objects::nonNull).anyMatch(a -> a.equalsIgnoreCase(action));
-        }).collect(Collectors.toList());
+    }).collect(Collectors.toList());
         return this;
     }
 
