@@ -3,10 +3,8 @@ package com.example.ezclick;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.EthanApiPlugin.Inventory;
 import com.example.EthanApiPlugin.TileObjects;
-import com.example.InteractionApi.InteractionHelper;
-import com.example.InteractionApi.InventoryInteraction;
-import com.example.InteractionApi.TileObjectInteraction;
-import com.example.PacketUtilsPlugin;
+
+import com.example.PacketUtils.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.ObjectPackets;
 import com.example.tooltips.*;

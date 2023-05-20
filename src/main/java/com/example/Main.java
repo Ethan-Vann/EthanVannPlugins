@@ -8,30 +8,29 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
-<<<<<<< HEAD
 public class Main
 {
-	public static void main(String args[]) throws IOException
-	{
-		ReadableByteChannel readableByteChannel = Channels.newChannel(new File("./src/main/resources/RuneLiteHijack.jar").toURI().toURL().openStream());
-		FileOutputStream fileOutputStream;
-=======
-public class Main {
-    public static void main(String args[]) throws IOException {
-        ReadableByteChannel readableByteChannel = Channels.newChannel(new URL("https://github.com/Ethan-Vann/Installer/releases/download/1.0/RuneLiteHijack.jar").openStream());
+    public static void main(String args[]) throws IOException
+    {
+        ReadableByteChannel readableByteChannel = Channels.newChannel(new File("./src/main/resources/RuneLiteHijack.jar").toURI().toURL().openStream());
         FileOutputStream fileOutputStream;
->>>>>>> master
 
-        if (System.getProperty("os.name").contains("Mac OS X")) {
+        if (System.getProperty("os.name").contains("Mac OS X"))
+        {
             fileOutputStream = new FileOutputStream("/Applications/RuneLite.app/Contents/Resources/EthanVannInstaller.jar");
-        } else {
+        }
+        else
+        {
             fileOutputStream = new FileOutputStream(System.getProperty("user.home") + "\\AppData\\Local\\RuneLite\\EthanVannInstaller.jar");
         }
         fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
         String file;
-        if (System.getProperty("os.name").contains("Mac OS X")) {
+        if (System.getProperty("os.name").contains("Mac OS X"))
+        {
             file = "/Applications/RuneLite.app/Contents/Resources/config.json";
-        } else {
+        }
+        else
+        {
             file = System.getProperty("user.home") + "\\AppData\\Local\\RuneLite\\config.json";
         }
         InputStream inputStream = new FileInputStream(file);
