@@ -22,34 +22,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.example.tooltips;
+package com.example.tooltips
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Singleton;
-import lombok.Getter;
-import net.runelite.client.ui.overlay.tooltip.Tooltip;
+import net.runelite.client.ui.overlay.tooltip.Tooltip
 
-import static com.example.tooltips.TooltipsOverlay.*;
+object TooltipManager {
 
-@Singleton
-public class TooltipManager
-{
-	@Getter
-	private final List<Tooltip> tooltips = new ArrayList<>();
+    val tooltips: ArrayList<Tooltip> = ArrayList()
+    fun add(tooltip: Tooltip) {
+        tooltips.add(tooltip)
+    }
 
-	public void add(Tooltip tooltip)
-	{
-		tooltips.add(tooltip);
-	}
+    fun addFront(tooltip: Tooltip) {
+        tooltips.add(0, tooltip)
+    }
 
-	public void addFront(Tooltip tooltip)
-	{
-		tooltips.add(0, tooltip);
-	}
-
-	public void clear()
-	{
-		tooltips.clear();
-	}
+    fun clear() {
+        tooltips.clear()
+    }
 }

@@ -33,8 +33,7 @@ public class EZClickPlugin extends Plugin {
     @Inject
     public Client client;
 
-    @Inject
-    public TooltipManager tooltipManager;
+    public TooltipManager tooltipManager = TooltipManager.INSTANCE;
 
     public static ArrayList<Tooltip> headerTooltips = new ArrayList<>();
 

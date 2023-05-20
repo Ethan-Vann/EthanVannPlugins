@@ -75,21 +75,20 @@ public class TooltipsOverlay extends Overlay
 		MenuAction.CC_OP
 	);
 
-	private final TooltipManager tooltipManager;
+	private final TooltipManager tooltipManager = TooltipManager.INSTANCE;
 	private final Client client;
 	private final TooltipsConfig config;
 
 
 
 	@Inject
-	TooltipsOverlay(Client client, TooltipManager tooltipManager, TooltipsConfig config)
+	TooltipsOverlay(Client client, TooltipsConfig config)
 	{
 		setPosition(OverlayPosition.DYNAMIC);
 		setLayer(OverlayLayer.ABOVE_WIDGETS);
 		// additionally allow tooltips above the full screen world map and welcome screen
 		drawAfterInterface(WidgetID.FULLSCREEN_CONTAINER_TLI);
 		this.client = client;
-		this.tooltipManager = tooltipManager;
 		this.config = config;
 	}
 

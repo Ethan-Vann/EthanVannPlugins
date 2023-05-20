@@ -45,17 +45,16 @@ public class TooltipOverlay extends Overlay
 {
 	private static final int UNDER_OFFSET = 24;
 	private static final int PADDING = 2;
-	private final TooltipManager tooltipManager;
+	private final TooltipManager tooltipManager = TooltipManager.INSTANCE;
 	private final Client client;
 	private final RuneLiteConfig runeLiteConfig;
 
 	private int prevWidth, prevHeight;
 
 	@Inject
-	private TooltipOverlay(Client client, TooltipManager tooltipManager, final RuneLiteConfig runeLiteConfig)
+	private TooltipOverlay(Client client, final RuneLiteConfig runeLiteConfig)
 	{
 		this.client = client;
-		this.tooltipManager = tooltipManager;
 		this.runeLiteConfig = runeLiteConfig;
 		setPosition(OverlayPosition.TOOLTIP);
 		setPriority(OverlayPriority.HIGHEST);
