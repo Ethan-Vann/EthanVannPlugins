@@ -1,5 +1,6 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections.query;
 
+import com.example.EthanApiPlugin.Collections.EquipmentItemWidget;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 public class EquipmentItemQuery {
     private List<EquipmentItemWidget> items;
 
-    EquipmentItemQuery(List<EquipmentItemWidget> items) {
+    public EquipmentItemQuery(List<EquipmentItemWidget> items) {
         this.items = new ArrayList(items);
     }
 

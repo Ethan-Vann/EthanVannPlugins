@@ -1,4 +1,4 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections.query;
 
 public enum QuickPrayer {
     THICK_SKIN(0),

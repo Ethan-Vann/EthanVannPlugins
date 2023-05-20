@@ -1,7 +1,7 @@
 package com.example.E3t4g;
 
+import com.example.EthanApiPlugin.Collections.Inventory;
 import com.example.EthanApiPlugin.EthanApiPlugin;
-import com.example.EthanApiPlugin.Inventory;
 import com.example.InteractionApi.InventoryInteraction;
 import com.example.PacketUtils.PacketUtilsPlugin;
 import com.example.PacketUtils.WidgetInfoExtended;

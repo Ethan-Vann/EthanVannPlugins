@@ -1,5 +1,6 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections.query;
 
+import com.example.EthanApiPlugin.EthanApiPlugin;
 import net.runelite.api.Actor;
 import net.runelite.api.Client;
 import net.runelite.api.NPC;
@@ -15,7 +16,7 @@ public class NPCQuery {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
     private List<NPC> npcs;
 
-    NPCQuery(List<NPC> npcs) {
+    public NPCQuery(List<NPC> npcs) {
         this.npcs = new ArrayList(npcs);
     }
 
@@ -31,7 +32,7 @@ public class NPCQuery {
                 return false;
             String[] actions = getNPCComposition(npc).getActions();
             return Arrays.stream(actions).filter(Objects::nonNull).anyMatch(a -> a.equalsIgnoreCase(action));
-    }).collect(Collectors.toList());
+        }).collect(Collectors.toList());
         return this;
     }
 

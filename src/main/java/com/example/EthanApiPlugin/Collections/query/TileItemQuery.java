@@ -1,8 +1,12 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections.query;
 
+import com.example.EthanApiPlugin.Collections.ETileItem;
+import com.example.EthanApiPlugin.EthanApiPlugin;
 import lombok.SneakyThrows;
+import net.runelite.api.Client;
 import net.runelite.api.ItemComposition;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.client.RuneLite;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
 
@@ -14,12 +18,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static com.example.EthanApiPlugin.TileObjects.client;
-
 public class TileItemQuery {
     public List<ETileItem> tileItems;
+    static Client client = RuneLite.getInjector().getInstance(Client.class);
 
-    TileItemQuery(List<ETileItem> tileItems) {
+    public TileItemQuery(List<ETileItem> tileItems) {
         this.tileItems = new ArrayList<ETileItem>(tileItems);
     }
 

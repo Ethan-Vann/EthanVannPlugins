@@ -1,5 +1,7 @@
 package com.example.EthanApiPlugin;
 
+import com.example.EthanApiPlugin.Collections.*;
+import com.example.EthanApiPlugin.Collections.query.QuickPrayer;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -53,6 +55,10 @@ public class EthanApiPlugin extends Plugin {
                         }
                     });
 
+
+    public static Client getClient() {
+        return client;
+    }
 
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
@@ -337,6 +343,10 @@ public class EthanApiPlugin extends Plugin {
         return -1;
     }
 
+    public static void sendClientMessage(String message) {
+        client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", message, null);
+    }
+
     public static PathResult canPathToTile(WorldPoint destinationTile) {
         int z = client.getPlane();
         if (z != destinationTile.getPlane()) {
@@ -473,7 +483,7 @@ public class EthanApiPlugin extends Plugin {
         return new PathResult(isReachable, currentDistance);
     }
 
-    static class PathResult {
+    public static class PathResult {
         private final boolean reachable;
         private final int distance;
 

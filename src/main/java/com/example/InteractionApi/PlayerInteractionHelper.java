@@ -1,6 +1,6 @@
 package com.example.InteractionApi;
 
-import com.example.EthanApiPlugin.Players;
+import com.example.EthanApiPlugin.Collections.Players;
 import com.example.Packets.MousePackets;
 import com.example.Packets.PlayerPackets;
 import net.runelite.api.Player;

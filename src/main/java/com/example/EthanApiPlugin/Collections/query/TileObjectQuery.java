@@ -1,4 +1,4 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections.query;
 
 import net.runelite.api.Client;
 import net.runelite.api.ObjectComposition;
@@ -49,6 +49,11 @@ public class TileObjectQuery {
 
     public TileObjectQuery atLocation(WorldPoint location) {
         tileObjects = tileObjects.stream().filter(tileObject -> tileObject.getWorldLocation().equals(location)).collect(Collectors.toList());
+        return this;
+    }
+
+    public TileObjectQuery withinDistance(int distance) {
+        tileObjects = tileObjects.stream().filter(tileObject -> tileObject.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()) <= distance).collect(Collectors.toList());
         return this;
     }
 

@@ -1,7 +1,7 @@
 package com.example.InteractionApi;
 
-import com.example.EthanApiPlugin.TileObjectQuery;
-import com.example.EthanApiPlugin.TileObjects;
+import com.example.EthanApiPlugin.Collections.TileObjects;
+import com.example.EthanApiPlugin.Collections.query.TileObjectQuery;
 import com.example.Packets.MousePackets;
 import com.example.Packets.ObjectPackets;
 import net.runelite.api.ObjectComposition;

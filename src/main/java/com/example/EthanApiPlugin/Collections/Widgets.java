@@ -1,5 +1,6 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections;
 
+import com.example.EthanApiPlugin.Collections.query.WidgetQuery;
 import net.runelite.api.Client;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.RuneLite;

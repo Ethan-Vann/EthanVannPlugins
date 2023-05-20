@@ -1,5 +1,6 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections;
 
+import com.example.EthanApiPlugin.Collections.query.TileObjectQuery;
 import net.runelite.api.*;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.RuneLite;

@@ -1,5 +1,6 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections.query;
 
+import com.example.EthanApiPlugin.EthanApiPlugin;
 import lombok.SneakyThrows;
 import net.runelite.api.Client;
 import net.runelite.api.ItemComposition;
@@ -18,7 +19,7 @@ public class ItemQuery {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
     static ItemManager itemManager = RuneLite.getInjector().getInstance(ItemManager.class);
 
-    ItemQuery(List<Widget> items) {
+    public ItemQuery(List<Widget> items) {
         this.items = new ArrayList(items);
     }
 

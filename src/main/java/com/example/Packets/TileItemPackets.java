@@ -1,6 +1,6 @@
 package com.example.Packets;
 
-import com.example.EthanApiPlugin.ETileItem;
+import com.example.EthanApiPlugin.Collections.ETileItem;
 import com.example.PacketUtils.PacketDef;
 import com.example.PacketUtils.PacketReflection;
 import lombok.SneakyThrows;

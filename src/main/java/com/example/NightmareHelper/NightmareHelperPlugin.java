@@ -1,7 +1,7 @@
 package com.example.NightmareHelper;
 
+import com.example.EthanApiPlugin.Collections.query.QuickPrayer;
 import com.example.EthanApiPlugin.EthanApiPlugin;
-import com.example.EthanApiPlugin.QuickPrayer;
 import com.example.InteractionApi.InteractionHelper;
 import com.example.PacketUtils.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
@@ -22,7 +22,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 
 import java.util.Arrays;
 
-import static com.example.EthanApiPlugin.QuickPrayer.*;
+import static com.example.EthanApiPlugin.Collections.query.QuickPrayer.*;
 
 @PluginDependency(PacketUtilsPlugin.class)
 @PluginDependency(EthanApiPlugin.class)

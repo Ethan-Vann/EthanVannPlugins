@@ -1,4 +1,6 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections;
+
+import com.example.EthanApiPlugin.Collections.query.TileItemQuery;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.example.InteractionApi;
 
-import com.example.EthanApiPlugin.Inventory;
+import com.example.EthanApiPlugin.Collections.Inventory;
 import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
 import net.runelite.api.widgets.Widget;

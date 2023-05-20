@@ -1,4 +1,4 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections.query;
 
 import net.runelite.api.Actor;
 import net.runelite.api.Client;
@@ -15,7 +15,7 @@ public class PlayerQuery {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
     private List<Player> players;
 
-    PlayerQuery(List<Player> players) {
+    public PlayerQuery(List<Player> players) {
         this.players = new ArrayList<>(players);
     }
 

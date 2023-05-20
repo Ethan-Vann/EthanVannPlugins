@@ -1,6 +1,6 @@
 package com.example.Packets;
 
-import com.example.EthanApiPlugin.TileObjectQuery;
+import com.example.EthanApiPlugin.Collections.query.TileObjectQuery;
 import com.example.PacketUtils.PacketDef;
 import com.example.PacketUtils.PacketReflection;
 import lombok.SneakyThrows;

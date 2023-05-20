@@ -1,7 +1,7 @@
 package com.example.InteractionApi;
 
-import com.example.EthanApiPlugin.NPCQuery;
-import com.example.EthanApiPlugin.NPCs;
+import com.example.EthanApiPlugin.Collections.NPCs;
+import com.example.EthanApiPlugin.Collections.query.NPCQuery;
 import com.example.Packets.MousePackets;
 import com.example.Packets.NPCPackets;
 import net.runelite.api.NPC;

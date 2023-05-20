@@ -1,4 +1,4 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections;
 
 import com.example.Packets.MousePackets;
 import com.example.Packets.TileItemPackets;
@@ -6,8 +6,8 @@ import net.runelite.api.TileItem;
 import net.runelite.api.coords.WorldPoint;
 
 public class ETileItem {
-    WorldPoint location;
-    TileItem tileItem;
+    public WorldPoint location;
+    public TileItem tileItem;
 
     public ETileItem(WorldPoint worldLocation, TileItem tileItem) {
         this.location = worldLocation;

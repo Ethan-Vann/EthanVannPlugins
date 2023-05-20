@@ -1,4 +1,4 @@
-package com.example.EthanApiPlugin;
+package com.example.EthanApiPlugin.Collections.query;
 
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.util.Text;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class WidgetQuery {
     List<Widget> widgets;
 
-    WidgetQuery(HashSet<Widget> widgets) {
+    public WidgetQuery(HashSet<Widget> widgets) {
         this.widgets = new ArrayList<>(widgets);
     }
 
