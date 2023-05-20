@@ -5,6 +5,7 @@ import com.example.E3t4g.e3t4g;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.LavaRunecrafter.LavaRunecrafterPlugin;
 import com.example.NightmareHelper.NightmareHelperPlugin;
+import com.example.PacketUtils.PacketUtilsPlugin;
 import com.example.PrayerFlicker.EthanPrayerFlickerPlugin;
 import com.example.UpkeepPlugin.UpkeepPlugin;
 import com.example.gauntletFlicker.gauntletFlicker;

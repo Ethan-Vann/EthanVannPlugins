@@ -8,7 +8,6 @@ import net.runelite.api.Client;
 import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
@@ -165,35 +164,57 @@ public class PacketReflection {
                 }
             }
             PACKETWRITER.setAccessible(true);
-            Method addNode = null;
+//            Method addNode = null;
+//            try {
+//                for (Method declaredMethod : PACKETWRITER.get(null).getClass().getDeclaredMethods()) {
+//                    int modifiers = declaredMethod.getModifiers();
+//                    if (!Modifier.isStatic(modifiers) || !Modifier.isPublic(modifiers) || !declaredMethod.getReturnType().equals(void.class) || declaredMethod.getParameterCount() != 2 ||
+//                            !declaredMethod.getParameterTypes()[0].equals(PACKETWRITER.get(null).getClass()) || !declaredMethod.getParameterTypes()[1].equals(packetBufferNode.getClass())) {
+//                        continue;
+//                    }
+//                    addNode = declaredMethod;
+//                    addNode.setAccessible(true);
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
             try {
-                for (Method declaredMethod : PACKETWRITER.get(null).getClass().getDeclaredMethods()) {
-                    int modifiers = declaredMethod.getModifiers();
-                    if (!Modifier.isStatic(modifiers) || !Modifier.isPublic(modifiers) || !declaredMethod.getReturnType().equals(void.class) || declaredMethod.getParameterCount() != 2 ||
-                            !declaredMethod.getParameterTypes()[0].equals(PACKETWRITER.get(null).getClass()) || !declaredMethod.getParameterTypes()[1].equals(packetBufferNode.getClass())) {
-                        continue;
-                    }
-                    addNode = declaredMethod;
-                    addNode.setAccessible(true);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                if (addNode == null) {
-                    addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
-                    addNode.setAccessible(true);
-                    addNode.invoke(PACKETWRITER.get(null), packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
-                } else {
-                    addNode.invoke(null, PACKETWRITER.get(null), packetBufferNode);
-                }
+//                if (addNode == null) {
+//                    addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
+//                    addNode.setAccessible(true);
+//                    addNode.invoke(PACKETWRITER.get(null), packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
+//                } else {
+//                    addNode.invoke(null, PACKETWRITER.get(null), packetBufferNode);
+//                }
+                addNode(PACKETWRITER.get(null),packetBufferNode);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            addNode.setAccessible(false);
+//            addNode.setAccessible(false);
             PACKETWRITER.setAccessible(false);
         }
+    }
+    @SneakyThrows
+    public static void addNode(Object eqVar0, Object lgVar1){
+        Field eqVar0_anField = eqVar0.getClass().getDeclaredField("an");
+        eqVar0_anField.setAccessible(true);
+        Object eqVar0_an = eqVar0_anField.get(eqVar0);
+        Method eqVar0_an_an = eqVar0_an.getClass().getDeclaredMethod("an", lgVar1.getClass().getSuperclass());
+        eqVar0_an_an.setAccessible(true);
+        eqVar0_an_an.invoke(eqVar0_an, lgVar1);
+        Field lgVar1_acField = lgVar1.getClass().getDeclaredField("ac");
+        lgVar1_acField.setAccessible(true);
+        Field lgVar1_awField = lgVar1.getClass().getDeclaredField("aw");
+        lgVar1_awField.setAccessible(true);
+        Object lgVar1_awObject = lgVar1_awField.get(lgVar1);
+        Field lgVar1_aw_atField = lgVar1_awObject.getClass().getField("at");
+        lgVar1_aw_atField.setAccessible(true);
+        lgVar1_acField.set(lgVar1, -1120134497 *lgVar1_aw_atField.getInt(lgVar1_awObject));
+        lgVar1_aw_atField.set(lgVar1_awObject, 0);
+        Field eqVar0_awField = eqVar0.getClass().getDeclaredField("aw");
+        eqVar0_awField.setAccessible(true);
+        eqVar0_awField.set(eqVar0, (int) eqVar0_awField.get(eqVar0) + -56666229* lgVar1_acField.getInt(lgVar1));
     }
 
 //    @SneakyThrows

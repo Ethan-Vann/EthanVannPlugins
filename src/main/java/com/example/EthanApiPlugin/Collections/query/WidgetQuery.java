@@ -4,10 +4,7 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class WidgetQuery {
@@ -43,6 +40,9 @@ public class WidgetQuery {
     public WidgetQuery withItemId(int itemId) {
         widgets = widgets.stream().filter(widget -> widget.getItemId() == itemId).collect(java.util.stream.Collectors.toList());
         return this;
+    }
+    public Optional<Widget> first() {
+        return widgets.stream().findFirst();
     }
 
     public WidgetQuery nonPlaceHolder() {

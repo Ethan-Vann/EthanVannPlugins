@@ -25,6 +25,10 @@ public class NPCQuery {
         return this;
     }
 
+    public NPCQuery atLocation(WorldPoint wp){
+        npcs = npcs.stream().filter(npc -> npc.getWorldLocation().equals(wp)).collect(Collectors.toList());
+        return this;
+    }
     public NPCQuery withAction(String action) {
         npcs = npcs.stream().filter(npc -> {
             NPCComposition npcComposition = getNPCComposition(npc);
