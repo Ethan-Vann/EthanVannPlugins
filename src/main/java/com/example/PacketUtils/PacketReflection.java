@@ -215,6 +215,12 @@ public class PacketReflection {
         Field eqVar0_awField = eqVar0.getClass().getDeclaredField("aw");
         eqVar0_awField.setAccessible(true);
         eqVar0_awField.set(eqVar0, (int) eqVar0_awField.get(eqVar0) + -56666229* lgVar1_acField.getInt(lgVar1));
+        eqVar0_anField.setAccessible(false);
+        eqVar0_an_an.setAccessible(false);
+        lgVar1_acField.setAccessible(false);
+        lgVar1_awField.setAccessible(false);
+        lgVar1_aw_atField.setAccessible(false);
+        eqVar0_awField.setAccessible(false);
     }
 
 //    @SneakyThrows
