@@ -7,11 +7,9 @@ import com.example.LavaRunecrafter.LavaRunecrafterPlugin;
 import com.example.NightmareHelper.NightmareHelperPlugin;
 import com.example.PacketUtils.PacketUtilsPlugin;
 import com.example.PrayerFlicker.EthanPrayerFlickerPlugin;
-import com.example.hidden.TestingSuite.TestingSuitePlugin;
 import com.example.UpkeepPlugin.UpkeepPlugin;
 import com.example.gauntletFlicker.gauntletFlicker;
 import com.example.harpoon2ticker.SwordFish2Tick;
-import com.example.hidden.Switcher.BasicSwitcher;
 import com.example.superglass.SuperGlassMakerPlugin;
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
@@ -22,7 +20,7 @@ public class ExamplePluginTest {
                 gauntletFlicker.class,
                 SuperGlassMakerPlugin.class, UpkeepPlugin.class, LavaRunecrafterPlugin.class,
                 NightmareHelperPlugin.class, SwordFish2Tick.class
-                , e3t4g.class, AutoTele.class, BasicSwitcher.class, TestingSuitePlugin.class);
+                , e3t4g.class, AutoTele.class);
         RuneLite.main(args);
     }
 }
