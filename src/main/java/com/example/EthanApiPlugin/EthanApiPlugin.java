@@ -580,6 +580,32 @@ public class EthanApiPlugin extends Plugin {
                         continue b;
                     }
 
+                    //far movements
+                    //Far West
+                    if (x == -2 && y == 0) {
+                        if (farWObstructed(worldPointListEntry.getKey(), impassible, walkable)) {
+                            continue;
+                        }
+                    }
+                    //Far East
+                    if (x == 2 && y == 0) {
+                        if (farEObstructed(worldPointListEntry.getKey(), impassible, walkable)) {
+                            continue;
+                        }
+                    }
+                    //Far South
+                    if (x == 0 && y == -2) {
+                        if (farSObstructed(worldPointListEntry.getKey(), impassible, walkable)) {
+                            continue;
+                        }
+                    }
+                    //Far North
+                    if (x == 0 && y == 2) {
+                        if (farNObstructed(worldPointListEntry.getKey(), impassible, walkable)) {
+                            continue;
+                        }
+                    }
+                    //far movements
                     //L movement in here so i dont get lost in the saauce down there
                     if (Math.abs(x) + Math.abs(y) == 3) {
                         //North east
@@ -682,30 +708,6 @@ public class EthanApiPlugin extends Plugin {
                         //Diagonal NE
                         if (x == 2 && y == 2) {
                             if (farNEObstructed(worldPointListEntry.getKey(), impassible, walkable)) {
-                                continue;
-                            }
-                        }
-                        //Far West
-                        if (x == -2 && y == 0) {
-                            if (farWObstructed(worldPointListEntry.getKey(), impassible, walkable)) {
-                                continue;
-                            }
-                        }
-                        //Far East
-                        if (x == 2 && y == 0) {
-                            if (farEObstructed(worldPointListEntry.getKey(), impassible, walkable)) {
-                                continue;
-                            }
-                        }
-                        //Far South
-                        if (x == 0 && y == -2) {
-                            if (farSObstructed(worldPointListEntry.getKey(), impassible, walkable)) {
-                                continue;
-                            }
-                        }
-                        //Far North
-                        if (x == 0 && y == 2) {
-                            if (farNObstructed(worldPointListEntry.getKey(), impassible, walkable)) {
                                 continue;
                             }
                         }
