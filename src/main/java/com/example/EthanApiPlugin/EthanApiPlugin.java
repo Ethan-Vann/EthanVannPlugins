@@ -261,6 +261,7 @@ public class EthanApiPlugin extends Plugin {
         return -1;
     }
 
+    @Deprecated
     public int getEmptySlots(WidgetInfo widgetInfo) {
         List<Widget> inventoryItems = Arrays.asList(client.getWidget(widgetInfo.getId()).getDynamicChildren());
         return (int) inventoryItems.stream().filter(item -> item.getItemId() == 6512).count();
@@ -334,7 +335,7 @@ public class EthanApiPlugin extends Plugin {
         }
         return null;
     }
-
+    @Deprecated
     public int checkIfWearing(int[] ids) {
 
         if (client.getItemContainer(InventoryID.EQUIPMENT) != null) {
