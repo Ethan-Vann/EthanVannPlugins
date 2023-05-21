@@ -557,35 +557,35 @@ public final class WidgetID {
     }
 
     static class Prayer {
-        static final int THICK_SKIN = 5;
-        static final int BURST_OF_STRENGTH = 6;
-        static final int CLARITY_OF_THOUGHT = 7;
-        static final int SHARP_EYE = 23;
-        static final int MYSTIC_WILL = 24;
-        static final int ROCK_SKIN = 8;
-        static final int SUPERHUMAN_STRENGTH = 9;
-        static final int IMPROVED_REFLEXES = 10;
-        static final int RAPID_RESTORE = 11;
-        static final int RAPID_HEAL = 12;
-        static final int PROTECT_ITEM = 13;
-        static final int HAWK_EYE = 25;
-        static final int MYSTIC_LORE = 26;
-        static final int STEEL_SKIN = 14;
-        static final int ULTIMATE_STRENGTH = 15;
-        static final int INCREDIBLE_REFLEXES = 16;
-        static final int PROTECT_FROM_MAGIC = 17;
-        static final int PROTECT_FROM_MISSILES = 18;
-        static final int PROTECT_FROM_MELEE = 19;
-        static final int EAGLE_EYE = 27;
-        static final int MYSTIC_MIGHT = 28;
-        static final int RETRIBUTION = 20;
-        static final int REDEMPTION = 21;
-        static final int SMITE = 22;
-        static final int PRESERVE = 33;
-        static final int CHIVALRY = 29;
-        static final int PIETY = 30;
-        static final int RIGOUR = 31;
-        static final int AUGURY = 32;
+        static final int THICK_SKIN = 9;
+        static final int BURST_OF_STRENGTH = 10;
+        static final int CLARITY_OF_THOUGHT = 11;
+        static final int SHARP_EYE = 27;
+        static final int MYSTIC_WILL = 30;
+        static final int ROCK_SKIN = 12;
+        static final int SUPERHUMAN_STRENGTH = 13;
+        static final int IMPROVED_REFLEXES = 14;
+        static final int RAPID_RESTORE = 15;
+        static final int RAPID_HEAL = 16;
+        static final int PROTECT_ITEM = 17;
+        static final int HAWK_EYE = 28;
+        static final int MYSTIC_LORE = 31;
+        static final int STEEL_SKIN = 18;
+        static final int ULTIMATE_STRENGTH = 19;
+        static final int INCREDIBLE_REFLEXES = 20;
+        static final int PROTECT_FROM_MAGIC = 21;
+        static final int PROTECT_FROM_MISSILES = 22;
+        static final int PROTECT_FROM_MELEE = 23;
+        static final int EAGLE_EYE = 29;
+        static final int MYSTIC_MIGHT = 32;
+        static final int RETRIBUTION = 24;
+        static final int REDEMPTION = 25;
+        static final int SMITE = 26;
+        static final int PRESERVE = 37;
+        static final int CHIVALRY = 34;
+        static final int PIETY = 35;
+        static final int RIGOUR = 33;
+        static final int AUGURY = 36;
     }
 
     public static class QuickPrayer {
