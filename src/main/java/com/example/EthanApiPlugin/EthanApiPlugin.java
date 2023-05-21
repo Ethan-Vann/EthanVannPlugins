@@ -549,6 +549,8 @@ public class EthanApiPlugin extends Plugin {
     }
 
 
+
+    //this method paths locally aka within the current scene. It is not a fully fledged worldwalker
     @SneakyThrows
     public ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashMap<WorldPoint, List<WorldPoint>> paths,
                                             HashSet<WorldPoint> impassible, HashSet<WorldPoint> dangerous,
