@@ -523,7 +523,7 @@ public class EthanApiPlugin extends Plugin {
         return client;
     }
 
-    public ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashSet<WorldPoint> dangerous) {
+    public static ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashSet<WorldPoint> dangerous) {
 
         HashMap<WorldPoint, List<WorldPoint>> paths = new HashMap<>();
         HashSet<WorldPoint> walkableTiles = new HashSet<>(reachableTiles());
@@ -534,14 +534,14 @@ public class EthanApiPlugin extends Plugin {
         return pathToGoal(goal, paths, impassibleTiles, dangerous, new HashSet<>(reachableTiles()), new HashSet<>());
     }
 
-    public ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashSet<WorldPoint> dangerous, HashSet<WorldPoint> impassible) {
+    public static ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashSet<WorldPoint> dangerous, HashSet<WorldPoint> impassible) {
 
         HashMap<WorldPoint, List<WorldPoint>> paths = new HashMap<>();
         paths.put(client.getLocalPlayer().getWorldLocation(), List.of(client.getLocalPlayer().getWorldLocation()));
         return pathToGoal(goal, paths, impassible, dangerous, new HashSet<>(reachableTiles()), new HashSet<>());
     }
 
-    public ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashSet<WorldPoint> walkable, HashSet<WorldPoint> dangerous, HashSet<WorldPoint> impassible) {
+    public static ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashSet<WorldPoint> walkable, HashSet<WorldPoint> dangerous, HashSet<WorldPoint> impassible) {
 
         HashMap<WorldPoint, List<WorldPoint>> paths = new HashMap<>();
         paths.put(client.getLocalPlayer().getWorldLocation(), List.of(client.getLocalPlayer().getWorldLocation()));
@@ -552,7 +552,7 @@ public class EthanApiPlugin extends Plugin {
 
     //this method paths locally aka within the current scene. It is not a fully fledged worldwalker
     @SneakyThrows
-    public ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashMap<WorldPoint, List<WorldPoint>> paths,
+    public static ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashMap<WorldPoint, List<WorldPoint>> paths,
                                             HashSet<WorldPoint> impassible, HashSet<WorldPoint> dangerous,
                                             HashSet<WorldPoint> walkable, HashSet<WorldPoint> walked) {
         HashMap<WorldPoint, List<WorldPoint>> paths2 = new HashMap<>(paths);
