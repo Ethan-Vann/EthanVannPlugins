@@ -151,7 +151,7 @@ public class LavaRunecrafterPlugin extends Plugin {
                 timeout = 1;
                 return;
             }
-            hadbook = !Bank.search().matchesWildCardNoCase("*Abyssal book*").empty();
+            hadbook = !Bank.search().matchesWildCardNoCase("*Abyssal book*").nonPlaceHolder().empty();
             //System.out.println("doing item operations");
             try {
                 binding = client.getItemContainer(InventoryID.EQUIPMENT).getItem(EquipmentInventorySlot.AMULET.getSlotIdx());
