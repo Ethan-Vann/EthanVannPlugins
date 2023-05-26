@@ -39,12 +39,10 @@ public class BankInteraction {
     }
     public static void withdrawX(Widget item, int amount){
         if(EthanApiPlugin.getClient().getVarbitValue(WITHDRAW_QUANTITY)==amount){
-            System.out.println("already set to " + amount);
             MousePackets.queueClickPacket();
             WidgetPackets.queueWidgetActionPacket(5,item.getId(),item.getItemId(), item.getIndex());
             return;
         }
-        System.out.println("setting to " + amount);
         BankInteraction.useItem(item,"Withdraw-X");
         EthanApiPlugin.getClient().setVarcStrValue(359,Integer.toString(amount));
         EthanApiPlugin.getClient().setVarcIntValue(5,7);
