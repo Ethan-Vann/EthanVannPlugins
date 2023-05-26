@@ -120,7 +120,6 @@ public class SuperGlassMakerPlugin extends Plugin {
             MousePackets.queueClickPacket();
             WidgetPackets.queueWidgetAction(glass.get(), "Deposit-All");
         }
-        MousePackets.queueClickPacket();
         BankInteraction.withdrawX(sand.get(), config.secondary().getSandAmount());
 //        WidgetPackets.queueWidgetAction(sand.get(), "Withdraw-" + config.secondary().getSandAmount());
         boolean secondaryWithdrawn = handleSecondary();
