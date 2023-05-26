@@ -85,7 +85,8 @@ public class LavaRunecrafterPlugin extends Plugin {
     @SneakyThrows
     public void onGameTick(GameTick event) {
         if (!Widgets.search().withTextContains("What do you want?").hiddenState(false).empty() || !Widgets.search().withTextContains("Can you repair").hiddenState(false).empty()) {
-            //System.out.println("repairing pouches dialog");
+            EthanApiPlugin.sendClientMessage("repairing");
+            EthanApiPlugin.sendClientMessage(String.valueOf(hadbook));
             MousePackets.queueClickPacket();
             WidgetPackets.queueResumePause(15138821, -1);
             MousePackets.queueClickPacket();
