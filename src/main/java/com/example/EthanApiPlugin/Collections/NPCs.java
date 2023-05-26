@@ -12,7 +12,7 @@ import java.util.List;
 
 public class NPCs {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
-    private static List<NPC> npcList = new ArrayList<>();
+    private static final List<NPC> npcList = new ArrayList<>();
 
     public static NPCQuery search() {
         return new NPCQuery(npcList);

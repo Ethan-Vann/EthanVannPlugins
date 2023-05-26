@@ -75,7 +75,7 @@ public class SuperGlassMakerPlugin extends Plugin {
                 return;
             } else {
                 client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "couldn't find bank or banker", null);
-                api.stopPlugin(this);
+                EthanApiPlugin.stopPlugin(this);
                 return;
             }
         }
@@ -99,7 +99,7 @@ public class SuperGlassMakerPlugin extends Plugin {
             }
             timesFailed++;
             if (timesFailed > 2) {
-                api.stopPlugin(this);
+                EthanApiPlugin.stopPlugin(this);
             } else {
                 if (banker.isPresent()) {
                     NPCInteraction.interact(banker.get(), "Bank");
@@ -107,7 +107,7 @@ public class SuperGlassMakerPlugin extends Plugin {
                     TileObjectInteraction.interact(bank.get(), "Bank");
                 } else {
                     client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "couldn't find bank or banker", null);
-                    api.stopPlugin(this);
+                    EthanApiPlugin.stopPlugin(this);
                     return;
                 }
             }
@@ -124,7 +124,7 @@ public class SuperGlassMakerPlugin extends Plugin {
         boolean secondaryWithdrawn = handleSecondary();
         if (!secondaryWithdrawn) {
             client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "no secondary stop plugin", null);
-            api.stopPlugin(this);
+            EthanApiPlugin.stopPlugin(this);
             return;
         }
         if (banker.isPresent()) {
@@ -133,7 +133,7 @@ public class SuperGlassMakerPlugin extends Plugin {
             TileObjectInteraction.interact(bank.get(), "Bank");
         } else {
             client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "couldn't find bank or banker try 2", null);
-            api.stopPlugin(this);
+            EthanApiPlugin.stopPlugin(this);
             return;
         }
         MousePackets.queueClickPacket();

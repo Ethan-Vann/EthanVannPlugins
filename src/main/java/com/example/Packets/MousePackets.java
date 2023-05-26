@@ -17,7 +17,7 @@ import static java.awt.event.InputEvent.BUTTON1_DOWN_MASK;
 public class MousePackets {
 
     static Client client = RuneLite.getInjector().getInstance(Client.class);
-    private static Random random = new Random();
+    private static final Random random = new Random();
     private static long randomDelay = randomDelay();
 
     public static BigInteger modInverse(BigInteger val, int bits) {

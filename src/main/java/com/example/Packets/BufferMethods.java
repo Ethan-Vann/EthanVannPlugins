@@ -14,7 +14,7 @@ public class BufferMethods {
         Field offsetField = bufferInstance.getClass().getField(ObfuscatedNames.bufferOffsetField);
         arrayField.setAccessible(true);
         offsetField.setAccessible(true);
-        byte array[] = (byte[]) arrayField.get(bufferInstance);
+        byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (128 - writtenValue);
         offsetField.setInt(bufferInstance, offset);
@@ -29,7 +29,7 @@ public class BufferMethods {
         Field offsetField = bufferInstance.getClass().getField(ObfuscatedNames.bufferOffsetField);
         arrayField.setAccessible(true);
         offsetField.setAccessible(true);
-        byte array[] = (byte[]) arrayField.get(bufferInstance);
+        byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) writtenValue;
         offsetField.setInt(bufferInstance, offset);
@@ -44,7 +44,7 @@ public class BufferMethods {
         Field offsetField = bufferInstance.getClass().getField(ObfuscatedNames.bufferOffsetField);
         arrayField.setAccessible(true);
         offsetField.setAccessible(true);
-        byte array[] = (byte[]) arrayField.get(bufferInstance);
+        byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue + 128);
         offsetField.setInt(bufferInstance, offset);
@@ -59,7 +59,7 @@ public class BufferMethods {
         Field offsetField = bufferInstance.getClass().getField(ObfuscatedNames.bufferOffsetField);
         arrayField.setAccessible(true);
         offsetField.setAccessible(true);
-        byte array[] = (byte[]) arrayField.get(bufferInstance);
+        byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue >> 8);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) writtenValue;
@@ -75,7 +75,7 @@ public class BufferMethods {
         Field offsetField = bufferInstance.getClass().getField(ObfuscatedNames.bufferOffsetField);
         arrayField.setAccessible(true);
         offsetField.setAccessible(true);
-        byte array[] = (byte[]) arrayField.get(bufferInstance);
+        byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue >> 8);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue + 128);
@@ -91,7 +91,7 @@ public class BufferMethods {
         Field offsetField = bufferInstance.getClass().getField(ObfuscatedNames.bufferOffsetField);
         arrayField.setAccessible(true);
         offsetField.setAccessible(true);
-        byte array[] = (byte[]) arrayField.get(bufferInstance);
+        byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue >> 16);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue >> 24);
@@ -110,7 +110,7 @@ public class BufferMethods {
         Field offsetField = bufferInstance.getClass().getField(ObfuscatedNames.bufferOffsetField);
         arrayField.setAccessible(true);
         offsetField.setAccessible(true);
-        byte array[] = (byte[]) arrayField.get(bufferInstance);
+        byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) writtenValue;
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue >> 8);
@@ -126,9 +126,9 @@ public class BufferMethods {
         Field offsetField = bufferInstance.getClass().getField(ObfuscatedNames.bufferOffsetField);
         arrayField.setAccessible(true);
         offsetField.setAccessible(true);
-        byte array[] = (byte[]) arrayField.get(bufferInstance);
+        byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-        array[(offset += -1516355947) * -1633313603 - 1] = (byte) (0 - writtenValue);
+        array[(offset += -1516355947) * -1633313603 - 1] = (byte) (-writtenValue);
         offsetField.setInt(bufferInstance, offset);
         arrayField.set(bufferInstance, array);
         arrayField.setAccessible(false);
@@ -142,7 +142,7 @@ public class BufferMethods {
         Field offsetField = bufferInstance.getClass().getField(ObfuscatedNames.bufferOffsetField);
         arrayField.setAccessible(true);
         offsetField.setAccessible(true);
-        byte array[] = (byte[]) arrayField.get(bufferInstance);
+        byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue >> 8);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) writtenValue;
@@ -160,7 +160,7 @@ public class BufferMethods {
         Field offsetField = bufferInstance.getClass().getField(ObfuscatedNames.bufferOffsetField);
         arrayField.setAccessible(true);
         offsetField.setAccessible(true);
-        byte array[] = (byte[]) arrayField.get(bufferInstance);
+        byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue + 128);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue >> 8);
@@ -177,7 +177,7 @@ public class BufferMethods {
         Field offsetField = bufferInstance.getClass().getField(ObfuscatedNames.bufferOffsetField);
         arrayField.setAccessible(true);
         offsetField.setAccessible(true);
-        byte array[] = (byte[]) arrayField.get(bufferInstance);
+        byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue >> 24);
         array[(offset += -1516355947) * -1633313603 - 1] = (byte) (writtenValue >> 16);

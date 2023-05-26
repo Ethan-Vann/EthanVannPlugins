@@ -7,7 +7,7 @@ import net.runelite.api.widgets.WidgetInfo;
 import java.util.List;
 
 public class InteractionHelper {
-    static private int quickPrayerWidgetID = WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId();
+    static private final int quickPrayerWidgetID = WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId();
 
     public static void toggleNormalPrayer(int packedWidgID) {
         MousePackets.queueClickPacket();

@@ -99,10 +99,7 @@ public class EthanApiPlugin extends Plugin {
     }
 
     public static boolean isQuickPrayerActive(QuickPrayer prayer) {
-        if ((client.getVarbitValue(4102) & (int) Math.pow(2, prayer.getIndex())) == Math.pow(2, prayer.getIndex())) {
-            return true;
-        }
-        return false;
+        return (client.getVarbitValue(4102) & (int) Math.pow(2, prayer.getIndex())) == Math.pow(2, prayer.getIndex());
     }
 
     public static boolean isQuickPrayerEnabled() {
@@ -230,10 +227,7 @@ public class EthanApiPlugin extends Plugin {
         if ((flag & CollisionDataFlag.BLOCK_MOVEMENT_OBJECT) == CollisionDataFlag.BLOCK_MOVEMENT_OBJECT) {
             return false;
         }
-        if ((flag & CollisionDataFlag.BLOCK_MOVEMENT_FLOOR_DECORATION) == CollisionDataFlag.BLOCK_MOVEMENT_FLOOR_DECORATION) {
-            return false;
-        }
-        return true;
+        return (flag & CollisionDataFlag.BLOCK_MOVEMENT_FLOOR_DECORATION) != CollisionDataFlag.BLOCK_MOVEMENT_FLOOR_DECORATION;
     }
 
 
@@ -335,6 +329,7 @@ public class EthanApiPlugin extends Plugin {
         }
         return null;
     }
+
     @Deprecated
     public int checkIfWearing(int[] ids) {
 
@@ -542,19 +537,17 @@ public class EthanApiPlugin extends Plugin {
     }
 
     public static ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashSet<WorldPoint> walkable, HashSet<WorldPoint> dangerous, HashSet<WorldPoint> impassible) {
-
         HashMap<WorldPoint, List<WorldPoint>> paths = new HashMap<>();
         paths.put(client.getLocalPlayer().getWorldLocation(), List.of(client.getLocalPlayer().getWorldLocation()));
         return pathToGoal(goal, paths, impassible, dangerous, walkable, new HashSet<>());
     }
 
 
-
     //this method paths locally aka within the current scene. It is not a fully fledged worldwalker
     @SneakyThrows
     public static ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashMap<WorldPoint, List<WorldPoint>> paths,
-                                            HashSet<WorldPoint> impassible, HashSet<WorldPoint> dangerous,
-                                            HashSet<WorldPoint> walkable, HashSet<WorldPoint> walked) {
+                                                   HashSet<WorldPoint> impassible, HashSet<WorldPoint> dangerous,
+                                                   HashSet<WorldPoint> walkable, HashSet<WorldPoint> walked) {
         HashMap<WorldPoint, List<WorldPoint>> paths2 = new HashMap<>(paths);
         if (!walkable.contains(goal)) {
             return null;
@@ -897,10 +890,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(-1).dy(0)) || !walkable.contains(starting.dx(-1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(0).dy(1)) || !walkable.contains(starting.dx(0).dy(1))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(0).dy(1)) || !walkable.contains(starting.dx(0).dy(1));
     }
 
     public static void sendClientMessage(String message) {
@@ -911,10 +901,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(1).dy(0)) || !walkable.contains(starting.dx(1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(0).dy(1)) || !walkable.contains(starting.dx(0).dy(1))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(0).dy(1)) || !walkable.contains(starting.dx(0).dy(1));
     }
 
     //L movement of 2 north one east, as opposed to 2 east one north (what should we call this difference?)
@@ -925,10 +912,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(0).dy(1)) || !walkable.contains(starting.dx(0).dy(1))) {
             return true;
         }
-        if (impassible.contains(starting.dx(0).dy(2)) || !walkable.contains(starting.dx(0).dy(2))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(0).dy(2)) || !walkable.contains(starting.dx(0).dy(2));
     }
 
     //L movement of 2 east one North, as opposed to 2 north one east
@@ -939,10 +923,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(1).dy(0)) || !walkable.contains(starting.dx(1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(2).dy(0)) || !walkable.contains(starting.dx(2).dy(0))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(2).dy(0)) || !walkable.contains(starting.dx(2).dy(0));
     }
 
     static boolean eastSouthLObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
@@ -952,10 +933,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(1).dy(0)) || !walkable.contains(starting.dx(1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(2).dy(0)) || !walkable.contains(starting.dx(2).dy(0))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(2).dy(0)) || !walkable.contains(starting.dx(2).dy(0));
     }
 
     static boolean southEastLObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
@@ -965,10 +943,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(0).dy(-1)) || !walkable.contains(starting.dx(0).dy(-1))) {
             return true;
         }
-        if (impassible.contains(starting.dx(0).dy(-2)) || !walkable.contains(starting.dx(0).dy(-2))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(0).dy(-2)) || !walkable.contains(starting.dx(0).dy(-2));
     }
 
     static boolean southWestLObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
@@ -978,10 +953,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(0).dy(-1)) || !walkable.contains(starting.dx(0).dy(-1))) {
             return true;
         }
-        if (impassible.contains(starting.dx(0).dy(-2)) || !walkable.contains(starting.dx(0).dy(-2))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(0).dy(-2)) || !walkable.contains(starting.dx(0).dy(-2));
     }
 
     static boolean westSouthLObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
@@ -991,10 +963,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(-1).dy(0)) || !walkable.contains(starting.dx(-1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(-2).dy(0)) || !walkable.contains(starting.dx(-2).dy(0))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(-2).dy(0)) || !walkable.contains(starting.dx(-2).dy(0));
     }
 
     static boolean westNorthLObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
@@ -1004,10 +973,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(-1).dy(0)) || !walkable.contains(starting.dx(-1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(-2).dy(0)) || !walkable.contains(starting.dx(-2).dy(0))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(-2).dy(0)) || !walkable.contains(starting.dx(-2).dy(0));
     }
 
     static boolean northWestLObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
@@ -1017,30 +983,21 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(0).dy(1)) || !walkable.contains(starting.dx(0).dy(1))) {
             return true;
         }
-        if (impassible.contains(starting.dx(0).dy(2)) || !walkable.contains(starting.dx(0).dy(2))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(0).dy(2)) || !walkable.contains(starting.dx(0).dy(2));
     }
 
     static boolean seObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
         if (impassible.contains(starting.dx(1).dy(0)) || !walkable.contains(starting.dx(1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(0).dy(-1)) || !walkable.contains(starting.dx(0).dy(-1))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(0).dy(-1)) || !walkable.contains(starting.dx(0).dy(-1));
     }
 
     static boolean swObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
         if (impassible.contains(starting.dx(-1).dy(0)) || !walkable.contains(starting.dx(-1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(0).dy(-1)) || !walkable.contains(starting.dx(0).dy(-1))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(0).dy(-1)) || !walkable.contains(starting.dx(0).dy(-1));
     }
 
     static boolean farNObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
@@ -1072,10 +1029,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(-1).dy(0)) || !walkable.contains(starting.dx(-1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(-1).dy(-1)) || !walkable.contains(starting.dx(-1).dy(-1))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(-1).dy(-1)) || !walkable.contains(starting.dx(-1).dy(-1));
     }
 
     static boolean farNWObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
@@ -1091,10 +1045,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(-1).dy(0)) || !walkable.contains(starting.dx(-1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(-1).dy(1)) || !walkable.contains(starting.dx(-1).dy(1))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(-1).dy(1)) || !walkable.contains(starting.dx(-1).dy(1));
     }
 
     static boolean farNEObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
@@ -1110,10 +1061,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(1).dy(0)) || !walkable.contains(starting.dx(1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(1).dy(1)) || !walkable.contains(starting.dx(1).dy(1))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(1).dy(1)) || !walkable.contains(starting.dx(1).dy(1));
     }
 
     static boolean farSEObstructed(WorldPoint starting, HashSet<WorldPoint> impassible, HashSet<WorldPoint> walkable) {
@@ -1129,10 +1077,7 @@ public class EthanApiPlugin extends Plugin {
         if (impassible.contains(starting.dx(1).dy(0)) || !walkable.contains(starting.dx(1).dy(0))) {
             return true;
         }
-        if (impassible.contains(starting.dx(1).dy(-1)) || !walkable.contains(starting.dx(1).dy(-1))) {
-            return true;
-        }
-        return false;
+        return impassible.contains(starting.dx(1).dy(-1)) || !walkable.contains(starting.dx(1).dy(-1));
     }
 
     @Override

@@ -5,6 +5,7 @@ import net.runelite.api.Actor;
 import net.runelite.api.Client;
 import net.runelite.api.NPC;
 import net.runelite.api.NPCComposition;
+import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
 
@@ -17,7 +18,7 @@ public class NPCQuery {
     private List<NPC> npcs;
 
     public NPCQuery(List<NPC> npcs) {
-        this.npcs = new ArrayList(npcs);
+        this.npcs = new ArrayList(npcs.stream().filter(Objects::nonNull).collect(Collectors.toList()));
     }
 
     public NPCQuery filter(Predicate<? super NPC> predicate) {
@@ -25,10 +26,11 @@ public class NPCQuery {
         return this;
     }
 
-    public NPCQuery atLocation(WorldPoint wp){
+    public NPCQuery atLocation(WorldPoint wp) {
         npcs = npcs.stream().filter(npc -> npc.getWorldLocation().equals(wp)).collect(Collectors.toList());
         return this;
     }
+
     public NPCQuery withAction(String action) {
         npcs = npcs.stream().filter(npc -> {
             NPCComposition npcComposition = getNPCComposition(npc);
@@ -81,6 +83,11 @@ public class NPCQuery {
 
     public NPCQuery idInList(List<Integer> ids) {
         npcs = npcs.stream().filter(npcs -> ids.contains(npcs.getId())).collect(Collectors.toList());
+        return this;
+    }
+
+    public NPCQuery withinWorldArea(WorldArea area) {
+        npcs = npcs.stream().filter(npcs -> area.contains(npcs.getWorldLocation())).collect(Collectors.toList());
         return this;
     }
 

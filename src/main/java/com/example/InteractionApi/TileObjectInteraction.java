@@ -10,6 +10,8 @@ import net.runelite.api.TileObject;
 import java.util.Optional;
 
 public class TileObjectInteraction {
+
+
     public static boolean interact(String name, String... actions) {
         return TileObjects.search().withName(name).first().flatMap(tileObject ->
         {

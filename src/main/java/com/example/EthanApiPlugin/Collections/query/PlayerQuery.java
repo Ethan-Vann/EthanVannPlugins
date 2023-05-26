@@ -3,6 +3,7 @@ package com.example.EthanApiPlugin.Collections.query;
 import net.runelite.api.Actor;
 import net.runelite.api.Client;
 import net.runelite.api.Player;
+import net.runelite.api.coords.WorldArea;
 import net.runelite.client.RuneLite;
 
 import java.util.ArrayList;
@@ -26,6 +27,11 @@ public class PlayerQuery {
                 filteredPlayers.add(player);
         }
         players = filteredPlayers;
+        return this;
+    }
+
+    public PlayerQuery withinWorldArea(WorldArea area) {
+        players = players.stream().filter(player -> area.contains(player.getWorldLocation())).collect(Collectors.toList());
         return this;
     }
 

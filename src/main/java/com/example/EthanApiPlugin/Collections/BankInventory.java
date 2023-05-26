@@ -196,20 +196,19 @@ public class BankInventory {
 
     @Subscribe
     public void onItemContainerChanged(ItemContainerChanged e) {
-        switch (e.getContainerId()) {
-            case 93:
-                if (client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER) == null) {
-                    BankInventory.bankIventoryItems.clear();
-                    return;
-                }
-                try {
-                    BankInventory.bankIventoryItems =
-                            Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
-                    break;
-                } catch (NullPointerException err) {
-                    BankInventory.bankIventoryItems.clear();
-                    break;
-                }
+        if (e.getContainerId() == 93) {
+            if (client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER) == null) {
+                BankInventory.bankIventoryItems.clear();
+                return;
+            }
+            try {
+                BankInventory.bankIventoryItems =
+                        Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
+                return;
+            } catch (NullPointerException err) {
+                BankInventory.bankIventoryItems.clear();
+                return;
+            }
         }
     }
 

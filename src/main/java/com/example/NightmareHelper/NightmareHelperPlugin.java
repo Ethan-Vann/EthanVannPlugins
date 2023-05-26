@@ -59,8 +59,8 @@ public class NightmareHelperPlugin extends Plugin {
             forceTab = false;
         }
         if (client.getWidget(5046276) == null) {
-            mousePackets.queueClickPacket();
-            widgetPackets.queueWidgetAction(client.getWidget(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB), "Setup");
+            MousePackets.queueClickPacket();
+            WidgetPackets.queueWidgetAction(client.getWidget(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB), "Setup");
             forceTab = true;
         }
         handlePrayer();
@@ -99,43 +99,43 @@ public class NightmareHelperPlugin extends Plugin {
         }
         if (shouldPray == PROTECT_FROM_MAGIC) {
             if (!cursed) {
-                if (!api.isQuickPrayerActive(PROTECT_FROM_MAGIC)) {
-                    mousePackets.queueClickPacket();
-                    widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 12); //quickPrayer magic
+                if (!EthanApiPlugin.isQuickPrayerActive(PROTECT_FROM_MAGIC)) {
+                    MousePackets.queueClickPacket();
+                    WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 12); //quickPrayer magic
                 }
                 return;
             }
-            if (!api.isQuickPrayerActive(PROTECT_FROM_MELEE)) {
-                mousePackets.queueClickPacket();
-                widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 14); //quickPrayer melee
+            if (!EthanApiPlugin.isQuickPrayerActive(PROTECT_FROM_MELEE)) {
+                MousePackets.queueClickPacket();
+                WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 14); //quickPrayer melee
             }
             return;
         }
         if (shouldPray == PROTECT_FROM_MELEE) {
             if (!cursed) {
-                if (!api.isQuickPrayerActive(PROTECT_FROM_MELEE)) {
-                    mousePackets.queueClickPacket();
-                    widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 14); //quickPrayer melee
+                if (!EthanApiPlugin.isQuickPrayerActive(PROTECT_FROM_MELEE)) {
+                    MousePackets.queueClickPacket();
+                    WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 14); //quickPrayer melee
                 }
                 return;
             }
-            if (!api.isQuickPrayerActive(PROTECT_FROM_MISSILES)) {
-                mousePackets.queueClickPacket();
-                widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 13); //quickPrayer range
+            if (!EthanApiPlugin.isQuickPrayerActive(PROTECT_FROM_MISSILES)) {
+                MousePackets.queueClickPacket();
+                WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 13); //quickPrayer range
             }
             return;
         }
         if (shouldPray == PROTECT_FROM_MISSILES) {
             if (!cursed) {
-                if (!api.isQuickPrayerActive(PROTECT_FROM_MISSILES)) {
-                    mousePackets.queueClickPacket();
-                    widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 13); //quickPrayer range
+                if (!EthanApiPlugin.isQuickPrayerActive(PROTECT_FROM_MISSILES)) {
+                    MousePackets.queueClickPacket();
+                    WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 13); //quickPrayer range
                 }
                 return;
             }
-            if (!api.isQuickPrayerActive(PROTECT_FROM_MAGIC)) {
-                mousePackets.queueClickPacket();
-                widgetPackets.queueWidgetActionPacket(1, 5046276, -1, 12); //quickPrayer magic
+            if (!EthanApiPlugin.isQuickPrayerActive(PROTECT_FROM_MAGIC)) {
+                MousePackets.queueClickPacket();
+                WidgetPackets.queueWidgetActionPacket(1, 5046276, -1, 12); //quickPrayer magic
             }
         }
     }
@@ -143,7 +143,6 @@ public class NightmareHelperPlugin extends Plugin {
     @Subscribe
     public void onNpcSpawned(NpcSpawned e) {
         if (!inFight()) {
-            return;
         }
 
     }

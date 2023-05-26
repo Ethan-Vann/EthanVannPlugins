@@ -1,5 +1,6 @@
 package com.example.E3t4g;
 
+import com.example.EthanApiPlugin.Collections.Equipment;
 import com.example.EthanApiPlugin.Collections.Inventory;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.InteractionApi.InventoryInteraction;
@@ -12,6 +13,7 @@ import com.google.inject.Inject;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.api.VarPlayer;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.eventbus.Subscribe;
@@ -46,6 +48,12 @@ public class e3t4g extends Plugin {
     public void onGameTick(GameTick e) {
         timeout = timeout == 0 ? 2 : timeout - 1;
         if (timeout != 2) return;
+        if (client.getVarpValue(VarPlayer.SPECIAL_ATTACK_PERCENT) == 1000) {
+            if (!Equipment.search().matchesWildCardNoCase("*Dragon pickaxe*").empty()||!Equipment.search().matchesWildCardNoCase("*infernal pickaxe*").empty()) {
+                MousePackets.queueClickPacket();
+                WidgetPackets.queueWidgetActionPacket(1, 38862884, -1, -1);
+            }
+        }
         int sizeEmpty = Inventory.search().withId(ItemID.WATERSKIN0).result().size();
         int sizeFilled = Inventory.search().nameContains("Waterskin").result().size();
         if (sizeEmpty > 0) {

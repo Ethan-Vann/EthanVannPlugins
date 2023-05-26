@@ -7,9 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.ScriptEvent;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.ScriptPreFired;
+import net.runelite.api.widgets.Widget;
 import net.runelite.client.RuneLite;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
@@ -69,18 +71,6 @@ public class PacketUtilsPlugin extends Plugin {
         }
     }
 
-    @Subscribe
-    public void onScriptPreFired(ScriptPreFired e) {
-        if (config.debug()) {
-            if (e.getScriptId() == 1121) {
-                System.out.print("resume pause");
-                for (int i = 1; i < e.getScriptEvent().getArguments().length; i++) {
-                    System.out.print(":" + e.getScriptEvent().getArguments()[i]);
-                }
-                System.out.println();
-            }
-        }
-    }
 
     @Override
     @SneakyThrows
@@ -122,6 +112,18 @@ public class PacketUtilsPlugin extends Plugin {
                 }
             }
         });
+    }
+
+    @Subscribe
+    public void onScriptPreFired(ScriptPreFired e) {
+        if (config.debug()) {
+            if (e.getScriptId() == 1405) {
+                System.out.print("resume pause maybe?");
+                ScriptEvent scriptEvent = e.getScriptEvent();
+                Widget w = scriptEvent.getSource();
+                System.out.println(scriptEvent.getOp() + ":" + w.getId() + ":" + w.getIndex());
+            }
+        }
     }
 
     @Override

@@ -186,7 +186,7 @@ public class PacketReflection {
 //                } else {
 //                    addNode.invoke(null, PACKETWRITER.get(null), packetBufferNode);
 //                }
-                addNode(PACKETWRITER.get(null),packetBufferNode);
+                addNode(PACKETWRITER.get(null), packetBufferNode);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -195,8 +195,9 @@ public class PacketReflection {
             PACKETWRITER.setAccessible(false);
         }
     }
+
     @SneakyThrows
-    public static void addNode(Object eqVar0, Object lgVar1){
+    public static void addNode(Object eqVar0, Object lgVar1) {
         Field eqVar0_anField = eqVar0.getClass().getDeclaredField("an");
         eqVar0_anField.setAccessible(true);
         Object eqVar0_an = eqVar0_anField.get(eqVar0);
@@ -210,11 +211,11 @@ public class PacketReflection {
         Object lgVar1_awObject = lgVar1_awField.get(lgVar1);
         Field lgVar1_aw_atField = lgVar1_awObject.getClass().getField("at");
         lgVar1_aw_atField.setAccessible(true);
-        lgVar1_acField.set(lgVar1, -1120134497 *lgVar1_aw_atField.getInt(lgVar1_awObject));
+        lgVar1_acField.set(lgVar1, -1120134497 * lgVar1_aw_atField.getInt(lgVar1_awObject));
         lgVar1_aw_atField.set(lgVar1_awObject, 0);
         Field eqVar0_awField = eqVar0.getClass().getDeclaredField("aw");
         eqVar0_awField.setAccessible(true);
-        eqVar0_awField.set(eqVar0, (int) eqVar0_awField.get(eqVar0) + -56666229* lgVar1_acField.getInt(lgVar1));
+        eqVar0_awField.set(eqVar0, (int) eqVar0_awField.get(eqVar0) + -56666229 * lgVar1_acField.getInt(lgVar1));
         eqVar0_anField.setAccessible(false);
         eqVar0_an_an.setAccessible(false);
         lgVar1_acField.setAccessible(false);

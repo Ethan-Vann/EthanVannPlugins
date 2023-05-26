@@ -25,20 +25,22 @@ public class Bank {
         return new ItemQuery(bankItems.stream().filter(Objects::nonNull).collect(Collectors.toList()));
     }
 
+    public static boolean isOpen() {
+        return client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER) != null && !client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER).isHidden();
+    }
+
     @Subscribe
     public void onItemContainerChanged(ItemContainerChanged e) {
-        switch (e.getContainerId()) {
-            case 95:
-                if (client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER) == null) {
-                    Bank.bankItems.clear();
-                }
-                try {
-                    Bank.bankItems =
-                            Arrays.stream(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
-                } catch (NullPointerException ex) {
-                    Bank.bankItems.clear();
-                }
-                break;
+        if (e.getContainerId() == 95) {
+            if (client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER) == null) {
+                Bank.bankItems.clear();
+            }
+            try {
+                Bank.bankItems =
+                        Arrays.stream(client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
+            } catch (NullPointerException ex) {
+                Bank.bankItems.clear();
+            }
         }
     }
 

@@ -30,10 +30,10 @@ public enum QuickPrayer {
     PIETY(26),
     RIGOUR(24),
     AUGURY(27);
-    private int index;
+    private final int index;
     private int varbit;
 
-    private QuickPrayer(int index) {
+    QuickPrayer(int index) {
         this.varbit = varbit;
         this.index = index;
     }

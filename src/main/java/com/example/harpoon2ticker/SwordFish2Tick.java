@@ -85,7 +85,7 @@ public class SwordFish2Tick extends Plugin {
         } else {
             if (client.getTickCount() - lastHitsplat != 2) {
                 notifier.notify("2 tick fisher failed somehow");
-                api.stopPlugin(this);
+                EthanApiPlugin.stopPlugin(this);
                 return;
             }
             lastHitsplat = client.getTickCount();

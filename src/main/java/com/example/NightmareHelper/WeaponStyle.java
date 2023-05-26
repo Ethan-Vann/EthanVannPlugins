@@ -5,5 +5,5 @@ public enum WeaponStyle {
     RANGE,
     MELEE,
     CHINS,
-    TRIDENTS;
+    TRIDENTS
 }

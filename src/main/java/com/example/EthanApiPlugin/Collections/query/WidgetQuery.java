@@ -41,6 +41,7 @@ public class WidgetQuery {
         widgets = widgets.stream().filter(widget -> widget.getItemId() == itemId).collect(java.util.stream.Collectors.toList());
         return this;
     }
+
     public Optional<Widget> first() {
         return widgets.stream().findFirst();
     }
