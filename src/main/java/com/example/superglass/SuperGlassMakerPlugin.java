@@ -5,6 +5,7 @@ import com.example.EthanApiPlugin.Collections.BankInventory;
 import com.example.EthanApiPlugin.Collections.NPCs;
 import com.example.EthanApiPlugin.Collections.TileObjects;
 import com.example.EthanApiPlugin.EthanApiPlugin;
+import com.example.InteractionApi.BankInteraction;
 import com.example.InteractionApi.NPCInteraction;
 import com.example.InteractionApi.TileObjectInteraction;
 import com.example.PacketUtils.PacketUtilsPlugin;
@@ -120,7 +121,8 @@ public class SuperGlassMakerPlugin extends Plugin {
             WidgetPackets.queueWidgetAction(glass.get(), "Deposit-All");
         }
         MousePackets.queueClickPacket();
-        WidgetPackets.queueWidgetAction(sand.get(), "Withdraw-" + config.secondary().getSandAmount());
+        BankInteraction.withdrawX(sand.get(), config.secondary().getSandAmount());
+//        WidgetPackets.queueWidgetAction(sand.get(), "Withdraw-" + config.secondary().getSandAmount());
         boolean secondaryWithdrawn = handleSecondary();
         if (!secondaryWithdrawn) {
             client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "no secondary stop plugin", null);
@@ -156,8 +158,9 @@ public class SuperGlassMakerPlugin extends Plugin {
             WidgetPackets.queueWidgetAction(secondary.get(), "Withdraw-1");
             return true;
         }
-        MousePackets.queueClickPacket();
-        WidgetPackets.queueWidgetAction(secondary.get(), "Withdraw-" + config.secondary().getSandAmount());
+//        MousePackets.queueClickPacket();
+//        WidgetPackets.queueWidgetAction(secondary.get(), "Withdraw-" + config.secondary().getSandAmount());
+        BankInteraction.withdrawX(secondary.get(), config.secondary().getSandAmount());
         return true;
     }
 
