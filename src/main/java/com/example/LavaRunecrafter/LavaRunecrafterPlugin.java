@@ -85,8 +85,6 @@ public class LavaRunecrafterPlugin extends Plugin {
     @SneakyThrows
     public void onGameTick(GameTick event) {
         if (!Widgets.search().withTextContains("What do you want?").hiddenState(false).empty() || !Widgets.search().withTextContains("Can you repair").hiddenState(false).empty()) {
-            EthanApiPlugin.sendClientMessage("repairing");
-            EthanApiPlugin.sendClientMessage(String.valueOf(hadbook));
             MousePackets.queueClickPacket();
             WidgetPackets.queueResumePause(15138821, -1);
             MousePackets.queueClickPacket();
@@ -151,7 +149,6 @@ public class LavaRunecrafterPlugin extends Plugin {
                 timeout = 1;
                 return;
             }
-            System.out.println(Bank.search().result().size());
             hadbook = !Bank.search().matchesWildCardNoCase("*Abyssal book*").nonPlaceHolder().empty();
             //System.out.println("doing item operations");
             try {
