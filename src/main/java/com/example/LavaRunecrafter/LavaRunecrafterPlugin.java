@@ -151,6 +151,7 @@ public class LavaRunecrafterPlugin extends Plugin {
                 timeout = 1;
                 return;
             }
+            System.out.println(Bank.search().result().size());
             hadbook = !Bank.search().matchesWildCardNoCase("*Abyssal book*").nonPlaceHolder().empty();
             //System.out.println("doing item operations");
             try {
