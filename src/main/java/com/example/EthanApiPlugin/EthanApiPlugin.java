@@ -56,6 +56,9 @@ public class EthanApiPlugin extends Plugin {
                     });
 
 
+    public static boolean loggedIn(){
+        return client.getGameState()==GameState.LOGGED_IN;
+    }
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
         try {

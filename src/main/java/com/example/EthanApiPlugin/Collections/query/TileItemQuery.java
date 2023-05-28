@@ -7,6 +7,7 @@ import net.runelite.api.Client;
 import net.runelite.api.ItemComposition;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
+import net.runelite.client.game.ItemManager;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class TileItemQuery {
     public List<ETileItem> tileItems;
     static Client client = RuneLite.getInjector().getInstance(Client.class);
+    static ItemManager itemManager = RuneLite.getInjector().getInstance(ItemManager.class);
 
     public TileItemQuery(List<ETileItem> tileItems) {
         this.tileItems = new ArrayList<ETileItem>(tileItems);
@@ -84,6 +86,11 @@ public class TileItemQuery {
                             }
                         }).
                         collect(Collectors.toList());
+        return this;
+    }
+
+    public TileItemQuery aboveXValue(int value) {
+        tileItems = tileItems.stream().filter(item -> itemManager.getItemPrice(item.getTileItem().getId()) > value).collect(Collectors.toList());
         return this;
     }
 
@@ -156,6 +163,11 @@ public class TileItemQuery {
             return Optional.empty();
         }
         return Optional.ofNullable(tileItems.get(0));
+    }
+
+    public TileItemQuery withinDistance(int distance) {
+        tileItems = tileItems.stream().filter(tileItem -> tileItem.getLocation().distanceTo(client.getLocalPlayer().getWorldLocation()) <= distance).collect(Collectors.toList());
+        return this;
     }
 
     public Optional<ETileItem> nearestToPlayer() {
