@@ -56,9 +56,10 @@ public class EthanApiPlugin extends Plugin {
                     });
 
 
-    public static boolean loggedIn(){
-        return client.getGameState()==GameState.LOGGED_IN;
+    public static boolean loggedIn() {
+        return client.getGameState() == GameState.LOGGED_IN;
     }
+
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
         try {
@@ -107,6 +108,16 @@ public class EthanApiPlugin extends Plugin {
 
     public static boolean isQuickPrayerEnabled() {
         return client.getVarbitValue(QUICK_PRAYER) == 1;
+    }
+
+
+    @SneakyThrows
+    public static int getAnimation(NPC npc) {
+        Field animation = npc.getClass().getSuperclass().getDeclaredField("cs");
+        animation.setAccessible(true);
+        int anim = animation.getInt(npc) * -1372355773;
+        animation.setAccessible(false);
+        return anim;
     }
 
     @SneakyThrows
@@ -526,7 +537,6 @@ public class EthanApiPlugin extends Plugin {
         HashMap<WorldPoint, List<WorldPoint>> paths = new HashMap<>();
         HashSet<WorldPoint> walkableTiles = new HashSet<>(reachableTiles());
         HashSet<WorldPoint> impassibleTiles = new HashSet<>(EthanApiPlugin.sceneWorldPoints());
-        System.out.println("Completed impassible tiles 1");
         impassibleTiles.removeIf(walkableTiles::contains);
         paths.put(client.getLocalPlayer().getWorldLocation(), List.of(client.getLocalPlayer().getWorldLocation()));
         return pathToGoal(goal, paths, impassibleTiles, dangerous, new HashSet<>(reachableTiles()), new HashSet<>());
