@@ -54,44 +54,48 @@ public class PacketReflection {
             log.warn("Failed to load Packets Into Client");
             return false;
         }
+        log.warn("Loaded Packets Into Client");
         return true;
     }
 
     @SneakyThrows
     public static void writeObject(String obfname, Object buffer, Object input) {
         switch (obfname) {
-            case "du":
-                BufferMethods.du(buffer, (Integer) input);
+            case "ef":
+                BufferMethods.ef(buffer, (Integer) input);
                 break;
-            case "bu":
-                BufferMethods.bu(buffer, (Integer) input);
+            case "be":
+                BufferMethods.be(buffer, (Integer) input);
                 break;
-            case "dh":
-                BufferMethods.dh(buffer, (Integer) input);
-                break;
-            case "bf":
-                BufferMethods.bf(buffer, (Integer) input);
+            case "dx":
+                BufferMethods.dx(buffer, (Integer) input);
                 break;
             case "dy":
                 BufferMethods.dy(buffer, (Integer) input);
                 break;
-            case "el":
-                BufferMethods.el(buffer, (Integer) input);
+            case "ez":
+                BufferMethods.ez(buffer, (Integer) input);
                 break;
-            case "dn":
-                BufferMethods.dn(buffer, (Integer) input);
+            case "bw":
+                BufferMethods.bw(buffer, (Integer) input);
                 break;
-            case "dp":
-                BufferMethods.dp(buffer, (Integer) input);
+            case "bh":
+                BufferMethods.bh(buffer, (Integer) input);
                 break;
-            case "eb":
-                BufferMethods.eb(buffer, (Integer) input);
+            case "dj":
+                BufferMethods.dj(buffer, (Integer) input);
                 break;
-            case "ds":
-                BufferMethods.ds(buffer, (Integer) input);
+            case "dz":
+                BufferMethods.dz(buffer, (Integer) input);
                 break;
-            case "ba":
-                BufferMethods.ba(buffer, (Integer) input);
+            case "dk":
+                BufferMethods.dk(buffer, (Integer) input);
+                break;
+            case "em":
+                BufferMethods.em(buffer, (Integer) input);
+                break;
+            case "do":
+                BufferMethods.doMethod(buffer, (Integer) input);
                 break;
         }
     }
@@ -196,32 +200,31 @@ public class PacketReflection {
         }
     }
 
-    @SneakyThrows
-    public static void addNode(Object eqVar0, Object lgVar1) {
-        Field eqVar0_anField = eqVar0.getClass().getDeclaredField("an");
-        eqVar0_anField.setAccessible(true);
-        Object eqVar0_an = eqVar0_anField.get(eqVar0);
-        Method eqVar0_an_an = eqVar0_an.getClass().getDeclaredMethod("an", lgVar1.getClass().getSuperclass());
-        eqVar0_an_an.setAccessible(true);
-        eqVar0_an_an.invoke(eqVar0_an, lgVar1);
-        Field lgVar1_acField = lgVar1.getClass().getDeclaredField("ac");
-        lgVar1_acField.setAccessible(true);
-        Field lgVar1_awField = lgVar1.getClass().getDeclaredField("aw");
-        lgVar1_awField.setAccessible(true);
-        Object lgVar1_awObject = lgVar1_awField.get(lgVar1);
-        Field lgVar1_aw_atField = lgVar1_awObject.getClass().getField("at");
-        lgVar1_aw_atField.setAccessible(true);
-        lgVar1_acField.set(lgVar1, -1120134497 * lgVar1_aw_atField.getInt(lgVar1_awObject));
-        lgVar1_aw_atField.set(lgVar1_awObject, 0);
-        Field eqVar0_awField = eqVar0.getClass().getDeclaredField("aw");
-        eqVar0_awField.setAccessible(true);
-        eqVar0_awField.set(eqVar0, (int) eqVar0_awField.get(eqVar0) + -56666229 * lgVar1_acField.getInt(lgVar1));
-        eqVar0_anField.setAccessible(false);
-        eqVar0_an_an.setAccessible(false);
-        lgVar1_acField.setAccessible(false);
-        lgVar1_awField.setAccessible(false);
-        lgVar1_aw_atField.setAccessible(false);
-        eqVar0_awField.setAccessible(false);
+    public static void addNode(Object eqVar0, Object lmVar1) {
+        try {
+            Class om = client.getClass().getClassLoader().loadClass("om");
+            Field an = eqVar0.getClass().getDeclaredField("an");
+            an.setAccessible(true);
+            Method wh = om.getDeclaredMethod("wh", an.get(eqVar0).getClass(),lmVar1.getClass().getSuperclass());
+            wh.setAccessible(true);
+            wh.invoke(null, an.get(eqVar0), lmVar1);
+            Field avField = lmVar1.getClass().getDeclaredField("av");
+            avField.setAccessible(true);
+            Object avObject = avField.get(lmVar1);
+            Field avaeField = avObject.getClass().getField("ae");
+            avaeField.setAccessible(true);
+            Field asField = lmVar1.getClass().getDeclaredField("as");
+            asField.setAccessible(true);
+            asField.set(lmVar1,avaeField.getInt(avObject)*1756013327);
+
+            Field thisAv = eqVar0.getClass().getDeclaredField("av");
+            thisAv.setAccessible(true);
+            int total =  thisAv.getInt(eqVar0);
+            total   +=  asField.getInt(lmVar1)*1696608891;
+            thisAv.set(eqVar0,total);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 //    @SneakyThrows

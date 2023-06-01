@@ -10,7 +10,7 @@ repositories {
 	mavenCentral()
 }
 
-def runeLiteVersion = 'latest.release'
+def runeLiteVersion = '1.10.3'
 
 dependencies {
 	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
@@ -23,7 +23,7 @@ dependencies {
 }
 
 group = 'com.example'
-version = '4.8'
+version = '4.9'
 sourceCompatibility = "11"
 
 tasks.withType(Jar) {
