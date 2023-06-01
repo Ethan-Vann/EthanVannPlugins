@@ -38,7 +38,14 @@ public class PacketReflection {
             classWithgetPacketBufferNode = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.classContainingGetPacketBufferNodeName);
             ClientPacket = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.clientPacketClassName);
             PACKETWRITER = clientInstance.getClass().getDeclaredField(ObfuscatedNames.packetWriterFieldName);
+            //Devious fix for logout issue
+            Field vc = clientInstance.getClass().getDeclaredField("vc");
+            vc.setAccessible(true);
+            vc.set(null,Integer.MAX_VALUE);
+            vc.setAccessible(false);
+            //Devious fix for logout issue
             PacketBufferNode = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.packetBufferNodeClassName);
+
             PACKETWRITER.setAccessible(true);
             Field isaac2 = PACKETWRITER.get(null).getClass().getDeclaredField(ObfuscatedNames.isaacCipherFieldName);
             isaac2.setAccessible(true);
@@ -54,7 +61,6 @@ public class PacketReflection {
             log.warn("Failed to load Packets Into Client");
             return false;
         }
-        log.warn("Loaded Packets Into Client");
         return true;
     }
 
