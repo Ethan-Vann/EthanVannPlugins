@@ -48,7 +48,7 @@ public class EquipmentItemQuery {
     }
 
     public EquipmentItemQuery idInList(List<Integer> ids) {
-        items = items.stream().filter(item -> ids.contains(item.getItemId())).collect(Collectors.toList());
+        items = items.stream().filter(item -> ids.contains(item.getEquipmentItemId())).collect(Collectors.toList());
         return this;
     }
 
