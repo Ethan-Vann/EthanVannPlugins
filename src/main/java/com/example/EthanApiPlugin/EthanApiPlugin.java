@@ -147,7 +147,7 @@ public class EthanApiPlugin extends Plugin {
     }
 
     @SneakyThrows
-    public static int pathLength(NPC npc){
+    public static int pathLength(NPC npc) {
         Field pathLength = npc.getClass().getSuperclass().getDeclaredField("de");
         pathLength.setAccessible(true);
         int path = pathLength.getInt(npc) * 1557847499;
@@ -156,7 +156,7 @@ public class EthanApiPlugin extends Plugin {
     }
 
     @SneakyThrows
-    public static int pathLength(Player player){
+    public static int pathLength(Player player) {
         Field pathLength = player.getClass().getSuperclass().getDeclaredField("de");
         pathLength.setAccessible(true);
         int path = pathLength.getInt(player) * 1557847499;
@@ -170,6 +170,7 @@ public class EthanApiPlugin extends Plugin {
         for (Method declaredMethod : npc.getComposition().getClass().getDeclaredMethods()) {
             if (declaredMethod.getReturnType() == short[].class && declaredMethod.getParameterTypes().length == 0) {
                 getHeadIconArrayMethod = declaredMethod;
+                break;
             }
         }
         if (getHeadIconArrayMethod == null) {
@@ -622,7 +623,7 @@ public class EthanApiPlugin extends Plugin {
                                                    HashSet<WorldPoint> impassible, HashSet<WorldPoint> dangerous,
                                                    HashSet<WorldPoint> walkable, HashSet<WorldPoint> walked) {
         LinkedHashMap<WorldPoint, List<WorldPoint>> paths2 = new LinkedHashMap<>(paths);
-        if(Collections.disjoint(walkable,goal)){
+        if (Collections.disjoint(walkable, goal)) {
             return null;
         }
         for (Map.Entry<WorldPoint, List<WorldPoint>> worldPointListEntry : paths.entrySet()) {

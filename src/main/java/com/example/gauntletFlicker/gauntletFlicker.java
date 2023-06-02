@@ -1,8 +1,11 @@
 package com.example.gauntletFlicker;
 
+import com.example.EthanApiPlugin.Collections.Equipment;
+import com.example.EthanApiPlugin.Collections.Inventory;
 import com.example.EthanApiPlugin.Collections.query.QuickPrayer;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.InteractionApi.InteractionHelper;
+import com.example.InteractionApi.InventoryInteraction;
 import com.example.PacketUtils.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
@@ -20,6 +23,7 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 
 import javax.inject.Inject;
+import java.util.Optional;
 import java.util.Set;
 
 @PluginDescriptor(
@@ -53,19 +57,24 @@ public class gauntletFlicker extends Plugin {
             forceTab = false;
             return;
         }
-        Item weapon = null;
-        try {
-            weapon = client.getItemContainer(InventoryID.EQUIPMENT).getItem(EquipmentInventorySlot.WEAPON.getSlotIdx());
-        } catch (NullPointerException ex) {
-            //todo
-        }
+
         String name = "";
-        if (weapon != null) {
-            ItemComposition itemComp =
-                    manager.getItemComposition(client.getItemContainer(InventoryID.EQUIPMENT).getItem(EquipmentInventorySlot.WEAPON.getSlotIdx()).getId());
-            name = itemComp.getName() == null ? "" : itemComp.getName();
+        if(!Equipment.search().matchesWildCardNoCase("*staff*").empty()){
+            name = "staff";
+        }
+        if(!Equipment.search().matchesWildCardNoCase("*bow*").empty()){
+            name = "bow";
+        }
+        if(!Equipment.search().matchesWildCardNoCase("*halberd*").empty()){
+            name = "halberd";
         }
         NPC hunllef = client.getNpcs().stream().filter(x -> HUNLLEF_IDS.contains(x.getId())).findFirst().orElse(null);
+        if(hunllef!=null&&(hunllef.isDead()||hunllef.getHealthRatio()==0)){
+            if(EthanApiPlugin.isQuickPrayerEnabled()){
+                InteractionHelper.togglePrayer();
+                return;
+            }
+        }
         if (client.getVarbitValue(9177) != 1) {
             forceTab = false;
             return;
@@ -94,41 +103,35 @@ public class gauntletFlicker extends Plugin {
         }
         if (hunllef != null) {
             if (EthanApiPlugin.getHeadIcon(hunllef) == HeadIcon.MAGIC && (!name.contains("bow") && !name.contains("halberd"))) {
-                Widget bow = EthanApiPlugin.getItem("*bow*");
-                Widget halberd = EthanApiPlugin.getItem("*halberd*");
-                if (bow != null) {
-                    MousePackets.queueClickPacket();
-                    WidgetPackets.queueWidgetAction(bow, "Wield");
+                Optional<Widget> bow = Inventory.search().matchesWildCardNoCase("*bow*").first();
+                Optional<Widget> halberd = Inventory.search().matchesWildCardNoCase("*halberd*").first();
+                if (bow.isPresent()) {
+                    InventoryInteraction.useItem(bow.get(),"Equip", "Wear", "Wield");
                     updatedWeapon = "bow";
-                } else if (halberd != null) {
-                    MousePackets.queueClickPacket();
-                    WidgetPackets.queueWidgetAction(halberd, "Wield");
+                } else if (halberd.isPresent()) {
+                    InventoryInteraction.useItem(halberd.get(),"Equip", "Wear", "Wield");
                     updatedWeapon = "halberd";
                 }
             }
             if (EthanApiPlugin.getHeadIcon(hunllef) == HeadIcon.RANGED && (!name.contains("staff") && !name.contains("halberd"))) {
-                Widget staff = EthanApiPlugin.getItem("*staff*");
-                Widget halberd = EthanApiPlugin.getItem("*halberd*");
-                if (staff != null) {
-                    MousePackets.queueClickPacket();
-                    WidgetPackets.queueWidgetAction(staff, "Wield");
+                Optional<Widget> staff = Inventory.search().matchesWildCardNoCase("*staff*").first();
+                Optional<Widget> halberd = Inventory.search().matchesWildCardNoCase("*halberd*").first();
+                if (staff.isPresent()) {
+                    InventoryInteraction.useItem(staff.get(),"Equip", "Wear", "Wield");
                     updatedWeapon = "staff";
-                } else if (halberd != null) {
-                    MousePackets.queueClickPacket();
-                    WidgetPackets.queueWidgetAction(halberd, "Wield");
+                } else if (halberd.isPresent()) {
+                    InventoryInteraction.useItem(halberd.get(),"Equip", "Wear", "Wield");
                     updatedWeapon = "halberd";
                 }
             }
             if (EthanApiPlugin.getHeadIcon(hunllef) == HeadIcon.MELEE && (!name.contains("staff") && !name.contains("bow"))) {
-                Widget staff = EthanApiPlugin.getItem("*staff*");
-                Widget bow = EthanApiPlugin.getItem("*bow*");
-                if (staff != null) {
-                    MousePackets.queueClickPacket();
-                    WidgetPackets.queueWidgetAction(staff, "Wield");
+                Optional<Widget> staff = Inventory.search().matchesWildCardNoCase("*staff*").first();
+                Optional<Widget> bow = Inventory.search().matchesWildCardNoCase("*bow*").first();
+                if (staff.isPresent()) {
+                    InventoryInteraction.useItem(staff.get(),"Equip", "Wear", "Wield");
                     updatedWeapon = "staff";
-                } else if (bow != null) {
-                    MousePackets.queueClickPacket();
-                    WidgetPackets.queueWidgetAction(bow, "Wield");
+                } else if (bow.isPresent()) {
+                    InventoryInteraction.useItem(bow.get(),"Equip", "Wear", "Wield");
                     updatedWeapon = "bow";
                 }
             }

@@ -211,7 +211,7 @@ public class PacketReflection {
             Class om = client.getClass().getClassLoader().loadClass("om");
             Field an = eqVar0.getClass().getDeclaredField("an");
             an.setAccessible(true);
-            Method wh = om.getDeclaredMethod("wh", an.get(eqVar0).getClass(),lmVar1.getClass().getSuperclass());
+            Method wh = om.getDeclaredMethod("wh", an.get(eqVar0).getClass(), lmVar1.getClass().getSuperclass());
             wh.setAccessible(true);
             wh.invoke(null, an.get(eqVar0), lmVar1);
             Field avField = lmVar1.getClass().getDeclaredField("av");
@@ -221,13 +221,13 @@ public class PacketReflection {
             avaeField.setAccessible(true);
             Field asField = lmVar1.getClass().getDeclaredField("as");
             asField.setAccessible(true);
-            asField.set(lmVar1,avaeField.getInt(avObject)*1756013327);
+            asField.set(lmVar1, avaeField.getInt(avObject) * 1756013327);
 
             Field thisAv = eqVar0.getClass().getDeclaredField("av");
             thisAv.setAccessible(true);
-            int total =  thisAv.getInt(eqVar0);
-            total   +=  asField.getInt(lmVar1)*1696608891;
-            thisAv.set(eqVar0,total);
+            int total = thisAv.getInt(eqVar0);
+            total += asField.getInt(lmVar1) * 1696608891;
+            thisAv.set(eqVar0, total);
         } catch (Exception e) {
             e.printStackTrace();
         }
