@@ -1,6 +1,5 @@
 package com.example.LavaRunecrafter;
 
-import com.example.EthanApiPlugin.Collections.Bank;
 import com.example.EthanApiPlugin.Collections.Widgets;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.PacketUtils.PacketUtilsPlugin;
@@ -12,10 +11,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provides;
 import lombok.SneakyThrows;
 import net.runelite.api.*;
-import net.runelite.api.events.ChatMessage;
-import net.runelite.api.events.GameObjectSpawned;
-import net.runelite.api.events.GameTick;
-import net.runelite.api.events.StatChanged;
+import net.runelite.api.events.*;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.config.ConfigManager;
@@ -44,7 +40,7 @@ public class LavaRunecrafterPlugin extends Plugin {
     Client client;
     @Inject
     PluginManager pluginManager;
-    boolean hadbook = false;
+    Boolean hadbook = null;
     HashMap<Widget, int[]> pouches = new HashMap<>();
     @Inject
     LavaRunecrafterPluginConfig config;
@@ -84,17 +80,19 @@ public class LavaRunecrafterPlugin extends Plugin {
     @Subscribe
     @SneakyThrows
     public void onGameTick(GameTick event) {
-        if (!Widgets.search().withTextContains("What do you want?").hiddenState(false).empty() || !Widgets.search().withTextContains("Can you repair").hiddenState(false).empty()) {
-            MousePackets.queueClickPacket();
-            WidgetPackets.queueResumePause(15138821, -1);
-            MousePackets.queueClickPacket();
-            WidgetPackets.queueResumePause(14352385, hadbook ? 1 : 2);
-            MousePackets.queueClickPacket();
-            WidgetPackets.queueResumePause(14221317, -1);
-            MousePackets.queueClickPacket();
-            EthanApiPlugin.invoke(-1, -1, 26, -1, -1, "", "", -1, -1);
-            timeout = 0;
-            return;
+        if (hadbook != null) {
+            if (!Widgets.search().withTextContains("What do you want?").hiddenState(false).empty() || !Widgets.search().withTextContains("Can you repair").hiddenState(false).empty()) {
+                MousePackets.queueClickPacket();
+                WidgetPackets.queueResumePause(15138821, -1);
+                MousePackets.queueClickPacket();
+                WidgetPackets.queueResumePause(14352385, hadbook ? 1 : 2);
+                MousePackets.queueClickPacket();
+                WidgetPackets.queueResumePause(14221317, -1);
+                MousePackets.queueClickPacket();
+                EthanApiPlugin.invoke(-1, -1, 26, -1, -1, "", "", -1, -1);
+                timeout = 0;
+                return;
+            }
         }
         if (timeout > 0) {
             timeout--;
@@ -149,7 +147,6 @@ public class LavaRunecrafterPlugin extends Plugin {
                 timeout = 1;
                 return;
             }
-            hadbook = !Bank.search().matchesWildCardNoCase("*Abyssal book*").nonPlaceHolder().empty();
             //System.out.println("doing item operations");
             try {
                 binding = client.getItemContainer(InventoryID.EQUIPMENT).getItem(EquipmentInventorySlot.AMULET.getSlotIdx());
@@ -468,4 +465,12 @@ public class LavaRunecrafterPlugin extends Plugin {
         }
     }
 
+    @Subscribe
+    public void onItemContainerChanged(ItemContainerChanged e) {
+        if (e.getContainerId() == InventoryID.BANK.getId()) {
+            if (e.getItemContainer() != null) {
+                hadbook = e.getItemContainer().contains(ItemID.ABYSSAL_BOOK);
+            }
+        }
+    }
 }
