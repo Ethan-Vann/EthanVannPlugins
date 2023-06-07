@@ -39,9 +39,11 @@ public class Bank {
             for (Item item : e.getItemContainer().getItems()) {
                 try {
                     if(item==null){
+                        i++;
                         continue;
                     }
                     if(EthanApiPlugin.itemDefs.get(item.getId()).getPlaceholderTemplateId()==14401){
+                        i++;
                         continue;
                     }
                     Bank.bankItems.add(new BankItemWidget(EthanApiPlugin.itemDefs.get(item.getId()).getName(),item.getId(),item.getQuantity(),i));
