@@ -61,6 +61,15 @@ public class ItemQuery {
         items = items.stream().filter(item -> ids.contains(item.getItemId())).collect(Collectors.toList());
         return this;
     }
+    
+    public ItemQuery nameInList(List<String> names) {
+        items = items.stream()
+                .filter(item -> names.stream()
+                        .map(String::toLowerCase)
+                        .anyMatch(name -> Text.removeTags(item.getName()).equalsIgnoreCase(name)))
+                .collect(Collectors.toList());
+        return this;
+    }
 
     public ItemQuery indexIs(int index) {
         items = items.stream().filter(item -> item.getIndex() == index).collect(Collectors.toList());
