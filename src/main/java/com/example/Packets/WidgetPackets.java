@@ -8,6 +8,7 @@ import net.runelite.api.widgets.Widget;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import net.runelite.client.util.Text;
 
 public class WidgetPackets {
     @SneakyThrows
@@ -61,7 +62,7 @@ public class WidgetPackets {
         int num = -1;
         for (String action : actions) {
             for (String action2 : actionlist) {
-                if (action != null && action.equalsIgnoreCase(action2)) {
+				if (action != null && Text.removeTags(action).equalsIgnoreCase(action2)) {
                     num = actions.indexOf(action.toLowerCase()) + 1;
                 }
             }
