@@ -86,6 +86,9 @@ public class EthanApiPlugin extends Plugin {
         return client.getGameState() == GameState.LOGGED_IN;
     }
 
+    public static WorldPoint playerPosition(){
+        return client.getLocalPlayer().getWorldLocation();
+    }
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
         try {
