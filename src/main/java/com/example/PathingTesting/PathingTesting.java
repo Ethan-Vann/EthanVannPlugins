@@ -29,6 +29,7 @@ import java.util.Random;
 @PluginDescriptor(name = "PathingTesting", description = "", enabledByDefault = false, tags = {"Testing"})
 public class PathingTesting extends Plugin {
     static List<WorldPoint> path = new ArrayList<>();
+    static List<WorldPoint> fullPath = new ArrayList<>();
     static WorldPoint currentPathDestination = null;
     static WorldPoint goal = null;
     @Inject
@@ -50,7 +51,8 @@ public class PathingTesting extends Plugin {
         currentPathDestination = null;
         path = null;
         goal = null;
-        overlay = new PathingTestingOverlay(EthanApiPlugin.getClient(), this);
+        fullPath = null;
+        overlay = new PathingTestingOverlay(EthanApiPlugin.getClient(), this,config);
         overlayManager.add(overlay);
     }
     @Override
@@ -58,11 +60,13 @@ public class PathingTesting extends Plugin {
         currentPathDestination = null;
         path = null;
         goal = null;
+        fullPath = null;
         overlayManager.remove(overlay);
     }
     public static boolean walkTo(WorldPoint goal){
         currentPathDestination = null;
         path = GlobalCollisionMap.findPath(goal);
+        fullPath = new ArrayList<>(path);
         PathingTesting.goal = goal;
         currentPathDestination = null;
         if(path == null){
@@ -75,11 +79,13 @@ public class PathingTesting extends Plugin {
         if (e.getGroup().equals("PathingTesting") && e.getKey().equals("run")) {
             currentPathDestination = null;
             path = GlobalCollisionMap.findPath(new WorldPoint(config.x(), config.y(), EthanApiPlugin.getClient().getPlane()));
+            fullPath = new ArrayList<>(path);
             goal = new WorldPoint(config.x(), config.y(), EthanApiPlugin.getClient().getPlane());
         }
         if (e.getGroup().equals("PathingTesting") && e.getKey().equals("stop")) {
             currentPathDestination = null;
             path = null;
+            fullPath = null;
             clientThread.invoke(() -> {
                 TileObjects.search().filter(x -> x instanceof WallObject).withAction("Open").nearestToPlayer().ifPresent(
                         tileObject -> {

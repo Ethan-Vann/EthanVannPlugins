@@ -40,4 +40,13 @@ public interface PathingTestingConfig extends Config {
     default boolean stop() {
         return false;
     }
+    @ConfigItem(
+            keyName = "drawTiles",
+            name = "drawTiles",
+            description = ""
+    )
+    default boolean drawTiles() {
+        return false;
+    }
+
 }
