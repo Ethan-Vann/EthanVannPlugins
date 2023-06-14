@@ -27,6 +27,9 @@ public class Inventory {
     public static int getEmptySlots() {
         return 28 - search().result().size();
     }
+    public static boolean full(){
+        return getEmptySlots()==0;
+    }
 
     public static int getItemAmount(int itemId) {
         return search().withId(itemId).result().size();

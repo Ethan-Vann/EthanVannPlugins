@@ -111,4 +111,10 @@ public class TileObjectQuery {
         }
         return client.getObjectDefinition(tileObject.getId()).getImpostor();
     }
+    public static ObjectComposition getObjectComposition(int id) {
+        if (client.getObjectDefinition(id).getImpostorIds() == null || client.getObjectDefinition(id).getImpostor() == null) {
+            return client.getObjectDefinition(id);
+        }
+        return client.getObjectDefinition(id).getImpostor();
+    }
 }
