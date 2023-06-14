@@ -20,10 +20,10 @@ import java.util.stream.Collectors;
 
 public class BankInventory {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
-    static List<Widget> bankInventoryItems = new ArrayList<>();
+    static List<Widget> bankIventoryItems = new ArrayList<>();
 
     public static ItemQuery search() {
-        return new ItemQuery(bankInventoryItems.stream().filter(Objects::nonNull).collect(Collectors.toList()));
+        return new ItemQuery(bankIventoryItems.stream().filter(Objects::nonNull).collect(Collectors.toList()));
     }
 
     //	@Subscribe
@@ -186,10 +186,10 @@ public class BankInventory {
     public void onWidgetLoaded(WidgetLoaded e) {
         if (e.getGroupId() == WidgetID.BANK_INVENTORY_GROUP_ID) {
             try {
-                BankInventory.bankInventoryItems =
+                BankInventory.bankIventoryItems =
                         Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
             } catch (NullPointerException err) {
-                BankInventory.bankInventoryItems.clear();
+                BankInventory.bankIventoryItems.clear();
             }
         }
     }
@@ -198,15 +198,15 @@ public class BankInventory {
     public void onItemContainerChanged(ItemContainerChanged e) {
         if (e.getContainerId() == 93) {
             if (client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER) == null) {
-                BankInventory.bankInventoryItems.clear();
+                BankInventory.bankIventoryItems.clear();
                 return;
             }
             try {
-                BankInventory.bankInventoryItems =
+                BankInventory.bankIventoryItems =
                         Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
                 return;
             } catch (NullPointerException err) {
-                BankInventory.bankInventoryItems.clear();
+                BankInventory.bankIventoryItems.clear();
                 return;
             }
         }
@@ -215,7 +215,7 @@ public class BankInventory {
     @Subscribe
     public void onGameStateChanged(GameStateChanged gameStateChanged) {
         if (gameStateChanged.getGameState() == GameState.HOPPING || gameStateChanged.getGameState() == GameState.LOGIN_SCREEN || gameStateChanged.getGameState() == GameState.CONNECTION_LOST) {
-            BankInventory.bankInventoryItems.clear();
+            BankInventory.bankIventoryItems.clear();
         }
     }
 }
