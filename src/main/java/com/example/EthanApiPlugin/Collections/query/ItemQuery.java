@@ -38,6 +38,14 @@ public class ItemQuery {
         return this;
     }
 
+    public ItemQuery withSet(Set<Integer> ids) {
+        items = items.stream()
+                .filter(item -> ids.contains(item.getItemId()))
+                .collect(Collectors.toList());
+        return this;
+    }
+
+
     public ItemQuery withName(String name) {
         items = items.stream().filter(item -> item.getName().equals(name)).collect(Collectors.toList());
         return this;
