@@ -3,6 +3,7 @@ package com.example.Packets;
 import com.example.PacketUtils.PacketDef;
 import com.example.PacketUtils.PacketReflection;
 import lombok.SneakyThrows;
+import net.runelite.api.Item;
 import net.runelite.api.widgets.Widget;
 
 import java.util.Arrays;
