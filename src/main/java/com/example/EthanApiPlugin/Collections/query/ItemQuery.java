@@ -33,6 +33,13 @@ public class ItemQuery {
         return this;
     }
 
+    public ItemQuery withSet(Set<Integer> ids) {
+        items = items.stream()
+                .filter(item -> ids.contains(item.getItemId()))
+                .collect(Collectors.toList());
+        return this;
+    }
+
     public ItemQuery withId(int id) {
         items = items.stream().filter(item -> item.getItemId() == id).collect(Collectors.toList());
         return this;
