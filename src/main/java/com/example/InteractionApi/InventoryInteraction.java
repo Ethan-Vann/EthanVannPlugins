@@ -6,6 +6,7 @@ import com.example.Packets.WidgetPackets;
 import net.runelite.api.widgets.Widget;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public class InventoryInteraction {
@@ -18,8 +19,18 @@ public class InventoryInteraction {
         }).orElse(false);
     }
 
+
     public static boolean useItem(int id, String... actions) {
         return Inventory.search().withId(id).first().flatMap(item ->
+        {
+            MousePackets.queueClickPacket();
+            WidgetPackets.queueWidgetAction(item, actions);
+            return Optional.of(true);
+        }).orElse(false);
+    }
+
+    public static boolean useItem(Set<Integer> id, String... actions) {
+        return Inventory.search().withSet(id).first().flatMap(item ->
         {
             MousePackets.queueClickPacket();
             WidgetPackets.queueWidgetAction(item, actions);
