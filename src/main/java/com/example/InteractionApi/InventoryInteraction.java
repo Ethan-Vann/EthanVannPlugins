@@ -18,8 +18,7 @@ public class InventoryInteraction {
             return Optional.of(true);
         }).orElse(false);
     }
-
-
+    
     public static boolean useItem(int id, String... actions) {
         return Inventory.search().withId(id).first().flatMap(item ->
         {
@@ -28,7 +27,7 @@ public class InventoryInteraction {
             return Optional.of(true);
         }).orElse(false);
     }
-
+    
     public static boolean useItem(Set<Integer> id, String... actions) {
         return Inventory.search().withSet(id).first().flatMap(item ->
         {
@@ -37,7 +36,7 @@ public class InventoryInteraction {
             return Optional.of(true);
         }).orElse(false);
     }
-
+    
     public static boolean useItem(Predicate<? super Widget> predicate, String... actions) {
         return Inventory.search().filter(predicate).first().flatMap(item ->
         {
@@ -46,7 +45,7 @@ public class InventoryInteraction {
             return Optional.of(true);
         }).orElse(false);
     }
-
+    
     public static boolean useItemIndex(int index, String... actions) {
         return Inventory.search().indexIs(index).first().flatMap(item ->
         {
@@ -55,7 +54,7 @@ public class InventoryInteraction {
             return Optional.of(true);
         }).orElse(false);
     }
-
+    
     public static boolean useItem(Widget item, String... actions) {
         if (item == null) {
             return false;
