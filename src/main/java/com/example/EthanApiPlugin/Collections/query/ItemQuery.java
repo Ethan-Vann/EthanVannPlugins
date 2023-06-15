@@ -45,7 +45,6 @@ public class ItemQuery {
         return this;
     }
 
-
     public ItemQuery withName(String name) {
         items = items.stream().filter(item -> item.getName().equals(name)).collect(Collectors.toList());
         return this;
