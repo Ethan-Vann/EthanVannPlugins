@@ -27,7 +27,7 @@ public class InventoryInteraction {
         }).orElse(false);
     }
 
-        public static boolean useItem(Set<Integer> id, String... actions) {
+    public static boolean useItem(Set<Integer> id, String... actions) {
         return Inventory.search().withSet(id).first().flatMap(item ->
         {
             MousePackets.queueClickPacket();
