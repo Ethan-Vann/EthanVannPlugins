@@ -10,8 +10,6 @@ public final class StatInformation extends Plugin {
 
     static Client client = RuneLite.getInjector().getInstance(Client.class);
 
-    private StatInformation() {}
-
     public static int getLevel(Skill skillName, StatType type)
     {
         return type == StatType.BASE ?
