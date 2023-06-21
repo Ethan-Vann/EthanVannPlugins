@@ -18,4 +18,9 @@ public final class StatInformation extends Plugin {
                 client.getRealSkillLevel(skillName) : client.getBoostedSkillLevel(skillName);
 
     }
+
+    public static int getHpPercentage()
+    {
+        return (int)((double)getLevel(Skill.HITPOINTS, StatType.BOOSTED) / getLevel(Skill.HITPOINTS, StatType.BASE) * 100);
+    }
 }
