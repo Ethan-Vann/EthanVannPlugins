@@ -63,6 +63,12 @@ public class PathingTesting extends Plugin {
         fullPath = null;
         overlayManager.remove(overlay);
     }
+    public static boolean pathingTo(WorldPoint a){
+        return goal!=null&& goal.equals(a);
+    }
+    public static boolean pathing(){
+        return goal!=null;
+    }
     public static boolean walkTo(WorldPoint goal){
         currentPathDestination = null;
         path = GlobalCollisionMap.findPath(goal);
