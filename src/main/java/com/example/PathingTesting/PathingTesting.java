@@ -168,7 +168,7 @@ public class PathingTesting extends Plugin {
         Tile tA = getTile(a);
         Tile tB = getTile(b);
         if (tA == null || tB == null) {
-            return true;
+            return false;
         }
         return isDoored(tA, tB);
     }
