@@ -14,6 +14,7 @@ public enum MapSquare
     BLASTFURNACE(7757),
     ARDOUGNE(10547),
     DRAYNOR(12338),
+    POLLNIVNEACH(13358),
 
     UNNAMED(-1);
 
