@@ -10,9 +10,12 @@ import java.util.Map;
 @Getter
 public enum MapSquare
 {
-    WINTERTODT_REGION(6462),
-    BLASTFURNACE_REGION(7757),
-    ARDOUGNE_REGION(10547),
+    WINTERTODT(6462),
+    BLASTFURNACE(7757),
+    ARDOUGNE(10547),
+    DRAYNOR(12338),
+    POLLNIVNEACH(13358),
+
     UNNAMED(-1);
 
     private final int id;
