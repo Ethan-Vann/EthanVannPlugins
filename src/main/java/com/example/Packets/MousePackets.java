@@ -49,7 +49,7 @@ public class MousePackets {
             deltaMs = 32767L;
         }
         PacketReflection.clientMouseLastLastPressedTimeMillis.set(client, Long.parseLong(ObfuscatedNames.ClientMouseSetterGarbage) * (long) PacketReflection.mouseHandlerLastPressedTime.get(null));
-        int mouseInfo = ((int) deltaMs << 1) + 1;
+        int mouseInfo = ((int) deltaMs << 1);
         PacketReflection.sendPacket(PacketDef.EVENT_MOUSE_CLICK, mouseInfo, x, y);
         PacketReflection.mouseHandlerLastPressedTime.setAccessible(false);
         PacketReflection.clientMouseLastLastPressedTimeMillis.setAccessible(false);
