@@ -84,7 +84,7 @@ public class MousePackets {
         return Math.max(1, Math.min(13000, val));
     }
 
-    private static void pressKey() {
+    public static void pressKey() {
         KeyEvent keyPress = new KeyEvent(client.getCanvas(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), BUTTON1_DOWN_MASK, KeyEvent.VK_BACK_SPACE);
         client.getCanvas().dispatchEvent(keyPress);
         KeyEvent keyRelease = new KeyEvent(client.getCanvas(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_BACK_SPACE);
