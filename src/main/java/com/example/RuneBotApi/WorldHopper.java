@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.widgets.WidgetInfo;
-import net.runelite.client.chat.ChatColorType;
-import net.runelite.client.chat.ChatMessageBuilder;
 import net.runelite.client.game.WorldService;
 import net.runelite.client.util.WorldUtil;
 import net.runelite.http.api.worlds.World;
@@ -51,7 +49,6 @@ public class WorldHopper {
         List<World> worlds = worldResult.getWorlds();
 
         int worldIdx = worlds.indexOf(currentWorld);
-        int totalLevel = client.getTotalLevel();
 
         World world;
         do
@@ -68,7 +65,6 @@ public class WorldHopper {
             EnumSet<WorldType> types = world.getTypes().clone();
 
             types.remove(WorldType.BOUNTY);
-            // Treat LMS world like casual world
             types.remove(WorldType.LAST_MAN_STANDING);
 
             // Avoid switching to near-max population worlds, as it will refuse to allow the hop if the world is full
@@ -79,7 +75,6 @@ public class WorldHopper {
 
             if (world.getPlayers() < 0)
             {
-                // offline world
                 continue;
             }
 
@@ -93,14 +88,7 @@ public class WorldHopper {
 
         if (world == currentWorld)
         {
-            String chatMessage = new ChatMessageBuilder()
-                    .append(ChatColorType.NORMAL)
-                    .append("Couldn't find a world to quick-hop to.")
-                    .build();
-
-            RBApi.runOnClientThread(() -> {
-                EthanApiPlugin.sendClientMessage("Couldn't find a world to hop to.");
-            });
+            RBApi.runOnClientThread(() -> EthanApiPlugin.sendClientMessage("Couldn't find a world to hop to."));
         }
         else
         {
@@ -130,14 +118,12 @@ public class WorldHopper {
             return;
         }
 
-
         quickHopTargetWorld = rsWorld;
         displaySwitcherAttempts = 0;
     }
 
     public void hopWorlds()
     {
-        System.out.println("trying to hop");
         if (quickHopTargetWorld == null)
         {
             return;
