@@ -91,26 +91,6 @@ public class GlobalCollisionMap {
             if (north(currentData) && visited.add(currentData.dy(1))) {
                 queue.add(new Node(currentData.dy(1), current));
             }
-//            //southwest
-//            if (southWest(current) && !visited.get(packed(current.dx(-1).dy(-1)))) {
-//                queue.add(new Node(current.dx(-1).dy(-1), path));
-//                visited.set(packed(current.dx(-1).dy(-1)));
-//            }
-//            //southeast
-//            if (southEast(current) && !visited.get(packed(current.dx(+1).dy(-1)))) {
-//                queue.add(new Node(current.dx(+1).dy(-1), path));
-//                visited.set(current.dx(+1).dy(-1));
-//            }
-//            //northwest
-//            if (northWest(current) && !visited.contains(current.dx(-1).dy(+1))) {
-//                queue.add(new Node(current.dx(-1).dy(+1), path));
-//                visited.add(current.dx(-1).dy(+1));
-//            }
-//            //northeast
-//            if (northEast(current) && !visited.contains(current.dx(+1).dy(+1))) {
-//                queue.add(new Node(current.dx(+1).dy(+1), path));
-//                visited.add(current.dx(+1).dy(+1));
-//            }
         }
         return null;
     }
