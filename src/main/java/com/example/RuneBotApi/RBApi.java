@@ -37,13 +37,42 @@ public class RBApi {
         getClientThread().invoke(r);
     }
 
-    public static void sendChatDialogue(ChatDialogueOptions options)
+    public static void sendKeystroke(KeyStroke options)
     {
         Client client = getClient();
         KeyEvent keyPress = new KeyEvent(client.getCanvas(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), InputEvent.BUTTON1_DOWN_MASK, options.getKeyEvent());
         KeyEvent keyRelease = new KeyEvent(client.getCanvas(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, options.getKeyEvent());
         client.getCanvas().dispatchEvent(keyPress);
         client.getCanvas().dispatchEvent(keyRelease);
+    }
+
+    /**
+     * Untested WIP: do not try to use yet
+     */
+    public static boolean enterBankPin(String pin)
+    {
+        if (pin.length() != 4) return false;
+
+        for (char i : pin.toCharArray())
+        {
+            if (i < '0' || i > '9') return false;
+
+            switch (i)
+            {
+                case '0': sendKeystroke(KeyStroke.ZERO);
+         break; case '1': sendKeystroke(KeyStroke.ONE);
+         break; case '2': sendKeystroke(KeyStroke.TWO);
+         break; case '3': sendKeystroke(KeyStroke.THREE);
+         break; case '4': sendKeystroke(KeyStroke.FOUR);
+         break; case '5': sendKeystroke(KeyStroke.FIVE);
+         break; case '6': sendKeystroke(KeyStroke.SIX);
+         break; case '7': sendKeystroke(KeyStroke.SEVEN);
+         break; case '8': sendKeystroke(KeyStroke.EIGHT);
+         break; case '9': sendKeystroke(KeyStroke.NINE);
+            }
+        }
+
+        return true;
     }
 
 
