@@ -52,6 +52,9 @@ public class AutoTele extends Plugin {
 
     @Subscribe
     public void onGameTick(GameTick event) {
+        if(!EthanApiPlugin.loggedIn()){
+            return;
+        }
         if (timeout > 0) {
             timeout--;
             return;

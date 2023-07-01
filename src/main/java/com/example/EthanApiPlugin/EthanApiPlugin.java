@@ -19,6 +19,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.PluginInstantiationException;
 import net.runelite.client.plugins.PluginManager;
+import net.runelite.client.ui.ClientUI;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
 
@@ -39,6 +40,7 @@ import static net.runelite.api.Varbits.QUICK_PRAYER;
 )
 public class EthanApiPlugin extends Plugin {
 
+    static ClientUI clientUI = RuneLite.getInjector().getInstance(ClientUI.class);
     static Client client = RuneLite.getInjector().getInstance(Client.class);
     static PluginManager pluginManager = RuneLite.getInjector().getInstance(PluginManager.class);
     static ItemManager itemManager = RuneLite.getInjector().getInstance(ItemManager.class);
@@ -84,6 +86,10 @@ public class EthanApiPlugin extends Plugin {
 
     public static boolean loggedIn() {
         return client.getGameState() == GameState.LOGGED_IN;
+    }
+    public static boolean inRegion(int regionID){
+        List<Integer> mapRegions = Arrays.stream(client.getMapRegions()).boxed().collect(Collectors.toList());
+        return mapRegions.contains(regionID);
     }
 
     public static WorldPoint playerPosition(){
@@ -230,9 +236,9 @@ public class EthanApiPlugin extends Plugin {
     public static List<WorldPoint> reachableTiles() {
         HashSet<Tile> retPoints = new HashSet<>();
         Tile[][] tiles = client.getScene().getTiles()[client.getPlane()];
+        int[][] flags = client.getCollisionMaps()[client.getPlane()].getFlags();
         Tile firstPoint = tiles[client.getLocalPlayer().getWorldLocation().getX() - client.getBaseX()][client.getLocalPlayer().getWorldLocation().getY() - client.getBaseY()];
         Queue<Tile> queue = new LinkedList<>();
-        int[][] flags = client.getCollisionMaps()[client.getPlane()].getFlags();
         queue.add(firstPoint);
         while (!queue.isEmpty()) {
             Tile tile = queue.poll();
@@ -579,6 +585,9 @@ public class EthanApiPlugin extends Plugin {
     public static Client getClient() {
         return client;
     }
+    public static ClientUI getClientUI() {
+        return clientUI;
+    }
 
     public static ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashSet<WorldPoint> dangerous) {
 
@@ -626,6 +635,7 @@ public class EthanApiPlugin extends Plugin {
                                                    HashSet<WorldPoint> impassible, HashSet<WorldPoint> dangerous,
                                                    HashSet<WorldPoint> walkable, HashSet<WorldPoint> walked) {
         Queue<List<WorldPoint>> queue = new LinkedList<>(paths);
+        ArrayDeque<Node> nodeQueue = new ArrayDeque<>();
         if (Collections.disjoint(walkable, goal)) {
             return null;
         }
