@@ -6,6 +6,7 @@ import com.example.Packets.WidgetPackets;
 import net.runelite.api.widgets.Widget;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public class InventoryInteraction {

@@ -3,6 +3,23 @@ plugins {
     id 'maven-publish'
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username 'admin'
+                password 'password'
+            }
+            url "http://baseUrl/artifactory/libs-release-local"
+        }
+    }
+}
+
 repositories {
     mavenLocal()
     maven {

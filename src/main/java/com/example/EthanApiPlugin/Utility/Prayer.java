@@ -5,7 +5,7 @@ import net.runelite.api.widgets.WidgetInfo;
 import com.example.EthanApiPlugin.Utility.WidgetInfoExt;
 
 public enum Prayer {
-    THICK_SKIN(Varbits.PRAYER_THICK_SKIN, 5.0D, WidgetInfoExt.PRAYER_THICK_SKIN),
+    THICK_SKIN(Varbits.PRAYER_THICK_SKIN, 5.01, WidgetInfoExt.PRAYER_THICK_SKIN),
     BURST_OF_STRENGTH(Varbits.PRAYER_BURST_OF_STRENGTH, 5.0D, WidgetInfoExt.PRAYER_BURST_OF_STRENGTH),
     CLARITY_OF_THOUGHT(Varbits.PRAYER_CLARITY_OF_THOUGHT, 5.0D, WidgetInfoExt.PRAYER_CLARITY_OF_THOUGHT),
     SHARP_EYE(Varbits.PRAYER_SHARP_EYE, 5.0D, WidgetInfoExt.PRAYER_SHARP_EYE),
