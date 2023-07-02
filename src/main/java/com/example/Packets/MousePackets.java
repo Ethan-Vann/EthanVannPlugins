@@ -49,7 +49,7 @@ public class MousePackets {
             deltaMs = 32767L;
         }
         PacketReflection.clientMouseLastLastPressedTimeMillis.set(client, Long.parseLong(ObfuscatedNames.ClientMouseSetterGarbage) * (long) PacketReflection.mouseHandlerLastPressedTime.get(null));
-        int mouseInfo = ((int) deltaMs << 1) + 1;
+        int mouseInfo = ((int) deltaMs << 1);
         PacketReflection.sendPacket(PacketDef.EVENT_MOUSE_CLICK, mouseInfo, x, y);
         PacketReflection.mouseHandlerLastPressedTime.setAccessible(false);
         PacketReflection.clientMouseLastLastPressedTimeMillis.setAccessible(false);
@@ -84,7 +84,7 @@ public class MousePackets {
         return Math.max(1, Math.min(13000, val));
     }
 
-    private static void pressKey() {
+    public static void pressKey() {
         KeyEvent keyPress = new KeyEvent(client.getCanvas(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), BUTTON1_DOWN_MASK, KeyEvent.VK_BACK_SPACE);
         client.getCanvas().dispatchEvent(keyPress);
         KeyEvent keyRelease = new KeyEvent(client.getCanvas(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_BACK_SPACE);

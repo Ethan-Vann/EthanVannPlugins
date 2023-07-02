@@ -3,6 +3,23 @@ plugins {
     id 'maven-publish'
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username 'admin'
+                password 'password'
+            }
+            url "http://baseUrl/artifactory/libs-release-local"
+        }
+    }
+}
+
 repositories {
     mavenLocal()
     maven {
@@ -11,7 +28,7 @@ repositories {
     mavenCentral()
 }
 
-def runeLiteVersion = '1.10.3'
+def runeLiteVersion = '1.10.6'
 
 dependencies {
     compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
@@ -22,6 +39,7 @@ dependencies {
     testImplementation group: 'net.runelite', name: 'jshell', version: runeLiteVersion
     implementation 'org.json:json:20230227'
     implementation 'org.roaringbitmap:RoaringBitmap:0.9.44'
+
 }
 sourceSets {
 
@@ -29,7 +47,6 @@ sourceSets {
 
         java {
             srcDir "src"
-
         }
 
     }
@@ -59,23 +76,6 @@ task FatJarWithHidden(type: Jar) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            credentials {
-                username 'admin'
-                password 'password'
-            }
-            url "http://baseUrl/artifactory/libs-release-local"
-        }
-    }
 }
 
 tasks.withType(JavaCompile) {

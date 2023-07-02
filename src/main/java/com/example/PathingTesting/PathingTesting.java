@@ -63,6 +63,12 @@ public class PathingTesting extends Plugin {
         fullPath = null;
         overlayManager.remove(overlay);
     }
+    public static boolean pathingTo(WorldPoint a){
+        return goal!=null&& goal.equals(a);
+    }
+    public static boolean pathing(){
+        return goal!=null;
+    }
     public static boolean walkTo(WorldPoint goal){
         currentPathDestination = null;
         path = GlobalCollisionMap.findPath(goal);
@@ -122,7 +128,7 @@ public class PathingTesting extends Plugin {
                 MovementPackets.queueMovement(currentPathDestination);
             }
             if (currentPathDestination == null || currentPathDestination.equals(EthanApiPlugin.playerPosition()) || !EthanApiPlugin.isMoving()) {
-                int step = rand.nextInt((50 - 15) + 1) + 15;
+                int step = rand.nextInt((35 - 10) + 1) + 10;
                 int max = step;
                 for (int i = 0; i < step; i++) {
                     if (path.size() - 2 >= i) {
@@ -159,7 +165,12 @@ public class PathingTesting extends Plugin {
     }
 
     private boolean isDoored(WorldPoint a, WorldPoint b) {
-        return isDoored(getTile(a), getTile(b));
+        Tile tA = getTile(a);
+        Tile tB = getTile(b);
+        if (tA == null || tB == null) {
+            return false;
+        }
+        return isDoored(tA, tB);
     }
 
     private boolean isDoored(Tile a, Tile b) {

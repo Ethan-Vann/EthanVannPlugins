@@ -38,12 +38,12 @@ public class PacketReflection {
             classWithgetPacketBufferNode = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.classContainingGetPacketBufferNodeName);
             ClientPacket = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.clientPacketClassName);
             PACKETWRITER = clientInstance.getClass().getDeclaredField(ObfuscatedNames.packetWriterFieldName);
-//            //Devious fix for logout issue
-//            Field vc = clientInstance.getClass().getDeclaredField("vc");
-//            vc.setAccessible(true);
-//            vc.set(null,Integer.MAX_VALUE);
-//            vc.setAccessible(false);
-//            //Devious fix for logout issue
+//            Devious fix for logout issue
+//            Field dc = clientInstance.getClass().getDeclaredField("dc");
+//            dc.setAccessible(true);
+//            dc.set(null,Integer.MAX_VALUE);
+//            dc.setAccessible(false);
+//            Devious fix for logout issue
             PacketBufferNode = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.packetBufferNodeClassName);
 
             PACKETWRITER.setAccessible(true);
@@ -211,7 +211,7 @@ public class PacketReflection {
             Class om = client.getClass().getClassLoader().loadClass("om");
             Field an = eqVar0.getClass().getDeclaredField("an");
             an.setAccessible(true);
-            Method wh = om.getDeclaredMethod("wh", an.get(eqVar0).getClass(), lmVar1.getClass().getSuperclass());
+            Method wh = om.getDeclaredMethod("ad", an.get(eqVar0).getClass(), lmVar1.getClass().getSuperclass());
             wh.setAccessible(true);
             wh.invoke(null, an.get(eqVar0), lmVar1);
             Field avField = lmVar1.getClass().getDeclaredField("av");
