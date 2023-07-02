@@ -148,7 +148,7 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static int getAnimation(NPC npc) {
-        Field animation = npc.getClass().getSuperclass().getDeclaredField("be");
+        Field animation = npc.getClass().getSuperclass().getDeclaredField("co");
         animation.setAccessible(true);
         int anim = animation.getInt(npc) * -254610587;
         animation.setAccessible(false);
