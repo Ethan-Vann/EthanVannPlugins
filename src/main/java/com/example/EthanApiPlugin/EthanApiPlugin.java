@@ -148,7 +148,7 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static int getAnimation(NPC npc) {
-        Field animation = npc.getClass().getSuperclass().getDeclaredField("be");
+        Field animation = npc.getClass().getSuperclass().getDeclaredField("co");
         animation.setAccessible(true);
         int anim = animation.getInt(npc) * -254610587;
         animation.setAccessible(false);
@@ -442,7 +442,11 @@ public class EthanApiPlugin extends Plugin {
 
         int pSY = client.getLocalPlayer().getLocalLocation().getSceneY();
         Point p1 = client.getScene().getTiles()[client.getPlane()][pSX][pSY].getSceneLocation();
-        Point p2 = new Point(LocalPoint.fromWorld(client, destinationTile).getSceneX(), LocalPoint.fromWorld(client, destinationTile).getSceneY());
+        LocalPoint lp = LocalPoint.fromWorld(client, destinationTile);
+        if(lp == null || !lp.isInScene()){
+            return new PathResult(false, Integer.MAX_VALUE);
+        }
+        Point p2 = new Point(lp.getSceneX(), lp.getSceneY());
 
         int middleX = p1.getX();
         int middleY = p1.getY();
