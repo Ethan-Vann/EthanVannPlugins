@@ -4,14 +4,19 @@ import net.runelite.api.ItemID;
 
 public class RBConstants {
 
-    // npcs
+    // ~~~~Npcs~~~~
     public static final int ardyKnightId = 3297;
 
-    // misc
+    // ~~~~Misc~~~~
     public static final int coinPouchId = 22531;
 
 
-    // food
+    // ~~~~Food~~~~
+
+    /**
+     * doesn't support blighted foods because that'd be cumbersome, and
+     * if you use blighted foods you're a broke bitch anyways
+     */
     public static final int[] foodIds = {
             ItemID.ANGLERFISH,
             ItemID.DARK_CRAB,
@@ -55,13 +60,17 @@ public class RBConstants {
             ItemID.TUNA,
             ItemID.SALMON,
             ItemID.TROUT,
+            ItemID.GUTHIX_REST1,
+            ItemID.GUTHIX_REST2,
+            ItemID.GUTHIX_REST3,
+            ItemID.GUTHIX_REST4,
             ItemID.SARADOMIN_BREW1,
             ItemID.SARADOMIN_BREW2,
             ItemID.SARADOMIN_BREW3,
-            ItemID.SARADOMIN_BREW4,
+            ItemID.SARADOMIN_BREW4
     };
 
-    // potions
+    // ~~~~Potions~~~~
     public static final int[] brewIds = {ItemID.SARADOMIN_BREW1, ItemID.SARADOMIN_BREW2, ItemID.SARADOMIN_BREW3, ItemID.SARADOMIN_BREW4};
     public static final int[] restoreIds = {ItemID.SUPER_RESTORE1, ItemID.SUPER_RESTORE2, ItemID.SUPER_RESTORE3, ItemID.SUPER_RESTORE4};
 

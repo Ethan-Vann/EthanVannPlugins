@@ -5,16 +5,15 @@ import com.example.RuneBotApi.RBApi;
 import com.example.RuneBotApi.RBConstants;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
+import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 public class Food {
-    private static Client client = RBApi.getClient();
-    private static ItemContainer container = client.getItemContainer(InventoryID.INVENTORY);
+    private static final Client client = RBApi.getClient();
+    private static final ItemContainer container = client.getItemContainer(InventoryID.INVENTORY);
 
     /**
      * this is a bit awkwardly named. It will consume the highest healing food if possible,
@@ -25,8 +24,10 @@ public class Food {
     public static int eatBestFood()
     {
         Set<Integer> inventoryIds = new HashSet<>();
-        for (int i = 0; i < 29; ++i)
-            inventoryIds.add(Objects.requireNonNull(container.getItem(i)).getId());
+        for (int i = 0; i < 29; ++i) {
+            Item item = container.getItem(i);
+            if (item != null) inventoryIds.add(item.getId());
+        }
 
         for (int food : RBConstants.foodIds)
         {
