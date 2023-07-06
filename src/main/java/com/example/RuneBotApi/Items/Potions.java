@@ -7,6 +7,7 @@ import net.runelite.api.ItemID;
 public class Potions {
 
     public static final int[] brewIds = {ItemID.SARADOMIN_BREW1, ItemID.SARADOMIN_BREW2, ItemID.SARADOMIN_BREW3, ItemID.SARADOMIN_BREW4};
+    public static final int[] restoreIds = {ItemID.SUPER_RESTORE1, ItemID.SUPER_RESTORE2, ItemID.SUPER_RESTORE3, ItemID.SUPER_RESTORE4};
 
     /**
      * drinks brews with the lowest dose having the highest priority
@@ -15,6 +16,23 @@ public class Potions {
     public static boolean drinkBrew()
     {
         for (int i : brewIds)
+        {
+            if (!Inventory.search().withId(i).result().isEmpty())
+            {
+                InventoryInteraction.useItem(i, "Drink");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * drinks restores with the lowest dose having the highest priority
+     * returns true if successful
+     */
+    public static boolean drinkRestore()
+    {
+        for (int i : restoreIds)
         {
             if (!Inventory.search().withId(i).result().isEmpty())
             {
