@@ -3,6 +3,7 @@ package com.example.RuneBotApi;
 import com.example.PacketUtils.PacketDef;
 import com.example.PacketUtils.PacketReflection;
 import com.example.Packets.MousePackets;
+import com.example.RuneBotApi.LocalPlayer.LocationInformation;
 import net.runelite.api.Client;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
@@ -34,5 +35,15 @@ public class Movement {
         );
 
         move(worldPoint);
+    }
+
+    public static void moveRelative(int offsetX, int offsetY)
+    {
+        WorldPoint loc = LocationInformation.getTile();
+
+        loc = loc.dx(offsetX);
+        loc = loc.dy(offsetY);
+
+        move(loc);
     }
 }
