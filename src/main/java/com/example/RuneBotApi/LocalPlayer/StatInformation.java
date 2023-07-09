@@ -21,4 +21,9 @@ public final class StatInformation extends Plugin {
     {
         return (int)((double)getLevel(Skill.HITPOINTS, StatType.BOOSTED) / getLevel(Skill.HITPOINTS, StatType.BASE) * 100);
     }
+
+    public static int getHp()
+    {
+        return getLevel(Skill.HITPOINTS, StatType.BOOSTED);
+    }
 }
