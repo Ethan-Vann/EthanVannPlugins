@@ -8,6 +8,7 @@ public class Potions {
 
     private static final int[] brewIds = {ItemID.SARADOMIN_BREW1, ItemID.SARADOMIN_BREW2, ItemID.SARADOMIN_BREW3, ItemID.SARADOMIN_BREW4};
     private static final int[] restoreIds = {ItemID.SUPER_RESTORE1, ItemID.SUPER_RESTORE2, ItemID.SUPER_RESTORE3, ItemID.SUPER_RESTORE4};
+    private static final int[] prayerIds = {ItemID.PRAYER_POTION1, ItemID.PRAYER_POTION2, ItemID.PRAYER_POTION3, ItemID.PRAYER_POTION4};
     private static final int[] superAttackIds = {ItemID.SUPER_ATTACK1, ItemID.SUPER_ATTACK2, ItemID.SUPER_ATTACK3, ItemID.SUPER_ATTACK4};
     private static final int[] superStrengthIds = {ItemID.SUPER_STRENGTH1, ItemID.SUPER_STRENGTH2, ItemID.SUPER_STRENGTH3, ItemID.SUPER_STRENGTH4};
     private static final int[] superCombatIds = {ItemID.SUPER_COMBAT_POTION1, ItemID.SUPER_COMBAT_POTION2, ItemID.SUPER_COMBAT_POTION3, ItemID.SUPER_COMBAT_POTION4};
@@ -23,6 +24,7 @@ public class Potions {
         {
             case SARA_BREW:             return consume(brewIds);
             case SUPER_RESTORE:         return consume(restoreIds);
+            case PRAYER:                return consume(prayerIds);
             case SUPER_ATTACK:          return consume(superAttackIds);
             case SUPER_STRENGTH:        return consume(superStrengthIds);
             case SUPER_COMBAT:          return consume(superCombatIds);
