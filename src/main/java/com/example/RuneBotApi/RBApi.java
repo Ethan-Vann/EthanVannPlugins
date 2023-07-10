@@ -1,18 +1,15 @@
 package com.example.RuneBotApi;
 
-import com.example.EthanApiPlugin.Collections.Widgets;
-import com.example.Packets.WidgetPackets;
 import lombok.SneakyThrows;
 import net.runelite.api.Client;
-import net.runelite.api.widgets.Widget;
 import net.runelite.client.RuneLite;
 import net.runelite.client.callback.ClientThread;
+import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.WorldService;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
 
-import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.*;
@@ -41,13 +38,19 @@ public class RBApi {
         return RuneLite.getInjector().getProvider(WorldService.class).get();
     }
 
+    public static ConfigManager getConfigManager()
+    {
+        return RuneLite.getInjector().getProvider(ConfigManager.class).get();
+    }
+
     public static void runOnClientThread(Runnable r)
     {
         getClientThread().invoke(r);
     }
 
     @SneakyThrows
-    public static void sendKeystroke(KeyStroke options) {
+    public static void sendKeystroke(KeyStroke options)
+    {
         Client client = getClient();
         KeyEvent keyPress = new KeyEvent(client.getCanvas(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), InputEvent.BUTTON1_DOWN_MASK, options.getKeyEvent());
         KeyEvent keyRelease = new KeyEvent(client.getCanvas(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, options.getKeyEvent());
@@ -59,38 +62,15 @@ public class RBApi {
 //     * Untested WIP: do not try to use yet
 //     */
 //    public static boolean enterBankPin(String pin) /*throws AWTException*/ {
-//
-//        for (Widget i : Widgets.search().withText("1").result())
-//        {
-//            if (i.getParentId() >= 13959184 && i.getParentId() <= 13959202 && i.getParentId() % 2 == 0)
-//            {
-//                WidgetPackets.queueWidgetActionPacket(0, 13959184, -1, -1);
-//                System.out.println(i.getText());
-//                for (var j : i.getActions()) System.out.println(j);
-//            }
-//
-//        }
-//        for (Widget i : Widgets.search().withText("2").result())
-//        {
-////            if (i.getParentId() >= 13959184 && i.getParentId() <= 13959202 && i.getParentId() % 2 == 0)
-////                WidgetPackets.queueWidgetActionPacket(0, i.getId(), -1, -1);
-//        }
-//        return true;
+//        original idea. sendKeystroke doesn't seem to work for anything except the space bar for some reason
 //        if (pin.length() != 4) return false;
-//        Robot robot = new Robot();
-//        robot.keyPress(KeyStroke.ZERO.getKeyEvent());
-//        robot.keyRelease(KeyStroke.ZERO.getKeyEvent());
-//        if (getClient() != null) return true;
-//
 //        for (char i : pin.toCharArray())
 //        {
 //            if (i < '0' || i > '9') return false;
 //
 //            switch (i)
 //            {
-//                case '0':
-//                    sendKeystroke(KeyStroke.ZERO);
-//                    System.out.println("in here");
+//                case '0': sendKeystroke(KeyStroke.ZERO);
 //         break; case '1': sendKeystroke(KeyStroke.ONE);
 //         break; case '2': sendKeystroke(KeyStroke.TWO);
 //         break; case '3': sendKeystroke(KeyStroke.THREE);

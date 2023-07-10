@@ -15,6 +15,7 @@ public enum MapSquare
     ARDOUGNE(10547),
     DRAYNOR(12338),
     POLLNIVNEACH(13358),
+    ZULRAH(9007),
 
     UNNAMED(-1);
 

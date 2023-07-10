@@ -3,6 +3,7 @@ package com.example.RuneBotApi.Items;
 public enum PotionType {
     SARA_BREW,
     SUPER_RESTORE,
+    PRAYER,
     SUPER_ATTACK,
     SUPER_STRENGTH,
     SUPER_COMBAT,
@@ -10,5 +11,6 @@ public enum PotionType {
     RANGING,
     DIVINE_RANGING,
     BASTION,
-    DIVINE_BASTION
+    DIVINE_BASTION,
+    STAMINA
 }
