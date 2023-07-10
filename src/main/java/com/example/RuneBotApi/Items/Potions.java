@@ -17,6 +17,7 @@ public class Potions {
     private static final int[] divineRangedIds = {ItemID.DIVINE_RANGING_POTION1, ItemID.DIVINE_RANGING_POTION1, ItemID.DIVINE_RANGING_POTION1, ItemID.DIVINE_RANGING_POTION1};
     private static final int[] bastionIds = {ItemID.BASTION_POTION1, ItemID.BASTION_POTION2, ItemID.BASTION_POTION3, ItemID.BASTION_POTION4};
     private static final int[] divineBastionIds = {ItemID.DIVINE_BASTION_POTION1, ItemID.DIVINE_BASTION_POTION2, ItemID.DIVINE_BASTION_POTION3, ItemID.DIVINE_BASTION_POTION4};
+    private static final int[] staminaIds = {ItemID.STAMINA_POTION1, ItemID.STAMINA_POTION2, ItemID.STAMINA_POTION3, ItemID.STAMINA_POTION4};
 
     public static boolean drinkPotion(PotionType type)
     {
@@ -33,6 +34,7 @@ public class Potions {
             case DIVINE_RANGING:        return consume(divineRangedIds);
             case BASTION:               return consume(bastionIds);
             case DIVINE_BASTION:        return consume(divineBastionIds);
+            case STAMINA:               return consume(staminaIds);
         }
 
         return false;

@@ -11,5 +11,6 @@ public enum PotionType {
     RANGING,
     DIVINE_RANGING,
     BASTION,
-    DIVINE_BASTION
+    DIVINE_BASTION,
+    STAMINA
 }
