@@ -98,7 +98,7 @@ public class EthanApiPlugin extends Plugin {
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
         try {
-            skullField = player.getClass().getDeclaredField("as");
+            skullField = player.getClass().getDeclaredField("ar");
             skullField.setAccessible(true);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
@@ -106,7 +106,7 @@ public class EthanApiPlugin extends Plugin {
         }
         int var1 = -1;
         try {
-            var1 = skullField.getInt(player) * 1366672705;
+            var1 = skullField.getInt(player) * -2104548197;
             skullField.setAccessible(false);
         } catch (IllegalAccessException | NullPointerException e) {
             e.printStackTrace();
@@ -148,9 +148,9 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static int getAnimation(NPC npc) {
-        Field animation = npc.getClass().getSuperclass().getDeclaredField("co");
+        Field animation = npc.getClass().getSuperclass().getDeclaredField("du");
         animation.setAccessible(true);
-        int anim = animation.getInt(npc) * -254610587;
+        int anim = animation.getInt(npc) * 1584912307;
         animation.setAccessible(false);
         return anim;
     }
@@ -365,11 +365,11 @@ public class EthanApiPlugin extends Plugin {
     @SneakyThrows
     public static void invoke(int var0, int var1, int var2, int var3, int var4, String var5, String var6, int var7,
                               int var8) {
-        Class invokeClass = client.getClass().getClassLoader().loadClass("kq");
-        Method invoke = invokeClass.getDeclaredMethod("kj", int.class, int.class, int.class, int.class, int.class,
+        Class invokeClass = client.getClass().getClassLoader().loadClass("ce");
+        Method invoke = invokeClass.getDeclaredMethod("kc", int.class, int.class, int.class, int.class, int.class,
                 String.class, String.class, int.class, int.class, int.class);
         invoke.setAccessible(true);
-        invoke.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, 1849187210);
+        invoke.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, 14);
         invoke.setAccessible(false);
     }
 

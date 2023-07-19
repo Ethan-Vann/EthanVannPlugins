@@ -42,7 +42,7 @@ public class PacketUtilsPlugin extends Plugin {
     PacketReflection packetReflection;
     @Inject
     ClientThread thread;
-    public static final int CLIENT_REV = 214;
+    public static final int CLIENT_REV = 215;
     private static boolean loaded = false;
     @Inject
     private PluginManager pluginManager;
