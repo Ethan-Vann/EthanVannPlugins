@@ -1175,5 +1175,6 @@ public class EthanApiPlugin extends Plugin {
         eventBus.register(RuneLite.getInjector().getInstance(Equipment.class));
 		eventBus.register(RuneLite.getInjector().getInstance(DepositBox.class));
 		eventBus.register(RuneLite.getInjector().getInstance(ShopInventory.class));
+        eventBus.register(RuneLite.getInjector().getInstance(Shop.class));
     }
 }
