@@ -844,7 +844,7 @@ public final class ObfuscatedNames {
     public static final String IF_BUTTONT_WRITE1 = "sourceItemId";
     public static final String IF_BUTTONT_METHOD_NAME1 = "dh";
     public static final String IF_BUTTONT_WRITE2 = "destinationSlot";
-    public static final String IF_BUTTONT_METHOD_NAME2 = "ej";
+    public static final String IF_BUTTONT_METHOD_NAME2 = "dv";
     public static final String IF_BUTTONT_WRITE3 = "sourceSlot";
     public static final String IF_BUTTONT_METHOD_NAME3 = "dh";
     public static final String IF_BUTTONT_WRITE4 = "destinationItemId";
@@ -852,7 +852,7 @@ public final class ObfuscatedNames {
     public static final String IF_BUTTONT_WRITE5 = "sourceWidgetId";
     public static final String IF_BUTTONT_METHOD_NAME5 = "ej";
     public static final String IF_BUTTONT_WRITE6 = "destinationWidgetId";
-    public static final String IF_BUTTONT_METHOD_NAME6 = "dv";
+    public static final String IF_BUTTONT_METHOD_NAME6 = "ej";
 
     public static final String OPNPCT_OBFUSCATEDNAME = "av";
     public static final String OPNPCT_WRITE1 = "widgetId";
