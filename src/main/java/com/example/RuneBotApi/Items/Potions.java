@@ -58,6 +58,7 @@ public class Potions {
      * returns true if successful
      * @deprecated use drinkPotion(PotionType type)
      */
+    @Deprecated
     public static boolean drinkBrew()
     {
         for (int i : brewIds)
@@ -76,6 +77,7 @@ public class Potions {
      * returns true if successful
      * @deprecated use drinkPotion(PotionType type)
      */
+    @Deprecated
     public static boolean drinkRestore()
     {
         for (int i : restoreIds)
