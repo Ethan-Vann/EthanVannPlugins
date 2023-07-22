@@ -16,10 +16,6 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)writtenValue;
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 8);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 16);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 24);
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue + 128);
         offsetField.setInt(bufferInstance, offset);
         arrayField.set(bufferInstance, array);
@@ -35,8 +31,8 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)writtenValue;
-        array[(offset += 646629181) * -164706283 - 1] = (byte)(0 - writtenValue);
+        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue + 128);
+        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
         offsetField.setInt(bufferInstance, offset);
         arrayField.set(bufferInstance, array);
         arrayField.setAccessible(false);
@@ -51,7 +47,6 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue + 128);
         array[(offset += 646629181) * -164706283 - 1] = (byte)writtenValue;
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
         offsetField.setInt(bufferInstance, offset);
@@ -68,9 +63,10 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(128 + writtenValue);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 8);
+        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
         array[(offset += 646629181) * -164706283 - 1] = (byte)writtenValue;
+        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 24);
+        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 16);
         offsetField.setInt(bufferInstance, offset);
         arrayField.set(bufferInstance, array);
         arrayField.setAccessible(false);
@@ -85,13 +81,7 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 8);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)writtenValue;
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 24);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 16);
-        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 16);
-        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 24);
-        array[(offset += 646629181) * -164706283 - 1] = (byte)writtenValue;
+        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue + 128);
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
         offsetField.setInt(bufferInstance, offset);
         arrayField.set(bufferInstance, array);
@@ -107,10 +97,6 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 24);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 16);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 8);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)writtenValue;
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
         array[(offset += 646629181) * -164706283 - 1] = (byte)(128 + writtenValue);
         offsetField.setInt(bufferInstance, offset);
@@ -128,12 +114,11 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 8);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)writtenValue;
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
         array[(offset += 646629181) * -164706283 - 1] = (byte)writtenValue;
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 24);
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 16);
+
         offsetField.setInt(bufferInstance, offset);
         arrayField.set(bufferInstance, array);
         arrayField.setAccessible(false);
@@ -148,12 +133,10 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)writtenValue;
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 8);
-        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 24);
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 16);
-        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
+        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 24);
         array[(offset += 646629181) * -164706283 - 1] = (byte)writtenValue;
+        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
         offsetField.setInt(bufferInstance, offset);
         arrayField.set(bufferInstance, array);
         arrayField.setAccessible(false);
@@ -169,9 +152,11 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(0 - writtenValue);
-        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue + 128);
+        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 24);
+        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 16);
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
+        array[(offset += 646629181) * -164706283 - 1] = (byte)writtenValue;
+
         offsetField.setInt(bufferInstance, offset);
         arrayField.set(bufferInstance, array);
         arrayField.setAccessible(false);
@@ -186,8 +171,6 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 8);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue + 128);
         array[(offset += 646629181) * -164706283 - 1] = (byte)(128 - writtenValue);
         offsetField.setInt(bufferInstance, offset);
         arrayField.set(bufferInstance, array);
@@ -204,10 +187,6 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 16);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 24);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)writtenValue;
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(writtenValue >> 8);
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
         array[(offset += 646629181) * -164706283 - 1] = (byte)writtenValue;
         offsetField.setInt(bufferInstance, offset);
@@ -224,7 +203,6 @@ public class BufferMethods {
         offsetField.setAccessible(true);
         byte[] array = (byte[]) arrayField.get(bufferInstance);
         int offset = offsetField.getInt(bufferInstance);
-//        array[(offset += 1775636691) * -1705195685 - 1] = (byte)(128 - writtenValue);
         array[(offset += 646629181) * -164706283 - 1] = (byte)writtenValue;
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
         array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 16);
