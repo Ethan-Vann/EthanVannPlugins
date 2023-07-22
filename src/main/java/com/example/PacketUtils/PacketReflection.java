@@ -197,6 +197,8 @@ public class PacketReflection {
 //                    addNode.invoke(null, PACKETWRITER.get(null), packetBufferNode);
 //                }
                 addNode(PACKETWRITER.get(null), packetBufferNode);
+
+                System.out.println(String.format("Logged packet name %s, packet def %s",def.name, def.type.name()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -210,9 +212,11 @@ public class PacketReflection {
         try {
             Field ay = eqVar0.getClass().getDeclaredField("ay");
             ay.setAccessible(true);
-            Class ayClass = ay.get(eqVar0).getClass();
-            Method aa = ayClass.getDeclaredMethod("aa", lmVar1.getClass().getSuperclass());
-            aa.invoke(ay.get(eqVar0), lmVar1);
+            Class cq = client.getClass().getClassLoader().loadClass("cq");
+            Method te = cq.getDeclaredMethod("te", ay.get(eqVar0).getClass(), lmVar1.getClass().getSuperclass());
+            te.setAccessible(true);
+            te.invoke(null, ay.get(eqVar0), lmVar1);
+
             Field am = lmVar1.getClass().getDeclaredField("am");
             Field arField = lmVar1.getClass().getDeclaredField("ar");
             arField.setAccessible(true);
@@ -223,35 +227,16 @@ public class PacketReflection {
             int amValue = -1643463139 * avField.getInt(arObject);
             am.setInt(lmVar1, amValue);
             avField.setInt(arObject, 0);
-            Field az = eqVar0.getClass().getDeclaredField("az");
-            az.setAccessible(true);
-            int azValue = az.getInt(eqVar0);
-            int x = 1559877663 * amValue;
+
+            Field var1ay = lmVar1.getClass().getDeclaredField("ay");
+            var1ay.setAccessible(true);
+            Field ap = eqVar0.getClass().getDeclaredField("ap");
+            ap.setAccessible(true);
+            int azValue = ap.getInt(eqVar0);
+            int x = 1559877663 * var1ay.getInt(lmVar1);
             int totalAzValue = azValue + x;
-            az.setInt(eqVar0, totalAzValue);
+            ap.setInt(eqVar0, totalAzValue);
 
-
-
-//            Class om = client.getClass().getClassLoader().loadClass("om");
-//            Field an = eqVar0.getClass().getDeclaredField("an");
-//            an.setAccessible(true);
-//            Method wh = om.getDeclaredMethod("ad", an.get(eqVar0).getClass(), lmVar1.getClass().getSuperclass());
-//            wh.setAccessible(true);
-//            wh.invoke(null, an.get(eqVar0), lmVar1);
-//            Field avField = lmVar1.getClass().getDeclaredField("av");
-//            avField.setAccessible(true);
-//            Object avObject = avField.get(lmVar1);
-//            Field avaeField = avObject.getClass().getField("ae");
-//            avaeField.setAccessible(true);
-//            Field asField = lmVar1.getClass().getDeclaredField("as");
-//            asField.setAccessible(true);
-//            asField.set(lmVar1, avaeField.getInt(avObject) * 1756013327);
-//
-//            Field thisAv = eqVar0.getClass().getDeclaredField("av");
-//            thisAv.setAccessible(true);
-//            int total = thisAv.getInt(eqVar0);
-//            total += asField.getInt(lmVar1) * 1696608891;
-//            thisAv.set(eqVar0, total);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,5 +1,3 @@
-package com.example.Packets;
-
 import com.example.PacketUtils.ObfuscatedNames;
 import lombok.SneakyThrows;
 
