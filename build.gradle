@@ -9,6 +9,7 @@ repositories {
         url = 'https://repo.runelite.net'
     }
     mavenCentral()
+    jcenter()
 }
 
 def runeLiteVersion = '1.10.9.1'
@@ -22,6 +23,8 @@ dependencies {
     testImplementation group: 'net.runelite', name: 'jshell', version: runeLiteVersion
     implementation 'org.json:json:20230227'
     implementation 'org.roaringbitmap:RoaringBitmap:0.9.44'
+    implementation("com.google.archivepatcher:archive-patch-applier:1.0.4")
+    implementation("org.benf:cfr:0.152")
 }
 sourceSets {
 
