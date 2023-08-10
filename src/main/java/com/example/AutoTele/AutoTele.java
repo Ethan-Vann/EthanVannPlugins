@@ -15,7 +15,6 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -39,8 +38,6 @@ public class AutoTele extends Plugin {
     static final int SEED_POD = 4544;
     int previousLevel = -1;
     public static boolean teleportedFromSkulledPlayer = false;
-    @Inject
-    ItemManager itemManager;
     @Inject
     AutoTeleConfig config;
     static final Set<Integer> RING_OF_WEALTH_ITEM_IDS = Set.of(ItemID.RING_OF_WEALTH_1, ItemID.RING_OF_WEALTH_2, ItemID.RING_OF_WEALTH_3, ItemID.RING_OF_WEALTH_4, ItemID.RING_OF_WEALTH_5, ItemID.RING_OF_WEALTH_I1, ItemID.RING_OF_WEALTH_I2, ItemID.RING_OF_WEALTH_I3, ItemID.RING_OF_WEALTH_I4, ItemID.RING_OF_WEALTH_I5);

@@ -37,8 +37,6 @@ public class SwordFish2Tick extends Plugin {
     Notifier notifier;
     @Inject
     Client client;
-    @Inject
-    EthanApiPlugin api;
     List<WorldPoint> movements = new ArrayList<>();
     boolean moving = false;
 

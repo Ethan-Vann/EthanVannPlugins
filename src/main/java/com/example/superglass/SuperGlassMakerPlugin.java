@@ -34,8 +34,6 @@ public class SuperGlassMakerPlugin extends Plugin {
     @Inject
     Client client;
     @Inject
-    EthanApiPlugin api;
-    @Inject
     SuperGlassMakerPluginConfig config;
 
     @Override

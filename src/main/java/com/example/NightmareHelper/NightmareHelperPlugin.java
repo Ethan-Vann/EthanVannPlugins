@@ -5,7 +5,6 @@ import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.InteractionApi.InteractionHelper;
 import com.example.PacketUtils.PacketUtilsPlugin;
 import com.example.Packets.MousePackets;
-import com.example.Packets.MovementPackets;
 import com.example.Packets.WidgetPackets;
 import com.google.inject.Inject;
 import net.runelite.api.ChatMessageType;
@@ -35,14 +34,6 @@ import static com.example.EthanApiPlugin.Collections.query.QuickPrayer.*;
 public class NightmareHelperPlugin extends Plugin {
     @Inject
     Client client;
-    @Inject
-    MousePackets mousePackets;
-    @Inject
-    WidgetPackets widgetPackets;
-    @Inject
-    EthanApiPlugin api;
-    @Inject
-    MovementPackets movementPackets;
     boolean forceTab = false;
     QuickPrayer shouldPray;
     boolean cursed = false;

@@ -31,18 +31,10 @@ import java.util.Optional;
 @PluginDependency(PacketUtilsPlugin.class)
 public class e3t4g extends Plugin {
     @Inject
-    MousePackets mousePackets;
-    @Inject
-    ObjectPackets objectPackets;
-    @Inject
     Client client;
-    @Inject
-    WidgetPackets widgetPackets;
     int[][] rockPos = new int[][]{{3165, 2908}, {3165, 2909}, {3165, 2910}, {3167, 2911}};
     int timeout = 0;
     int rock = 0;
-    @Inject
-    EthanApiPlugin api;
 
     @Subscribe
     public void onGameTick(GameTick e) {
