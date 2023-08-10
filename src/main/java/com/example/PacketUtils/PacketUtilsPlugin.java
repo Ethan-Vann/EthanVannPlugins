@@ -5,7 +5,10 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.*;
+import net.runelite.api.ChatMessageType;
+import net.runelite.api.Client;
+import net.runelite.api.GameState;
+import net.runelite.api.ScriptEvent;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.ScriptPreFired;
@@ -94,7 +97,7 @@ public class PacketUtilsPlugin extends Plugin {
         Thread updateThread = new Thread(() ->
         {
             setupRuneliteUpdateHandling(RuneLiteProperties.getVersion());
-            //cleanup();
+            cleanup();
         });
         updateThread.start();
         staticClient = client;
@@ -178,7 +181,6 @@ public class PacketUtilsPlugin extends Plugin {
         }
         String doActionClassName = "";
         String doActionMethodName = "";
-        String actorClass = "";
         Field classes = ClassLoader.class.getDeclaredField("classes");
         classes.setAccessible(true);
         ClassLoader classLoader = client.getClass().getClassLoader();
@@ -186,10 +188,6 @@ public class PacketUtilsPlugin extends Plugin {
         Class<?>[] params = new Class[]{int.class, int.class, int.class, int.class, int.class, String.class, String.class, int.class, int.class};
         for (Class<?> aClass : classesVector) {
             for (Method declaredMethod : aClass.getDeclaredMethods()) {
-                if(declaredMethod.getName().equals("isInteracting")){
-                    System.out.println("actor class: " +aClass.getSimpleName());
-                    actorClass = aClass.getSimpleName();
-                }
                 if (declaredMethod.getParameterCount() != 10) {
                     continue;
                 }
@@ -214,9 +212,7 @@ public class PacketUtilsPlugin extends Plugin {
         Path vanillaOutputPath = codeSource.resolve("vanilla.jar");
         Path patchedOutputPath = codeSource.resolve("patched.jar");
         Path doActionOutputPath = codeSource.resolve("doAction.class");
-        Path getAnimation = codeSource.resolve(actorClass+".class");
         Path decompilationOutputPath = codeSource.resolve("decompiled.txt");
-        Path actorOutputPath = codeSource.resolve("getAnimationDecompiled.txt");
         downloadVanillaJar(vanillaOutputPath, rlConfigURL);
         File vanilla = vanillaOutputPath.toFile();
         if (vanilla.exists()) {
@@ -229,15 +225,7 @@ public class PacketUtilsPlugin extends Plugin {
         patchedOutputStream.flush();
         patchedOutputStream.close();
         try (JarFile patchedJar = new JarFile(patchedOutputPath.toFile())) {
-            String finalActorClass = actorClass;
             patchedJar.entries().asIterator().forEachRemaining(jarEntry -> {
-                if(jarEntry.getName().equals(finalActorClass +".class")){
-                    try (InputStream inputStream = patchedJar.getInputStream(jarEntry)) {
-                        Files.copy(inputStream, codeSource.resolve(finalActorClass +".class"), StandardCopyOption.REPLACE_EXISTING);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
                 if (jarEntry.getName().equals(doActionFinalClassName + ".class")) {
                     try (InputStream inputStream = patchedJar.getInputStream(jarEntry)) {
                         Files.copy(inputStream, doActionOutputPath, StandardCopyOption.REPLACE_EXISTING);
@@ -254,13 +242,6 @@ public class PacketUtilsPlugin extends Plugin {
         s.flush();
         s.close();
         decompilationOutputStream.close();
-        OutputStream actorOutputStream = Files.newOutputStream(actorOutputPath);
-        PrintStream actorPrintStream = new PrintStream(actorOutputStream);
-        System.setOut(actorPrintStream);
-        Main.main(new String[]{getAnimation.toAbsolutePath().toString(), "--methodname", "getAnimation"});
-        actorPrintStream.flush();
-        actorPrintStream.close();
-        actorOutputStream.close();
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
         File output = decompilationOutputPath.toFile();
         BufferedReader reader = new BufferedReader(new FileReader(output));
