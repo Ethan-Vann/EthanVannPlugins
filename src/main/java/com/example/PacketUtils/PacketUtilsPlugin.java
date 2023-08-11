@@ -8,11 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
-import net.runelite.api.ScriptEvent;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.MenuOptionClicked;
-import net.runelite.api.events.ScriptPreFired;
-import net.runelite.api.widgets.Widget;
 import net.runelite.client.RuneLite;
 import net.runelite.client.RuneLiteProperties;
 import net.runelite.client.callback.ClientThread;
@@ -22,6 +19,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.PluginInstantiationException;
 import net.runelite.client.plugins.PluginManager;
+import net.runelite.client.rs.ClientLoader;
 import org.benf.cfr.reader.Main;
 
 import javax.inject.Inject;
@@ -29,16 +27,13 @@ import javax.swing.*;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -204,7 +199,6 @@ public class PacketUtilsPlugin extends Plugin {
         final String doActionFinalClassName = doActionClassName;
         final String doActionFinalMethodName = doActionMethodName;
         classes.setAccessible(false);
-        URL clientPatchURL = new URL("https://repo.runelite.net/net/runelite/client-patch/%VERSION%/client-patch-%VERSION%.jar".replaceAll("%VERSION%", version));
         URL rlConfigURL = new URL("https://static.runelite.net/jav_config.ws");
         if (!codeSource.toFile().isDirectory()) {
             Files.createDirectory(codeSource);
@@ -221,7 +215,9 @@ public class PacketUtilsPlugin extends Plugin {
             System.out.println("Vanilla jar does not exist");
         }
         OutputStream patchedOutputStream = Files.newOutputStream(patchedOutputPath);
-        new FileByFileV1DeltaApplier().applyDelta(vanilla, patchInputStream(clientPatchURL), patchedOutputStream);
+        InputStream patch = ClientLoader.class.getResourceAsStream("/client.patch");
+        new FileByFileV1DeltaApplier().applyDelta(vanilla, patch, patchedOutputStream);
+        patch.close();
         patchedOutputStream.flush();
         patchedOutputStream.close();
         try (JarFile patchedJar = new JarFile(patchedOutputPath.toFile())) {
@@ -303,39 +299,6 @@ public class PacketUtilsPlugin extends Plugin {
             }
         }
         configReader.close();
-    }
-
-    public static InputStream patchInputStream(URL clientPatchURL) throws IOException, URISyntaxException {
-        System.out.println("Downloading client patch from " + clientPatchURL);
-        JarInputStream patchedStream = new JarInputStream(clientPatchURL.openConnection().getInputStream());
-        while (true) {
-            JarEntry entry = patchedStream.getNextJarEntry();
-            if (entry == null) {
-                break;
-            }
-            if (entry.isDirectory()) {
-                continue;
-            }
-            if (entry.getName().equals("client.patch")) {
-                ByteArrayInputStream returnStream = new ByteArrayInputStream(patchedStream.readNBytes((int) entry.getSize()));
-                patchedStream.close();
-                return returnStream;
-            }
-        }
-        patchedStream.close();
-        return null;
-    }
-
-    @Subscribe
-    public void onScriptPreFired(ScriptPreFired e) {
-        if (config.debug()) {
-            if (e.getScriptId() == 1405) {
-                System.out.print("resume pause maybe?");
-                ScriptEvent scriptEvent = e.getScriptEvent();
-                Widget w = scriptEvent.getSource();
-                System.out.println(scriptEvent.getOp() + ":" + w.getId() + ":" + w.getIndex());
-            }
-        }
     }
 
     @Override
