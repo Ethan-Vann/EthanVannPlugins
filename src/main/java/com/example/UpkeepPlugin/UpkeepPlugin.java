@@ -10,6 +10,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Skill;
+import net.runelite.api.VarPlayer;
+import net.runelite.api.Varbits;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.config.ConfigManager;
@@ -81,14 +83,12 @@ public class UpkeepPlugin extends Plugin {
         if (strength < config.StrengthLowAmount()) {
             handleAction(config.StrengthActions());
         }
-        //		if (client.getVarbitValue(102) == 0 && !config.AntiPoisonActions().trim().isEmpty())
-        //		{
-        //			handleAction(config.AntiPoisonActions());
-        //		}
-        //		if (client.getVarbitValue(Varbits.ANTIFIRE) == 0 && client.getVarbitValue(Varbits.SUPER_ANTIFIRE) == 0 && !config.AntiFireActions().trim().isEmpty())
-        //		{
-        //			handleAction(config.AntiFireActions());
-        //		}
+        if (config.AntiFireToggle()) {
+            handleAntiFire();
+        }
+        if (config.AntiVenomToggle()) {
+            handleAntiVenom();
+        }
     }
 
     public void handleAction(String actionParam) {
@@ -109,6 +109,18 @@ public class UpkeepPlugin extends Plugin {
                     break;
                 }
             }
+        }
+    }
+
+    public void handleAntiFire() {
+        if (client.getVarbitValue(Varbits.ANTIFIRE) == 0 && client.getVarbitValue(Varbits.SUPER_ANTIFIRE) == 0) {
+            handleAction(config.AntiFireActions());
+        }
+    }
+
+    public void handleAntiVenom() {
+        if (client.getVarpValue(VarPlayer.POISON) > 0) {
+            handleAction(config.AntiPoisonActions());
         }
     }
 }
