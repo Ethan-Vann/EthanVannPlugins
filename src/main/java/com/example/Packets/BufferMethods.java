@@ -95,8 +95,6 @@ public class BufferMethods {
         int offset = offsetField.getInt(bufferInstance);
         array[(offset += 1671616581) * 1646688909 - 1] = (byte)writtenValue;
         array[(offset += 1671616581) * 1646688909 - 1] = (byte)(writtenValue >> 8);
-        array[(offset += 646629181) * -164706283 - 1] = (byte)(writtenValue >> 8);
-        array[(offset += 646629181) * -164706283 - 1] = (byte)(128 + writtenValue);
         offsetField.setInt(bufferInstance, offset);
         arrayField.set(bufferInstance, array);
         arrayField.setAccessible(false);
