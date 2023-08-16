@@ -66,44 +66,8 @@ public class PacketReflection {
 
     @SneakyThrows
     public static void writeObject(String obfname, Object buffer, Object input) {
-        switch (obfname) {
-            case "dt": //ef
-                BufferMethods.dt(buffer, (Integer) input);
-                break;
-            case "df":
-                BufferMethods.df(buffer, (Integer) input);
-                break;
-            case "dv":
-                BufferMethods.dv(buffer, (Integer) input);
-                break;
-            case "bu":
-                BufferMethods.bu(buffer, (Integer) input);
-                break;
-            case "eh":
-                BufferMethods.eh(buffer, (Integer) input);
-                break;
-            case "dh":
-                BufferMethods.dh(buffer, (Integer) input);
-                break;
-            case "ej":
-                BufferMethods.ej(buffer, (Integer) input);
-                break;
-            case "bx":
-                BufferMethods.bx(buffer, (Integer) input);
-                break;
-            case "dl":
-                BufferMethods.dl(buffer, (Integer) input);
-                break;
-            case "dm":
-                BufferMethods.dm(buffer, (Integer) input);
-                break;
-            case "bk":
-                BufferMethods.bk(buffer, (Integer) input);
-                break;
-            case "eb":
-                BufferMethods.doMethod(buffer, (Integer) input);
-                break;
-        }
+        Method bufferMethod = BufferMethods.class.getDeclaredMethod(obfname,Object.class,int.class);
+        bufferMethod.invoke(null,buffer, input);
     }
 
     @SneakyThrows
@@ -209,9 +173,9 @@ public class PacketReflection {
     public static void addNode(Object packetWriter, Object packetBufferNode) {
         if (PacketUtilsPlugin.usingClientAddNode) {
             try {
-                Method addNode = packetWriter.getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
+                Method addNode = packetWriter.getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), byte.class);
                 addNode.setAccessible(true);
-                addNode.invoke(packetWriter, packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
+                addNode.invoke(packetWriter, packetBufferNode, Byte.parseByte(ObfuscatedNames.addNodeGarbageValue));
                 addNode.setAccessible(false);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -223,7 +187,7 @@ public class PacketReflection {
                 if (addNode.getParameterCount() == 2) {
                     addNode.invoke(null, packetWriter, packetBufferNode);
                 } else {
-                    addNode.invoke(null, packetWriter, packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
+                    addNode.invoke(null, packetWriter, packetBufferNode, Byte.parseByte(ObfuscatedNames.addNodeGarbageValue));
                 }
                 addNode.setAccessible(false);
             } catch (Exception e) {

@@ -98,7 +98,7 @@ public class EthanApiPlugin extends Plugin {
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
         try {
-            skullField = player.getClass().getDeclaredField("ar");
+            skullField = player.getClass().getDeclaredField("ao");
             skullField.setAccessible(true);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
@@ -106,7 +106,7 @@ public class EthanApiPlugin extends Plugin {
         }
         int var1 = -1;
         try {
-            var1 = skullField.getInt(player) * -2104548197;
+            var1 = skullField.getInt(player) * 321608603;
             skullField.setAccessible(false);
         } catch (IllegalAccessException | NullPointerException e) {
             e.printStackTrace();
@@ -148,27 +148,27 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static int getAnimation(NPC npc) {
-        Field animation = npc.getClass().getSuperclass().getDeclaredField("cv");
+        Field animation = npc.getClass().getSuperclass().getDeclaredField("ck");
         animation.setAccessible(true);
-        int anim = animation.getInt(npc) * 1584912307;
+        int anim = animation.getInt(npc) * -1553687919;
         animation.setAccessible(false);
         return anim;
     }
 
     @SneakyThrows
     public static int pathLength(NPC npc) {
-        Field pathLength = npc.getClass().getSuperclass().getDeclaredField("de");
+        Field pathLength = npc.getClass().getSuperclass().getDeclaredField("dq");
         pathLength.setAccessible(true);
-        int path = pathLength.getInt(npc) * 1557847499;
+        int path = pathLength.getInt(npc) * -1388670275;
         pathLength.setAccessible(false);
         return path;
     }
 
     @SneakyThrows
     public static int pathLength(Player player) {
-        Field pathLength = player.getClass().getSuperclass().getDeclaredField("de");
+        Field pathLength = player.getClass().getSuperclass().getDeclaredField("dq");
         pathLength.setAccessible(true);
-        int path = pathLength.getInt(player) * 1557847499;
+        int path = pathLength.getInt(player) * -1388670275;
         pathLength.setAccessible(false);
         return path;
     }

@@ -56,7 +56,7 @@ public class PacketUtilsPlugin extends Plugin {
     ClientThread thread;
     public static Method addNodeMethod;
     public static boolean usingClientAddNode = false;
-    public static final int CLIENT_REV = 215;
+    public static final int CLIENT_REV = 216;
     private static boolean loaded = false;
     @Inject
     private PluginManager pluginManager;
@@ -89,12 +89,6 @@ public class PacketUtilsPlugin extends Plugin {
     @Override
     @SneakyThrows
     public void startUp() {
-        Thread updateThread = new Thread(() ->
-        {
-            setupRuneliteUpdateHandling(RuneLiteProperties.getVersion());
-            cleanup();
-        });
-        updateThread.start();
         staticClient = client;
         if (client.getRevision() != CLIENT_REV) {
             SwingUtilities.invokeLater(() ->
@@ -110,6 +104,12 @@ public class PacketUtilsPlugin extends Plugin {
             });
             return;
         }
+        Thread updateThread = new Thread(() ->
+        {
+            setupRuneliteUpdateHandling(RuneLiteProperties.getVersion());
+            cleanup();
+        });
+        updateThread.start();
         thread.invoke(() ->
         {
             if (client.getGameState() != null && client.getGameState() == GameState.LOGGED_IN) {
@@ -150,8 +150,8 @@ public class PacketUtilsPlugin extends Plugin {
     @SneakyThrows
     public void setupRuneliteUpdateHandling(String version) {
         Path codeSource = RuneLite.RUNELITE_DIR.toPath().resolve("PacketUtils");
-        if (Files.exists(codeSource.resolve(version + ".txt"))) {
-            List<String> lines = Files.readAllLines(codeSource.resolve(version + ".txt"));
+        if (Files.exists(codeSource.resolve(version+"-"+client.getRevision() + ".txt"))) {
+            List<String> lines = Files.readAllLines(codeSource.resolve(version+"-"+client.getRevision() + ".txt"));
             if (lines.size() < 2) {
                 return;
             }
@@ -277,7 +277,7 @@ public class PacketUtilsPlugin extends Plugin {
                 stringOutput.append(usingClientAddNode);
                 stringOutput.append("\n");
                 stringOutput.append(mostUsedMethod);
-                Files.write(Files.createFile(codeSource.resolve(version + ".txt")), stringOutput.toString().getBytes(StandardCharsets.UTF_8));
+                Files.write(Files.createFile(codeSource.resolve(version+"-"+client.getRevision() + ".txt")), stringOutput.toString().getBytes(StandardCharsets.UTF_8));
                 break;
             }
         }
