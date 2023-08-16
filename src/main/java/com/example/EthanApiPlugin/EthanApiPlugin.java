@@ -44,6 +44,7 @@ public class EthanApiPlugin extends Plugin {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
     static PluginManager pluginManager = RuneLite.getInjector().getInstance(PluginManager.class);
     static ItemManager itemManager = RuneLite.getInjector().getInstance(ItemManager.class);
+    static Method doAction = null;
     public static final int[][] directionsMap = {
             {-2, 0},
             {0, 2},
@@ -87,14 +88,16 @@ public class EthanApiPlugin extends Plugin {
     public static boolean loggedIn() {
         return client.getGameState() == GameState.LOGGED_IN;
     }
-    public static boolean inRegion(int regionID){
+
+    public static boolean inRegion(int regionID) {
         List<Integer> mapRegions = Arrays.stream(client.getMapRegions()).boxed().collect(Collectors.toList());
         return mapRegions.contains(regionID);
     }
 
-    public static WorldPoint playerPosition(){
+    public static WorldPoint playerPosition() {
         return client.getLocalPlayer().getWorldLocation();
     }
+
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
         try {
@@ -365,12 +368,34 @@ public class EthanApiPlugin extends Plugin {
     @SneakyThrows
     public static void invoke(int var0, int var1, int var2, int var3, int var4, String var5, String var6, int var7,
                               int var8) {
-        Class invokeClass = client.getClass().getClassLoader().loadClass("ce");
-        Method invoke = invokeClass.getDeclaredMethod("kc", int.class, int.class, int.class, int.class, int.class,
-                String.class, String.class, int.class, int.class, byte.class);
-        invoke.setAccessible(true);
-        invoke.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8,(byte)14);
-        invoke.setAccessible(false);
+        if (doAction == null) {
+            Field classes = ClassLoader.class.getDeclaredField("classes");
+            classes.setAccessible(true);
+            ClassLoader classLoader = client.getClass().getClassLoader();
+            Vector<Class<?>> classesVector = (Vector<Class<?>>) classes.get(classLoader);
+            Class<?>[] params = new Class[]{int.class, int.class, int.class, int.class, int.class, String.class, String.class, int.class, int.class};
+            for (Class<?> aClass : classesVector) {
+                if (doAction != null) {
+                    break;
+                }
+                for (Method declaredMethod : aClass.getDeclaredMethods()) {
+                    if (declaredMethod.getParameterCount() != 10) {
+                        continue;
+                    }
+                    if (declaredMethod.getReturnType() != void.class) {
+                        continue;
+                    }
+                    if (!Arrays.equals(Arrays.copyOfRange(declaredMethod.getParameterTypes(), 0, 9), params)) {
+                        continue;
+                    }
+                    doAction = declaredMethod;
+                    break;
+                }
+            }
+        }
+        doAction.setAccessible(true);
+        doAction.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, (byte) 5);
+        doAction.setAccessible(false);
     }
 
     @Deprecated
@@ -443,7 +468,7 @@ public class EthanApiPlugin extends Plugin {
         int pSY = client.getLocalPlayer().getLocalLocation().getSceneY();
         Point p1 = client.getScene().getTiles()[client.getPlane()][pSX][pSY].getSceneLocation();
         LocalPoint lp = LocalPoint.fromWorld(client, destinationTile);
-        if(lp == null || !lp.isInScene()){
+        if (lp == null || !lp.isInScene()) {
             return new PathResult(false, Integer.MAX_VALUE);
         }
         Point p2 = new Point(lp.getSceneX(), lp.getSceneY());
@@ -589,6 +614,7 @@ public class EthanApiPlugin extends Plugin {
     public static Client getClient() {
         return client;
     }
+
     public static ClientUI getClientUI() {
         return clientUI;
     }
@@ -1173,8 +1199,8 @@ public class EthanApiPlugin extends Plugin {
         eventBus.register(RuneLite.getInjector().getInstance(TileObjects.class));
         eventBus.register(RuneLite.getInjector().getInstance(Players.class));
         eventBus.register(RuneLite.getInjector().getInstance(Equipment.class));
-		eventBus.register(RuneLite.getInjector().getInstance(DepositBox.class));
-		eventBus.register(RuneLite.getInjector().getInstance(ShopInventory.class));
+        eventBus.register(RuneLite.getInjector().getInstance(DepositBox.class));
+        eventBus.register(RuneLite.getInjector().getInstance(ShopInventory.class));
         eventBus.register(RuneLite.getInjector().getInstance(Shop.class));
     }
 }
