@@ -39,10 +39,10 @@ public class PacketReflection {
             ClientPacket = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.clientPacketClassName);
             PACKETWRITER = clientInstance.getClass().getDeclaredField(ObfuscatedNames.packetWriterFieldName);
 //            //Devious fix for logout issue
-//            Field dc = clientInstance.getClass().getDeclaredField("dc");
-//            dc.setAccessible(true);
-//            dc.set(null,Integer.MAX_VALUE);
-//            dc.setAccessible(false);
+//            Field ju = clientInstance.getClass().getDeclaredField("ju");
+//            ju.setAccessible(true);
+//            ju.set(null,Integer.MAX_VALUE);
+//            ju.setAccessible(false);
 //            //Devious fix for logout issue
             PacketBufferNode = clientInstance.getClass().getClassLoader().loadClass(ObfuscatedNames.packetBufferNodeClassName);
 
@@ -138,34 +138,11 @@ public class PacketReflection {
                 }
             }
             PACKETWRITER.setAccessible(true);
-//            Method addNode = null;
-//            try {
-//                for (Method declaredMethod : PACKETWRITER.get(null).getClass().getDeclaredMethods()) {
-//                    int modifiers = declaredMethod.getModifiers();
-//                    if (!Modifier.isStatic(modifiers) || !Modifier.isPublic(modifiers) || !declaredMethod.getReturnType().equals(void.class) || declaredMethod.getParameterCount() != 2 ||
-//                            !declaredMethod.getParameterTypes()[0].equals(PACKETWRITER.get(null).getClass()) || !declaredMethod.getParameterTypes()[1].equals(packetBufferNode.getClass())) {
-//                        continue;
-//                    }
-//                    addNode = declaredMethod;
-//                    addNode.setAccessible(true);
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
             try {
-//                if (addNode == null) {
-//                    addNode = PACKETWRITER.get(null).getClass().getDeclaredMethod(com.plugins.ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
-//                    addNode.setAccessible(true);
-//                    addNode.invoke(PACKETWRITER.get(null), packetBufferNode, Integer.parseInt(com.plugins.ObfuscatedNames.addNodeGarbageValue));
-//                } else {
-//                    addNode.invoke(null, PACKETWRITER.get(null), packetBufferNode);
-//                }
                 addNode(PACKETWRITER.get(null), packetBufferNode);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-//            addNode.setAccessible(false);
             PACKETWRITER.setAccessible(false);
         }
     }
@@ -173,10 +150,24 @@ public class PacketReflection {
     public static void addNode(Object packetWriter, Object packetBufferNode) {
         if (PacketUtilsPlugin.usingClientAddNode) {
             try {
-                Method addNode = packetWriter.getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), byte.class);
-                addNode.setAccessible(true);
-                addNode.invoke(packetWriter, packetBufferNode, Byte.parseByte(ObfuscatedNames.addNodeGarbageValue));
-                addNode.setAccessible(false);
+                Method addNode = null;
+                long garbageValue = Math.abs(Long.parseLong(ObfuscatedNames.addNodeGarbageValue));
+                if (garbageValue < 256) {
+                    addNode = packetWriter.getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), byte.class);
+                    addNode.setAccessible(true);
+                    addNode.invoke(packetWriter, packetBufferNode, Byte.parseByte(ObfuscatedNames.addNodeGarbageValue));
+                } else if (garbageValue < 32768) {
+                    addNode = packetWriter.getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), short.class);
+                    addNode.setAccessible(true);
+                    addNode.invoke(packetWriter, packetBufferNode, Short.parseShort(ObfuscatedNames.addNodeGarbageValue));
+                } else if (garbageValue < Integer.MAX_VALUE) {
+                    addNode = packetWriter.getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
+                    addNode.setAccessible(true);
+                    addNode.invoke(packetWriter, packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
+                }
+                if(addNode!=null){
+                    addNode.setAccessible(false);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -187,7 +178,14 @@ public class PacketReflection {
                 if (addNode.getParameterCount() == 2) {
                     addNode.invoke(null, packetWriter, packetBufferNode);
                 } else {
-                    addNode.invoke(null, packetWriter, packetBufferNode, Byte.parseByte(ObfuscatedNames.addNodeGarbageValue));
+                    long garbageValue = Math.abs(Long.parseLong(ObfuscatedNames.addNodeGarbageValue));
+                    if (garbageValue < 256) {
+                        addNode.invoke(null, packetWriter, packetBufferNode, Byte.parseByte(ObfuscatedNames.addNodeGarbageValue));
+                    } else if (garbageValue < 32768) {
+                        addNode.invoke(null, packetWriter, packetBufferNode, Short.parseShort(ObfuscatedNames.addNodeGarbageValue));
+                    } else if (garbageValue < Integer.MAX_VALUE) {
+                        addNode.invoke(null, packetWriter, packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
+                    }
                 }
                 addNode.setAccessible(false);
             } catch (Exception e) {
@@ -195,48 +193,6 @@ public class PacketReflection {
             }
         }
     }
-//     public static void addNode(Object eqVar0, Object lmVar1) {
-//        try {
-//            Field ay = eqVar0.getClass().getDeclaredField("ay");
-//            ay.setAccessible(true);
-//            Class or = client.getClass().getClassLoader().loadClass("or");
-//            Method eo = or.getDeclaredMethod("eo", ay.get(eqVar0).getClass(), lmVar1.getClass().getSuperclass());
-//            eo.setAccessible(true);
-//            eo.invoke(null, ay.get(eqVar0), lmVar1);
-//
-//            Field var1ay = lmVar1.getClass().getDeclaredField("ay");
-//            Field am = lmVar1.getClass().getDeclaredField("am");
-//            Field arField = lmVar1.getClass().getDeclaredField("ar");
-//            arField.setAccessible(true);
-//            Object arObject = arField.get(lmVar1);
-//            Field avField = arObject.getClass().getField("av");
-//            am.setAccessible(true);
-//            avField.setAccessible(true);
-//            int amValue = -1643463139 * avField.getInt(arObject);
-//            var1ay.setInt(lmVar1, amValue);
-//            avField.setInt(arObject, 0);
-//
-//            Field var0ar = eqVar0.getClass().getDeclaredField("ar");
-//            var0ar.setAccessible(true);
-//            var1ay.setAccessible(true);
-//            Field ap = eqVar0.getClass().getDeclaredField("ap");
-//            ap.setAccessible(true);
-//            int var0arValue = var0ar.getInt(eqVar0);
-//            int x = 1559877663 * var1ay.getInt(lmVar1);
-//            int totalAzValue = var0arValue + x;
-//            var0ar.setInt(eqVar0, totalAzValue);
-//            ap.setAccessible(false);
-//            var0ar.setAccessible(false);
-//            var1ay.setAccessible(false);
-//            am.setAccessible(false);
-//            avField.setAccessible(false);
-//            arField.setAccessible(false);
-//            ay.setAccessible(false);
-//            eo.setAccessible(false);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     @SneakyThrows
     static Field fetchPacketField(String name) {
