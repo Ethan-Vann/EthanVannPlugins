@@ -18,10 +18,14 @@ import java.util.stream.Collectors;
 public class BankInventory {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
     static List<Widget> bankInventoryItems = new ArrayList<>();
+    static int lastUpdateTick = 0;
 
     public static ItemQuery search() {
-        BankInventory.bankInventoryItems =
-                Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
+        if (lastUpdateTick < client.getTickCount()) {
+            BankInventory.bankInventoryItems =
+                    Arrays.stream(client.getWidget(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER).getDynamicChildren()).filter(Objects::nonNull).filter(x -> x.getItemId() != 6512 && x.getItemId() != -1).collect(Collectors.toList());
+            lastUpdateTick = client.getTickCount();
+        }
         return new ItemQuery(bankInventoryItems.stream().filter(Objects::nonNull).collect(Collectors.toList()));
     }
 //    @Subscribe
