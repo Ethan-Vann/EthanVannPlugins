@@ -54,6 +54,9 @@ public class Equipment {
             }
             equipment.clear();
             int i = -1;
+            if(client.getItemContainer(InventoryID.EQUIPMENT.getId()) == null){
+                return new EquipmentItemQuery(equipment);
+            }
             for (Item item : client.getItemContainer(InventoryID.EQUIPMENT.getId()).getItems()) {
                 i++;
                 if (item == null) {
