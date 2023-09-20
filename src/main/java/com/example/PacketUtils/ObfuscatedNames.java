@@ -56,7 +56,7 @@ public final class ObfuscatedNames {
     public static final String OPLOC4_WRITE3 = "worldPointX";
     public static final String OPLOC4_METHOD_NAME3 = "dd";
     public static final String OPLOC4_WRITE4 = "ctrlDown";
-    public static final String OPLOC4_METHOD_NAME4 = "do";
+    public static final String OPLOC4_METHOD_NAME4 = "don";
 
     public static final String OPPLAYER5_OBFUSCATEDNAME = "cr";
     public static final String OPPLAYER5_WRITE1 = "ctrlDown";
@@ -84,7 +84,7 @@ public final class ObfuscatedNames {
     public static final String OPOBJ4_WRITE3 = "worldPointY";
     public static final String OPOBJ4_METHOD_NAME3 = "bu";
     public static final String OPOBJ4_WRITE4 = "ctrlDown";
-    public static final String OPOBJ4_METHOD_NAME4 = "do";
+    public static final String OPOBJ4_METHOD_NAME4 = "don";
 
     public static final String OPPLAYER1_OBFUSCATEDNAME = "cx";
     public static final String OPPLAYER1_WRITE1 = "ctrlDown";
@@ -128,7 +128,7 @@ public final class ObfuscatedNames {
 
     public static final String OPOBJ5_OBFUSCATEDNAME = "dk";
     public static final String OPOBJ5_WRITE1 = "ctrlDown";
-    public static final String OPOBJ5_METHOD_NAME1 = "do";
+    public static final String OPOBJ5_METHOD_NAME1 = "don";
     public static final String OPOBJ5_WRITE2 = "worldPointY";
     public static final String OPOBJ5_METHOD_NAME2 = "bu";
     public static final String OPOBJ5_WRITE3 = "worldPointX";
@@ -176,7 +176,7 @@ public final class ObfuscatedNames {
     public static final String OPOBJ2_WRITE2 = "worldPointY";
     public static final String OPOBJ2_METHOD_NAME2 = "bu";
     public static final String OPOBJ2_WRITE3 = "ctrlDown";
-    public static final String OPOBJ2_METHOD_NAME3 = "do";
+    public static final String OPOBJ2_METHOD_NAME3 = "don";
     public static final String OPOBJ2_WRITE4 = "objectId";
     public static final String OPOBJ2_METHOD_NAME4 = "dy";
 
@@ -214,7 +214,7 @@ public final class ObfuscatedNames {
 
     public static final String OPPLAYER2_OBFUSCATEDNAME = "cu";
     public static final String OPPLAYER2_WRITE1 = "ctrlDown";
-    public static final String OPPLAYER2_METHOD_NAME1 = "do";
+    public static final String OPPLAYER2_METHOD_NAME1 = "don";
     public static final String OPPLAYER2_WRITE2 = "playerIndex";
     public static final String OPPLAYER2_METHOD_NAME2 = "bu";
 
@@ -248,7 +248,7 @@ public final class ObfuscatedNames {
     public static final String OPOBJ1_WRITE1 = "worldPointY";
     public static final String OPOBJ1_METHOD_NAME1 = "dy";
     public static final String OPOBJ1_WRITE2 = "ctrlDown";
-    public static final String OPOBJ1_METHOD_NAME2 = "do";
+    public static final String OPOBJ1_METHOD_NAME2 = "don";
     public static final String OPOBJ1_WRITE3 = "worldPointX";
     public static final String OPOBJ1_METHOD_NAME3 = "dy";
     public static final String OPOBJ1_WRITE4 = "objectId";
