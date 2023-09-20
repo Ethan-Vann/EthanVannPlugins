@@ -109,7 +109,7 @@ public final class ObfuscatedNames {
     public static final String OPLOC3_METHOD_NAME4 = "dp";
 
     public static final String OPPLAYERT_OBFUSCATEDNAME = "bs";
-    public static final String OPPLAYERT_WRITE1 = "slot";
+    public static final String OPPLAYERT_WRITE1 = "itemId";
     public static final String OPPLAYERT_METHOD_NAME1 = "bu";
     public static final String OPPLAYERT_WRITE2 = "slot";
     public static final String OPPLAYERT_METHOD_NAME2 = "dy";
@@ -143,13 +143,13 @@ public final class ObfuscatedNames {
     public static final String OPLOCT_METHOD_NAME2 = "dd";
     public static final String OPLOCT_WRITE3 = "worldPointX";
     public static final String OPLOCT_METHOD_NAME3 = "bu";
-    public static final String OPLOCT_WRITE4 = "slot";
+    public static final String OPLOCT_WRITE4 = "widgetId";
     public static final String OPLOCT_METHOD_NAME4 = "en";
     public static final String OPLOCT_WRITE5 = "objectId";
     public static final String OPLOCT_METHOD_NAME5 = "dt";
     public static final String OPLOCT_WRITE6 = "worldPointY";
     public static final String OPLOCT_METHOD_NAME6 = "dt";
-    public static final String OPLOCT_WRITE7 = "widgetId";
+    public static final String OPLOCT_WRITE7 = "itemId";
     public static final String OPLOCT_METHOD_NAME7 = "dy";
 
     public static final String OPNPC4_OBFUSCATEDNAME = "bo";
@@ -185,9 +185,9 @@ public final class ObfuscatedNames {
     public static final String OPOBJT_METHOD_NAME1 = "dy";
     public static final String OPOBJT_WRITE2 = "ctrlDown";
     public static final String OPOBJT_METHOD_NAME2 = "dl";
-    public static final String OPOBJT_WRITE3 = "itemId";
+    public static final String OPOBJT_WRITE3 = "widgetId";
     public static final String OPOBJT_METHOD_NAME3 = "bh";
-    public static final String OPOBJT_WRITE4 = "slot";
+    public static final String OPOBJT_WRITE4 = "itemId";
     public static final String OPOBJT_METHOD_NAME4 = "bu";
     public static final String OPOBJT_WRITE5 = "worldPointY";
     public static final String OPOBJT_METHOD_NAME5 = "dd";
@@ -271,9 +271,9 @@ public final class ObfuscatedNames {
     public static final String OPPLAYER4_METHOD_NAME2 = "dp";
 
     public static final String OPNPCT_OBFUSCATEDNAME = "ah";
-    public static final String OPNPCT_WRITE1 = "ctrlDown";
+    public static final String OPNPCT_WRITE1 = "widgetId";
     public static final String OPNPCT_METHOD_NAME1 = "en";
-    public static final String OPNPCT_WRITE2 = "npcIndex";
+    public static final String OPNPCT_WRITE2 = "itemId";
     public static final String OPNPCT_METHOD_NAME2 = "dy";
     public static final String OPNPCT_WRITE3 = "ctrlDown";
     public static final String OPNPCT_METHOD_NAME3 = "dl";
