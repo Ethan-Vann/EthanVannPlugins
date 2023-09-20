@@ -154,8 +154,6 @@ public class PacketReflection {
                 if (garbageValue < 256) {
                     addNode = packetWriter.getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), byte.class);
                     addNode.setAccessible(true);
-                    System.out.println("writer:" +packetWriter);
-                    System.out.println("buffer:"+packetBufferNode);
                     addNode.invoke(packetWriter, packetBufferNode, Byte.parseByte(ObfuscatedNames.addNodeGarbageValue));
                 } else if (garbageValue < 32768) {
                     addNode = packetWriter.getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), short.class);
