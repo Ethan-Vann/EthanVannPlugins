@@ -1,10 +1,8 @@
 package com.example.EthanApiPlugin.Collections.query;
 
+import com.example.EthanApiPlugin.Collections.Players;
 import com.example.EthanApiPlugin.EthanApiPlugin;
-import net.runelite.api.Actor;
-import net.runelite.api.Client;
-import net.runelite.api.NPC;
-import net.runelite.api.NPCComposition;
+import net.runelite.api.*;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
@@ -122,6 +120,10 @@ public class NPCQuery {
 
     public NPCQuery notInteracting() {
         npcs = npcs.stream().filter(npc -> !npc.isInteracting()).collect(Collectors.toList());
+        return this;
+    }
+    public NPCQuery noOneInteractingWith(){
+        npcs = npcs.stream().filter(npc -> Players.search().interactingWith(npc).isEmpty()).collect(Collectors.toList());
         return this;
     }
 

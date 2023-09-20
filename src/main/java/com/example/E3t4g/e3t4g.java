@@ -41,7 +41,7 @@ public class e3t4g extends Plugin {
         timeout = timeout == 0 ? 2 : timeout - 1;
         if (timeout != 2) return;
         if (client.getVarpValue(VarPlayer.SPECIAL_ATTACK_PERCENT) == 1000) {
-            if (!Equipment.search().matchesWildCardNoCase("*Dragon pickaxe*").empty()||!Equipment.search().matchesWildCardNoCase("*infernal pickaxe*").empty()) {
+            if (!Equipment.search().matchesWildCardNoCase("*Dragon pickaxe*").empty() || !Equipment.search().matchesWildCardNoCase("*infernal pickaxe*").empty()) {
                 MousePackets.queueClickPacket();
                 WidgetPackets.queueWidgetActionPacket(1, 38862884, -1, -1);
             }

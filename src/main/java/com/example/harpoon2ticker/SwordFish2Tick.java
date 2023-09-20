@@ -43,7 +43,7 @@ public class SwordFish2Tick extends Plugin {
     @Subscribe
     public void onGameTick(GameTick e) {
         if (client.getGameState() != GameState.LOGGED_IN) return;
-        if(!NPCs.search().withAction("Dismiss").interactingWithLocal().empty()) return;
+        if (!NPCs.search().withAction("Dismiss").interactingWithLocal().empty()) return;
         WorldPoint playerLocation = client.getLocalPlayer().getWorldLocation();
         NPC fishingSpot = client.getNpcs().stream().filter(x -> x.getId() == 7470).min(Comparator.comparingInt(x -> x.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()))).orElse(null);
         if (fishingSpot == null || (fishingSpot.getWorldLocation().getX() == playerLocation.getX() && fishingSpot.getWorldLocation().getY() == playerLocation.getY() + 1)) {
@@ -90,7 +90,7 @@ public class SwordFish2Tick extends Plugin {
             }
             lastHitsplat = client.getTickCount();
         }
-        if(!NPCs.search().withAction("Dismiss").interactingWithLocal().empty()) return;
+        if (!NPCs.search().withAction("Dismiss").interactingWithLocal().empty()) return;
         if (!e.getActor().equals(client.getLocalPlayer())) return;
         NPC fishingSpot = client.getNpcs().stream().filter(x -> x.getId() == 7470).min(Comparator.comparingInt(x -> x.getWorldLocation().distanceTo(client.getLocalPlayer().getWorldLocation()))).orElse(null);
         WorldPoint playerLocation = client.getLocalPlayer().getWorldLocation();

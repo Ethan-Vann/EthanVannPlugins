@@ -94,7 +94,7 @@ public class TileItemQuery {
         return this;
     }
 
-    public TileItemQuery stackAboveXValue(int value){
+    public TileItemQuery stackAboveXValue(int value) {
         tileItems = tileItems.stream().filter(item -> item.getTileItem().getQuantity() * itemManager.getItemPrice(item.getTileItem().getId()) > value).collect(Collectors.toList());
         return this;
     }
@@ -179,6 +179,7 @@ public class TileItemQuery {
         tileItems = tileItems.stream().filter(tileItem -> tileItem.getLocation().distanceTo(point) <= distance).collect(Collectors.toList());
         return this;
     }
+
     public Optional<ETileItem> nearestToPlayer() {
         return nearestToPoint(client.getLocalPlayer().getWorldLocation());
     }

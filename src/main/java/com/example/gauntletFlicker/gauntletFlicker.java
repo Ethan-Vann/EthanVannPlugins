@@ -59,18 +59,18 @@ public class gauntletFlicker extends Plugin {
         }
 
         String name = "";
-        if(!Equipment.search().matchesWildCardNoCase("*staff*").empty()){
+        if (!Equipment.search().matchesWildCardNoCase("*staff*").empty()) {
             name = "staff";
         }
-        if(!Equipment.search().matchesWildCardNoCase("*bow*").empty()){
+        if (!Equipment.search().matchesWildCardNoCase("*bow*").empty()) {
             name = "bow";
         }
-        if(!Equipment.search().matchesWildCardNoCase("*halberd*").empty()){
+        if (!Equipment.search().matchesWildCardNoCase("*halberd*").empty()) {
             name = "halberd";
         }
         NPC hunllef = client.getNpcs().stream().filter(x -> HUNLLEF_IDS.contains(x.getId())).findFirst().orElse(null);
-        if(hunllef!=null&&(hunllef.isDead()||hunllef.getHealthRatio()==0)){
-            if(EthanApiPlugin.isQuickPrayerEnabled()){
+        if (hunllef != null && (hunllef.isDead() || hunllef.getHealthRatio() == 0)) {
+            if (EthanApiPlugin.isQuickPrayerEnabled()) {
                 InteractionHelper.togglePrayer();
                 return;
             }
@@ -106,10 +106,10 @@ public class gauntletFlicker extends Plugin {
                 Optional<Widget> bow = Inventory.search().matchesWildCardNoCase("*bow*").first();
                 Optional<Widget> halberd = Inventory.search().matchesWildCardNoCase("*halberd*").first();
                 if (bow.isPresent()) {
-                    InventoryInteraction.useItem(bow.get(),"Equip", "Wear", "Wield");
+                    InventoryInteraction.useItem(bow.get(), "Equip", "Wear", "Wield");
                     updatedWeapon = "bow";
                 } else if (halberd.isPresent()) {
-                    InventoryInteraction.useItem(halberd.get(),"Equip", "Wear", "Wield");
+                    InventoryInteraction.useItem(halberd.get(), "Equip", "Wear", "Wield");
                     updatedWeapon = "halberd";
                 }
             }
@@ -117,10 +117,10 @@ public class gauntletFlicker extends Plugin {
                 Optional<Widget> staff = Inventory.search().matchesWildCardNoCase("*staff*").first();
                 Optional<Widget> halberd = Inventory.search().matchesWildCardNoCase("*halberd*").first();
                 if (staff.isPresent()) {
-                    InventoryInteraction.useItem(staff.get(),"Equip", "Wear", "Wield");
+                    InventoryInteraction.useItem(staff.get(), "Equip", "Wear", "Wield");
                     updatedWeapon = "staff";
                 } else if (halberd.isPresent()) {
-                    InventoryInteraction.useItem(halberd.get(),"Equip", "Wear", "Wield");
+                    InventoryInteraction.useItem(halberd.get(), "Equip", "Wear", "Wield");
                     updatedWeapon = "halberd";
                 }
             }
@@ -128,10 +128,10 @@ public class gauntletFlicker extends Plugin {
                 Optional<Widget> staff = Inventory.search().matchesWildCardNoCase("*staff*").first();
                 Optional<Widget> bow = Inventory.search().matchesWildCardNoCase("*bow*").first();
                 if (staff.isPresent()) {
-                    InventoryInteraction.useItem(staff.get(),"Equip", "Wear", "Wield");
+                    InventoryInteraction.useItem(staff.get(), "Equip", "Wear", "Wield");
                     updatedWeapon = "staff";
                 } else if (bow.isPresent()) {
-                    InventoryInteraction.useItem(bow.get(),"Equip", "Wear", "Wield");
+                    InventoryInteraction.useItem(bow.get(), "Equip", "Wear", "Wield");
                     updatedWeapon = "bow";
                 }
             }

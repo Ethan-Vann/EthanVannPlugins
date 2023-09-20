@@ -32,6 +32,18 @@ public class ItemQuery {
         items = items.stream().filter(item -> Arrays.asList(item.getActions()).contains(action)).collect(Collectors.toList());
         return this;
     }
+    public ItemQuery tradeAble() {
+        items = items.stream().filter(item -> itemManager.getItemComposition(item.getItemId()).isTradeable()).collect(Collectors.toList());
+        return this;
+    }
+    public ItemQuery differenceInValueLessThan(int difference) {
+        items = items.stream().filter(item -> Math.abs(itemManager.getItemComposition(item.getItemId()).getHaPrice() - itemManager.getItemPriceWithSource(item.getItemId(),true)) < difference).collect(Collectors.toList());
+        return this;
+    }
+    public ItemQuery priceOver(int price) {
+        items = items.stream().filter(item -> itemManager.getItemComposition(item.getItemId()).getHaPrice() >= price).collect(Collectors.toList());
+        return this;
+    }
 
     public ItemQuery withSet(Set<Integer> ids) {
         items = items.stream()
@@ -68,7 +80,7 @@ public class ItemQuery {
         items = items.stream().filter(item -> ids.contains(item.getItemId())).collect(Collectors.toList());
         return this;
     }
-    
+
     public ItemQuery nameInList(List<String> names) {
         items = items.stream()
                 .filter(item -> names.stream()

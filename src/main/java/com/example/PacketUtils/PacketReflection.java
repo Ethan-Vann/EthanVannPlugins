@@ -66,8 +66,8 @@ public class PacketReflection {
 
     @SneakyThrows
     public static void writeObject(String obfname, Object buffer, Object input) {
-        Method bufferMethod = BufferMethods.class.getDeclaredMethod(obfname,Object.class,int.class);
-        bufferMethod.invoke(null,buffer, input);
+        Method bufferMethod = BufferMethods.class.getDeclaredMethod(obfname, Object.class, int.class);
+        bufferMethod.invoke(null, buffer, input);
     }
 
     @SneakyThrows
@@ -133,7 +133,6 @@ public class PacketReflection {
         if (params != null) {
             for (Map.Entry<String, String> stringEntry : def.fields.entrySet()) {
                 if (params.contains(stringEntry.getKey())) {
-
                     writeObject(stringEntry.getValue(), buffer, objects[params.indexOf(stringEntry.getKey())]);
                 }
             }
@@ -155,6 +154,8 @@ public class PacketReflection {
                 if (garbageValue < 256) {
                     addNode = packetWriter.getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), byte.class);
                     addNode.setAccessible(true);
+                    System.out.println("writer:" +packetWriter);
+                    System.out.println("buffer:"+packetBufferNode);
                     addNode.invoke(packetWriter, packetBufferNode, Byte.parseByte(ObfuscatedNames.addNodeGarbageValue));
                 } else if (garbageValue < 32768) {
                     addNode = packetWriter.getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), short.class);
@@ -165,7 +166,7 @@ public class PacketReflection {
                     addNode.setAccessible(true);
                     addNode.invoke(packetWriter, packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
                 }
-                if(addNode!=null){
+                if (addNode != null) {
                     addNode.setAccessible(false);
                 }
             } catch (Exception e) {

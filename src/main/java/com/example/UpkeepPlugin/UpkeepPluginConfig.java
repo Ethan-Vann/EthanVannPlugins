@@ -143,6 +143,7 @@ public interface UpkeepPluginConfig extends Config {
     default boolean AntiVenomToggle() {
         return false;
     }
+
     @ConfigItem(
             keyName = "AntiVenomActions",
             name = "AntiVenom Actions",
