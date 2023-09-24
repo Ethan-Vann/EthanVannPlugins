@@ -58,7 +58,7 @@ public class PacketReflection {
             clientMouseLastLastPressedTimeMillis = clientInstance.getClass().getDeclaredField(ObfuscatedNames.clientMouseLastLastPressedTimeMillis);
         } catch (Exception e) {
             e.printStackTrace();
-            log.warn("Failed to load com.plugins.Packets Into Client");
+            log.warn("Failed to load Into Client");
             return false;
         }
         return true;
