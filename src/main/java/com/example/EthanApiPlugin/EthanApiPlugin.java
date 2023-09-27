@@ -26,6 +26,7 @@ import net.runelite.client.util.WildcardMatcher;
 import javax.swing.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -45,6 +46,7 @@ public class EthanApiPlugin extends Plugin {
     static PluginManager pluginManager = RuneLite.getInjector().getInstance(PluginManager.class);
     static ItemManager itemManager = RuneLite.getInjector().getInstance(ItemManager.class);
     static Method doAction = null;
+    static String animationField = null;
     public static final int[][] directionsMap = {
             {-2, 0},
             {0, 2},
@@ -151,7 +153,40 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static int getAnimation(NPC npc) {
-        Field animation = npc.getClass().getSuperclass().getDeclaredField("cd");
+        if (npc == null) {
+            return -1;
+        }
+        if (animationField == null) {
+            for (Field declaredField : npc.getClass().getSuperclass().getDeclaredFields()) {
+                if (declaredField == null) {
+                    continue;
+                }
+                declaredField.setAccessible(true);
+                if (declaredField.getType() != int.class) {
+                    continue;
+                }
+                if (Modifier.isFinal(declaredField.getModifiers())) {
+                    continue;
+                }
+                if (Modifier.isStatic(declaredField.getModifiers())) {
+                    continue;
+                }
+                int value = declaredField.getInt(npc);
+                declaredField.setInt(npc, 4795789);
+                if (npc.getAnimation() == 1375718357 * 4795789) {
+                    animationField = declaredField.getName();
+                    declaredField.setInt(npc, value);
+                    declaredField.setAccessible(false);
+                    break;
+                }
+                declaredField.setInt(npc, value);
+                declaredField.setAccessible(false);
+            }
+        }
+        if (animationField == null) {
+            return -1;
+        }
+        Field animation = npc.getClass().getSuperclass().getDeclaredField(animationField);
         animation.setAccessible(true);
         int anim = animation.getInt(npc) * 1375718357;
         animation.setAccessible(false);
