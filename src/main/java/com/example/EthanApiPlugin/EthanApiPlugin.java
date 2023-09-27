@@ -180,20 +180,20 @@ public class EthanApiPlugin extends Plugin {
     public static HeadIcon getHeadIcon(NPC npc) {
         Method getHeadIconArrayMethod = null;
         for (Method declaredMethod : npc.getComposition().getClass().getDeclaredMethods()) {
-            if (declaredMethod.getReturnType() == short[].class && declaredMethod.getParameterTypes().length == 0&& declaredMethod.getName().length()==2) {
+            if (declaredMethod.getReturnType() == short[].class && declaredMethod.getParameterTypes().length == 0) {
                 getHeadIconArrayMethod = declaredMethod;
-                break;
+                if (getHeadIconArrayMethod == null) {
+                    continue;
+                }
+                getHeadIconArrayMethod.setAccessible(true);
+                short[] headIconArray = (short[]) getHeadIconArrayMethod.invoke(npc.getComposition());
+                if (headIconArray == null || headIconArray.length == 0) {
+                    continue;
+                }
+                return HeadIcon.values()[headIconArray[0]];
             }
         }
-        if (getHeadIconArrayMethod == null) {
-            return null;
-        }
-        getHeadIconArrayMethod.setAccessible(true);
-        short[] headIconArray = (short[]) getHeadIconArrayMethod.invoke(npc.getComposition());
-        if (headIconArray == null || headIconArray.length == 0) {
-            return null;
-        }
-        return HeadIcon.values()[headIconArray[0]];
+        return null;
     }
 
     @Deprecated
