@@ -52,13 +52,6 @@ task FatJar(type: Jar) {
     exclude("com/example/PathingTesting")
     with jar
 }
-shadowJar {
-    sourceCompatibility = "11"
-    targetCompatibility = "11"
-    manifest{
-        attributes 'Multi-Release':'true'
-    }
-}
 
 task FatJarWithHidden(type: Jar) {
     manifest {
