@@ -27,7 +27,6 @@ dependencies {
     implementation("org.benf:cfr:0.152")
 }
 sourceSets {
-
     main {
 
         java {
@@ -38,8 +37,9 @@ sourceSets {
 }
 
 group = 'com.example'
-version = '4.9'
+version = '5.3'
 sourceCompatibility = "11"
+targetCompatibility = "11"
 
 task FatJar(type: Jar) {
     manifest {
@@ -49,7 +49,15 @@ task FatJar(type: Jar) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     exclude("com/example/hidden")
+    exclude("com/example/PathingTesting")
     with jar
+}
+shadowJar {
+    sourceCompatibility = "11"
+    targetCompatibility = "11"
+    manifest{
+        attributes 'Multi-Release':'true'
+    }
 }
 
 task FatJarWithHidden(type: Jar) {

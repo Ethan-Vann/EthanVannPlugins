@@ -180,7 +180,7 @@ public class EthanApiPlugin extends Plugin {
     public static HeadIcon getHeadIcon(NPC npc) {
         Method getHeadIconArrayMethod = null;
         for (Method declaredMethod : npc.getComposition().getClass().getDeclaredMethods()) {
-            if (declaredMethod.getReturnType() == short[].class && declaredMethod.getParameterTypes().length == 0) {
+            if (declaredMethod.getReturnType() == short[].class && declaredMethod.getParameterTypes().length == 0&& declaredMethod.getName().length()==2) {
                 getHeadIconArrayMethod = declaredMethod;
                 break;
             }
