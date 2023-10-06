@@ -147,7 +147,7 @@ public class PacketUtilsPlugin extends Plugin {
     }
 
     @SneakyThrows
-    public static void setupNeverlog(){
+    public static void setLogoutTimer(int clientTicks){
         staticClient.setIdleTimeout(42069);
         for (Field declaredField : staticClient.getClass().getDeclaredFields()) {
             if(declaredField.getType()==int.class&& Modifier.isStatic(declaredField.getModifiers())){
@@ -158,11 +158,22 @@ public class PacketUtilsPlugin extends Plugin {
                     continue;
                 }
                 System.out.println("found idle ticks field: " + declaredField.getName());
-                declaredField.setInt(null, Integer.MAX_VALUE);
+                declaredField.setInt(null, clientTicks);
                 declaredField.setAccessible(false);
             }
         }
     }
+
+    @SneakyThrows
+    public static void setupNeverlog(){
+        setLogoutTimer(Integer.MAX_VALUE);
+    }
+
+    @SneakyThrows
+    public static void stopNeverlog(){
+        setLogoutTimer(15000);
+    }
+
     @SneakyThrows
     public void cleanup() {
         if(!loadedConfigName.equals(makeString())){

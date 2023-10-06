@@ -163,6 +163,11 @@ public class TileItemQuery {
         return tileItems;
     }
 
+    public TileItemQuery idInList(List<Integer> ids) {
+        tileItems = tileItems.stream().filter(tileItem -> ids.contains(tileItem.getTileItem().getId())).collect(Collectors.toList());
+        return this;
+    }
+
     public Optional<ETileItem> first() {
         if (tileItems.size() == 0) {
             return Optional.empty();
