@@ -222,6 +222,7 @@ public class EthanApiPlugin extends Plugin {
                 }
                 getHeadIconArrayMethod.setAccessible(true);
                 short[] headIconArray = (short[]) getHeadIconArrayMethod.invoke(npc.getComposition());
+                getHeadIconArrayMethod.setAccessible(false);
                 if (headIconArray == null || headIconArray.length == 0) {
                     continue;
                 }
