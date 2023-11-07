@@ -424,6 +424,7 @@ public class EthanApiPlugin extends Plugin {
                         continue;
                     }
                     doAction = declaredMethod;
+                    System.out.println(doAction);
                     break;
                 }
             }

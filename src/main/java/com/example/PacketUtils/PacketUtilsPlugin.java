@@ -57,7 +57,7 @@ public class PacketUtilsPlugin extends Plugin {
     ClientThread thread;
     public static Method addNodeMethod;
     public static boolean usingClientAddNode = false;
-    public static final int CLIENT_REV = 217;
+    public static final int CLIENT_REV = 218;
     private static boolean loaded = false;
     private static String loadedConfigName = "";
     @Inject
@@ -247,6 +247,7 @@ public class PacketUtilsPlugin extends Plugin {
         Path patchedOutputPath = codeSource.resolve("patched.jar");
         Path doActionOutputPath = codeSource.resolve("doAction.class");
         Path decompilationOutputPath = codeSource.resolve("decompiled.txt");
+        System.out.println("Downloading vanilla client");
         downloadVanillaJar(vanillaOutputPath, rlConfigURL);
         File vanilla = vanillaOutputPath.toFile();
         if (vanilla.exists()) {
