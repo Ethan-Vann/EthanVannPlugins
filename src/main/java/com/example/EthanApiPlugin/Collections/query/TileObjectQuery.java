@@ -3,7 +3,6 @@ package com.example.EthanApiPlugin.Collections.query;
 import net.runelite.api.Client;
 import net.runelite.api.ObjectComposition;
 import net.runelite.api.TileObject;
-import net.runelite.api.World;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
 
