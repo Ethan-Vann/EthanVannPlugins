@@ -657,7 +657,6 @@ public class EthanApiPlugin extends Plugin {
     }
 
     public static ArrayList<WorldPoint> pathToGoal(WorldPoint goal, HashSet<WorldPoint> dangerous) {
-
         ArrayList<List<WorldPoint>> paths = new ArrayList<>();
         paths.add(List.of(client.getLocalPlayer().getWorldLocation()));
         HashSet<WorldPoint> walkableTiles = new HashSet<>(reachableTiles());
@@ -669,7 +668,6 @@ public class EthanApiPlugin extends Plugin {
     }
 
     public static ArrayList<WorldPoint> pathToGoal(HashSet<WorldPoint> goalSet, HashSet<WorldPoint> dangerous) {
-
         ArrayList<List<WorldPoint>> paths = new ArrayList<>();
         paths.add(List.of(client.getLocalPlayer().getWorldLocation()));
         HashSet<WorldPoint> walkableTiles = new HashSet<>(reachableTiles());
@@ -702,6 +700,9 @@ public class EthanApiPlugin extends Plugin {
                                                    HashSet<WorldPoint> impassible, HashSet<WorldPoint> dangerous,
                                                    HashSet<WorldPoint> walkable, HashSet<WorldPoint> walked) {
         Queue<List<WorldPoint>> queue = new LinkedList<>(paths);
+        if(queue.isEmpty()){
+            queue.add(List.of(client.getLocalPlayer().getWorldLocation()));
+        }
         ArrayDeque<Node> nodeQueue = new ArrayDeque<>();
         if (Collections.disjoint(walkable, goal)) {
             return null;
