@@ -108,6 +108,12 @@ public class ItemQuery {
         return this;
     }
 
+    public ItemQuery onlyStackable() {
+        items = items.stream().filter(this::isStackable).collect(Collectors.toList());
+        return this;
+    }
+
+
     public ItemQuery onlyUnnoted() {
         items = items.stream().filter(item -> !isNoted(item)).collect(Collectors.toList());
         return this;
@@ -138,5 +144,11 @@ public class ItemQuery {
     public boolean isNoted(Widget item) {
         ItemComposition itemComposition = EthanApiPlugin.itemDefs.get(item.getItemId());
         return itemComposition.getNote() != -1;
+    }
+
+    @SneakyThrows
+    public boolean isStackable(Widget item) {
+        ItemComposition itemComposition = EthanApiPlugin.itemDefs.get(item.getItemId());
+        return itemComposition.isStackable();
     }
 }
