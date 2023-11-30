@@ -1,9 +1,6 @@
 package com.example.EthanApiPlugin.Utility;
 
-import net.runelite.api.CollisionData;
-import net.runelite.api.GameObject;
-import net.runelite.api.Point;
-import net.runelite.api.TileObject;
+import net.runelite.api.*;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
@@ -54,7 +51,9 @@ public class WorldAreaUtility {
             if (localScenePoint == null){
                 continue;
             }
-            if (planeData[localScenePoint.getSceneX()][localScenePoint.getSceneY()] > 0){
+
+            int flags = planeData[localScenePoint.getSceneX()][localScenePoint.getSceneY()];
+            if ((flags & CollisionDataFlag.BLOCK_MOVEMENT_FULL) != 0){
                 grownArea.remove(testPoint);
             }
         }
