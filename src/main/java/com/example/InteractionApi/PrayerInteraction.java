@@ -41,7 +41,7 @@ public class PrayerInteraction {
         prayerMap.put(Prayer.MYSTIC_LORE, WidgetInfoExtended.PRAYER_MYSTIC_LORE);
         prayerMap.put(Prayer.SUPERHUMAN_STRENGTH, WidgetInfoExtended.PRAYER_SUPERHUMAN_STRENGTH);
         prayerMap.put(Prayer.MYSTIC_WILL, WidgetInfoExtended.PRAYER_MYSTIC_WILL);
-        prayerMap.put(Prayer.RP_REJUVENATION, WidgetInfoExtended.PRAYER_MYSTIC_WILL);
+        prayerMap.put(Prayer.RP_REJUVENATION, WidgetInfoExtended.PRAYER_RP_REJUVENATION);
         prayerMap.put(Prayer.RP_ANCIENT_STRENGTH, WidgetInfoExtended.PRAYER_RP_ANCIENT_STRENGTH);
         prayerMap.put(Prayer.RP_ANCIENT_SIGHT, WidgetInfoExtended.PRAYER_RP_ANCIENT_SIGHT);
         prayerMap.put(Prayer.RP_ANCIENT_WILL, WidgetInfoExtended.PRAYER_RP_ANCIENT_WILL);
