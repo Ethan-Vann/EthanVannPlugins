@@ -453,6 +453,11 @@ public class EquipmentItemWidget implements Widget {
     }
 
     @Override
+    public Widget createStaticChild(int type) {
+        return null;
+    }
+
+    @Override
     public Widget createChild(int index, int type) {
         return null;
     }
@@ -764,6 +769,11 @@ public class EquipmentItemWidget implements Widget {
 
     @Override
     public void setOnDragListener(Object... args) {
+
+    }
+
+    @Override
+    public void setOnScrollWheelListener(Object... args) {
 
     }
 
