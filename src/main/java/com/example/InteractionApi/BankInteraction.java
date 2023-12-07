@@ -15,6 +15,12 @@ public class BankInteraction {
     private static final int WITHDRAW_AS_VARBIT = 3958;
     private static final int WITHDRAW_ITEM_MODE = 0;
     private static final int WITHDRAW_NOTES_MODE = 1;
+    private static final int WITHDRAW_ITEM_MODE_WIDGET = 786454;
+    private static final int WITHDRAW_NOTE_MODE_WIDGET = 786456;
+
+    private static final String ITEM_MODE_ACTION = "Item";
+    private static final String NOTE_MODE_ACTION = "Note";
+
 
     public static boolean useItem(String name, boolean noted, String... actions) {
         return Bank.search().withName(name).first().flatMap(item ->
@@ -89,8 +95,8 @@ public class BankInteraction {
 
     public static boolean setWithdrawMode(boolean noted) {
         int withdrawAsVarbitValue = EthanApiPlugin.getClient().getVarbitValue(WITHDRAW_AS_VARBIT);
-        Optional<Widget> itemWidget = Widgets.search().withId(786454).withAction("Item").first();
-        Optional<Widget> noteWidget = Widgets.search().withId(786456).withAction("Note").first();
+        Optional<Widget> itemWidget = Widgets.search().withId(WITHDRAW_ITEM_MODE_WIDGET).withAction(ITEM_MODE_ACTION).first();
+        Optional<Widget> noteWidget = Widgets.search().withId(WITHDRAW_NOTE_MODE_WIDGET).withAction(NOTE_MODE_ACTION).first();
         if (itemWidget.isEmpty() || noteWidget.isEmpty()) {
             return false;
         }
