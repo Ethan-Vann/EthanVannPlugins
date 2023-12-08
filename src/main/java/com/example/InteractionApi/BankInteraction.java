@@ -173,14 +173,14 @@ public class BankInteraction {
 
         if (withdrawMode == WITHDRAW_ITEM_MODE && withdrawAsVarbitValue != WITHDRAW_ITEM_MODE) {
             MousePackets.queueClickPacket();
-            WidgetPackets.queueWidgetAction(noteWidget.get(), "Note");
+            WidgetPackets.queueWidgetAction(noteWidget.get(), "Item");
 
             return true;
         }
 
         if (withdrawMode == WITHDRAW_NOTES_MODE && withdrawAsVarbitValue != WITHDRAW_NOTES_MODE) {
             MousePackets.queueClickPacket();
-            WidgetPackets.queueWidgetAction(itemWidget.get(), "Item");
+            WidgetPackets.queueWidgetAction(itemWidget.get(), "Note");
 
             return true;
         }
