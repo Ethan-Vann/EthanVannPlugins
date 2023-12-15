@@ -213,16 +213,11 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static HeadIcon getHeadIcon(NPC npc) {
-        Method getHeadIconArrayMethod = null;
         for (Method declaredMethod : npc.getComposition().getClass().getDeclaredMethods()) {
-            if (declaredMethod.getReturnType() == short[].class && declaredMethod.getParameterTypes().length == 0) {
-                getHeadIconArrayMethod = declaredMethod;
-                if (getHeadIconArrayMethod == null) {
-                    continue;
-                }
-                getHeadIconArrayMethod.setAccessible(true);
-                short[] headIconArray = (short[]) getHeadIconArrayMethod.invoke(npc.getComposition());
-                getHeadIconArrayMethod.setAccessible(false);
+            if (declaredMethod.getReturnType() == short[].class && declaredMethod.getParameterTypes().length == 0 && declaredMethod.getName().length()==2) {
+                declaredMethod.setAccessible(true);
+                short[] headIconArray = (short[]) declaredMethod.invoke(npc.getComposition());
+                declaredMethod.setAccessible(false);
                 if (headIconArray == null || headIconArray.length == 0) {
                     continue;
                 }
