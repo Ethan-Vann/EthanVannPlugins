@@ -18,28 +18,28 @@ public class PlayerPackets {
         int ctrl = ctrlDown ? 1 : 0;
         switch (actionFieldNo) {
             case 1:
-                PacketReflection.sendPacket(PacketDef.OPPLAYER1, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpPlayer1(), playerIndex, ctrl);
                 break;
             case 2:
-                PacketReflection.sendPacket(PacketDef.OPPLAYER2, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpPlayer2(), playerIndex, ctrl);
                 break;
             case 3:
-                PacketReflection.sendPacket(PacketDef.OPPLAYER3, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpPlayer3(), playerIndex, ctrl);
                 break;
             case 4:
-                PacketReflection.sendPacket(PacketDef.OPPLAYER4, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpPlayer4(), playerIndex, ctrl);
                 break;
             case 5:
-                PacketReflection.sendPacket(PacketDef.OPPLAYER5, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpPlayer5(), playerIndex, ctrl);
                 break;
             case 6:
-                PacketReflection.sendPacket(PacketDef.OPPLAYER6, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpPlayer6(), playerIndex, ctrl);
                 break;
             case 7:
-                PacketReflection.sendPacket(PacketDef.OPPLAYER7, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpPlayer7(), playerIndex, ctrl);
                 break;
             case 8:
-                PacketReflection.sendPacket(PacketDef.OPPLAYER8, playerIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpPlayer8(), playerIndex, ctrl);
                 break;
         }
     }
@@ -70,7 +70,7 @@ public class PlayerPackets {
     public static void queueWidgetOnPlayer(int playerIndex, int sourceItemId, int sourceSlot, int sourceWidgetId,
                                            boolean ctrlDown) {
         int ctrl = ctrlDown ? 1 : 0;
-        PacketReflection.sendPacket(PacketDef.OPPLAYERT, playerIndex, sourceItemId, sourceSlot, sourceWidgetId, ctrl);
+        PacketReflection.sendPacket(PacketDef.getOpPlayerT(), playerIndex, sourceItemId, sourceSlot, sourceWidgetId, ctrl);
     }
 
     public static void queueWidgetOnPlayer(Player player, Widget widget) {

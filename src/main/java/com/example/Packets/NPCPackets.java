@@ -19,19 +19,19 @@ public class NPCPackets {
         int ctrl = ctrlDown ? 1 : 0;
         switch (actionFieldNo) {
             case 1:
-                PacketReflection.sendPacket(PacketDef.OPNPC1, npcIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpNpc1(), npcIndex, ctrl);
                 break;
             case 2:
-                PacketReflection.sendPacket(PacketDef.OPNPC2, npcIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpNpc2(), npcIndex, ctrl);
                 break;
             case 3:
-                PacketReflection.sendPacket(PacketDef.OPNPC3, npcIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpNpc3(), npcIndex, ctrl);
                 break;
             case 4:
-                PacketReflection.sendPacket(PacketDef.OPNPC4, npcIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpNpc4(), npcIndex, ctrl);
                 break;
             case 5:
-                PacketReflection.sendPacket(PacketDef.OPNPC5, npcIndex, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpNpc5(), npcIndex, ctrl);
                 break;
         }
     }
@@ -72,7 +72,7 @@ public class NPCPackets {
     public static void queueWidgetOnNPC(int npcIndex, int sourceItemId, int sourceSlot, int sourceWidgetId,
                                         boolean ctrlDown) {
         int ctrl = ctrlDown ? 1 : 0;
-        PacketReflection.sendPacket(PacketDef.OPNPCT, npcIndex, sourceItemId, sourceSlot, sourceWidgetId, ctrl);
+        PacketReflection.sendPacket(PacketDef.getOpNpcT(), npcIndex, sourceItemId, sourceSlot, sourceWidgetId, ctrl);
     }
 
     public static void queueWidgetOnNPC(NPC npc, Widget widget) {

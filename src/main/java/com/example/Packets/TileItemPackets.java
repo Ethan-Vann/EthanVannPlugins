@@ -13,19 +13,19 @@ public class TileItemPackets {
         int ctrl = ctrlDown ? 1 : 0;
         switch (actionFieldNo) {
             case 1:
-                PacketReflection.sendPacket(PacketDef.OPOBJ1, objectId, worldPointX, worldPointY, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpObj1(), objectId, worldPointX, worldPointY, ctrl);
                 break;
             case 2:
-                PacketReflection.sendPacket(PacketDef.OPOBJ2, objectId, worldPointX, worldPointY, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpObj2(), objectId, worldPointX, worldPointY, ctrl);
                 break;
             case 3:
-                PacketReflection.sendPacket(PacketDef.OPOBJ3, objectId, worldPointX, worldPointY, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpObj3(), objectId, worldPointX, worldPointY, ctrl);
                 break;
             case 4:
-                PacketReflection.sendPacket(PacketDef.OPOBJ4, objectId, worldPointX, worldPointY, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpObj4(), objectId, worldPointX, worldPointY, ctrl);
                 break;
             case 5:
-                PacketReflection.sendPacket(PacketDef.OPOBJ5, objectId, worldPointX, worldPointY, ctrl);
+                PacketReflection.sendPacket(PacketDef.getOpObj5(), objectId, worldPointX, worldPointY, ctrl);
                 break;
         }
     }
@@ -33,7 +33,7 @@ public class TileItemPackets {
     public static void queueWidgetOnTileItem(int objectId, int worldPointX, int worldPointY, int sourceSlot,
                                              int sourceItemId, int sourceWidgetId, boolean ctrlDown) {
         int ctrl = ctrlDown ? 1 : 0;
-        PacketReflection.sendPacket(PacketDef.OPOBJT, objectId, worldPointX, worldPointY, sourceSlot, sourceItemId,
+        PacketReflection.sendPacket(PacketDef.getOpObjT(), objectId, worldPointX, worldPointY, sourceSlot, sourceItemId,
                 sourceWidgetId, ctrl);
     }
 

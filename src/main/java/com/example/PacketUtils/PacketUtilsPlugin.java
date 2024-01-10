@@ -57,7 +57,7 @@ public class PacketUtilsPlugin extends Plugin {
     ClientThread thread;
     public static Method addNodeMethod;
     public static boolean usingClientAddNode = false;
-    public static final int CLIENT_REV = 218;
+    public static final int CLIENT_REV = 219;
     private static boolean loaded = false;
     private static String loadedConfigName = "";
     @Inject
@@ -191,7 +191,7 @@ public class PacketUtilsPlugin extends Plugin {
             Path f = codeSource.resolve(version + "-" + client.getRevision() + ".txt");
             List<String> lines = Files.readAllLines(f);
             loadedConfigName = f.getFileName().toString();
-            System.out.println(loadedConfigName);
+            System.out.println("config name: "+loadedConfigName);
             if (lines.size() < 2) {
                 return;
             }
