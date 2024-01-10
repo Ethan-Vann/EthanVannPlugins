@@ -103,7 +103,7 @@ public class EthanApiPlugin extends Plugin {
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
         try {
-            skullField = player.getClass().getDeclaredField("ar");
+            skullField = player.getClass().getDeclaredField("af");
             skullField.setAccessible(true);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
@@ -111,7 +111,7 @@ public class EthanApiPlugin extends Plugin {
         }
         int var1 = -1;
         try {
-            var1 = skullField.getInt(player) * -110809851;
+            var1 = skullField.getInt(player) * -921814889;
             skullField.setAccessible(false);
         } catch (IllegalAccessException | NullPointerException e) {
             e.printStackTrace();
@@ -173,7 +173,7 @@ public class EthanApiPlugin extends Plugin {
                 }
                 int value = declaredField.getInt(npc);
                 declaredField.setInt(npc, 4795789);
-                if (npc.getAnimation() == -760216869 * 4795789) {
+                if (npc.getAnimation() == -70627403 * 4795789) {
                     animationField = declaredField.getName();
                     declaredField.setInt(npc, value);
                     declaredField.setAccessible(false);
@@ -188,25 +188,25 @@ public class EthanApiPlugin extends Plugin {
         }
         Field animation = npc.getClass().getSuperclass().getDeclaredField(animationField);
         animation.setAccessible(true);
-        int anim = animation.getInt(npc) * -760216869;
+        int anim = animation.getInt(npc) * -70627403;
         animation.setAccessible(false);
         return anim;
     }
 
     @SneakyThrows
     public static int pathLength(NPC npc) {
-        Field pathLength = npc.getClass().getSuperclass().getDeclaredField("dq");
+        Field pathLength = npc.getClass().getSuperclass().getDeclaredField("cx");
         pathLength.setAccessible(true);
-        int path = pathLength.getInt(npc) * -1742381503;
+        int path = pathLength.getInt(npc) * 6573123;
         pathLength.setAccessible(false);
         return path;
     }
 
     @SneakyThrows
     public static int pathLength(Player player) {
-        Field pathLength = player.getClass().getSuperclass().getDeclaredField("dq");
+        Field pathLength = player.getClass().getSuperclass().getDeclaredField("cx");
         pathLength.setAccessible(true);
-        int path = pathLength.getInt(player) * -1742381503;
+        int path = pathLength.getInt(player) * 6573123;
         pathLength.setAccessible(false);
         return path;
     }
@@ -430,7 +430,7 @@ public class EthanApiPlugin extends Plugin {
             }
         }
         doAction.setAccessible(true);
-        doAction.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, (byte) 88);
+        doAction.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, (byte) 90);
         doAction.setAccessible(false);
     }
 
