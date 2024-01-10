@@ -28,22 +28,22 @@ public class TileObjectQuery {
                 }).collect(Collectors.toList());
         return this;
     }
-    public TileObjectQuery withActions(String... actions){
-tileObjects =
-                tileObjects.stream().filter(tileObject -> {
-                    ObjectComposition objectComposition = getObjectComposition(tileObject);
-                    if (objectComposition == null)
-                        return false;
-                    String[] objectActions = objectComposition.getActions();
-                    for (String action : actions) {
-                        if (Arrays.stream(objectActions).filter(Objects::nonNull).anyMatch(a -> a.equalsIgnoreCase(action))) {
-                            return true;
-                        }
-                    }
-                    return false;
-                }).collect(Collectors.toList());
-        return this;
-    }
+//    public TileObjectQuery withActions(String... actions){
+//tileObjects =
+//                tileObjects.stream().filter(tileObject -> {
+//                    ObjectComposition objectComposition = getObjectComposition(tileObject);
+//                    if (objectComposition == null)
+//                        return false;
+//                    String[] objectActions = objectComposition.getActions();
+//                    for (String action : actions) {
+//                        if (Arrays.stream(objectActions).filter(Objects::nonNull).anyMatch(a -> a.equalsIgnoreCase(action))) {
+//                            return true;
+//                        }
+//                    }
+//                    return false;
+//                }).collect(Collectors.toList());
+//        return this;
+//    }
 
     public TileObjectQuery withId(int id) {
         tileObjects = tileObjects.stream().filter(tileObject -> tileObject.getId() == id).collect(Collectors.toList());
