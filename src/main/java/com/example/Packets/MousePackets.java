@@ -7,12 +7,19 @@ import lombok.SneakyThrows;
 import net.runelite.api.Client;
 import net.runelite.client.RuneLite;
 
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
 import java.math.BigInteger;
+import java.util.Random;
+import java.util.concurrent.Executors;
+
+import static java.awt.event.InputEvent.BUTTON1_DOWN_MASK;
 
 public class MousePackets{
     
     static Client client = RuneLite.getInjector().getInstance(Client.class);
+    private static final Random random = new Random();
+    private static long randomDelay = randomDelay();
     public static BigInteger modInverse(BigInteger val, int bits) {
         try {
             BigInteger shift = BigInteger.ONE.shiftLeft(bits);
@@ -41,16 +48,45 @@ public class MousePackets{
         }
         int mouseInfo = ((int) deltaMs << 1);
         PacketReflection.sendPacket(PacketDef.getEventMouseClick(), mouseInfo, x, y);
+        if (checkIdleLogout()) {
+            randomDelay = randomDelay();
+            Executors.newSingleThreadExecutor()
+                    .submit(MousePackets::pressKey);
+        }
     }
 
     public static void queueClickPacket() {
         queueClickPacket(0, 0);
     }
 
-    public void queueRandomClickPacket(int x, int y) {
+    private static boolean checkIdleLogout() {
+        int idleClientTicks = client.getKeyboardIdleTicks();
 
+        if (client.getMouseIdleTicks() < idleClientTicks) {
+            idleClientTicks = client.getMouseIdleTicks();
+        }
+
+        return idleClientTicks >= randomDelay;
     }
 
+    private static long randomDelay() {
+        return (long) clamp(
+                Math.round(random.nextGaussian() * 8000)
+        );
+    }
+
+    private static double clamp(double val) {
+        return Math.max(1, Math.min(13000, val));
+    }
+
+    private static void pressKey() {
+        KeyEvent keyPress = new KeyEvent(client.getCanvas(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), BUTTON1_DOWN_MASK, KeyEvent.VK_BACK_SPACE);
+        client.getCanvas().dispatchEvent(keyPress);
+        KeyEvent keyRelease = new KeyEvent(client.getCanvas(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_BACK_SPACE);
+        client.getCanvas().dispatchEvent(keyRelease);
+        KeyEvent keyTyped = new KeyEvent(client.getCanvas(), KeyEvent.KEY_TYPED, System.currentTimeMillis(), 0, KeyEvent.VK_BACK_SPACE);
+        client.getCanvas().dispatchEvent(keyTyped);
+    }
     @SneakyThrows
     public static long getMouseHandlerLastMillis() {
         Class<?> mouseHandler = client.getClass().getClassLoader().loadClass(ObfuscatedNames.MouseHandler_lastPressedTimeMillisClass);
