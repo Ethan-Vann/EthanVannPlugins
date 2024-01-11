@@ -88,7 +88,7 @@ public class PacketDef {
     public static PacketDef getOpNpcT() {
         String[] writeData = new String[]{ObfuscatedNames.OPNPCT_WRITE1, ObfuscatedNames.OPNPCT_WRITE2, ObfuscatedNames.OPNPCT_WRITE3,ObfuscatedNames.OPNPCT_WRITE4,ObfuscatedNames.OPNPCT_WRITE5};
         String[][] writeMethods = ObfuscatedNames.OPNPCT_WRITES;
-        return new PacketDef(ObfuscatedNames.OPNPCT_OBFUSCATEDNAME, writeData, writeMethods, PacketType.OPNPC);
+        return new PacketDef(ObfuscatedNames.OPNPCT_OBFUSCATEDNAME, writeData, writeMethods, PacketType.OPNPCT);
     }
 
     public static PacketDef getOpPlayerT() {
