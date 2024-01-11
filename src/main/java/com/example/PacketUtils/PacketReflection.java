@@ -124,7 +124,6 @@ public class PacketReflection {
                 int index = params.indexOf(def.writeData[i]);
                 Object writeValue = objects[index];
                 for (String s : def.writeMethods[i]) {
-                    System.out.println("Writing: " + s + " " + writeValue);
                     BufferMethods.writeValue(s, (Integer) writeValue, buffer);
                 }
             }
