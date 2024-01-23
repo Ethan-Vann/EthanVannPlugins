@@ -193,7 +193,7 @@ public class NPCQuery {
     }
 
     public Optional<NPC> nearestByPath() {
-        return npcs.stream().distinct().min(Comparator.comparingInt(o -> {
+        return npcs.stream().min(Comparator.comparingInt(o -> {
             var path = GlobalCollisionMap.findPath(o.getWorldLocation());
             if (path == null) {
                 return Integer.MAX_VALUE;

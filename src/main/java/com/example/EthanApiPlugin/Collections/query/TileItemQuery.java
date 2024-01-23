@@ -200,7 +200,7 @@ public class TileItemQuery {
     }
 
     public Optional<ETileItem> nearestByPath() {
-        return tileItems.stream().distinct().min(Comparator.comparingInt(o -> {
+        return tileItems.stream().min(Comparator.comparingInt(o -> {
             var path = GlobalCollisionMap.findPath(o.location);
             if (path == null) {
                 return Integer.MAX_VALUE;

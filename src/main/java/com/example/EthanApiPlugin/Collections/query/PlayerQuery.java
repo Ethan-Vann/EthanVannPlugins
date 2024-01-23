@@ -107,7 +107,7 @@ public class PlayerQuery {
     }
 
     public Optional<Player> nearestByPath() {
-        return players.stream().distinct().min(Comparator.comparingInt(o -> {
+        return players.stream().min(Comparator.comparingInt(o -> {
             var path = GlobalCollisionMap.findPath(o.getWorldLocation());
             if (path == null) {
                 return Integer.MAX_VALUE;

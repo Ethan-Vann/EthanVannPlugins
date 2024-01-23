@@ -141,7 +141,7 @@ public class TileObjectQuery {
     }
 
     public Optional<TileObject> nearestByPath() {
-        return tileObjects.stream().distinct().min(Comparator.comparingInt(o -> {
+        return tileObjects.stream().min(Comparator.comparingInt(o -> {
             List<WorldPoint> adjacentTiles = WorldAreaUtility.objectInteractableTiles(o);
             return adjacentTiles.stream().distinct().mapToInt(worldPoint -> {
                 List<WorldPoint> path = GlobalCollisionMap.findPath(worldPoint);
