@@ -2,9 +2,11 @@ package com.example.EthanApiPlugin.Collections.query;
 
 import com.example.EthanApiPlugin.Collections.ETileItem;
 import com.example.EthanApiPlugin.EthanApiPlugin;
+import com.example.EthanApiPlugin.PathFinding.GlobalCollisionMap;
 import lombok.SneakyThrows;
 import net.runelite.api.Client;
 import net.runelite.api.ItemComposition;
+import net.runelite.api.NPC;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
 import net.runelite.client.game.ItemManager;
@@ -195,5 +197,15 @@ public class TileItemQuery {
     public boolean isNoted(ETileItem item) {
         ItemComposition itemComposition = EthanApiPlugin.itemDefs.get(item.tileItem.getId());
         return itemComposition.getNote() != -1;
+    }
+
+    public Optional<ETileItem> nearestByPath() {
+        return tileItems.stream().min(Comparator.comparingInt(o -> {
+            var path = GlobalCollisionMap.findPath(o.location);
+            if (path == null) {
+                return Integer.MAX_VALUE;
+            }
+            return path.size();
+        }));
     }
 }

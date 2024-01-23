@@ -1,11 +1,15 @@
 package com.example.EthanApiPlugin.Collections.query;
 
+import com.example.EthanApiPlugin.EthanApiPlugin;
+import com.example.EthanApiPlugin.PathFinding.GlobalCollisionMap;
+import com.example.EthanApiPlugin.Utility.WorldAreaUtility;
 import net.runelite.api.Client;
 import net.runelite.api.ObjectComposition;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -134,6 +138,19 @@ public class TileObjectQuery {
 
     public Optional<TileObject> nearestToPlayer() {
         return tileObjects.stream().min(Comparator.comparingInt(o -> client.getLocalPlayer().getWorldLocation().distanceTo(o.getWorldLocation())));
+    }
+
+    public Optional<TileObject> nearestByPath() {
+        return tileObjects.stream().min(Comparator.comparingInt(o -> {
+            List<WorldPoint> adjacentTiles = WorldAreaUtility.objectInteractableTiles(o);
+            return adjacentTiles.stream().distinct().mapToInt(worldPoint -> {
+                List<WorldPoint> path = GlobalCollisionMap.findPath(worldPoint);
+                if (path == null) {
+                    return Integer.MAX_VALUE;
+                }
+                return path.size();
+            }).min().orElse(Integer.MAX_VALUE);
+        }));
     }
 
     public Optional<TileObject> nearestToPoint(WorldPoint point) {

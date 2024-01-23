@@ -2,6 +2,8 @@ package com.example.EthanApiPlugin.Collections.query;
 
 import com.example.EthanApiPlugin.Collections.Players;
 import com.example.EthanApiPlugin.EthanApiPlugin;
+import com.example.EthanApiPlugin.PathFinding.GlobalCollisionMap;
+import com.example.EthanApiPlugin.Utility.WorldAreaUtility;
 import net.runelite.api.*;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
@@ -188,5 +190,15 @@ public class NPCQuery {
             return npc.getComposition();
         }
         return npc.getTransformedComposition();
+    }
+
+    public Optional<NPC> nearestByPath() {
+        return npcs.stream().min(Comparator.comparingInt(o -> {
+            var path = GlobalCollisionMap.findPath(o.getWorldLocation());
+            if (path == null) {
+                return Integer.MAX_VALUE;
+            }
+            return path.size();
+        }));
     }
 }
