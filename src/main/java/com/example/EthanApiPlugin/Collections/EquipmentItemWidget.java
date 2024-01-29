@@ -288,7 +288,7 @@ public class EquipmentItemWidget implements Widget {
 
     @Override
     public int getIndex() {
-        return -1;
+        return index;
     }
 
     @Override
@@ -323,7 +323,7 @@ public class EquipmentItemWidget implements Widget {
 
     @Override
     public int getItemId() {
-        return -1;
+        return equipmentItemId;
     }
 
     @Override
