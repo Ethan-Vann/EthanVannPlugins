@@ -143,13 +143,11 @@ public class TileObjectQuery {
     public Optional<TileObject> nearestByPath() {
         return tileObjects.stream().min(Comparator.comparingInt(o -> {
             List<WorldPoint> adjacentTiles = WorldAreaUtility.objectInteractableTiles(o);
-            return adjacentTiles.stream().distinct().mapToInt(worldPoint -> {
-                List<WorldPoint> path = GlobalCollisionMap.findPath(worldPoint);
-                if (path == null) {
-                    return Integer.MAX_VALUE;
-                }
+            ArrayList<WorldPoint> path = EthanApiPlugin.pathToGoal(new HashSet<>(adjacentTiles), new HashSet<>());
+            if (path != null) {
                 return path.size();
-            }).min().orElse(Integer.MAX_VALUE);
+            }
+            return Integer.MAX_VALUE;
         }));
     }
 

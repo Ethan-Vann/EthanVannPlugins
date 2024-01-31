@@ -1,17 +1,14 @@
 package com.example.EthanApiPlugin.Collections.query;
 
-import com.example.EthanApiPlugin.PathFinding.GlobalCollisionMap;
+import com.example.EthanApiPlugin.EthanApiPlugin;
 import net.runelite.api.Actor;
 import net.runelite.api.Client;
-import net.runelite.api.NPC;
 import net.runelite.api.Player;
 import net.runelite.api.coords.WorldArea;
+import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -108,11 +105,11 @@ public class PlayerQuery {
 
     public Optional<Player> nearestByPath() {
         return players.stream().min(Comparator.comparingInt(o -> {
-            var path = GlobalCollisionMap.findPath(o.getWorldLocation());
-            if (path == null) {
+            EthanApiPlugin.PathResult path = EthanApiPlugin.canPathToTile(o.getWorldLocation());
+            if (!path.isReachable()) {
                 return Integer.MAX_VALUE;
             }
-            return path.size();
+            return path.getDistance();
         }));
     }
 }

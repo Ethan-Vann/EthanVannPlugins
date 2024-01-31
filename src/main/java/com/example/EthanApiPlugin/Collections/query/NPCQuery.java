@@ -194,11 +194,11 @@ public class NPCQuery {
 
     public Optional<NPC> nearestByPath() {
         return npcs.stream().min(Comparator.comparingInt(o -> {
-            var path = GlobalCollisionMap.findPath(o.getWorldLocation());
-            if (path == null) {
+            EthanApiPlugin.PathResult path = EthanApiPlugin.canPathToTile(o.getWorldLocation());
+            if (!path.isReachable()) {
                 return Integer.MAX_VALUE;
             }
-            return path.size();
+            return path.getDistance();
         }));
     }
 }
