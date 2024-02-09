@@ -56,29 +56,6 @@ public class Bank {
         return client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER) != null && !client.getWidget(WidgetInfo.BANK_ITEM_CONTAINER).isHidden();
     }
 
-//    @Subscribe
-//    public void onItemContainerChanged(ItemContainerChanged e) {
-//        if (e.getContainerId() == 95) {
-//            int i = 0;
-//            Bank.bankItems.clear();
-//            for (Item item : e.getItemContainer().getItems()) {
-//                try {
-//                    if (item == null) {
-//                        i++;
-//                        continue;
-//                    }
-//                    if (EthanApiPlugin.itemDefs.get(item.getId()).getPlaceholderTemplateId() == 14401) {
-//                        i++;
-//                        continue;
-//                    }
-//                    Bank.bankItems.add(new BankItemWidget(EthanApiPlugin.itemDefs.get(item.getId()).getName(), item.getId(), item.getQuantity(), i));
-//                } catch (NullPointerException | ExecutionException ex) {
-//                    //todo fix this
-//                }
-//                i++;
-//            }
-//        }
-//    }
 
     @Subscribe
     public void onGameStateChanged(GameStateChanged gameStateChanged) {
