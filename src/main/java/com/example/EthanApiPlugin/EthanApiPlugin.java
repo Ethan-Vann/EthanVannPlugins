@@ -274,33 +274,48 @@ public class EthanApiPlugin extends Plugin {
     }
 
     public static List<WorldPoint> reachableTiles() {
-        HashSet<Tile> retPoints = new HashSet<>();
-        Tile[][] tiles = client.getScene().getTiles()[client.getPlane()];
+        boolean[][] visited = new boolean[104][104];
         int[][] flags = client.getCollisionMaps()[client.getPlane()].getFlags();
-        Tile firstPoint = tiles[client.getLocalPlayer().getWorldLocation().getX() - client.getBaseX()][client.getLocalPlayer().getWorldLocation().getY() - client.getBaseY()];
-        ArrayDeque<Tile> queue = new ArrayDeque<>();
+        WorldPoint playerLoc = client.getLocalPlayer().getWorldLocation();
+        int firstPoint = (playerLoc.getX()-client.getBaseX() << 16) | playerLoc.getY()-client.getBaseY();
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
         queue.add(firstPoint);
         while (!queue.isEmpty()) {
-            Tile tile = queue.poll();
-            int x = tile.getSceneLocation().getX();
-            int y = tile.getSceneLocation().getY();
-            if (y < 0 || x < 0 || y > 127 || x > 127) {
+            int point = queue.poll();
+            short x =(short)(point >> 16);
+            short y = (short)point;
+            if (y < 0 || x < 0 || y > 104 || x > 104) {
                 continue;
             }
-            if ((flags[x][y] & CollisionDataFlag.BLOCK_MOVEMENT_SOUTH) == 0 && (flags[x][y - 1] & CollisionDataFlag.BLOCK_MOVEMENT_FULL) == 0 && retPoints.add(tiles[x][y - 1])) {
-                queue.add(tiles[x][y - 1]);
+            if ((flags[x][y] & CollisionDataFlag.BLOCK_MOVEMENT_SOUTH) == 0 && (flags[x][y - 1] & CollisionDataFlag.BLOCK_MOVEMENT_FULL) == 0 && !visited[x][y - 1]) {
+                queue.add((x << 16) | (y - 1));
+                visited[x][y - 1] = true;
             }
-            if ((flags[x][y] & CollisionDataFlag.BLOCK_MOVEMENT_NORTH) == 0 && (flags[x][y + 1] & CollisionDataFlag.BLOCK_MOVEMENT_FULL) == 0 && retPoints.add(tiles[x][y + 1])) {
-                queue.add(tiles[x][y + 1]);
+            if ((flags[x][y] & CollisionDataFlag.BLOCK_MOVEMENT_NORTH) == 0 && (flags[x][y + 1] & CollisionDataFlag.BLOCK_MOVEMENT_FULL) == 0 && !visited[x][y + 1]) {
+                queue.add((x << 16) | (y + 1));
+                visited[x][y + 1] = true;
             }
-            if ((flags[x][y] & CollisionDataFlag.BLOCK_MOVEMENT_WEST) == 0 && (flags[x - 1][y] & CollisionDataFlag.BLOCK_MOVEMENT_FULL) == 0 && retPoints.add(tiles[x - 1][y])) {
-                queue.add(tiles[x - 1][y]);
+            if ((flags[x][y] & CollisionDataFlag.BLOCK_MOVEMENT_WEST) == 0 && (flags[x - 1][y] & CollisionDataFlag.BLOCK_MOVEMENT_FULL) == 0 && !visited[x - 1][y]) {
+                queue.add(((x - 1) << 16) | y);
+                visited[x - 1][y] = true;
             }
-            if ((flags[x][y] & CollisionDataFlag.BLOCK_MOVEMENT_EAST) == 0 && (flags[x + 1][y] & CollisionDataFlag.BLOCK_MOVEMENT_FULL) == 0 && retPoints.add(tiles[x + 1][y])) {
-                queue.add(tiles[x + 1][y]);
+            if ((flags[x][y] & CollisionDataFlag.BLOCK_MOVEMENT_EAST) == 0 && (flags[x + 1][y] & CollisionDataFlag.BLOCK_MOVEMENT_FULL) == 0 && !visited[x + 1][y]) {
+                queue.add(((x + 1) << 16) | y);
+                visited[x + 1][y] = true;
             }
         }
-        return retPoints.stream().map(Tile::getWorldLocation).collect(Collectors.toList());
+        int baseX = client.getBaseX();
+        int baseY = client.getBaseY();
+        int plane = client.getPlane();
+        List<WorldPoint> finalPoints = new ArrayList<>();
+        for (int x = 0; x < 104; ++x) {
+            for (int y = 0; y < 104; ++y) {
+                if (visited[x][y]) {
+                    finalPoints.add(new WorldPoint(baseX + x, baseY + y, plane));
+                }
+            }
+        }
+        return finalPoints;
     }
 
 //    public static List<WorldPoint> reachableTiles() {
