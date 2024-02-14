@@ -71,10 +71,11 @@ public class PacketReflection {
             }
         } else if (garbageValue < 32768) {
             try {
-                System.out.println("getPacketBufferNode: "+getPacketBufferNode);
+                //System.out.println("getPacketBufferNode: "+getPacketBufferNode);
+                //System.out.println("isaac: "+isaac);
                 packetBufferNode = getPacketBufferNode.invoke(null, fetchPacketField(def.name).get(ClientPacket),
                         isaac, Short.parseShort(ObfuscatedNames.getPacketBufferNodeGarbageValue));
-                System.out.println("packetBufferNode: "+packetBufferNode);
+                //System.out.println("packetBufferNode: "+packetBufferNode);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -141,12 +142,14 @@ public class PacketReflection {
                 int index = params.indexOf(def.writeData[i]);
                 Object writeValue = objects[index];
                 for (String s : def.writeMethods[i]) {
-                    System.out.println("Writing " + s + " " + writeValue);
+                    //System.out.println("Writing " + s + " " + writeValue);
                     BufferMethods.writeValue(s, (Integer) writeValue, buffer);
                 }
             }
             PACKETWRITER.setAccessible(true);
             try {
+                //System.out.println(PACKETWRITER);
+                //System.out.println(PACKETWRITER.get(null));
                 addNode(PACKETWRITER.get(null), packetBufferNode);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -170,7 +173,7 @@ public class PacketReflection {
                     addNode.invoke(packetWriter, packetBufferNode, Short.parseShort(ObfuscatedNames.addNodeGarbageValue));
                 } else if (garbageValue < Integer.MAX_VALUE) {
                     addNode = packetWriter.getClass().getDeclaredMethod(ObfuscatedNames.addNodeMethodName, packetBufferNode.getClass(), int.class);
-                    System.out.println("addnode: "+addNode);
+                    //System.out.println("addnode: "+addNode);
                     addNode.setAccessible(true);
                     addNode.invoke(packetWriter, packetBufferNode, Integer.parseInt(ObfuscatedNames.addNodeGarbageValue));
                 }

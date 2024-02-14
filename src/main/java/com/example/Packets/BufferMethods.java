@@ -61,7 +61,7 @@ public class BufferMethods {
         int index = nextIndex(getOffset(bufferInstance));
         setOffset(bufferInstance, index);
         index = index * Integer.parseInt(ObfuscatedNames.indexMultiplier) - 1;
-        System.out.println("Index: " + index);
+        //System.out.println("Index: " + index);
         switch (writeDescription.charAt(0)) {
             case 's':
                 setArray(bufferInstance, writeSub(writeTypeMagnitude, value, arr, index));
