@@ -190,7 +190,7 @@ public class EthanApiPlugin extends Plugin {
         }
         Field animation = npc.getClass().getSuperclass().getDeclaredField(animationField);
         animation.setAccessible(true);
-        int anim = animation.getInt(npc) * -70627403;
+        int anim = animation.getInt(npc) * 1049413981;
         animation.setAccessible(false);
         return anim;
     }
