@@ -1,7 +1,6 @@
 package com.example.PacketUtils;
 
 import com.example.Packets.BufferMethods;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 
@@ -29,7 +28,6 @@ public class PacketReflection {
     Client clientInstance;
     public static Client client = null;
 
-    @SneakyThrows
     public boolean LoadPackets() {
         try {
             client = clientInstance;
@@ -73,8 +71,10 @@ public class PacketReflection {
             }
         } else if (garbageValue < 32768) {
             try {
+                System.out.println("getPacketBufferNode: "+getPacketBufferNode);
                 packetBufferNode = getPacketBufferNode.invoke(null, fetchPacketField(def.name).get(ClientPacket),
                         isaac, Short.parseShort(ObfuscatedNames.getPacketBufferNodeGarbageValue));
+                System.out.println("packetBufferNode: "+packetBufferNode);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -86,7 +86,6 @@ public class PacketReflection {
                 e.printStackTrace();
             }
         }
-        System.out.println(getPacketBufferNode);
         Object buffer = null;
         try {
             buffer = packetBufferNode.getClass().getDeclaredField(ObfuscatedNames.packetBufferFieldName).get(packetBufferNode);
