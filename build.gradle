@@ -12,7 +12,7 @@ repositories {
     jcenter()
 }
 
-def runeLiteVersion = 'latest.release'
+def runeLiteVersion = '1.10.22'
 
 dependencies {
     compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion

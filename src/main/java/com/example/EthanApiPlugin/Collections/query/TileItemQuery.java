@@ -6,7 +6,6 @@ import com.example.EthanApiPlugin.PathFinding.GlobalCollisionMap;
 import lombok.SneakyThrows;
 import net.runelite.api.Client;
 import net.runelite.api.ItemComposition;
-import net.runelite.api.NPC;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.RuneLite;
 import net.runelite.client.game.ItemManager;
@@ -179,6 +178,10 @@ public class TileItemQuery {
 
     public TileItemQuery withinDistanceToPoint(int distance, WorldPoint point) {
         tileItems = tileItems.stream().filter(tileItem -> tileItem.getLocation().distanceTo(point) <= distance).collect(Collectors.toList());
+        return this;
+    }
+    public TileItemQuery alchValueAbove(int value){
+        tileItems = tileItems.stream().filter(tileItem -> itemManager.getItemComposition(tileItem.getTileItem().getId()).getHaPrice() > value).collect(Collectors.toList());
         return this;
     }
 

@@ -57,7 +57,7 @@ public class PacketUtilsPlugin extends Plugin {
     ClientThread thread;
     public static Method addNodeMethod;
     public static boolean usingClientAddNode = false;
-    public static final int CLIENT_REV = 219;
+    public static final int CLIENT_REV = 220;
     private static boolean loaded = false;
     private static String loadedConfigName = "";
     @Inject
@@ -296,6 +296,9 @@ public class PacketUtilsPlugin extends Plugin {
             }
         }
         reader.close();
+        for (String methodCall : methodCalls) {
+            System.out.println(methodCall);
+        }
         String mostUsedMethod = methodCalls.stream()
                 .collect(Collectors.groupingBy(str -> str, Collectors.counting()))
                 .entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
