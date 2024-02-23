@@ -141,16 +141,24 @@ public class TileObjectQuery {
     }
 
     public Optional<TileObject> nearestByPath() {
-        return tileObjects.stream().min(Comparator.comparingInt(o -> {
-            List<WorldPoint> adjacentTiles = WorldAreaUtility.objectInteractableTiles(o);
-            return adjacentTiles.stream().distinct().mapToInt(worldPoint -> {
-                List<WorldPoint> path = GlobalCollisionMap.findPath(worldPoint);
-                if (path == null) {
-                    return Integer.MAX_VALUE;
+        HashMap<WorldPoint, TileObject> map = new HashMap<>();
+        var playerLoc = client.getLocalPlayer().getWorldLocation();
+        for (TileObject tileObject : tileObjects) {
+            List<WorldPoint> adjacentTiles = WorldAreaUtility.objectInteractableTiles(tileObject);
+            for (WorldPoint worldPoint : adjacentTiles) {
+                if (playerLoc.equals(worldPoint)) {
+                    return Optional.of(tileObject);
                 }
-                return path.size();
-            }).min().orElse(Integer.MAX_VALUE);
-        }));
+                map.put(worldPoint, tileObject);
+            }
+        }
+
+        List<WorldPoint> path = EthanApiPlugin.pathToGoalSetFromPlayerNoCustomTiles(new HashSet<>(map.keySet()));
+        if (path == null || path.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(map.get(path.get(path.size() - 1)));
     }
 
     public Optional<TileObject> nearestToPoint(WorldPoint point) {

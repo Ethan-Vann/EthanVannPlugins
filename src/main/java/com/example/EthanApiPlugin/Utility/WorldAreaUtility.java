@@ -60,4 +60,46 @@ public class WorldAreaUtility {
 
         return grownArea;
     }
+
+    public static List<WorldPoint> objectInteractableTiles(Actor e) {
+        int x = 1;
+        int y = 1;
+        if (e instanceof NPC) {
+            NPC gameObject = (NPC) e;
+            x = gameObject.getComposition().getSize();
+            y = gameObject.getComposition().getSize();
+        }
+        WorldPoint areaMinCornerWorldPoint = new WorldPoint(e.getWorldLocation().getX() - 1, e.getWorldLocation().getY() - 1, e.getWorldLocation().getPlane());
+        List<WorldPoint> objectArea = e.getWorldArea().toWorldPointList();
+        int sx = x + 2;
+        int sy = y + 2;
+        ArrayList<WorldPoint> grownArea = new ArrayList<>(new WorldArea(areaMinCornerWorldPoint, sx, sy).toWorldPointList());
+        grownArea.remove(grownArea.size() - 1);
+        grownArea.remove((sx * sy) - sx);
+        grownArea.remove(sx - 1);
+        grownArea.remove(0);
+        grownArea.removeAll(objectArea);
+
+        CollisionData[] collisionData = client.getCollisionMaps();
+        if (collisionData == null) {
+            return grownArea;
+        }
+
+        int[][] planeData = collisionData[client.getPlane()].getFlags();
+
+        for (int i = grownArea.size() - 1; i >= 0; i--) {
+            WorldPoint testPoint = grownArea.get(i);
+            LocalPoint localScenePoint = LocalPoint.fromWorld(client, testPoint);
+            if (localScenePoint == null) {
+                continue;
+            }
+
+            int flags = planeData[localScenePoint.getSceneX()][localScenePoint.getSceneY()];
+            if ((flags & CollisionDataFlag.BLOCK_MOVEMENT_FULL) != 0) {
+                grownArea.remove(testPoint);
+            }
+        }
+
+        return grownArea;
+    }
 }
