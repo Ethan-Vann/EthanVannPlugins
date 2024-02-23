@@ -3,6 +3,7 @@ package com.example.EthanApiPlugin.Collections.query;
 import com.example.EthanApiPlugin.Collections.Players;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.EthanApiPlugin.PathFinding.GlobalCollisionMap;
+import com.example.EthanApiPlugin.Utility.WorldAreaUtility;
 import net.runelite.api.Actor;
 import net.runelite.api.Client;
 import net.runelite.api.NPC;
@@ -206,12 +207,27 @@ public class NPCQuery {
     }
 
     public Optional<NPC> nearestByPath() {
-        return npcs.stream().min(Comparator.comparingInt(o -> {
-            var path = GlobalCollisionMap.findPath(o.getWorldLocation());
-            if (path == null) {
-                return Integer.MAX_VALUE;
+        HashMap<WorldPoint, NPC> npcMap = new HashMap<>();
+        for (NPC npc : npcs) {
+            for (WorldPoint wp : npc.getWorldArea().toWorldPointList()) {
+                npcMap.put(wp, npc);
             }
-            return path.size();
-        }));
+
+            for (WorldPoint wp : WorldAreaUtility.objectInteractableTiles(npc)) {
+                npcMap.put(wp, npc);
+            }
+        }
+        List<WorldPoint> path = EthanApiPlugin.pathToGoalSetFromPlayerNoCustomTiles(new HashSet<>(npcMap.keySet()));
+        if (path == null) {
+            return Optional.empty();
+        }
+        if (path.isEmpty()) {
+            if (npcMap.containsKey(client.getLocalPlayer().getWorldLocation())) {
+                return Optional.ofNullable(npcMap.get(client.getLocalPlayer().getWorldLocation()));
+            } else {
+                return Optional.empty();
+            }
+        }
+        return Optional.ofNullable(npcMap.get(path.get(path.size() - 1)));
     }
 }
