@@ -2,7 +2,7 @@ package com.example.PacketUtils;
 
 public final class ObfuscatedNames {
 
-    public static final String[][] OPLOC5_WRITES = new String[][]{{"r 8","a 128"},{"r 8"," v"},{"a 128"},{"r 8","a 128"}};
+    public static final String[][] OPLOC5_WRITES = new String[][]{{"r 8","a 128"},{"r 8","v"},{"a 128"},{"r 8","a 128"}};
     public static final String[][] IF_BUTTONT_WRITES = new String[][]{{"r 8","v","r 24","r 16"},{"v","r 8"},{"r 8","a 128"},{"r 24","r 16","r 8","v"},{"r 8","a 128"},{"r 8","v"}};
     public static final String[][] OPOBJ5_WRITES = new String[][]{{"s 0"},{"r 8","v"},{"v","r 8"},{"r 8","a 128"}};
     public static final String[][] OPOBJ3_WRITES = new String[][]{{"v","r 8"},{"r 8","v"},{"r 8","a 128"},{"s 128"}};
