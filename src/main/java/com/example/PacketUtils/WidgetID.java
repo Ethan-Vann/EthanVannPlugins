@@ -36,7 +36,9 @@ import net.runelite.api.widgets.WidgetInfo;
  * For a more direct group-child widget mapping, use the
  * {@link WidgetInfo} enum class.
  */
-public final class WidgetID {
+
+public final class WidgetID
+{
     public static final int FAIRY_RING_PANEL_GROUP_ID = 381;
     public static final int FAIRY_RING_GROUP_ID = 398;
     public static final int LOGOUT_PANEL_ID = 182;
@@ -202,7 +204,8 @@ public final class WidgetID {
     public static final int MULTISKILL_MENU_GROUP_ID = 270;
 
 
-    static class WorldMap {
+    static class WorldMap
+    {
         static final int MAPVIEW = 7;
         static final int OVERVIEW_MAP = 10;
         static final int BOTTOM_BAR = 23;
@@ -211,30 +214,36 @@ public final class WidgetID {
         static final int TOOLTIP = 41;
     }
 
-    static class SlayerRewards {
+    static class SlayerRewards
+    {
         static final int TOP_BAR = 12;
     }
 
-    static class DialogOption {
+    static class DialogOption
+    {
         static final int OPTIONS = 1;
     }
 
-    static class DialogNPC {
+    static class DialogNPC
+    {
         static final int HEAD_MODEL = 2;
         static final int NAME = 4;
         static final int TEXT = 6;
     }
 
-    static class DialogPlayer {
+    static class DialogPlayer
+    {
         static final int TEXT = 6;
     }
 
-    static class LogoutPanel {
+    static class LogoutPanel
+    {
         static final int WORLD_SWITCHER_BUTTON = 3;
         static final int LOGOUT_BUTTON = 6;
     }
 
-    static class PestControl {
+    static class PestControl
+    {
         static final int KNIGHT_INFO_CONTAINER = 2;
 
         static final int ACTIVITY_SHIELD_CONTAINER = 9;
@@ -257,7 +266,8 @@ public final class WidgetID {
         static final int RED_HEALTH = 24;
     }
 
-    static class FriendList {
+    static class FriendList
+    {
         static final int TITLE = 3;
         static final int FULL_CONTAINER = 5;
         static final int SORT_BY_NAME_BUTTON = 7;
@@ -270,7 +280,8 @@ public final class WidgetID {
         static final int PREVIOUS_NAME_HOLDER = 18;
     }
 
-    static class IgnoreList {
+    static class IgnoreList
+    {
         static final int TITLE = 3;
         static final int FULL_CONTAINER = 5;
         static final int SORT_BY_NAME_BUTTON = 7;
@@ -281,14 +292,16 @@ public final class WidgetID {
         static final int PREVIOUS_NAME_HOLDER = 16;
     }
 
-    static class FriendsChat {
+    static class FriendsChat
+    {
         static final int ROOT = 0;
         static final int TITLE = 1;
         static final int OWNER = 2;
         static final int LIST = 12;
     }
 
-    static class Bank {
+    static class Bank
+    {
         static final int BANK_CONTAINER = 1;
         static final int INVENTORY_ITEM_CONTAINER = 3;
         static final int BANK_TITLE_BAR = 3;
@@ -311,12 +324,14 @@ public final class WidgetID {
         static final int EQUIPMENT_BUTTON = 113;
     }
 
-    static class GroupStorage {
+    static class GroupStorage
+    {
         static final int UI = 2;
         static final int ITEM_CONTAINER = 10;
     }
 
-    static class GrandExchange {
+    static class GrandExchange
+    {
         static final int WINDOW_CONTAINER = 0;
         static final int WINDOW_BORDERS = 2;
         static final int HISTORY_BUTTON = 3;
@@ -335,19 +350,23 @@ public final class WidgetID {
         static final int OFFER_CONFIRM_BUTTON = 29;
     }
 
-    static class GrandExchangeInventory {
+    static class GrandExchangeInventory
+    {
         static final int INVENTORY_ITEM_CONTAINER = 0;
     }
 
-    static class DepositBox {
+    static class DepositBox
+    {
         static final int INVENTORY_ITEM_CONTAINER = 2;
     }
 
-    static class Shop {
+    static class Shop
+    {
         static final int INVENTORY_ITEM_CONTAINER = 0;
     }
 
-    static class Smithing {
+    static class Smithing
+    {
         static final int INVENTORY_ITEM_CONTAINER = 0;
 
         static final int QTY_1 = 3;
@@ -385,24 +404,28 @@ public final class WidgetID {
         static final int LIMBS = 35;
     }
 
-    static class GuidePrices {
+    static class GuidePrices
+    {
         static final int ITEM_CONTAINER = 2;
         static final int INVENTORY_ITEM_CONTAINER = 0;
     }
 
-    static class Emotes {
+    static class Emotes
+    {
         static final int EMOTE_WINDOW = 0;
         static final int EMOTE_SCROLL_CONTAINER = 1;
         static final int EMOTE_CONTAINER = 2;
         static final int EMOTE_SCROLLBAR = 4;
     }
 
-    static class Cluescroll {
+    static class Cluescroll
+    {
         static final int CLUE_TEXT = 2;
         static final int CLUE_SCROLL_ITEM_CONTAINER = 3;
     }
 
-    static class Minimap {
+    static class Minimap
+    {
         static final int XP_ORB = 5;
         static final int HEALTH_ORB = 6;
         static final int PRAYER_ORB = 17;
@@ -419,11 +442,13 @@ public final class WidgetID {
         static final int WORLDMAP_OPTIONS = 53;
     }
 
-    static class LoginClickToPlayScreen {
+    static class LoginClickToPlayScreen
+    {
         static final int MESSAGE_OF_THE_DAY = 7;
     }
 
-    static class FixedViewport {
+    static class FixedViewport
+    {
         static final int MINIMAP = 8;
         static final int MINIMAP_DRAW_AREA = 21;
         static final int FIXED_VIEWPORT = 32;
@@ -462,7 +487,8 @@ public final class WidgetID {
         static final int INVENTORY_CONTAINER = 82;
     }
 
-    static class ResizableViewport {
+    static class ResizableViewport
+    {
         static final int RESIZABLE_VIEWPORT_OLD_SCHOOL_BOX = 15;
         static final int MULTICOMBAT_INDICATOR = 19;
         static final int MINIMAP = 93;
@@ -502,7 +528,8 @@ public final class WidgetID {
         static final int INVENTORY_PARENT = 95;
     }
 
-    static class ResizableViewportBottomLine {
+    static class ResizableViewportBottomLine
+    {
         static final int RESIZABLE_VIEWPORT_BOTTOM_LINE = 15;
         static final int MINIMAP = 90;
         static final int MINIMAP_DRAW_AREA = 29;
@@ -532,7 +559,8 @@ public final class WidgetID {
         static final int INVENTORY_PARENT = 94;
     }
 
-    static class Chatbox {
+    static class Chatbox
+    {
         static final int PARENT = 0;
         static final int BUTTONS = 1;
         static final int TAB_ALL = 4;
@@ -556,63 +584,40 @@ public final class WidgetID {
         static final int FIRST_MESSAGE = 57;
     }
 
-    static class Prayer {
+    static class Prayer
+    {
         static final int THICK_SKIN = 9;
         static final int BURST_OF_STRENGTH = 10;
         static final int CLARITY_OF_THOUGHT = 11;
-        static final int SHARP_EYE = 27;
-        static final int MYSTIC_WILL = 30;
         static final int ROCK_SKIN = 12;
         static final int SUPERHUMAN_STRENGTH = 13;
         static final int IMPROVED_REFLEXES = 14;
         static final int RAPID_RESTORE = 15;
         static final int RAPID_HEAL = 16;
         static final int PROTECT_ITEM = 17;
-        static final int HAWK_EYE = 28;
-        static final int MYSTIC_LORE = 31;
         static final int STEEL_SKIN = 18;
         static final int ULTIMATE_STRENGTH = 19;
         static final int INCREDIBLE_REFLEXES = 20;
         static final int PROTECT_FROM_MAGIC = 21;
         static final int PROTECT_FROM_MISSILES = 22;
         static final int PROTECT_FROM_MELEE = 23;
-        static final int EAGLE_EYE = 29;
-        static final int MYSTIC_MIGHT = 32;
         static final int RETRIBUTION = 24;
         static final int REDEMPTION = 25;
         static final int SMITE = 26;
-        static final int PRESERVE = 37;
-        static final int CHIVALRY = 34;
-        static final int PIETY = 35;
-        static final int RIGOUR = 33;
+        static final int SHARP_EYE = 27;
+        static final int MYSTIC_WILL = 28;
+        static final int HAWK_EYE = 29;
+        static final int MYSTIC_LORE = 30;
+        static final int EAGLE_EYE = 31;
+        static final int MYSTIC_MIGHT = 32;
+        static final int CHIVALRY = 33;
+        static final int PIETY = 34;
+        static final int RIGOUR = 35;
         static final int AUGURY = 36;
-        static final int RP_REJUVENATION = 20;
-        static final int RP_ANCIENT_STRENGTH = 9;
-        static final int RP_ANCIENT_SIGHT = 10;
-        static final int RP_ANCIENT_WILL = 11;
-        static final int RP_PROTECT_ITEM = 32;
-        static final int RP_RUINOUS_GRACE = 21;
-        static final int RP_DAMPEN_MAGIC = 18;
-        static final int RP_DAMPEN_RANGED = 17;
-        static final int RP_DAMPEN_MELEE = 16;
-        static final int RP_TRINITAS = 12;
-        static final int RP_BERSERKER = 24;
-        static final int RP_PURGE = 19;
-        static final int RP_METABOLISE = 23;
-        static final int RP_REBUKE = 30;
-        static final int RP_VINDICATION = 31;
-        static final int RP_DECIMATE = 13;
-        static final int RP_ANNIHILATE = 14;
-        static final int RP_VAPORISE = 15;
-        static final int RP_FUMUS_VOW = 25;
-        static final int RP_UMBRA_VOW = 27;
-        static final int RP_CRUORS_VOW = 26;
-        static final int RP_GLACIES_VOW = 28;
-        static final int RP_WRATH = 22;
-        static final int RP_INTENSIFY = 29;
+        static final int PRESERVE = 37;
     }
-
-    public static class QuickPrayer {
+    public static class QuickPrayer
+    {
         static final int PRAYERS = 4;
 
         public static final int THICK_SKIN_CHILD_ID = 0;
@@ -646,7 +651,8 @@ public final class WidgetID {
         public static final int AUGURY_CHILD_ID = 27;
     }
 
-    static class Combat {
+    static class Combat
+    {
         static final int WEAPON_NAME = 1;
         static final int LEVEL = 3;
         static final int STYLE_ONE = 4;
@@ -663,11 +669,12 @@ public final class WidgetID {
         static final int SPELL_TEXT = 29;
         static final int AUTO_RETALIATE = 30;
         static final int SPECIAL_ATTACK_BAR = 34;
-        static final int SPECIAL_ATTACK_CLICKBOX = 36;
+        static final int SPECIAL_ATTACK_CLICKBOX = 41;
         static final int TOOLTIP = 41;
     }
 
-    static class VolcanicMine {
+    static class VolcanicMine
+    {
         static final int STABILITY_INFOBOX_CONTAINER = 2;
         static final int TIME_LEFT = 6;
         static final int POINTS = 8;
@@ -682,13 +689,16 @@ public final class WidgetID {
         static final int VENTS_INFOBOX_CONTAINER = 26;
     }
 
-    static class BarbarianAssault {
-        static class ATK {
+    static class BarbarianAssault
+    {
+        static class ATK
+        {
             static final int ROLE_SPRITE = 11;
             static final int ROLE = 12;
         }
 
-        static class HLR {
+        static class HLR
+        {
             static final int TEAMMATES = 13;
             static final int TEAMMATE1 = 18;
             static final int TEAMMATE2 = 22;
@@ -704,40 +714,48 @@ public final class WidgetID {
         static final int REWARD_TEXT = 57;
     }
 
-    static class LevelUp {
+    static class LevelUp
+    {
         static final int SKILL = 1;
         static final int LEVEL = 2;
         static final int CONTINUE = 3;
     }
 
-    static class QuestCompleted {
+    static class QuestCompleted
+    {
         static final int NAME_TEXT = 4;
     }
 
-    static class Raids {
+    static class Raids
+    {
         static final int POINTS_INFOBOX = 3;
     }
 
-    static class Health {
+    static class Health
+    {
         static final int HEALTHBAR_CONTAINER = 5;
         static final int HEALTHBAR_TEXT = 20;
     }
 
-    static class ChambersOfXericStorageUnitPrivate {
+    static class ChambersOfXericStorageUnitPrivate
+    {
         static final int PRIVATE_CHEST_ITEM_CONTAINER = 6;
     }
 
-    static class Tob {
+    static class Tob
+    {
         static final int PARTY_INTERFACE = 5;
         static final int PARTY_STATS = 7;
         static final int HEALTHBAR_CONTAINER = 9;
     }
 
-    static class PuzzleBox {
+    static class PuzzleBox
+    {
         static final int VISIBLE_BOX = 4;
     }
 
-    static class LightBox {
+    static class LightBox
+    {
         static final int LIGHT_BOX = 1;
         static final int LIGHT_BOX_WINDOW = 2;
         static final int LIGHT_BULB_CONTAINER = 3;
@@ -752,17 +770,20 @@ public final class WidgetID {
         static final int BUTTON_H = 15;
     }
 
-    static class DialogSprite {
+    static class DialogSprite
+    {
         static final int SPRITE = 1;
         static final int TEXT = 2;
     }
 
-    static class ExperienceTracker {
+    static class ExperienceTracker
+    {
         static final int WIDGET = 4;
         static final int BOTTOM_BAR = 16;
     }
 
-    static class FairyRingPanel {
+    static class FairyRingPanel
+    {
         static final int HEADER = 2;
         static final int LIST = 7;
         static final int FAVORITES = 8;
@@ -770,7 +791,8 @@ public final class WidgetID {
         static final int SCROLLBAR = 152;
     }
 
-    static class FairyRing {
+    static class FairyRing
+    {
         static final int LEFT_ORB_CLOCKWISE = 19;
         static final int LEFT_ORB_COUNTER_CLOCKWISE = 20;
         static final int MIDDLE_ORB_CLOCKWISE = 21;
@@ -780,106 +802,126 @@ public final class WidgetID {
         static final int TELEPORT_BUTTON = 26;
     }
 
-    static class FairyRingCode {
+    static class FairyRingCode
+    {
         static final int FAIRY_QUEEN_HIDEOUT = 139;
     }
 
-    static class Barrows {
+    static class Barrows
+    {
         static final int BARROWS_BROTHERS = 4;
         static final int BARROWS_POTENTIAL = 5;
     }
 
-    static class Diary {
+    static class Diary
+    {
         static final int DIARY_TITLE = 2;
         static final int DIARY_TEXT = 3;
     }
 
-    static class DestroyItem {
+    static class DestroyItem
+    {
         static final int DESTROY_ITEM_NAME = 6;
         static final int DESTROY_ITEM_YES = 1;
         static final int DESTROY_ITEM_NO = 3;
     }
 
-    static class VarrockMuseum {
+    static class VarrockMuseum
+    {
         static final int VARROCK_MUSEUM_QUESTION = 28;
         static final int VARROCK_MUSEUM_FIRST_ANSWER = 29;
         static final int VARROCK_MUSEUM_SECOND_ANSWER = 30;
         static final int VARROCK_MUSEUM_THIRD_ANSWER = 31;
     }
 
-    static class KillLog {
+    static class KillLog
+    {
         static final int TITLE = 3;
         static final int MONSTER = 13;
         static final int KILLS = 14;
         static final int STREAK = 15;
     }
 
-    static class WorldSwitcher {
+    static class WorldSwitcher
+    {
         static final int CONTAINER = 1;
         static final int WORLD_LIST = 16;
         static final int LOGOUT_BUTTON = 23;
     }
 
-    static class Minigames {
+    static class Minigames
+    {
         static final int TELEPORT_BUTTON = 30;
     }
 
-    static class StandardSpellBook {
-        static final int LUMBRIDGE_HOME_TELEPORT = 6;
+    static class StandardSpellBook
+    {
+        static final int LUMBRIDGE_HOME_TELEPORT = 7;
         static final int KOUREND_HOME_TELEPORT = 4;
         static final int CATHERBY_HOME_TELEPORT = 5;
     }
 
-    static class AncientSpellBook {
+    static class AncientSpellBook
+    {
         static final int EDGEVILLE_HOME_TELEPORT = 100;
     }
 
-    static class LunarSpellBook {
+    static class LunarSpellBook
+    {
         static final int LUNAR_HOME_TELEPORT = 101;
         static final int FERTILE_SOIL = 126;
     }
 
-    static class ArceuusSpellBook {
+    static class ArceuusSpellBook
+    {
         static final int ARCEUUS_HOME_TELEPORT = 145;
     }
 
-    static class Pvp {
+    static class Pvp
+    {
         static final int KILLDEATH_RATIO = 26;
         static final int WILDERNESS_SKULL_CONTAINER = 44;
         static final int SKULL_CONTAINER = 45;
         static final int SAFE_ZONE = 47;
-        static final int WILDERNESS_LEVEL = 50; // this can also be the Deadman Mode "Protection" text
+        static final int WILDERNESS_LEVEL = 50; // this can also be the Deadman mode "Protection" text
     }
 
-    static class KourendFavour {
+    static class KourendFavour
+    {
         static final int KOUREND_FAVOUR_OVERLAY = 1;
     }
 
-    static class Zeah {
+    static class Zeah
+    {
         static final int MESS_HALL_COOKING_DISPLAY = 2;
     }
 
-    static class LootingBag {
+    static class LootingBag
+    {
         static final int LOOTING_BAG_INVENTORY = 5;
     }
 
-    static class Skotizo {
+    static class Skotizo
+    {
         static final int CONTAINER = 2;
     }
 
-    static class QuestList {
+    static class QuestList
+    {
         static final int BOX = 0;
         static final int CONTAINER = 2;
     }
 
-    static class Music {
+    static class Music
+    {
         static final int CONTAINER = 0;
         static final int SCROLL_CONTAINER = 3;
         static final int LIST = 5;
         static final int SCROLLBAR = 6;
     }
 
-    static class Barrows_Puzzle {
+    static class Barrows_Puzzle
+    {
         static final int PARENT = 0;
         static final int SEQUENCE_1 = 3;
         static final int ANSWER1_CONTAINER = 12;
@@ -890,49 +932,59 @@ public final class WidgetID {
         static final int ANSWER3 = 17;
     }
 
-    static class SeedVault {
+    static class SeedVault
+    {
         static final int INVENTORY_ITEM_CONTAINER = 1;
         static final int TITLE_CONTAINER = 2;
         static final int ITEM_CONTAINER = 15;
         static final int ITEM_TEXT = 16;
     }
 
-    static class ExplorersRing {
+    static class ExplorersRing
+    {
         static final int INVENTORY = 7;
     }
 
-    static class SettingsSide {
+    static class SettingsSide
+    {
         static final int CAMERA_ZOOM_SLIDER_TRACK = 100;
         static final int MUSIC_SLIDER = 29;
         static final int SOUND_EFFECT_SLIDER = 43;
         static final int AREA_SOUND_SLIDER = 57;
     }
 
-    static class Settings {
+    static class Settings
+    {
         static final int INIT = 1;
     }
 
-    static class AchievementDiary {
+    static class AchievementDiary
+    {
         static final int CONTAINER = 2;
     }
 
-    static class Skills {
+    static class Skills
+    {
         static final int CONTAINER = 0;
     }
 
-    static class Lms {
+    static class Lms
+    {
         static final int INFO = 2;
     }
 
-    static class LmsKDA {
+    static class LmsKDA
+    {
         static final int INFO = 4;
     }
 
-    static class AdventureLog {
+    static class AdventureLog
+    {
         static final int CONTAINER = 0;
     }
 
-    static class CollectionLog {
+    static class CollectionLog
+    {
         static final int CONTAINER = 0;
         static final int TABS = 3;
         static final int ENTRY = 17;
@@ -940,43 +992,52 @@ public final class WidgetID {
         static final int ENTRY_ITEMS = 36;
     }
 
-    static class GenericScroll {
+    static class GenericScroll
+    {
         static final int TEXT = 7;
     }
 
-    static class GauntletTimer {
+    static class GauntletTimer
+    {
         static final int CONTAINER = 2;
     }
 
-    static class HallowedSepulchreTimer {
+    static class HallowedSepulchreTimer
+    {
         static final int CONTAINER = 2;
     }
 
-    static class TrailblazerAreas {
+    static class TrailblazerAreas
+    {
         static final int TELEPORT = 59;
     }
 
-    static class TemporossStatus {
+    static class TemporossStatus
+    {
         static final int STATUS_INDICATOR = 2;
     }
 
-    static class Clan {
+    static class Clan
+    {
         static final int LAYER = 0;
         static final int HEADER = 1;
         static final int MEMBERS = 6;
     }
 
-    static class ClanGuest {
+    static class ClanGuest
+    {
         static final int LAYER = 0;
         static final int HEADER = 1;
         static final int MEMBERS = 6;
     }
 
-    static class Trade {
+    static class Trade
+    {
         static final int HEADER = 31;
     }
 
-    static class Equipment {
+    static class Equipment
+    {
         static final int HELMET = 15;
         static final int CAPE = 16;
         static final int AMULET = 17;
@@ -992,7 +1053,8 @@ public final class WidgetID {
         static final int INVENTORY_ITEM_CONTAINER = 0;
     }
 
-    static class BankPin {
+    static class BankPin
+    {
         static final int CONTAINER = 0;
         static final int TOP_LEFT_TEXT = 2;
         static final int FIRST_ENTERED = 3;
@@ -1014,34 +1076,40 @@ public final class WidgetID {
         static final int BUTTON_10 = 34;
     }
 
-    static class DialogNotification {
+    static class DialogNotification
+    {
         static final int TEXT = 0;
         static final int CONTINUE = 1;
     }
 
-    static class PestControlExchangeWindow {
+    static class PestControlExchangeWindow
+    {
         static final int ITEM_LIST = 2;
         static final int BOTTOM = 5;
         static final int POINTS = 8;
         static final int CONFIRM_BUTTON = 6;
     }
 
-    static class MinigameDialog {
+    static class MinigameDialog
+    {
         static final int TEXT = 1;
         static final int CONTINUE = 2;
     }
 
-    static class TheatreOfBlood {
+    static class TheatreOfBlood
+    {
         static final int RAIDING_PARTY = 9;
         static final int ORB_BOX = 10;
         static final int BOSS_HEALTH_BAR = 35;
     }
 
-    static class TheatreOfBloodParty {
+    static class TheatreOfBloodParty
+    {
         static final int CONTAINER = 10;
     }
 
-    static class EquipmentWidgetIdentifiers {
+    static class EquipmentWidgetIdentifiers
+    {
         static final int EQUIP_YOUR_CHARACTER = 3;
         static final int STAB_ATTACK_BONUS = 24;
         static final int SLASH_ATTACK_BONUS = 25;
@@ -1062,7 +1130,8 @@ public final class WidgetID {
         static final int WEIGHT = 49;
     }
 
-    static class FossilMushroomTeleport {
+    static class FossilMushroomTeleport
+    {
         static final int ROOT = 2;
         static final int HOUSE_ON_HILL = 4;
         static final int VERDANT_VALLEY = 8;
@@ -1070,214 +1139,223 @@ public final class WidgetID {
         static final int MUSHROOM_MEADOW = 16;
     }
 
-    static class SpellBook {
+    static class SpellBook
+    {
         static final int FILTERED_SPELLS_BOUNDS = 3;
         static final int TOOLTIP = 190;
 
         // NORMAL SPELLS
-        static final int LUMBRIDGE_HOME_TELEPORT = 6;
-        static final int WIND_STRIKE = 7;
-        static final int CONFUSE = 8;
-        static final int ENCHANT_CROSSBOW_BOLT = 9;
-        static final int WATER_STRIKE = 10;
-        static final int LVL_1_ENCHANT = 11;
-        static final int EARTH_STRIKE = 12;
-        static final int WEAKEN = 13;
-        static final int FIRE_STRIKE = 14;
-        static final int BONES_TO_BANANAS = 15;
-        static final int WIND_BOLT = 16;
-        static final int CURSE = 17;
-        static final int BIND = 18;
-        static final int LOW_LEVEL_ALCHEMY = 19;
-        static final int WATER_BOLT = 20;
-        static final int VARROCK_TELEPORT = 21;
-        static final int LVL_2_ENCHANT = 22;
-        static final int EARTH_BOLT = 23;
-        static final int LUMBRIDGE_TELEPORT = 24;
-        static final int TELEKINETIC_GRAB = 25;
-        static final int FIRE_BOLT = 26;
-        static final int FALADOR_TELEPORT = 27;
-        static final int CRUMBLE_UNDEAD = 28;
-        static final int TELEPORT_TO_HOUSE = 29;
-        static final int WIND_BLAST = 30;
-        static final int SUPERHEAT_ITEM = 31;
-        static final int CAMELOT_TELEPORT = 32;
-        static final int WATER_BLAST = 33;
-        static final int LVL_3_ENCHANT = 34;
-        static final int IBAN_BLAST = 35;
-        static final int SNARE = 36;
-        static final int MAGIC_DART = 37;
-        static final int ARDOUGNE_TELEPORT = 38;
-        static final int EARTH_BLAST = 39;
-        static final int HIGH_LEVEL_ALCHEMY = 40;
-        static final int CHARGE_WATER_ORB = 41;
-        static final int LVL_4_ENCHANT = 42;
-        static final int WATCHTOWER_TELEPORT = 43;
-        static final int FIRE_BLAST = 44;
-        static final int CHARGE_EARTH_ORB = 45;
-        static final int BONES_TO_PEACHES = 46;
-        static final int SARADOMIN_STRIKE = 47;
-        static final int CLAWS_OF_GUTHIX = 48;
-        static final int FLAMES_OF_ZAMORAK = 49;
-        static final int TROLLHEIM_TELEPORT = 50;
-        static final int WIND_WAVE = 51;
-        static final int CHARGE_FIRE_ORB = 52;
-        static final int TELEPORT_TO_APE_ATOLL = 53;
-        static final int WATER_WAVE = 54;
-        static final int CHARGE_AIR_ORB = 55;
-        static final int VULNERABILITY = 56;
-        static final int LVL_5_ENCHANT = 57;
-        static final int TELEPORT_TO_KOUREND = 58;
-        static final int EARTH_WAVE = 59;
-        static final int ENFEEBLE = 60;
-        static final int TELEOTHER_LUMBRIDGE = 61;
-        static final int FIRE_WAVE = 62;
-        static final int ENTANGLE = 63;
-        static final int STUN = 64;
-        static final int CHARGE = 65;
-        static final int WIND_SURGE = 66;
-        static final int TELEOTHER_FALADOR = 67;
-        static final int WATER_SURGE = 68;
-        static final int TELE_BLOCK = 69;
-        static final int BOUNTY_TARGET_TELEPORT = 70;
-        static final int LVL_6_ENCHANT = 71;
-        static final int TELEOTHER_CAMELOT = 72;
-        static final int EARTH_SURGE = 73;
-        static final int LVL_7_ENCHANT = 74;
-        static final int FIRE_SURGE = 75;
+        static final int LUMBRIDGE_HOME_TELEPORT = 7;
+        static final int WIND_STRIKE = 8;
+        static final int CONFUSE = 9;
+        static final int ENCHANT_CROSSBOW_BOLT = 10;
+        static final int WATER_STRIKE = 11;
+        static final int EARTH_STRIKE = 14;
+        static final int WEAKEN = 15;
+        static final int FIRE_STRIKE = 16;
+        static final int BONES_TO_BANANAS = 17;
+        static final int WIND_BOLT = 18;
+        static final int CURSE = 19;
+        static final int BIND = 20;
+        static final int LOW_LEVEL_ALCHEMY = 21;
+        static final int WATER_BOLT = 22;
+        static final int VARROCK_TELEPORT = 23;
+        static final int EARTH_BOLT = 25;
+        static final int LUMBRIDGE_TELEPORT = 26;
+        static final int TELEKINETIC_GRAB = 27;
+        static final int FIRE_BOLT = 28;
+        static final int FALADOR_TELEPORT = 29;
+        static final int CRUMBLE_UNDEAD = 20;
+        static final int TELEPORT_TO_HOUSE = 31;
+        static final int WIND_BLAST = 32;
+        static final int SUPERHEAT_ITEM = 33;
+        static final int CAMELOT_TELEPORT = 34;
+        static final int WATER_BLAST = 35;
+        static final int TELEPORT_TO_KOUREND = 36;
+        static final int IBAN_BLAST = 38;
+        static final int SNARE = 39;
+        static final int MAGIC_DART = 40;
+        static final int ARDOUGNE_TELEPORT = 41;
+        static final int EARTH_BLAST = 42;
+        static final int CIVITAS_TELEPORT = 43;
+        static final int HIGH_LEVEL_ALCHEMY = 44;
+        static final int CHARGE_WATER_ORB = 45;
+        static final int WATCHTOWER_TELEPORT = 47;
+        static final int FIRE_BLAST = 48;
+        static final int CHARGE_EARTH_ORB = 49;
+        static final int BONES_TO_PEACHES = 50;
+        static final int SARADOMIN_STRIKE = 51;
+        static final int CLAWS_OF_GUTHIX = 52;
+        static final int FLAMES_OF_ZAMORAK = 53;
+        static final int TROLLHEIM_TELEPORT = 54;
+        static final int WIND_WAVE = 55;
+        static final int CHARGE_FIRE_ORB = 56;
+        static final int TELEPORT_TO_APE_ATOLL = 57;
+        static final int WATER_WAVE = 58;
+        static final int CHARGE_AIR_ORB = 59;
+        static final int VULNERABILITY = 60;
+        static final int EARTH_WAVE = 62;
+        static final int ENFEEBLE = 63;
+        static final int TELEOTHER_LUMBRIDGE = 64;
+        static final int FIRE_WAVE = 65;
+        static final int ENTANGLE = 66;
+        static final int STUN = 67;
+        static final int CHARGE = 68;
+        static final int WIND_SURGE = 69;
+        static final int TELEOTHER_FALADOR = 70;
+        static final int WATER_SURGE = 71;
+        static final int TELE_BLOCK = 72;
+        static final int BOUNTY_TARGET_TELEPORT = 73;
+        static final int TELEOTHER_CAMELOT = 75;
+        static final int EARTH_SURGE = 76;
+        static final int FIRE_SURGE = 78;
+
+
+        //ENCHANTING SPELLS
+        static final int BACK_TO_MAIN_SPELLBOOK = 4;
+        static final int LVL_1_ENCHANT = 13;
+        static final int LVL_2_ENCHANT = 24;
+        static final int LVL_3_ENCHANT = 37;
+        static final int LVL_4_ENCHANT = 46;
+        static final int LVL_5_ENCHANT = 61;
+        static final int LVL_6_ENCHANT = 74;
+        static final int LVL_7_ENCHANT = 77;
 
         // ANCIENT SPELLS
-        static final int ICE_RUSH = 76;
-        static final int ICE_BLITZ = 77;
-        static final int ICE_BURST = 78;
-        static final int ICE_BARRAGE = 79;
-        static final int BLOOD_RUSH = 80;
-        static final int BLOOD_BLITZ = 81;
-        static final int BLOOD_BURST = 82;
-        static final int BLOOD_BARRAGE = 83;
-        static final int SMOKE_RUSH = 84;
-        static final int SMOKE_BLITZ = 85;
-        static final int SMOKE_BURST = 86;
-        static final int SMOKE_BARRAGE = 87;
-        static final int SHADOW_RUSH = 88;
-        static final int SHADOW_BLITZ = 89;
-        static final int SHADOW_BURST = 90;
-        static final int SHADOW_BARRAGE = 91;
-        static final int PADDEWWA_TELEPORT = 92;
-        static final int SENNTISTEN_TELEPORT = 93;
-        static final int KHARYRLL_TELEPORT = 94;
-        static final int LASSAR_TELEPORT = 95;
-        static final int DAREEYAK_TELEPORT = 96;
-        static final int CARRALLANGER_TELEPORT = 97;
-        static final int ANNAKARL_TELEPORT = 98;
-        static final int GHORROCK_TELEPORT = 99;
-        static final int EDGEVILLE_HOME_TELEPORT = 100;
+        static final int ICE_RUSH = 79;
+        static final int ICE_BLITZ = 80;
+        static final int ICE_BURST = 81;
+        static final int ICE_BARRAGE = 82;
+        static final int BLOOD_RUSH = 83;
+        static final int BLOOD_BLITZ = 84;
+        static final int BLOOD_BURST = 85;
+        static final int BLOOD_BARRAGE = 86;
+        static final int SMOKE_RUSH = 87;
+        static final int SMOKE_BLITZ = 88;
+        static final int SMOKE_BURST = 89;
+        static final int SMOKE_BARRAGE = 90;
+        static final int SHADOW_RUSH = 91;
+        static final int SHADOW_BLITZ = 92;
+        static final int SHADOW_BURST = 93;
+        static final int SHADOW_BARRAGE = 94;
+        static final int PADDEWWA_TELEPORT = 95;
+        static final int SENNTISTEN_TELEPORT = 96;
+        static final int KHARYRLL_TELEPORT = 97;
+        static final int LASSAR_TELEPORT = 98;
+        static final int DAREEYAK_TELEPORT = 99;
+        static final int CARRALLANGER_TELEPORT = 100;
+        static final int ANNAKARL_TELEPORT = 101;
+        static final int GHORROCK_TELEPORT = 102;
+        static final int EDGEVILLE_HOME_TELEPORT = 103;
 
         // LUNAR SPELLS
-        static final int LUNAR_HOME_TELEPORT = 101;
-        static final int BAKE_PIE = 102;
-        static final int CURE_PLANT = 103;
-        static final int MONSTER_EXAMINE = 104;
-        static final int NPC_CONTACT = 105;
-        static final int CURE_OTHER = 106;
-        static final int HUMIDIFY = 107;
-        static final int MOONCLAN_TELEPORT = 108;
-        static final int TELE_GROUP_MOONCLAN = 109;
-        static final int CURE_ME = 110;
-        static final int HUNTER_KIT = 111;
-        static final int WATERBIRTH_TELEPORT = 112;
-        static final int TELE_GROUP_WATERBIRTH = 113;
-        static final int CURE_GROUP = 114;
-        static final int STAT_SPY = 115;
-        static final int BARBARIAN_TELEPORT = 116;
-        static final int TELE_GROUP_BARBARIAN = 117;
-        static final int SUPERGLASS_MAKE = 118;
-        static final int TAN_LEATHER = 119;
-        static final int KHAZARD_TELEPORT = 120;
-        static final int TELE_GROUP_KHAZARD = 121;
-        static final int DREAM = 122;
-        static final int STRING_JEWELLERY = 123;
-        static final int STAT_RESTORE_POT_SHARE = 124;
-        static final int MAGIC_IMBUE = 125;
-        static final int FERTILE_SOIL = 126;
-        static final int BOOST_POTION_SHARE = 127;
-        static final int FISHING_GUILD_TELEPORT = 128;
-        static final int TELE_GROUP_FISHING_GUILD = 129;
-        static final int PLANK_MAKE = 130;
-        static final int CATHERBY_TELEPORT = 131;
-        static final int TELE_GROUP_CATHERBY = 132;
-        static final int RECHARGE_DRAGONSTONE = 133;
-        static final int ICE_PLATEAU_TELEPORT = 134;
-        static final int TELE_GROUP_ICE_PLATEAU = 135;
-        static final int ENERGY_TRANSFER = 136;
-        static final int HEAL_OTHER = 137;
-        static final int VENGEANCE_OTHER = 138;
-        static final int VENGEANCE = 139;
-        static final int HEAL_GROUP = 140;
-        static final int SPELLBOOK_SWAP = 141;
-        static final int GEOMANCY = 142;
-        static final int SPIN_FLAX = 143;
-        static final int OURANIA_TELEPORT = 144;
+        static final int LUNAR_HOME_TELEPORT = 104;
+        static final int BAKE_PIE = 105;
+        static final int CURE_PLANT = 106;
+        static final int MONSTER_EXAMINE = 107;
+        static final int NPC_CONTACT = 108;
+        static final int CURE_OTHER = 109;
+        static final int HUMIDIFY = 110;
+        static final int MOONCLAN_TELEPORT = 111;
+        static final int TELE_GROUP_MOONCLAN = 112;
+        static final int CURE_ME = 113;
+        static final int HUNTER_KIT = 114;
+        static final int WATERBIRTH_TELEPORT = 115;
+        static final int TELE_GROUP_WATERBIRTH = 116;
+        static final int CURE_GROUP = 117;
+        static final int STAT_SPY = 118;
+        static final int BARBARIAN_TELEPORT = 119;
+        static final int TELE_GROUP_BARBARIAN = 120;
+        static final int SUPERGLASS_MAKE = 121;
+        static final int TAN_LEATHER = 122;
+        static final int KHAZARD_TELEPORT = 123;
+        static final int TELE_GROUP_KHAZARD = 124;
+        static final int DREAM = 125;
+        static final int STRING_JEWELLERY = 126;
+        static final int STAT_RESTORE_POT_SHARE = 127;
+        static final int MAGIC_IMBUE = 128;
+        static final int FERTILE_SOIL = 129;
+        static final int BOOST_POTION_SHARE = 130;
+        static final int FISHING_GUILD_TELEPORT = 131;
+        static final int TELE_GROUP_FISHING_GUILD = 132;
+        static final int PLANK_MAKE = 133;
+        static final int CATHERBY_TELEPORT = 134;
+        static final int TELE_GROUP_CATHERBY = 135;
+        static final int RECHARGE_DRAGONSTONE = 136;
+        static final int ICE_PLATEAU_TELEPORT = 137;
+        static final int TELE_GROUP_ICE_PLATEAU = 138;
+        static final int ENERGY_TRANSFER = 139;
+        static final int HEAL_OTHER = 140;
+        static final int VENGEANCE_OTHER = 141;
+        static final int VENGEANCE = 142;
+        static final int HEAL_GROUP = 143;
+        static final int SPELLBOOK_SWAP = 144;
+        static final int GEOMANCY = 145;
+        static final int SPIN_FLAX = 146;
+        static final int OURANIA_TELEPORT = 147;
 
         // ARCEUUS SPELLS
-        static final int ARCEUUS_HOME_TELEPORT = 145;
-        static final int BASIC_REANIMATION = 146;
-        static final int ARCEUUS_LIBRARY_TELEPORT = 147;
-        static final int ADEPT_REANIMATION = 148;
-        static final int EXPERT_REANIMATION = 149;
-        static final int MASTER_REANIMATION = 150;
-        static final int DRAYNOR_MANOR_TELEPORT = 151;
-        static final int MIND_ALTAR_TELEPORT = 153;
-        static final int RESPAWN_TELEPORT = 154;
-        static final int SALVE_GRAVEYARD_TELEPORT = 155;
-        static final int FENKENSTRAINS_CASTLE_TELEPORT = 156;
-        static final int WEST_ARDOUGNE_TELEPORT = 157;
-        static final int HARMONY_ISLAND_TELEPORT = 158;
-        static final int CEMETERY_TELEPORT = 159;
-        static final int RESURRECT_CROPS = 160;
-        static final int BARROWS_TELEPORT = 161;
-        static final int APE_ATOLL_TELEPORT = 162;
-        static final int BATTLEFRONT_TELEPORT = 163;
-        static final int INFERIOR_DEMONBANE = 164;
-        static final int SUPERIOR_DEMONBANE = 165;
-        static final int DARK_DEMONBANE = 166;
-        static final int MARK_OF_DARKNESS = 167;
-        static final int GHOSTLY_GRASP = 168;
-        static final int SKELETAL_GRASP = 169;
-        static final int UNDEAD_GRASP = 170;
-        static final int WARD_OF_ARCEUUS = 171;
-        static final int LESSER_CORRUPTION = 172;
-        static final int GREATER_CORRUPTION = 173;
-        static final int DEMONIC_OFFERING = 174;
-        static final int SINISTER_OFFERING = 175;
-        static final int DEGRIME = 176;
-        static final int SHADOW_VEIL = 177;
-        static final int VILE_VIGOUR = 178;
-        static final int DARK_LURE = 179;
-        static final int DEATH_CHARGE = 180;
-        static final int RESURRECT_LESSER_GHOST = 181;
-        static final int RESURRECT_LESSER_SKELETON = 182;
-        static final int RESURRECT_LESSER_ZOMBIE = 183;
-        static final int RESURRECT_SUPERIOR_GHOST = 184;
-        static final int RESURRECT_SUPERIOR_SKELETON = 185;
-        static final int RESURRECT_SUPERIOR_ZOMBIE = 186;
-        static final int RESURRECT_GREATER_GHOST = 187;
-        static final int RESURRECT_GREATER_SKELETON = 188;
-        static final int RESURRECT_GREATER_ZOMBIE = 189;
+        static final int ARCEUUS_HOME_TELEPORT = 148;
+        static final int BASIC_REANIMATION = 149;
+        static final int ARCEUUS_LIBRARY_TELEPORT = 150;
+        static final int ADEPT_REANIMATION = 151;
+        static final int EXPERT_REANIMATION = 152;
+        static final int MASTER_REANIMATION = 153;
+        static final int DRAYNOR_MANOR_TELEPORT = 154;
+        static final int MIND_ALTAR_TELEPORT = 156;
+        static final int RESPAWN_TELEPORT = 157;
+        static final int SALVE_GRAVEYARD_TELEPORT = 158;
+        static final int FENKENSTRAINS_CASTLE_TELEPORT = 159;
+        static final int WEST_ARDOUGNE_TELEPORT = 160;
+        static final int HARMONY_ISLAND_TELEPORT = 161;
+        static final int CEMETERY_TELEPORT = 162;
+        static final int RESURRECT_CROPS = 163;
+        static final int BARROWS_TELEPORT = 164;
+        static final int APE_ATOLL_TELEPORT = 165;
+        static final int BATTLEFRONT_TELEPORT = 166;
+        static final int INFERIOR_DEMONBANE = 167;
+        static final int SUPERIOR_DEMONBANE = 168;
+        static final int DARK_DEMONBANE = 169;
+        static final int MARK_OF_DARKNESS = 170;
+        static final int GHOSTLY_GRASP = 171;
+        static final int SKELETAL_GRASP = 172;
+        static final int UNDEAD_GRASP = 173;
+        static final int WARD_OF_ARCEUUS = 174;
+        static final int LESSER_CORRUPTION = 175;
+        static final int GREATER_CORRUPTION = 176;
+        static final int DEMONIC_OFFERING = 177;
+        static final int SINISTER_OFFERING = 178;
+        static final int DEGRIME = 179;
+        static final int SHADOW_VEIL = 180;
+        static final int VILE_VIGOUR = 181;
+        static final int DARK_LURE = 182;
+        static final int DEATH_CHARGE = 183;
+        static final int RESURRECT_LESSER_GHOST = 184;
+        static final int RESURRECT_LESSER_SKELETON = 185;
+        static final int RESURRECT_LESSER_ZOMBIE = 186;
+        static final int RESURRECT_SUPERIOR_GHOST = 187;
+        static final int RESURRECT_SUPERIOR_SKELETON = 188;
+        static final int RESURRECT_SUPERIOR_ZOMBIE = 189;
+        static final int RESURRECT_GREATER_GHOST = 190;
+        static final int RESURRECT_GREATER_SKELETON = 191;
+        static final int RESURRECT_GREATER_ZOMBIE = 192;
     }
 
-    static class DialogSprite2 {
+    static class DialogSprite2
+    {
         static final int SPRITE1 = 1;
         static final int TEXT = 2;
         static final int SPRITE2 = 3;
         static final int CONTINUE = 4;
     }
 
-    static class QuestTab {
+    static class QuestTab
+    {
         static final int QUEST_TAB = 3;
     }
 
-    public static class TradeScreen {
+    public static class TradeScreen
+    {
         public static final int FIRST_TRADING_WITH = 31;
         public static final int SECOND_ACCEPT_FUNC = 13;
         public static final int SECOND_DECLINE_FUNC = 14;
@@ -1290,7 +1368,8 @@ public final class WidgetID {
         public static final int SECOND_TRADING_WITH = 30;
     }
 
-    public static class DuelConfig {
+    public static class DuelConfig
+    {
         public static final int CONFIG_GROUP_IP = 482;
         public static final int TITLE = 35;
         public static final int OPPONENT_ATT = 9;
@@ -1299,7 +1378,8 @@ public final class WidgetID {
         public static final int OPPONENT_HP = 21;
     }
 
-    public static class DuelResult {
+    public static class DuelResult
+    {
         public static final int RESULT_GROUP_ID = 372;
         public static final int TITLE = 16;
         public static final int TOTAL_STAKED = 32;
@@ -1307,7 +1387,8 @@ public final class WidgetID {
         public static final int WINNINGS = 40;
     }
 
-    static class JewelBox {
+    static class JewelBox
+    {
         static final int DUEL_RING = 2;
         static final int GAME_NECK = 3;
         static final int COMB_BRAC = 4;
@@ -1316,14 +1397,16 @@ public final class WidgetID {
         static final int AMUL_GLOR = 7; // yes
     }
 
-    static class Options {
+    static class Options
+    {
         static final int CAMERA_ZOOM_SLIDER_HANDLE = 15;
         static final int MUSIC_SLIDER = 37;
         static final int SOUND_EFFECT_SLIDER = 43;
         static final int AREA_SOUND_SLIDER = 49;
     }
 
-    static class GauntletMap {
+    static class GauntletMap
+    {
         static final int CONTAINER = 4;
     }
 }
