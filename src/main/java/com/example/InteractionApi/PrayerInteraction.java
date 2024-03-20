@@ -41,30 +41,6 @@ public class PrayerInteraction {
         prayerMap.put(Prayer.MYSTIC_LORE, WidgetInfoExtended.PRAYER_MYSTIC_LORE);
         prayerMap.put(Prayer.SUPERHUMAN_STRENGTH, WidgetInfoExtended.PRAYER_SUPERHUMAN_STRENGTH);
         prayerMap.put(Prayer.MYSTIC_WILL, WidgetInfoExtended.PRAYER_MYSTIC_WILL);
-        prayerMap.put(Prayer.RP_REJUVENATION, WidgetInfoExtended.PRAYER_RP_REJUVENATION);
-        prayerMap.put(Prayer.RP_ANCIENT_STRENGTH, WidgetInfoExtended.PRAYER_RP_ANCIENT_STRENGTH);
-        prayerMap.put(Prayer.RP_ANCIENT_SIGHT, WidgetInfoExtended.PRAYER_RP_ANCIENT_SIGHT);
-        prayerMap.put(Prayer.RP_ANCIENT_WILL, WidgetInfoExtended.PRAYER_RP_ANCIENT_WILL);
-        prayerMap.put(Prayer.RP_PROTECT_ITEM, WidgetInfoExtended.PRAYER_RP_PROTECT_ITEM);
-        prayerMap.put(Prayer.RP_RUINOUS_GRACE, WidgetInfoExtended.PRAYER_RP_RUINOUS_GRACE);
-        prayerMap.put(Prayer.RP_DAMPEN_MAGIC, WidgetInfoExtended.PRAYER_RP_DAMPEN_MAGIC);
-        prayerMap.put(Prayer.RP_DAMPEN_RANGED, WidgetInfoExtended.PRAYER_RP_DAMPEN_RANGED);
-        prayerMap.put(Prayer.RP_DAMPEN_MELEE, WidgetInfoExtended.PRAYER_RP_DAMPEN_MELEE);
-        prayerMap.put(Prayer.RP_TRINITAS, WidgetInfoExtended.PRAYER_RP_TRINITAS);
-        prayerMap.put(Prayer.RP_BERSERKER, WidgetInfoExtended.PRAYER_RP_BERSERKER);
-        prayerMap.put(Prayer.RP_PURGE, WidgetInfoExtended.PRAYER_RP_PURGE);
-        prayerMap.put(Prayer.RP_METABOLISE, WidgetInfoExtended.PRAYER_RP_METABOLISE);
-        prayerMap.put(Prayer.RP_REBUKE, WidgetInfoExtended.PRAYER_RP_REBUKE);
-        prayerMap.put(Prayer.RP_VINDICATION, WidgetInfoExtended.PRAYER_RP_VINDICATION);
-        prayerMap.put(Prayer.RP_DECIMATE, WidgetInfoExtended.PRAYER_RP_DECIMATE);
-        prayerMap.put(Prayer.RP_ANNIHILATE, WidgetInfoExtended.PRAYER_RP_ANNIHILATE);
-        prayerMap.put(Prayer.RP_VAPORISE, WidgetInfoExtended.PRAYER_RP_VAPORISE);
-        prayerMap.put(Prayer.RP_FUMUS_VOW, WidgetInfoExtended.PRAYER_RP_FUMUS_VOW);
-        prayerMap.put(Prayer.RP_UMBRA_VOW, WidgetInfoExtended.PRAYER_RP_UMBRA_VOW);
-        prayerMap.put(Prayer.RP_CRUORS_VOW, WidgetInfoExtended.PRAYER_RP_CRUORS_VOW);
-        prayerMap.put(Prayer.RP_GLACIES_VOW, WidgetInfoExtended.PRAYER_RP_GLACIES_VOW);
-        prayerMap.put(Prayer.RP_WRATH, WidgetInfoExtended.PRAYER_RP_WRATH);
-        prayerMap.put(Prayer.RP_INTENSIFY, WidgetInfoExtended.PRAYER_RP_INTENSIFY);
     }
 
     public static void togglePrayer(Prayer a) {
