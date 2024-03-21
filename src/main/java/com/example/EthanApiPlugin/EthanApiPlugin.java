@@ -197,7 +197,7 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static int pathLength(NPC npc) {
-        Field pathLength = npc.getClass().getSuperclass().getDeclaredField("bs");
+        Field pathLength = npc.getClass().getSuperclass().getDeclaredField("dx");
         pathLength.setAccessible(true);
         int path = pathLength.getInt(npc) * 614875555;
         pathLength.setAccessible(false);
@@ -206,7 +206,7 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static int pathLength(Player player) {
-        Field pathLength = player.getClass().getSuperclass().getDeclaredField("bs");
+        Field pathLength = player.getClass().getSuperclass().getDeclaredField("dx");
         pathLength.setAccessible(true);
         int path = pathLength.getInt(player) * 614875555;
         pathLength.setAccessible(false);
