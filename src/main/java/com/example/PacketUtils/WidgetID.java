@@ -605,10 +605,10 @@ public final class WidgetID
         static final int REDEMPTION = 25;
         static final int SMITE = 26;
         static final int SHARP_EYE = 27;
-        static final int MYSTIC_WILL = 28;
-        static final int HAWK_EYE = 29;
-        static final int MYSTIC_LORE = 30;
-        static final int EAGLE_EYE = 31;
+        static final int HAWK_EYE = 28;
+        static final int EAGLE_EYE = 29;
+        static final int MYSTIC_WILL = 30;
+        static final int MYSTIC_LORE = 31;
         static final int MYSTIC_MIGHT = 32;
         static final int RIGOUR = 33;
         static final int CHIVALRY = 34;
