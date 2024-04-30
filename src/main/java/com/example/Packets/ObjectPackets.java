@@ -16,8 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.PacketUtils.PacketReflection.client;
-
 public class ObjectPackets {
     @SneakyThrows
     public static void queueObjectAction(int actionFieldNo, int objectId, int worldPointX, int worldPointY,
@@ -68,7 +66,7 @@ public class ObjectPackets {
             p = new Point(object.getLocalLocation().getSceneX(), object.getLocalLocation().getSceneY());
         }
         LocalPoint lp = new LocalPoint(p.getX(), p.getY());
-        WorldPoint wp = WorldPoint.fromScene(client, lp.getX(), lp.getY(), object.getPlane());
+        WorldPoint wp = WorldPoint.fromScene(PacketReflection.getClient(), lp.getX(), lp.getY(), object.getPlane());
         int num = -1;
         for (String action : actions) {
             for (String action2 : actionlist) {
@@ -100,7 +98,7 @@ public class ObjectPackets {
             p = new Point(object.getLocalLocation().getSceneX(), object.getLocalLocation().getSceneY());
         }
         LocalPoint lp = new LocalPoint(p.getX(), p.getY());
-        WorldPoint wp = WorldPoint.fromScene(client, lp.getX(), lp.getY(), object.getPlane());
+        WorldPoint wp = WorldPoint.fromScene(PacketReflection.getClient(), lp.getX(), lp.getY(), object.getPlane());
         queueWidgetOnTileObject(object.getId(), wp.getX(), wp.getY(), widget.getIndex(),
                 widget.getItemId(),
                 widget.getId(),

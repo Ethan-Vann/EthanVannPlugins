@@ -7,12 +7,9 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
-import net.runelite.api.GameState;
-import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.client.RuneLite;
 import net.runelite.client.RuneLiteProperties;
-import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
@@ -51,28 +48,12 @@ public class PacketUtilsPlugin extends Plugin {
     @Inject
     Client client;
     static Client staticClient;
-    @Inject
-    PacketReflection packetReflection;
-    @Inject
-    ClientThread thread;
     public static Method addNodeMethod;
     public static boolean usingClientAddNode = false;
     public static final int CLIENT_REV = 221;
-    private static boolean loaded = false;
     private static String loadedConfigName = "";
     @Inject
     private PluginManager pluginManager;
-
-    @Subscribe
-    public void onGameStateChanged(GameStateChanged event) {
-        if (event.getGameState() == GameState.LOGGED_IN) {
-            loaded = packetReflection.LoadPackets();
-        }
-    }
-
-    public boolean isLoaded() {
-        return loaded;
-    }
 
     @Provides
     public PacketUtilsConfig getConfig(ConfigManager configManager) {
@@ -107,27 +88,17 @@ public class PacketUtilsPlugin extends Plugin {
             return;
         }
         //setupNeverlog();
-        Thread updateThread = new Thread(() ->
-        {
-            int feature = Runtime.version().feature();
-            if(feature!=11){
-                for (int i = 0; i < 10; i++) {
-                    log.error("ETHAN VANN PLUGINS LOADED ON JAVA != 11 THIS IS NOT SUPPORTED");
-                    log.error("DEVELOPERS SHOULD IGNORE BUG REPORTS CONTAINING THIS LINE UNTIL THIS ISSUE IS RESOLVED");
-                }
-            }else{
-                log.info("Ethan Vann Plugins loaded on Java 11");
+        int feature = Runtime.version().feature();
+        if (feature != 11) {
+            for (int i = 0; i < 10; i++) {
+                log.error("ETHAN VANN PLUGINS LOADED ON JAVA != 11 THIS IS NOT SUPPORTED");
+                log.error("DEVELOPERS SHOULD IGNORE BUG REPORTS CONTAINING THIS LINE UNTIL THIS ISSUE IS RESOLVED");
             }
-            setupRuneliteUpdateHandling(RuneLiteProperties.getVersion());
-            cleanup();
-        });
-        updateThread.start();
-        thread.invoke(() ->
-        {
-            if (client.getGameState() != null && client.getGameState() == GameState.LOGGED_IN) {
-                loaded = packetReflection.LoadPackets();
-            }
-        });
+        } else {
+            log.info("Ethan Vann Plugins loaded on Java 11");
+        }
+        setupRuneliteUpdateHandling(RuneLiteProperties.getVersion());
+        cleanup();
         SwingUtilities.invokeLater(() ->
         {
             for (Plugin plugin : pluginManager.getPlugins()) {
@@ -147,13 +118,13 @@ public class PacketUtilsPlugin extends Plugin {
     }
 
     @SneakyThrows
-    public static void setupNeverlog(){
+    public static void setupNeverlog() {
         staticClient.setIdleTimeout(42069);
         for (Field declaredField : staticClient.getClass().getDeclaredFields()) {
-            if(declaredField.getType()==int.class&& Modifier.isStatic(declaredField.getModifiers())){
+            if (declaredField.getType() == int.class && Modifier.isStatic(declaredField.getModifiers())) {
                 declaredField.setAccessible(true);
                 int value = declaredField.getInt(null);
-                if(value!=42069){
+                if (value != 42069) {
                     declaredField.setAccessible(false);
                     continue;
                 }
@@ -163,14 +134,15 @@ public class PacketUtilsPlugin extends Plugin {
             }
         }
     }
+
     @SneakyThrows
     public void cleanup() {
-        if(!loadedConfigName.equals(makeString())){
+        if (!loadedConfigName.equals(makeString())) {
             for (int i = 0; i < 10; i++) {
                 log.error("ETHAN VANN PLUGINS LOADED WITH INCORRECT CONFIG DATA THIS IS NOT SUPPORTED");
                 log.error("DEVELOPERS SHOULD IGNORE BUG REPORTS CONTAINING THIS LINE UNTIL THIS ISSUE IS RESOLVED");
             }
-        }else{
+        } else {
             log.info("config loaded from correct path");
         }
         Path codeSource = RuneLite.RUNELITE_DIR.toPath().resolve("PacketUtils");
@@ -191,7 +163,7 @@ public class PacketUtilsPlugin extends Plugin {
             Path f = codeSource.resolve(version + "-" + client.getRevision() + ".txt");
             List<String> lines = Files.readAllLines(f);
             loadedConfigName = f.getFileName().toString();
-            System.out.println("config name: "+loadedConfigName);
+            System.out.println("config name: " + loadedConfigName);
             if (lines.size() < 2) {
                 return;
             }
@@ -348,7 +320,6 @@ public class PacketUtilsPlugin extends Plugin {
     @Override
     public void shutDown() {
         log.info("Shutdown");
-        loaded = false;
     }
 
     @Inject
@@ -365,7 +336,8 @@ public class PacketUtilsPlugin extends Plugin {
             });
         }
     }
-    public String makeString(){
-        return RuneLiteProperties.getVersion()+"-" + client.getRevision() +".txt";
+
+    public String makeString() {
+        return RuneLiteProperties.getVersion() + "-" + client.getRevision() + ".txt";
     }
 }
