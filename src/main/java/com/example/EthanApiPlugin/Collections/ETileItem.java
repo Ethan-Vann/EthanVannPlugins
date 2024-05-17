@@ -4,6 +4,8 @@ import com.example.Packets.MousePackets;
 import com.example.Packets.TileItemPackets;
 import net.runelite.api.TileItem;
 import net.runelite.api.coords.WorldPoint;
+import static net.runelite.api.TileItem.OWNERSHIP_GROUP;
+import static net.runelite.api.TileItem.OWNERSHIP_SELF;
 
 public class ETileItem {
     public WorldPoint location;
@@ -20,6 +22,9 @@ public class ETileItem {
 
     public TileItem getTileItem() {
         return tileItem;
+    }
+    public boolean isMine(){
+        return tileItem.getOwnership() == OWNERSHIP_SELF||tileItem.getOwnership()==OWNERSHIP_GROUP;
     }
 
     public void interact(boolean ctrlDown) {
