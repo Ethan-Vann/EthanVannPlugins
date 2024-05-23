@@ -50,7 +50,7 @@ public class PacketUtilsPlugin extends Plugin {
     static Client staticClient;
     public static Method addNodeMethod;
     public static boolean usingClientAddNode = false;
-    public static final int CLIENT_REV = 221;
+    public static final int CLIENT_REV = 222;
     private static String loadedConfigName = "";
     @Inject
     private PluginManager pluginManager;
@@ -192,16 +192,16 @@ public class PacketUtilsPlugin extends Plugin {
         classes.setAccessible(true);
         ClassLoader classLoader = client.getClass().getClassLoader();
         Vector<Class<?>> classesVector = (Vector<Class<?>>) classes.get(classLoader);
-        Class<?>[] params = new Class[]{int.class, int.class, int.class, int.class, int.class, String.class, String.class, int.class, int.class};
+        Class<?>[] params = new Class[]{int.class, int.class, int.class, int.class, int.class, int.class, String.class, String.class, int.class, int.class};
         for (Class<?> aClass : classesVector) {
             for (Method declaredMethod : aClass.getDeclaredMethods()) {
-                if (declaredMethod.getParameterCount() != 10) {
+                if (declaredMethod.getParameterCount() != 11) {
                     continue;
                 }
                 if (declaredMethod.getReturnType() != void.class) {
                     continue;
                 }
-                if (!Arrays.equals(Arrays.copyOfRange(declaredMethod.getParameterTypes(), 0, 9), params)) {
+                if (!Arrays.equals(Arrays.copyOfRange(declaredMethod.getParameterTypes(), 0, 10), params)) {
                     continue;
                 }
                 doActionClassName = aClass.getSimpleName();
@@ -210,6 +210,8 @@ public class PacketUtilsPlugin extends Plugin {
         }
         final String doActionFinalClassName = doActionClassName;
         final String doActionFinalMethodName = doActionMethodName;
+        System.out.println(doActionFinalClassName);
+        System.out.println(doActionFinalMethodName);
         classes.setAccessible(false);
         URL rlConfigURL = new URL("https://static.runelite.net/jav_config.ws");
         if (!codeSource.toFile().isDirectory()) {
