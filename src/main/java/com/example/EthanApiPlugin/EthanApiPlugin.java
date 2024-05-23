@@ -105,7 +105,7 @@ public class EthanApiPlugin extends Plugin {
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
         try {
-            skullField = player.getClass().getDeclaredField("af");
+            skullField = player.getClass().getDeclaredField("aj");
             skullField.setAccessible(true);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
@@ -113,7 +113,7 @@ public class EthanApiPlugin extends Plugin {
         }
         int var1 = -1;
         try {
-            var1 = skullField.getInt(player) * 46156721;
+            var1 = skullField.getInt(player) * 1181672555;
             skullField.setAccessible(false);
         } catch (IllegalAccessException | NullPointerException e) {
             e.printStackTrace();
@@ -175,7 +175,7 @@ public class EthanApiPlugin extends Plugin {
                 }
                 int value = declaredField.getInt(npc);
                 declaredField.setInt(npc, 4795789);
-                if (npc.getAnimation() == -1037212889 * 4795789) {
+                if (npc.getAnimation() == 2002995319 * 4795789) {
                     animationField = declaredField.getName();
                     declaredField.setInt(npc, value);
                     declaredField.setAccessible(false);
@@ -190,28 +190,29 @@ public class EthanApiPlugin extends Plugin {
         }
         Field animation = npc.getClass().getSuperclass().getDeclaredField(animationField);
         animation.setAccessible(true);
-        int anim = animation.getInt(npc) * -1037212889;
+        int anim = animation.getInt(npc) * 2002995319;
         animation.setAccessible(false);
         return anim;
     }
 
-    @SneakyThrows
-    public static int pathLength(NPC npc) {
-        Field pathLength = npc.getClass().getSuperclass().getDeclaredField("dk");
-        pathLength.setAccessible(true);
-        int path = pathLength.getInt(npc) * -1259578643;
-        pathLength.setAccessible(false);
-        return path;
-    }
 
-    @SneakyThrows
-    public static int pathLength(Player player) {
-        Field pathLength = player.getClass().getSuperclass().getDeclaredField("dk");
-        pathLength.setAccessible(true);
-        int path = pathLength.getInt(player) * -1259578643;
-        pathLength.setAccessible(false);
-        return path;
-    }
+//    @SneakyThrows
+//    public static int pathLength(NPC npc) {
+//        Field pathLength = npc.getClass().getSuperclass().getDeclaredField("dk");
+//        pathLength.setAccessible(true);
+//        int path = pathLength.getInt(npc) * -1259578643;
+//        pathLength.setAccessible(false);
+//        return path;
+//    }
+//
+//    @SneakyThrows
+//    public static int pathLength(Player player) {
+//        Field pathLength = player.getClass().getSuperclass().getDeclaredField("dk");
+//        pathLength.setAccessible(true);
+//        int path = pathLength.getInt(player) * -1259578643;
+//        pathLength.setAccessible(false);
+//        return path;
+//    }
 
     @SneakyThrows
     public static HeadIcon getHeadIcon(NPC npc) {
@@ -416,26 +417,26 @@ public class EthanApiPlugin extends Plugin {
     }
 
     @SneakyThrows
-    public static void invoke(int var0, int var1, int var2, int var3, int var4, String var5, String var6, int var7,
-                              int var8) {
+    public static void invoke(int var0, int var1, int var2, int var3, int var4,int var5, String var6, String var7, int var8,
+                              int var9) {
         if (doAction == null) {
             Field classes = ClassLoader.class.getDeclaredField("classes");
             classes.setAccessible(true);
             ClassLoader classLoader = client.getClass().getClassLoader();
             Vector<Class<?>> classesVector = (Vector<Class<?>>) classes.get(classLoader);
-            Class<?>[] params = new Class[]{int.class, int.class, int.class, int.class, int.class, String.class, String.class, int.class, int.class};
+            Class<?>[] params = new Class[]{int.class, int.class, int.class, int.class, int.class, int.class, String.class, String.class, int.class, int.class};
             for (Class<?> aClass : classesVector) {
                 if (doAction != null) {
                     break;
                 }
                 for (Method declaredMethod : aClass.getDeclaredMethods()) {
-                    if (declaredMethod.getParameterCount() != 10) {
+                    if (declaredMethod.getParameterCount() != 11) {
                         continue;
                     }
                     if (declaredMethod.getReturnType() != void.class) {
                         continue;
                     }
-                    if (!Arrays.equals(Arrays.copyOfRange(declaredMethod.getParameterTypes(), 0, 9), params)) {
+                    if (!Arrays.equals(Arrays.copyOfRange(declaredMethod.getParameterTypes(), 0, 10), params)) {
                         continue;
                     }
                     doAction = declaredMethod;
@@ -445,7 +446,7 @@ public class EthanApiPlugin extends Plugin {
             }
         }
         doAction.setAccessible(true);
-        doAction.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, Integer.MAX_VALUE);
+        doAction.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8,var9, Byte.MAX_VALUE);
         doAction.setAccessible(false);
     }
 
