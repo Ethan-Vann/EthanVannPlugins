@@ -29,8 +29,6 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew FatJar
-
-# build/libs/*.jar  # Ruta al archivo JAR compilado por Gradle
         
     - name: Make a release
       id: make_release
@@ -44,4 +42,4 @@ jobs:
         body: |
           Automatic release by Github Actions!
         files: |
-          ./build/libs/*.jar
+          ./build/libs/EthanVannPlugins.jar
