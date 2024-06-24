@@ -40,8 +40,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: latest
-        name: Release ${{ github.sha }}
+        name: Latest Automatic Release from commit ${{ github.sha }}
         body: |
-          Automatic release triggered by commit ${GITHUB_SHA}
+          Automatic release by Github Actions!
         files: |
           ./build/libs/*.jar
