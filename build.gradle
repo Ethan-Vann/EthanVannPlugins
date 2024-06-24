@@ -1,3 +1,4 @@
+/*
 plugins {
     id 'java'
     id 'maven-publish'
@@ -84,3 +85,78 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 targetCompatibility = JavaVersion.VERSION_11
+*/
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenLocal()
+    maven { url = 'https://repo.runelite.net' }
+    mavenCentral()
+    jcenter()
+}
+
+def runeLiteVersion = 'latest.release'
+
+dependencies {
+    compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testImplementation 'junit:junit:4.12'
+    testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion
+    testImplementation group: 'net.runelite', name: 'jshell', version: runeLiteVersion
+    implementation 'org.json:json:20230227'
+    implementation 'org.roaringbitmap:RoaringBitmap:0.9.44'
+    implementation("com.google.archivepatcher:archive-patch-applier:1.0.4")
+    implementation("org.benf:cfr:0.152")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "src"
+        }
+    }
+}
+
+group = 'com.example'
+version = '5.4'
+sourceCompatibility = "11"
+targetCompatibility = "11"
+
+task FatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'com.example.Main'
+    }
+    archiveBaseName.set('EthanVannPlugins')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    exclude("com/example/hidden")
+    exclude("com/example/PathingTesting")
+    with jar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact tasks.FatJar
+        }
+    }
+    repositories {
+        maven {
+            name = "EthanApiCompiler"
+            url = uri("https://maven.pkg.github.com/KATalyzt36/EthanVannPlugins-Compiler/")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
