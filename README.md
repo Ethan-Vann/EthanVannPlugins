@@ -4,4 +4,4 @@
 
 ## Link
 
-### [EthanVannPlugins (API)](https://github.com/KATalyzt36/EthanVannPlugins-Compiler/releases/download/release/EthanVannPlugins.jar)
+### [EthanVannPlugins (API)](https://github.com/KATalyzt36/EthanVannPlugins-Compiler/releases/download/latest/EthanVannPlugins.jar)
