@@ -1,8 +1,11 @@
 name: EthanApiCompiler
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '*'
 
 jobs:
   build:
@@ -25,10 +28,18 @@ jobs:
       uses: gradle/gradle-build-action@v2
 
     - name: Build with Gradle
-      run: ./gradlew fatJar
-
-    - name: Publish to GitHub Packages
-      run: ./gradlew publish
+      run: ./gradlew FatJar
+        
+    - name: Make a release
+      id: make_release
+      uses: softprops/action-gh-release@v1
       env:
         USERNAME: ${{ github.actor }}
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: latest
+        release_name: Release ${{ github.sha }}
+        body: |
+          Automatic release triggered by commit ${GITHUB_SHA}
+        files: |
+          build/libs/*.jar  # Ruta al archivo JAR compilado por Gradle
