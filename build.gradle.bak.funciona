@@ -5,9 +5,7 @@ plugins {
 
 repositories {
     mavenLocal()
-    maven {
-        url = 'https://repo.runelite.net'
-    }
+    maven { url = 'https://repo.runelite.net' }
     mavenCentral()
     jcenter()
 }
@@ -26,13 +24,12 @@ dependencies {
     implementation("com.google.archivepatcher:archive-patch-applier:1.0.4")
     implementation("org.benf:cfr:0.152")
 }
+
 sourceSets {
     main {
-
         java {
             srcDir "src"
         }
-
     }
 }
 
@@ -45,7 +42,7 @@ task FatJar(type: Jar) {
     manifest {
         attributes 'Main-Class': 'com.example.Main'
     }
-    baseName = 'EthanVannPlugins'
+    archiveBaseName.set('EthanVannPlugins')
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     exclude("com/example/hidden")
@@ -53,29 +50,21 @@ task FatJar(type: Jar) {
     with jar
 }
 
-task FatJarWithHidden(type: Jar) {
-    manifest {
-        attributes 'Main-Class': 'com.example.Main'
-    }
-    baseName = 'EthanVannPlugins'
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+            artifact tasks.FatJar
         }
     }
     repositories {
         maven {
+            name = "EthanApiCompiler"
+            url = uri("https://maven.pkg.github.com/KATalyzt36/EthanVannPlugins-Compiler/")
             credentials {
-                username 'admin'
-                password 'password'
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
             }
-            url "http://baseUrl/artifactory/libs-release-local"
         }
     }
 }
@@ -83,4 +72,3 @@ publishing {
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
-targetCompatibility = JavaVersion.VERSION_11
