@@ -29,6 +29,8 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew FatJar
+
+# build/libs/*.jar  # Ruta al archivo JAR compilado por Gradle
         
     - name: Make a release
       id: make_release
@@ -42,4 +44,4 @@ jobs:
         body: |
           Automatic release triggered by commit ${GITHUB_SHA}
         files: |
-          build/libs/*.jar  # Ruta al archivo JAR compilado por Gradle
+          ./build/libs/*.jar
