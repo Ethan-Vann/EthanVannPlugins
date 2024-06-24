@@ -40,7 +40,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: latest
-        release_name: Release ${{ github.sha }}
+        name: Release ${{ github.sha }}
         body: |
           Automatic release triggered by commit ${GITHUB_SHA}
         files: |
