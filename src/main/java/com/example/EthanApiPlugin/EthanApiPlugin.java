@@ -105,7 +105,7 @@ public class EthanApiPlugin extends Plugin {
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
         try {
-            skullField = player.getClass().getDeclaredField("aj");
+            skullField = player.getClass().getDeclaredField("ag");
             skullField.setAccessible(true);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
@@ -113,7 +113,7 @@ public class EthanApiPlugin extends Plugin {
         }
         int var1 = -1;
         try {
-            var1 = skullField.getInt(player) * 1181672555;
+            var1 = skullField.getInt(player) * -227316761;
             skullField.setAccessible(false);
         } catch (IllegalAccessException | NullPointerException e) {
             e.printStackTrace();
@@ -175,7 +175,7 @@ public class EthanApiPlugin extends Plugin {
                 }
                 int value = declaredField.getInt(npc);
                 declaredField.setInt(npc, 4795789);
-                if (npc.getAnimation() == 2002995319 * 4795789) {
+                if (npc.getAnimation() == -614178723 * 4795789) {
                     animationField = declaredField.getName();
                     declaredField.setInt(npc, value);
                     declaredField.setAccessible(false);
