@@ -419,4 +419,13 @@ public final class ObfuscatedNames {
     public static final String MouseHandler_lastPressedTimeMillisClass = "bp";
     public static final String MouseHandler_lastPressedTimeMillisField = "as";
     public static final String clientMillisField = "db";
+
+
+
+
+    //update these please Ethan
+    public static final int getAnimationMultiplier = -614178723;
+    public static final int skullIconMultiplier = -227316761;
+    public static final String skullIconField = "ag";
+    //update these please Ethan
 }
