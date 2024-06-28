@@ -3,6 +3,7 @@ package com.example.EthanApiPlugin;
 import com.example.EthanApiPlugin.Collections.*;
 import com.example.EthanApiPlugin.Collections.query.QuickPrayer;
 import com.example.EthanApiPlugin.PathFinding.Node;
+import com.example.PacketUtils.ObfuscatedNames;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -105,7 +106,7 @@ public class EthanApiPlugin extends Plugin {
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
         try {
-            skullField = player.getClass().getDeclaredField("ag");
+            skullField = player.getClass().getDeclaredField(ObfuscatedNames.skullIconField);
             skullField.setAccessible(true);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
@@ -113,7 +114,7 @@ public class EthanApiPlugin extends Plugin {
         }
         int var1 = -1;
         try {
-            var1 = skullField.getInt(player) * -227316761;
+            var1 = skullField.getInt(player) * ObfuscatedNames.skullIconMultiplier;
             skullField.setAccessible(false);
         } catch (IllegalAccessException | NullPointerException e) {
             e.printStackTrace();
@@ -175,7 +176,7 @@ public class EthanApiPlugin extends Plugin {
                 }
                 int value = declaredField.getInt(npc);
                 declaredField.setInt(npc, 4795789);
-                if (npc.getAnimation() == -614178723 * 4795789) {
+                if (npc.getAnimation() == ObfuscatedNames.getAnimationMultiplier * 4795789) {
                     animationField = declaredField.getName();
                     declaredField.setInt(npc, value);
                     declaredField.setAccessible(false);
@@ -190,7 +191,7 @@ public class EthanApiPlugin extends Plugin {
         }
         Field animation = npc.getClass().getSuperclass().getDeclaredField(animationField);
         animation.setAccessible(true);
-        int anim = animation.getInt(npc) * 2002995319;
+        int anim = animation.getInt(npc) * ObfuscatedNames.getAnimationMultiplier;
         animation.setAccessible(false);
         return anim;
     }
