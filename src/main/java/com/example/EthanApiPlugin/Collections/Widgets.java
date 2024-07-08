@@ -5,10 +5,7 @@ import net.runelite.api.Client;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.RuneLite;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class Widgets {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
@@ -19,49 +16,52 @@ public class Widgets {
     //for update critical information make sure the widget is not hidden or use the other query types like inventory,
     // equipment ect as they will only return up-to-date information.
     public static WidgetQuery search() {
-        HashSet<Widget> returnList = new HashSet<>(Arrays.asList(client.getWidgetRoots()));
-        Queue<Widget> queue = new LinkedList<>(Arrays.asList(client.getWidgetRoots()));
-        while (!queue.isEmpty()) {
-            Widget widget = queue.poll();
-            if (widget == null) {
-                continue;
-            }
-            Widget[] dynamicChildren = widget.getDynamicChildren();
-            if (dynamicChildren != null) {
-                for (Widget dynamicChild : dynamicChildren) {
-                    if (dynamicChild == null) {
-                        continue;
+        HashSet<Widget> returnList = new HashSet<>();
+        Widget[] currentQueue;
+        ArrayList<Widget> buffer = new ArrayList<>();
+        currentQueue = client.getWidgetRoots();
+        while(currentQueue.length!=0) {
+            for (Widget widget : currentQueue) {
+                if (widget == null) {
+                    continue;
+                }
+                returnList.add(widget);
+                if (widget.getDynamicChildren() != null) {
+                    for (Widget dynamicChild : widget.getDynamicChildren()) {
+                        if (dynamicChild == null) {
+                            continue;
+                        }
+                        buffer.add(dynamicChild);
+                        returnList.add(dynamicChild);
                     }
-                    queue.add(dynamicChild);
-                    returnList.add(dynamicChild);
+                }
+                if (widget.getNestedChildren() != null) {
+                    for (Widget nestedChild : widget.getNestedChildren()) {
+                        if (nestedChild == null) {
+                            continue;
+                        }
+                        buffer.add(nestedChild);
+                        returnList.add(nestedChild);
+                    }
+                }
+                Widget[] staticChildren;
+                try {
+                    staticChildren = widget.getStaticChildren();
+                } catch (NullPointerException e) {
+                    continue;
+                }
+                if (staticChildren != null) {
+                    for (Widget staticChild : staticChildren) {
+                        if (staticChild == null) {
+                            continue;
+                        }
+                        buffer.add(staticChild);
+                        returnList.add(staticChild);
+                    }
                 }
             }
-            Widget[] nestedChildren = widget.getNestedChildren();
-            if (nestedChildren != null) {
-                for (Widget nestedChild : nestedChildren) {
-                    if (nestedChild == null) {
-                        continue;
-                    }
-                    queue.add(nestedChild);
-                    returnList.add(nestedChild);
-                }
-            }
-            Widget[] staticChildren;
-            try {
-                staticChildren = widget.getStaticChildren();
-            }catch (NullPointerException e){
-                continue;
-            }
-            if (staticChildren != null) {
-                for (Widget staticChild : staticChildren) {
-                    if (staticChild == null) {
-                        continue;
-                    }
-                    queue.add(staticChild);
-                    returnList.add(staticChild);
-                }
-            }
-            queue.addAll(Arrays.asList(widget.getNestedChildren()));
+            currentQueue = buffer.toArray(new Widget[]{});
+            buffer.clear();
         }
         return new WidgetQuery(returnList);
     }
