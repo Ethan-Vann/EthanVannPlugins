@@ -31,6 +31,9 @@ public class WidgetQuery {
                 return false;
             }
             for (String s : actions) {
+                if(s==null){
+                    continue;
+                }
                 if(Text.removeTags(s).equalsIgnoreCase(action)){
                     return true;
                 }
