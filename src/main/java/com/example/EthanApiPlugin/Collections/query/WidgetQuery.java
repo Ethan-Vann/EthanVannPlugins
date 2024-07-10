@@ -25,7 +25,21 @@ public class WidgetQuery {
     }
 
     public WidgetQuery withAction(String action) {
-        widgets = widgets.stream().filter(widget -> widget.getActions() != null && Arrays.asList(widget.getActions()).contains(action)).collect(java.util.stream.Collectors.toList());
+        widgets = widgets.stream().filter(x->{
+            String[] actions = x.getActions();
+            if(actions==null){
+                return false;
+            }
+            for (String s : actions) {
+                if(s==null){
+                    continue;
+                }
+                if(Text.removeTags(s).equalsIgnoreCase(action)){
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
         return this;
     }
 
@@ -73,7 +87,7 @@ public class WidgetQuery {
     }
 
     public WidgetQuery withName(String name) {
-        widgets = widgets.stream().filter(item -> item.getName() != null && item.getName().equals(name)).collect(Collectors.toList());
+        widgets = widgets.stream().filter(item -> item.getName() != null && Text.removeTags(item.getName()).equals(name)).collect(Collectors.toList());
         return this;
     }
 
