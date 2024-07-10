@@ -84,7 +84,7 @@ public class WidgetQuery {
     }
 
     public WidgetQuery withName(String name) {
-        widgets = widgets.stream().filter(item -> item.getName() != null && item.getName().equals(name)).collect(Collectors.toList());
+        widgets = widgets.stream().filter(item -> item.getName() != null && Text.removeTags(item.getName()).equals(name)).collect(Collectors.toList());
         return this;
     }
 
