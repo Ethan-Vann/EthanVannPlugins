@@ -217,45 +217,53 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static HeadIcon getHeadIcon(NPC npc) {
-//        Method getHeadIconMethod = null;
-//        for (Method declaredMethod : npc.getComposition().getClass().getDeclaredMethods()) {
-//            if (declaredMethod.getName().length() == 2 && declaredMethod.getReturnType() == short.class && declaredMethod.getParameterCount() == 1) {
-//                getHeadIconMethod = declaredMethod;
-//                getHeadIconMethod.setAccessible(true);
-//                short headIcon = (short) getHeadIconMethod.invoke(npc.getComposition(), 0);
-//                getHeadIconMethod.setAccessible(false);
-//
-//                if (headIcon == -1) {
-//                    continue;
-//                }
-//
-//                return HeadIcon.values()[headIcon];
-//            }
-//        }
-//        return null;
         Field vi = npc.getClass().getDeclaredField("ap");
         vi.setAccessible(true);
         Object viObj = vi.get(npc);
         if(viObj==null){
-            return null;
+            vi.setAccessible(false);
+            return getOldHeadIcon(npc);
         }
         Field adField = viObj.getClass().getDeclaredField("ad");
         adField.setAccessible(true);
         short[] ad = (short[]) adField.get(viObj);
+        adField.setAccessible(false);
+        vi.setAccessible(false);
         if(ad==null){
-            return null;
+            return getOldHeadIcon(npc);
         }
         if(ad.length==0){
-            return null;
+            return getOldHeadIcon(npc);
         }
         short headIcon  = ad[0];
         if(headIcon==-1){
-            return null;
+            return getOldHeadIcon(npc);
         }
-        adField.setAccessible(false);
-        vi.setAccessible(false);
-        //System.out.println(headIcon);
         return HeadIcon.values()[headIcon];
+    }
+
+    @SneakyThrows
+    public static HeadIcon getOldHeadIcon(NPC npc){
+                Method getHeadIconMethod = null;
+        for (Method declaredMethod : npc.getComposition().getClass().getDeclaredMethods()) {
+            if (declaredMethod.getName().length() == 2 && declaredMethod.getReturnType() == short.class && declaredMethod.getParameterCount() == 1) {
+                getHeadIconMethod = declaredMethod;
+                getHeadIconMethod.setAccessible(true);
+                short headIcon = -1;
+                try {
+                    headIcon = (short) getHeadIconMethod.invoke(npc.getComposition(), 0);
+                }catch (Exception e){
+                    //nothing
+                }
+                getHeadIconMethod.setAccessible(false);
+
+                if (headIcon == -1) {
+                    continue;
+                }
+                return HeadIcon.values()[headIcon];
+            }
+        }
+        return null;
     }
 
     @Deprecated
