@@ -193,21 +193,25 @@ public class PacketUtilsPlugin extends Plugin {
         ClassLoader classLoader = client.getClass().getClassLoader();
         Vector<Class<?>> classesVector = (Vector<Class<?>>) classes.get(classLoader);
         Class<?>[] params = new Class[]{int.class, int.class, int.class, int.class, int.class, int.class, String.class, String.class, int.class, int.class};
-        for (Class<?> aClass : classesVector) {
-            for (Method declaredMethod : aClass.getDeclaredMethods()) {
-                if (declaredMethod.getParameterCount() != 11) {
+        for (int i = 0; i < classesVector.size(); i++) {
+            try {
+                System.out.println("class: " + classesVector.get(i));
+                if (classesVector.get(i).getName().equals("ac")) {
+                    System.out.print("skipping ac");
                     continue;
                 }
-                if (declaredMethod.getReturnType() != void.class) {
-                    continue;
+                for (int i1 = 0; i1 < classesVector.get(i).getDeclaredMethods().length; i1++) {
+                    if (!Arrays.equals(Arrays.copyOfRange(classesVector.get(i).getDeclaredMethods()[i1].getParameterTypes(), 0, 10), params)) {
+                        continue;
+                    }
+                    doActionClassName = classesVector.get(i).getSimpleName();
+                    doActionMethodName = classesVector.get(i).getDeclaredMethods()[i1].getName();
                 }
-                if (!Arrays.equals(Arrays.copyOfRange(declaredMethod.getParameterTypes(), 0, 10), params)) {
-                    continue;
-                }
-                doActionClassName = aClass.getSimpleName();
-                doActionMethodName = declaredMethod.getName();
+            } catch (Exception e) {
+                System.out.println("exception");
             }
         }
+        System.out.print("finished");
         final String doActionFinalClassName = doActionClassName;
         final String doActionFinalMethodName = doActionMethodName;
         System.out.println(doActionFinalClassName);
@@ -229,14 +233,30 @@ public class PacketUtilsPlugin extends Plugin {
         } else {
             log.info("Vanilla jar does not exist");
         }
-        OutputStream patchedOutputStream = Files.newOutputStream(patchedOutputPath);
-        InputStream patch = ClientLoader.class.getResourceAsStream("/client.patch");
-        new FileByFileV1DeltaApplier().applyDelta(vanilla, patch, patchedOutputStream);
-        patch.close();
-        patchedOutputStream.flush();
-        patchedOutputStream.close();
+        String[] versionSplits = version.split("\\.");
+        int length = versionSplits.length;
+        if (version.contains("snapshot")) {
+            log.info("replacing snapshot version");
+            version = version.replace("-SNAPSHOT", "");
+        }
+        if ((length > 0 && Integer.parseInt(versionSplits[0]) > 1 || (length > 1) && (Integer.parseInt(versionSplits[1]) > 10) )|| (length > 2 && Integer.parseInt(versionSplits[2]) > 34)) {
+            String url = "https://repo.runelite.net/net/runelite/injected-client/" + version + "/injected-client-" + version + ".jar";
+            URL injectedURL = new URL(url);
+            log.info("Downloading vanilla client from " + injectedURL);
+            try (InputStream clientStream = injectedURL.openStream()) {
+                Files.copy(clientStream, patchedOutputPath, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } else {
+            OutputStream patchedOutputStream = Files.newOutputStream(patchedOutputPath);
+            InputStream patch = ClientLoader.class.getResourceAsStream("/client.patch");
+            new FileByFileV1DeltaApplier().applyDelta(vanilla, patch, patchedOutputStream);
+            patch.close();
+            patchedOutputStream.flush();
+            patchedOutputStream.close();
+        }
         try (JarFile patchedJar = new JarFile(patchedOutputPath.toFile())) {
             patchedJar.entries().asIterator().forEachRemaining(jarEntry -> {
+                System.out.println("jar entry: " + jarEntry.getName());
                 if (jarEntry.getName().equals(doActionFinalClassName + ".class")) {
                     try (InputStream inputStream = patchedJar.getInputStream(jarEntry)) {
                         Files.copy(inputStream, doActionOutputPath, StandardCopyOption.REPLACE_EXISTING);
