@@ -242,7 +242,7 @@ public class PacketUtilsPlugin extends Plugin {
         if ((length > 0 && Integer.parseInt(versionSplits[0]) > 1 || (length > 1) && (Integer.parseInt(versionSplits[1]) > 10) )|| (length > 2 && Integer.parseInt(versionSplits[2]) > 34)) {
             String url = "https://repo.runelite.net/net/runelite/injected-client/" + version + "/injected-client-" + version + ".jar";
             URL injectedURL = new URL(url);
-            log.info("Downloading vanilla client from " + injectedURL);
+            log.info("Downloading injected client from " + injectedURL);
             try (InputStream clientStream = injectedURL.openStream()) {
                 Files.copy(clientStream, patchedOutputPath, StandardCopyOption.REPLACE_EXISTING);
             }
