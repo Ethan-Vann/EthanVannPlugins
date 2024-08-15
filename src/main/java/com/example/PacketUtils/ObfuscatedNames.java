@@ -399,7 +399,7 @@ public final class ObfuscatedNames {
     public static final String offsetMultiplier = "1214539161";
     public static final String indexMultiplier = "-1594286423";
     public static final String addNodeGarbageValue = "1791231261";
-    public static final String getPacketBufferNodeGarbageValue = "-15"; //?
+    public static final String getPacketBufferNodeGarbageValue = "-15";
     public static final String packetWriterFieldName = "iq";
     public static final String isaacCipherFieldName = "ax";
     public static final String addNodeMethodName = "an";
