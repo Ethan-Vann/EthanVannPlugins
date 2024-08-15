@@ -470,7 +470,7 @@ public class EthanApiPlugin extends Plugin {
                             }
                             doAction = classesVector.get(i).getDeclaredMethods()[i1];
                         }
-                    } catch (NoClassDefFoundError ignored) {
+                    } catch (NoClassDefFoundError | VerifyError ignored) {
 
                     }
                 } catch (Exception ignored) {
