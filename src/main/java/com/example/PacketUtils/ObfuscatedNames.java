@@ -396,8 +396,8 @@ public final class ObfuscatedNames {
     public static final String[][] EVENT_MOUSE_CLICK_WRITES = new String[][]{{"r 8","v"},{"r 8","v"},{"r 8","v"}};
     public static final String[][] MOVE_GAMECLICK_WRITES = new String[][]{{"v"},{"v"},{"v","r 8"},{"r 8","v"}};
 
-    public static final String offsetMultiplier = "1214539161"; //??
-    public static final String indexMultiplier = "-1594286423"; //??
+    public static final String offsetMultiplier = "1214539161";
+    public static final String indexMultiplier = "-1594286423";
     public static final String addNodeGarbageValue = "1791231261";
     public static final String getPacketBufferNodeGarbageValue = "-15"; //?
     public static final String packetWriterFieldName = "iq";
@@ -405,7 +405,7 @@ public final class ObfuscatedNames {
     public static final String addNodeMethodName = "an";
     public static final String clientPacketClassName = "mc";
     public static final String packetWriterClassName = "eq";
-    public static final String classContainingGetPacketBufferNodeName = "ix"; //??
+    public static final String classContainingGetPacketBufferNodeName = "ix";
     public static final String packetBufferNodeClassName = "mf";
 
     public static final String packetBufferFieldName = "an";
