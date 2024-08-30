@@ -1,6 +1,5 @@
 package com.example.PacketUtils;
 
-import com.google.archivepatcher.applier.FileByFileV1DeltaApplier;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import lombok.SneakyThrows;
@@ -16,7 +15,6 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.PluginInstantiationException;
 import net.runelite.client.plugins.PluginManager;
-import net.runelite.client.rs.ClientLoader;
 import org.benf.cfr.reader.Main;
 
 import javax.inject.Inject;
@@ -249,13 +247,10 @@ public class PacketUtilsPlugin extends Plugin {
                 Files.copy(clientStream, patchedOutputPath, StandardCopyOption.REPLACE_EXISTING);
             }
         } else {
-            OutputStream patchedOutputStream = Files.newOutputStream(patchedOutputPath);
-            InputStream patch = ClientLoader.class.getResourceAsStream("/client.patch");
-            new FileByFileV1DeltaApplier().applyDelta(vanilla, patch, patchedOutputStream);
-            patch.close();
-            patchedOutputStream.flush();
-            patchedOutputStream.close();
+            System.out.println("unsupported rl version");
+            throw new UnsupportedOperationException("unsupported rl version");
         }
+        System.out.println(doActionFinalClassName);
         try (JarFile patchedJar = new JarFile(patchedOutputPath.toFile())) {
             patchedJar.entries().asIterator().forEachRemaining(jarEntry -> {
                 System.out.println("jar entry: " + jarEntry.getName());
