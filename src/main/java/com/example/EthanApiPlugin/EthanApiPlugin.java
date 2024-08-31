@@ -217,14 +217,14 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static HeadIcon getHeadIcon(NPC npc) {
-        Field vi = npc.getClass().getDeclaredField("ap");
+        Field vi = npc.getClass().getDeclaredField("vj");
         vi.setAccessible(true);
         Object viObj = vi.get(npc);
         if(viObj==null){
             vi.setAccessible(false);
             return getOldHeadIcon(npc);
         }
-        Field adField = viObj.getClass().getDeclaredField("ad");
+        Field adField = viObj.getClass().getDeclaredField("ay");
         adField.setAccessible(true);
         short[] ad = (short[]) adField.get(viObj);
         adField.setAccessible(false);
