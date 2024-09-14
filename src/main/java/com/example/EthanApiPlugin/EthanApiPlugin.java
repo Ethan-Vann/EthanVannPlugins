@@ -217,50 +217,50 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static HeadIcon getHeadIcon(NPC npc) {
-        Field vi = npc.getClass().getDeclaredField("vj");
-        vi.setAccessible(true);
-        Object viObj = vi.get(npc);
-        if(viObj==null){
-            vi.setAccessible(false);
+        Field aq = npc.getClass().getDeclaredField("aq");
+        aq.setAccessible(true);
+        Object aqObj = aq.get(npc);
+        if (aqObj == null) {
+            aq.setAccessible(false);
             return getOldHeadIcon(npc);
         }
-        Field adField = viObj.getClass().getDeclaredField("ay");
-        adField.setAccessible(true);
-        short[] ad = (short[]) adField.get(viObj);
-        adField.setAccessible(false);
-        vi.setAccessible(false);
-        if(ad==null){
+        Field aeField = aqObj.getClass().getDeclaredField("ae");
+        aeField.setAccessible(true);
+        short[] ae = (short[]) aeField.get(aqObj);
+        aeField.setAccessible(false);
+        aq.setAccessible(false);
+        if (ae == null) {
             return getOldHeadIcon(npc);
         }
-        if(ad.length==0){
+        if (ae.length == 0) {
             return getOldHeadIcon(npc);
         }
-        short headIcon  = ad[0];
-        if(headIcon==-1){
+        short headIcon = ae[0];
+        if (headIcon == -1) {
             return getOldHeadIcon(npc);
         }
         return HeadIcon.values()[headIcon];
     }
 
     @SneakyThrows
-    public static HeadIcon getOldHeadIcon(NPC npc){
-                Method getHeadIconMethod = null;
-        for (Method declaredMethod : npc.getComposition().getClass().getDeclaredMethods()) {
-            if (declaredMethod.getName().length() == 2 && declaredMethod.getReturnType() == short.class && declaredMethod.getParameterCount() == 1) {
+    public static HeadIcon getOldHeadIcon(NPC npc) {
+        Method getHeadIconMethod;
+        for (Method declaredMethod : npc.getClass().getDeclaredMethods()) {
+            if (declaredMethod.getName().length() == 2 && declaredMethod.getReturnType() == short[].class && declaredMethod.getParameterCount() == 0) {
                 getHeadIconMethod = declaredMethod;
                 getHeadIconMethod.setAccessible(true);
-                short headIcon = -1;
+                short[] headIcon = null;
                 try {
-                    headIcon = (short) getHeadIconMethod.invoke(npc.getComposition(), 0);
-                }catch (Exception e){
+                    headIcon = (short[]) getHeadIconMethod.invoke(npc);
+                } catch (Exception e) {
                     //nothing
                 }
                 getHeadIconMethod.setAccessible(false);
 
-                if (headIcon == -1) {
+                if (headIcon == null) {
                     continue;
                 }
-                return HeadIcon.values()[headIcon];
+                return HeadIcon.values()[headIcon[0]];
             }
         }
         return null;
@@ -310,13 +310,13 @@ public class EthanApiPlugin extends Plugin {
         boolean[][] visited = new boolean[104][104];
         int[][] flags = client.getCollisionMaps()[client.getPlane()].getFlags();
         WorldPoint playerLoc = client.getLocalPlayer().getWorldLocation();
-        int firstPoint = (playerLoc.getX()-client.getBaseX() << 16) | playerLoc.getY()-client.getBaseY();
+        int firstPoint = (playerLoc.getX() - client.getBaseX() << 16) | playerLoc.getY() - client.getBaseY();
         ArrayDeque<Integer> queue = new ArrayDeque<>();
         queue.add(firstPoint);
         while (!queue.isEmpty()) {
             int point = queue.poll();
-            short x =(short)(point >> 16);
-            short y = (short)point;
+            short x = (short) (point >> 16);
+            short y = (short) point;
             if (y < 0 || x < 0 || y > 104 || x > 104) {
                 continue;
             }
@@ -450,35 +450,35 @@ public class EthanApiPlugin extends Plugin {
 
     @Deprecated // use client menuAction
     @SneakyThrows
-    public static void invoke(int var0, int var1, int var2, int var3, int var4,int var5, String var6, String var7, int var8,
+    public static void invoke(int var0, int var1, int var2, int var3, int var4, int var5, String var6, String var7, int var8,
                               int var9) {
         if (doAction == null) {
+            Class<?> qtClass = null;
             Field classes = ClassLoader.class.getDeclaredField("classes");
             classes.setAccessible(true);
             ClassLoader classLoader = client.getClass().getClassLoader();
             Vector<Class<?>> classesVector = (Vector<Class<?>>) classes.get(classLoader);
-            Class<?>[] params = new Class[]{int.class, int.class, int.class, int.class, int.class, int.class, String.class, String.class, int.class, int.class};
-            for (int i = 0; i < classesVector.size(); i++) {
-                try {
-                    if (classesVector.get(i).getSuperclass()!=null&&classesVector.get(i).getSuperclass().getName().contains("SSLSocketFactory")) {
-                        continue;
-                    }
-                    try {
-                        for (int i1 = 0; i1 < classesVector.get(i).getDeclaredMethods().length; i1++) {
-                            if (!Arrays.equals(Arrays.copyOfRange(classesVector.get(i).getDeclaredMethods()[i1].getParameterTypes(), 0, 10), params)) {
-                                continue;
-                            }
-                            doAction = classesVector.get(i).getDeclaredMethods()[i1];
-                        }
-                    } catch (NoClassDefFoundError | VerifyError ignored) {
 
-                    }
-                } catch (Exception ignored) {
+            for (Class<?> clazz : classesVector) {
+                if (clazz.getName().equals(ObfuscatedNames.doActionClassName)) {
+                    qtClass = clazz;
+                    break;
                 }
             }
+
+            if (qtClass != null) {
+                try {
+                    doAction = qtClass.getDeclaredMethod(ObfuscatedNames.doActionMethodName, int.class, int.class, int.class, int.class, int.class, int.class, String.class, String.class, int.class, int.class);
+                } catch (NoSuchMethodException ignored) {
+                }
+            } else {
+                System.out.println("Cant find doAction");
+                return;
+            }
         }
+
         doAction.setAccessible(true);
-        doAction.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8,var9, Byte.MAX_VALUE);
+        doAction.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, var9, -886112733);
         doAction.setAccessible(false);
     }
 
@@ -711,6 +711,7 @@ public class EthanApiPlugin extends Plugin {
     public static List<WorldPoint> pathToGoalSetFromPlayerNoCustomTiles(HashSet<WorldPoint> goalSet) {
         return pathToGoalSet(goalSet, EMPTY_SET, EMPTY_SET, new HashSet<>(reachableTiles()), playerPosition());
     }
+
     public static List<WorldPoint> pathToGoalFromPlayerUsingCustomDangerous(WorldPoint goal, HashSet<WorldPoint> dangerous) {
         return pathToGoalSet(new HashSet<>(List.of(goal)), dangerous, EMPTY_SET, new HashSet<>(reachableTiles()), playerPosition());
     }
