@@ -184,8 +184,8 @@ public class PacketUtilsPlugin extends Plugin {
             log.info("addNodeMethod: " + addNodeMethod);
             return;
         }
-        String doActionClassName = "qt";
-        String doActionMethodName = "mo";
+        String doActionClassName = ObfuscatedNames.doActionClassName;
+        String doActionMethodName = ObfuscatedNames.doActionMethodName;
         System.out.print("finished");
         final String doActionFinalClassName = doActionClassName;
         final String doActionFinalMethodName = doActionMethodName;
