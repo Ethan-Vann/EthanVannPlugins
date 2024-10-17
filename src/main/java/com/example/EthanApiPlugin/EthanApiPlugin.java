@@ -197,23 +197,6 @@ public class EthanApiPlugin extends Plugin {
     }
 
 
-//    @SneakyThrows
-//    public static int pathLength(NPC npc) {
-//        Field pathLength = npc.getClass().getSuperclass().getDeclaredField("dk");
-//        pathLength.setAccessible(true);
-//        int path = pathLength.getInt(npc) * -1259578643;
-//        pathLength.setAccessible(false);
-//        return path;
-//    }
-//
-//    @SneakyThrows
-//    public static int pathLength(Player player) {
-//        Field pathLength = player.getClass().getSuperclass().getDeclaredField("dk");
-//        pathLength.setAccessible(true);
-//        int path = pathLength.getInt(player) * -1259578643;
-//        pathLength.setAccessible(false);
-//        return path;
-//    }
 
     @SneakyThrows
     public static HeadIcon getHeadIcon(NPC npc) {
@@ -222,7 +205,11 @@ public class EthanApiPlugin extends Plugin {
         Object aqObj = aq.get(npc);
         if (aqObj == null) {
             aq.setAccessible(false);
-            return getOldHeadIcon(npc);
+            HeadIcon icon = getOldHeadIcon(npc);
+            if(icon==null){
+                return getOlderHeadicon(npc);
+            }
+            return icon;
         }
         Field aeField = aqObj.getClass().getDeclaredField("ae");
         aeField.setAccessible(true);
@@ -230,16 +217,51 @@ public class EthanApiPlugin extends Plugin {
         aeField.setAccessible(false);
         aq.setAccessible(false);
         if (ae == null) {
-            return getOldHeadIcon(npc);
+            HeadIcon icon = getOldHeadIcon(npc);
+            if(icon==null){
+                return getOlderHeadicon(npc);
+            }
+            return icon;
         }
         if (ae.length == 0) {
-            return getOldHeadIcon(npc);
+            HeadIcon icon = getOldHeadIcon(npc);
+            if(icon==null){
+                return getOlderHeadicon(npc);
+            }
+            return icon;
         }
         short headIcon = ae[0];
         if (headIcon == -1) {
-            return getOldHeadIcon(npc);
+            HeadIcon icon = getOldHeadIcon(npc);
+            if(icon==null){
+                return getOlderHeadicon(npc);
+            }
+            return icon;
         }
         return HeadIcon.values()[headIcon];
+    }
+    @SneakyThrows
+    public static HeadIcon getOlderHeadicon(NPC npc){
+        Method getHeadIconMethod = null;
+        for (Method declaredMethod : npc.getComposition().getClass().getDeclaredMethods()) {
+            if (declaredMethod.getName().length() == 2 && declaredMethod.getReturnType() == short.class && declaredMethod.getParameterCount() == 1) {
+                getHeadIconMethod = declaredMethod;
+                getHeadIconMethod.setAccessible(true);
+                short headIcon = -1;
+                try {
+                    headIcon = (short) getHeadIconMethod.invoke(npc.getComposition(), 0);
+                }catch (Exception e){
+                    //nothing
+                }
+                getHeadIconMethod.setAccessible(false);
+
+                if (headIcon == -1) {
+                    continue;
+                }
+                return HeadIcon.values()[headIcon];
+            }
+        }
+        return null;
     }
 
     @SneakyThrows
