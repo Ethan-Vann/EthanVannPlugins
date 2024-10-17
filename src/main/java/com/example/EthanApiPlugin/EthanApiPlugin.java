@@ -104,46 +104,8 @@ public class EthanApiPlugin extends Plugin {
     }
 
     @Deprecated //apparently RL no longer blocks this on non-local players.
-    public static SkullIcon getSkullIcon(Player player) {
-        Field skullField = null;
-        try {
-            skullField = player.getClass().getDeclaredField(ObfuscatedNames.skullIconField);
-            skullField.setAccessible(true);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            return null;
-        }
-        int var1 = -1;
-        try {
-            var1 = skullField.getInt(player) * ObfuscatedNames.skullIconMultiplier;
-            skullField.setAccessible(false);
-        } catch (IllegalAccessException | NullPointerException e) {
-            e.printStackTrace();
-        }
-        switch (var1) {
-            case 0:
-                return SkullIcon.SKULL;
-            case 1:
-                return SkullIcon.SKULL_FIGHT_PIT;
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            default:
-                return null;
-            case 8:
-                return SkullIcon.DEAD_MAN_FIVE;
-            case 9:
-                return SkullIcon.DEAD_MAN_FOUR;
-            case 10:
-                return SkullIcon.DEAD_MAN_THREE;
-            case 11:
-                return SkullIcon.DEAD_MAN_TWO;
-            case 12:
-                return SkullIcon.DEAD_MAN_ONE;
-        }
+    public static int getSkullIcon(Player player) {
+        return player.getSkullIcon();
     }
 
     public static boolean isQuickPrayerActive(QuickPrayer prayer) {
