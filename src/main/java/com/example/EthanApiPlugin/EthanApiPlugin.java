@@ -103,6 +103,7 @@ public class EthanApiPlugin extends Plugin {
         return client.getLocalPlayer().getWorldLocation();
     }
 
+    @Deprecated //apparently RL no longer blocks this on non-local players.
     public static SkullIcon getSkullIcon(Player player) {
         Field skullField = null;
         try {
