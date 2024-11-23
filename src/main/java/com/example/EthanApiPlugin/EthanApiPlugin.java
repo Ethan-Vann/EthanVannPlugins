@@ -198,6 +198,7 @@ public class EthanApiPlugin extends Plugin {
 
     @SneakyThrows
     public static HeadIcon getHeadIcon(NPC npc) {
+        if(npc==null) return null;
         HeadIcon icon = getOldHeadIcon(npc);
         if(icon!=null){
             System.out.println("Icon returned using oldHeadIcon");
