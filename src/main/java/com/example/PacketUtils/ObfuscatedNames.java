@@ -2,6 +2,7 @@ package com.example.PacketUtils;
 
 public final class ObfuscatedNames {
 
+    public static final int CLIENT_REVISION = 227;
     public static final String EVENT_MOUSE_CLICK_OBFUSCATEDNAME = "dd";
     public static final String EVENT_MOUSE_CLICK_WRITE1 = "mouseInfo";
     public static final String EVENT_MOUSE_CLICK_METHOD_NAME1 = "bq";

@@ -42,13 +42,13 @@ import static net.runelite.api.Varbits.QUICK_PRAYER;
         hidden = false
 )
 public class EthanApiPlugin extends Plugin {
-
     static ClientUI clientUI = RuneLite.getInjector().getInstance(ClientUI.class);
     static Client client = RuneLite.getInjector().getInstance(Client.class);
     static PluginManager pluginManager = RuneLite.getInjector().getInstance(PluginManager.class);
     static ItemManager itemManager = RuneLite.getInjector().getInstance(ItemManager.class);
     static Method doAction = null;
     static String animationField = null;
+    static long animationMult;
     static final HashSet<WorldPoint> EMPTY_SET = new HashSet<>();
     public static final int[][] directionsMap = {
             {-2, 0},
@@ -122,87 +122,97 @@ public class EthanApiPlugin extends Plugin {
         if (npc == null) {
             return -1;
         }
-        if (animationField == null) {
-            for (Field declaredField : npc.getClass().getSuperclass().getDeclaredFields()) {
-                if (declaredField == null) {
-                    continue;
-                }
-                declaredField.setAccessible(true);
-                if (declaredField.getType() != int.class) {
-                    continue;
-                }
-                if (Modifier.isFinal(declaredField.getModifiers())) {
-                    continue;
-                }
-                if (Modifier.isStatic(declaredField.getModifiers())) {
-                    continue;
-                }
-                int value = declaredField.getInt(npc);
-                declaredField.setInt(npc, 4795789);
-                if (npc.getAnimation() == ObfuscatedNames.getAnimationMultiplier * 4795789) {
-                    animationField = declaredField.getName();
-                    declaredField.setInt(npc, value);
-                    declaredField.setAccessible(false);
-                    break;
-                }
-                declaredField.setInt(npc, value);
-                declaredField.setAccessible(false);
+        if(animationField==null||animationMult!=0){
+            Field[] fields = Arrays.stream(npc.getClass().getSuperclass().getDeclaredFields()).filter(x->x.getType()==int.class&&!Modifier.isFinal(x.getModifiers())&&!Modifier.isStatic(x.getModifiers())).toArray(Field[]::new);
+            boolean[] changed = new boolean[fields.length];
+            int[] values = new int[fields.length];
+            for (int i = 0; i < fields.length; i++) {
+                fields[i].setAccessible(true);
+                values[i] = fields[i].getInt(npc);
+                changed[i] = false;
             }
+            Random rand = new Random();
+            for (int i = 0; i < 5; i++) {
+                npc.setAnimation(rand.nextInt(Integer.MAX_VALUE));
+                for (int i1 = 0; i1 < values.length; i1++) {
+                    if(values[i1]!=fields[i1].getInt(npc)){
+                        changed[i1] = true;
+                    }
+                }
+            }
+            int animationFieldIndex = -1;
+            for (int i = 0; i < changed.length; i++) {
+                if(changed[i]){
+                    if(animationFieldIndex!=-1){
+                        System.out.println("too many changed");
+                        return -1;
+                    }
+                    animationFieldIndex = i;
+                }
+            }
+            String fieldName = fields[animationFieldIndex].getName();
+            fields[animationFieldIndex].setInt(npc,1);
+            long multiplier = npc.getAnimation();
+            for (Field field : fields) {
+                field.setAccessible(false);
+            }
+            animationField = fieldName;
+            animationMult = multiplier;
         }
-        if (animationField == null) {
-            return -1;
-        }
-        Field animation = npc.getClass().getSuperclass().getDeclaredField(animationField);
-        animation.setAccessible(true);
-        int anim = animation.getInt(npc) * ObfuscatedNames.getAnimationMultiplier;
-        animation.setAccessible(false);
-        return anim;
+        return (int) (npc.getClass().getSuperclass().getDeclaredField(animationField).getInt(npc)*animationMult);
     }
 
-
+    public static HeadIcon headIconThruLengthEightArrays(NPC npc) throws IllegalAccessException {
+        Class<?>[] trying = new Class<?>[]{npc.getClass(),npc.getComposition().getClass()};
+        for (Class<?> aClass : trying) {
+            for (Field declaredField : aClass.getDeclaredFields()) {
+                Field[] decFields = declaredField.getType().getDeclaredFields();
+                if(decFields.length==2){
+                    if(decFields[0].getType().isArray()&&decFields[1].getType().isArray()){
+                        for (Field decField : decFields) {
+                            decField.setAccessible(true);
+                        }
+                        Object[] array1 = (Object[]) decFields[0].get(npc);
+                        Object[] array2 = (Object[]) decFields[1].get(npc);
+                        for (Field decField : decFields) {
+                            decField.setAccessible(false);
+                        }
+                        if(array1.length==8&array2.length==8){
+                            if(decFields[0].getType()==short[].class){
+                                if((short)array1[0]==-1){
+                                    return null;
+                                }
+                                return HeadIcon.values()[(short)array1[0]];
+                            }
+                            if((short)array2[0]==-1){
+                                return null;
+                            }
+                            return HeadIcon.values()[(short)array2[0]];
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
     @SneakyThrows
     public static HeadIcon getHeadIcon(NPC npc) {
-        Field aq = npc.getClass().getDeclaredField("ab");
-        aq.setAccessible(true);
-        Object aqObj = aq.get(npc);
-        if (aqObj == null) {
-            aq.setAccessible(false);
-            HeadIcon icon = getOldHeadIcon(npc);
-            if(icon==null){
-                return getOlderHeadicon(npc);
-            }
+        HeadIcon icon = getOldHeadIcon(npc);
+        if(icon!=null){
+            System.out.println("Icon returned using oldHeadIcon");
             return icon;
         }
-        Field aeField = aqObj.getClass().getDeclaredField("bd");
-        aeField.setAccessible(true);
-        short[] ae = (short[]) aeField.get(aqObj);
-        aeField.setAccessible(false);
-        aq.setAccessible(false);
-        if (ae == null) {
-            HeadIcon icon = getOldHeadIcon(npc);
-            if(icon==null){
-                return getOlderHeadicon(npc);
-            }
+        icon = getOlderHeadicon(npc);
+        if(icon!=null){
+            System.out.println("Icon returned using OlderHeadicon");
             return icon;
         }
-        if (ae.length == 0) {
-            HeadIcon icon = getOldHeadIcon(npc);
-            if(icon==null){
-                return getOlderHeadicon(npc);
-            }
-            return icon;
-        }
-        short headIcon = ae[0];
-        if (headIcon == -1) {
-            HeadIcon icon = getOldHeadIcon(npc);
-            if(icon==null){
-                return getOlderHeadicon(npc);
-            }
-            return icon;
-        }
-        return HeadIcon.values()[headIcon];
+        System.out.println("Icon returned using headIconThruLengthEightArrays");
+        icon = headIconThruLengthEightArrays(npc);
+        return icon;
     }
+
     @SneakyThrows
     public static HeadIcon getOlderHeadicon(NPC npc){
         Method getHeadIconMethod = null;

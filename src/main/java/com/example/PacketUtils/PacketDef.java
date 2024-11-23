@@ -5,7 +5,6 @@ public class PacketDef {
     public final String[] writeData;
     public final String[][] writeMethods;
     public final PacketType type;
-
     PacketDef(String var1, String[] writeData, String[][] writeMethods, PacketType type) {
         this.name = var1;
         this.writeData = writeData;
