@@ -201,15 +201,15 @@ public class EthanApiPlugin extends Plugin {
         if(npc==null) return null;
         HeadIcon icon = getOldHeadIcon(npc);
         if(icon!=null){
-            System.out.println("Icon returned using oldHeadIcon");
+            //System.out.println("Icon returned using oldHeadIcon");
             return icon;
         }
         icon = getOlderHeadicon(npc);
         if(icon!=null){
-            System.out.println("Icon returned using OlderHeadicon");
+            //System.out.println("Icon returned using OlderHeadicon");
             return icon;
         }
-        System.out.println("Icon returned using headIconThruLengthEightArrays");
+        //System.out.println("Icon returned using headIconThruLengthEightArrays");
         icon = headIconThruLengthEightArrays(npc);
         return icon;
     }
