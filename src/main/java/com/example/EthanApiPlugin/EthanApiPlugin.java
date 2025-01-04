@@ -159,7 +159,10 @@ public class EthanApiPlugin extends Plugin {
             animationField = fieldName;
             animationMult = multiplier;
         }
-        return (int) (npc.getClass().getSuperclass().getDeclaredField(animationField).getInt(npc)*animationMult);
+        npc.getClass().getSuperclass().getDeclaredField(animationField).setAccessible(true);
+        long anim = (npc.getClass().getSuperclass().getDeclaredField(animationField).getInt(npc)*animationMult);
+        npc.getClass().getSuperclass().getDeclaredField(animationField).setAccessible(false);
+        return (int) anim;
     }
 
     public static HeadIcon headIconThruLengthEightArrays(NPC npc) throws IllegalAccessException {

@@ -227,7 +227,7 @@ public class PacketUtilsPlugin extends Plugin {
         System.out.println(doActionFinalClassName);
         try (JarFile patchedJar = new JarFile(patchedOutputPath.toFile())) {
             patchedJar.entries().asIterator().forEachRemaining(jarEntry -> {
-                System.out.println("jar entry: " + jarEntry.getName());
+                //System.out.println("jar entry: " + jarEntry.getName());
                 if (jarEntry.getName().equals(doActionFinalClassName + ".class")) {
                     try (InputStream inputStream = patchedJar.getInputStream(jarEntry)) {
                         Files.copy(inputStream, doActionOutputPath, StandardCopyOption.REPLACE_EXISTING);
