@@ -122,7 +122,7 @@ public class EthanApiPlugin extends Plugin {
         if (npc == null) {
             return -1;
         }
-        if(animationField==null||animationMult!=0){
+        if(animationField ==null|| animationMult ==0){
             Field[] fields = Arrays.stream(npc.getClass().getSuperclass().getDeclaredFields()).filter(x->x.getType()==int.class&&!Modifier.isFinal(x.getModifiers())&&!Modifier.isStatic(x.getModifiers())).toArray(Field[]::new);
             boolean[] changed = new boolean[fields.length];
             int[] values = new int[fields.length];
@@ -159,10 +159,11 @@ public class EthanApiPlugin extends Plugin {
             animationField = fieldName;
             animationMult = multiplier;
         }
-        npc.getClass().getSuperclass().getDeclaredField(animationField).setAccessible(true);
-        long anim = (npc.getClass().getSuperclass().getDeclaredField(animationField).getInt(npc)*animationMult);
-        npc.getClass().getSuperclass().getDeclaredField(animationField).setAccessible(false);
-        return (int) anim;
+        Field animation = npc.getClass().getSuperclass().getDeclaredField(animationField);
+        animation.setAccessible(true);
+        int anim = (int) (animation.getInt(npc) * animationMult);
+        animation.setAccessible(false);
+        return anim;
     }
 
     public static HeadIcon headIconThruLengthEightArrays(NPC npc) throws IllegalAccessException {
