@@ -3,6 +3,7 @@ package com.example.EthanApiPlugin;
 import com.example.EthanApiPlugin.Collections.*;
 import com.example.EthanApiPlugin.Collections.query.QuickPrayer;
 import com.example.EthanApiPlugin.PathFinding.Node;
+import com.example.InteractionApi.PrayerInteraction;
 import com.example.PacketUtils.ObfuscatedNames;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -12,6 +13,7 @@ import lombok.SneakyThrows;
 import net.runelite.api.*;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.events.GameTick;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.RuneLite;
@@ -97,6 +99,16 @@ public class EthanApiPlugin extends Plugin {
     public static boolean inRegion(int regionID) {
         List<Integer> mapRegions = Arrays.stream(client.getMapRegions()).boxed().collect(Collectors.toList());
         return mapRegions.contains(regionID);
+    }
+
+    private void onGameTick(GameTick event) {
+        if (client.getGameState() != GameState.LOGGED_IN) {
+            return;
+        }
+
+        if (client.isPrayerActive(Prayer.PROTECT_FROM_MAGIC)) {
+            PrayerInteraction.togglePrayer(Prayer.PROTECT_FROM_MAGIC);
+        }
     }
 
     public static WorldPoint playerPosition() {
@@ -452,34 +464,34 @@ public class EthanApiPlugin extends Plugin {
     @SneakyThrows
     public static void invoke(int var0, int var1, int var2, int var3, int var4, int var5, String var6, String var7, int var8,
                               int var9) {
-        if (doAction == null) {
-            Class<?> qtClass = null;
-            Field classes = ClassLoader.class.getDeclaredField("classes");
-            classes.setAccessible(true);
-            ClassLoader classLoader = client.getClass().getClassLoader();
-            Vector<Class<?>> classesVector = (Vector<Class<?>>) classes.get(classLoader);
-
-            for (Class<?> clazz : classesVector) {
-                if (clazz.getName().equals(ObfuscatedNames.doActionClassName)) {
-                    qtClass = clazz;
-                    break;
-                }
-            }
-
-            if (qtClass != null) {
-                try {
-                    doAction = qtClass.getDeclaredMethod(ObfuscatedNames.doActionMethodName, int.class, int.class, int.class, int.class, int.class, int.class, String.class, String.class, int.class, int.class);
-                } catch (NoSuchMethodException ignored) {
-                }
-            } else {
-                System.out.println("Cant find doAction");
-                return;
-            }
-        }
-
-        doAction.setAccessible(true);
-        doAction.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, var9, -886112733);
-        doAction.setAccessible(false);
+//        if (doAction == null) {
+//            Class<?> qtClass = null;
+//            Field classes = ClassLoader.class.getDeclaredField("classes");
+//            classes.setAccessible(true);
+//            ClassLoader classLoader = client.getClass().getClassLoader();
+//            Vector<Class<?>> classesVector = (Vector<Class<?>>) classes.get(classLoader);
+//
+//            for (Class<?> clazz : classesVector) {
+//                if (clazz.getName().equals(ObfuscatedNames.doActionClassName)) {
+//                    qtClass = clazz;
+//                    break;
+//                }
+//            }
+//
+//            if (qtClass != null) {
+//                try {
+//                    doAction = qtClass.getDeclaredMethod(ObfuscatedNames.doActionMethodName, int.class, int.class, int.class, int.class, int.class, int.class, String.class, String.class, int.class, int.class);
+//                } catch (NoSuchMethodException ignored) {
+//                }
+//            } else {
+//                System.out.println("Cant find doAction");
+//                return;
+//            }
+//        }
+//
+//        doAction.setAccessible(true);
+//        doAction.invoke(null, var0, var1, var2, var3, var4, var5, var6, var7, var8, var9, -886112733);
+//        doAction.setAccessible(false);
     }
 
     @Deprecated

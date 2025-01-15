@@ -48,7 +48,7 @@ public class PacketUtilsPlugin extends Plugin {
     static Client staticClient;
     public static Method addNodeMethod;
     public static boolean usingClientAddNode = false;
-    public static final int CLIENT_REV = 227;
+    public static final int CLIENT_REV = 228;
     private static String loadedConfigName = "";
     @Inject
     private PluginManager pluginManager;
@@ -207,12 +207,15 @@ public class PacketUtilsPlugin extends Plugin {
         } else {
             log.info("Vanilla jar does not exist");
         }
-        String[] versionSplits = version.split("\\.");
-        int length = versionSplits.length;
-        if (version.contains("snapshot")) {
+
+        if (version.contains("SNAPSHOT")) {
             log.info("replacing snapshot version");
             version = version.replace("-SNAPSHOT", "");
         }
+
+        String[] versionSplits = version.split("\\.");
+        int length = versionSplits.length;
+
         if ((length > 0 && Integer.parseInt(versionSplits[0]) > 1 || (length > 1) && (Integer.parseInt(versionSplits[1]) > 10) )|| (length > 2 && Integer.parseInt(versionSplits[2]) > 34)) {
             String url = "https://repo.runelite.net/net/runelite/injected-client/" + version + "/injected-client-" + version + ".jar";
             URL injectedURL = new URL(url);
