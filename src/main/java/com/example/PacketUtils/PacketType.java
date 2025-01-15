@@ -1,6 +1,8 @@
 package com.example.PacketUtils;
 
 public enum PacketType {
+    OPHELDD,
+    RESUME_COUNTDIALOG,
     RESUME_PAUSEBUTTON,
     IF_BUTTON,
     OPNPC,

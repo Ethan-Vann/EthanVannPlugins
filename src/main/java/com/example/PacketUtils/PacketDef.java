@@ -258,4 +258,16 @@ public class PacketDef {
         return new PacketDef(ObfuscatedNames.RESUME_PAUSEBUTTON_OBFUSCATEDNAME, writeData, writeMethods, PacketType.RESUME_PAUSEBUTTON);
     }
 
+    public static PacketDef getResumeCountDialog() {
+        String[] writeData = new String[]{ObfuscatedNames.RESUME_COUNTDIALOG_WRITE1};
+        String[][] writeMethods = ObfuscatedNames.RESUME_COUNTDIALOG_WRITES;
+        return new PacketDef(ObfuscatedNames.RESUME_COUNTDIALOG_OBFUSCATEDNAME, writeData, writeMethods, PacketType.RESUME_COUNTDIALOG);
+    }
+
+    public static PacketDef getHeldo() {
+        String[] writeData = new String[]{ObfuscatedNames.OPHELDD_WRITE1, ObfuscatedNames.OPHELDD_WRITE2, ObfuscatedNames.OPHELDD_WRITE3,
+                ObfuscatedNames.OPHELDD_WRITE4, ObfuscatedNames.OPHELDD_WRITE5, ObfuscatedNames.OPHELDD_WRITE6};
+        String[][] writeMethods = ObfuscatedNames.OPHELDD_WRITES;
+        return new PacketDef(ObfuscatedNames.OPHELDD_OBFUSCATEDNAME, writeData, writeMethods, PacketType.OPHELDD);
+    }
 }
