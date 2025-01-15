@@ -101,16 +101,6 @@ public class EthanApiPlugin extends Plugin {
         return mapRegions.contains(regionID);
     }
 
-    private void onGameTick(GameTick event) {
-        if (client.getGameState() != GameState.LOGGED_IN) {
-            return;
-        }
-
-        if (client.isPrayerActive(Prayer.PROTECT_FROM_MAGIC)) {
-            PrayerInteraction.togglePrayer(Prayer.PROTECT_FROM_MAGIC);
-        }
-    }
-
     public static WorldPoint playerPosition() {
         return client.getLocalPlayer().getWorldLocation();
     }
