@@ -541,17 +541,17 @@ public final class ObfuscatedNames {
     };
 
     public static final String OPHELDD_OBFUSCATEDNAME = "cz";
-    public static final String OPHELDD_WRITE1 = "sourceSlot";
+    public static final String OPHELDD_WRITE1 = "selectedWidgetItemId";
     public static final String OPHELDD_METHOD_NAME1 = "bj";
-    public static final String OPHELDD_WRITE2 = "destWidgetId";
+    public static final String OPHELDD_WRITE2 = "destSlot";
     public static final String OPHELDD_METHOD_NAME2 = "dq";
-    public static final String OPHELDD_WRITE3 = "selectedWidgetId";
+    public static final String OPHELDD_WRITE3 = "sourceSlot";
     public static final String OPHELDD_METHOD_NAME3 = "dq";
-    public static final String OPHELDD_WRITE4 = "destWidgetItemId";
+    public static final String OPHELDD_WRITE4 = "destWidgetId";
     public static final String OPHELDD_METHOD_NAME4 = "be";
-    public static final String OPHELDD_WRITE5 = "destSlot";
+    public static final String OPHELDD_WRITE5 = "destWidgetItemId";
     public static final String OPHELDD_METHOD_NAME5 = "bj";
-    public static final String OPHELDD_WRITE6 = "selectedWidgetItemId";
+    public static final String OPHELDD_WRITE6 = "selectedWidgetId";
     public static final String OPHELDD_METHOD_NAME6 = "be";
 
     public static final String[][] OPHELDD_WRITES = new String[][] {
