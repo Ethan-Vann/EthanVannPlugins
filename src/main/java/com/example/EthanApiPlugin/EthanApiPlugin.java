@@ -3,7 +3,6 @@ package com.example.EthanApiPlugin;
 import com.example.EthanApiPlugin.Collections.*;
 import com.example.EthanApiPlugin.Collections.query.QuickPrayer;
 import com.example.EthanApiPlugin.PathFinding.Node;
-import com.example.InteractionApi.PrayerInteraction;
 import com.example.PacketUtils.ObfuscatedNames;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -13,7 +12,6 @@ import lombok.SneakyThrows;
 import net.runelite.api.*;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.api.events.GameTick;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.RuneLite;
@@ -289,6 +287,24 @@ public class EthanApiPlugin extends Plugin {
             }
         }
         return null;
+    }
+
+    @SneakyThrows
+    public static int pathLength(NPC npc) {
+        Field pathLength = npc.getClass().getSuperclass().getDeclaredField(ObfuscatedNames.pathLengthFieldName);
+        pathLength.setAccessible(true);
+        int path = pathLength.getInt(npc) * ObfuscatedNames.pathLengthMultiplier;
+        pathLength.setAccessible(false);
+        return path;
+    }
+
+    @SneakyThrows
+    public static int pathLength(Player player) {
+        Field pathLength = player.getClass().getSuperclass().getDeclaredField(ObfuscatedNames.pathLengthFieldName);
+        pathLength.setAccessible(true);
+        int path = pathLength.getInt(player) * ObfuscatedNames.pathLengthMultiplier;
+        pathLength.setAccessible(false);
+        return path;
     }
 
     public static List<WorldPoint> sceneWorldPoints() {
