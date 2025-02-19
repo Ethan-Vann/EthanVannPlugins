@@ -540,18 +540,18 @@ public final class ObfuscatedNames {
     };
 
     public static final String OPHELDD_OBFUSCATEDNAME = "bx";
-    public static final String OPHELDD_WRITE1 = "selectedWidgetId"; // sourceSlot
-    public static final String OPHELDD_METHOD_NAME1 = "df";
-    public static final String OPHELDD_WRITE2 = "destWidgetItemId";
-    public static final String OPHELDD_METHOD_NAME2 = "cu";
-    public static final String OPHELDD_WRITE3 = "selectedWidgetItemId";
+    public static final String OPHELDD_WRITE1 = "selectedChildIndex";
+    public static final String OPHELDD_METHOD_NAME1 = "es";
+    public static final String OPHELDD_WRITE2 = "destId";
+    public static final String OPHELDD_METHOD_NAME2 = "ei";
+    public static final String OPHELDD_WRITE3 = "selectedId";
     public static final String OPHELDD_METHOD_NAME3 = "eh";
-    public static final String OPHELDD_WRITE4 = "sourceSlot";
-    public static final String OPHELDD_METHOD_NAME4 = "df";
-    public static final String OPHELDD_WRITE5 = "destSlot";
+    public static final String OPHELDD_WRITE4 = "selectedItemId";
+    public static final String OPHELDD_METHOD_NAME4 = "es";
+    public static final String OPHELDD_WRITE5 = "destItemId";
     public static final String OPHELDD_METHOD_NAME5 = "bm";
-    public static final String OPHELDD_WRITE6 = "destWidgetId"; // selectedWidgetItemId
-    public static final String OPHELDD_METHOD_NAME6 = "dv";
+    public static final String OPHELDD_WRITE6 = "destChildIndex";
+    public static final String OPHELDD_METHOD_NAME6 = "ed";
 
     public static final String[][] OPHELDD_WRITES = new String[][] {
             {"v", "r 8"},
