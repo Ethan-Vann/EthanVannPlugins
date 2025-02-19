@@ -134,7 +134,7 @@ public class PacketReflection {
         getPacketBufferNode.setAccessible(false);
         List<String> params = null;
         if (def.type == PacketType.OPHELDD) {
-            params = List.of("selectedWidgetId", "sourceSlot", "selectedWidgetItemId", "destWidgetId", "destSlot", "destWidgetItemId");
+            params = List.of("selectedId", "selectedChildIndex", "selectedItemId", "destId", "destChildIndex", "destItemId");
         }
         if (def.type == PacketType.RESUME_COUNTDIALOG) {
             params = List.of("var0");
