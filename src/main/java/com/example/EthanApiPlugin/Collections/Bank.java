@@ -2,6 +2,8 @@ package com.example.EthanApiPlugin.Collections;
 
 import com.example.EthanApiPlugin.Collections.query.ItemQuery;
 import com.example.EthanApiPlugin.EthanApiPlugin;
+import com.example.Packets.MousePackets;
+import com.example.Packets.WidgetPackets;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.InventoryID;
@@ -19,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class Bank {
+    private static final int WITHDRAW_MODE = 3958;
     static Client client = RuneLite.getInjector().getInstance(Client.class);
     static List<Widget> bankItems = new ArrayList<>();
     boolean bankUpdate = true;
@@ -61,6 +64,20 @@ public class Bank {
     public void onGameStateChanged(GameStateChanged gameStateChanged) {
         if (gameStateChanged.getGameState() == GameState.HOPPING || gameStateChanged.getGameState() == GameState.LOGIN_SCREEN || gameStateChanged.getGameState() == GameState.CONNECTION_LOST) {
             Bank.bankItems.clear();
+        }
+    }
+
+    public static boolean isNotedMode() {
+        return client.getVarbitValue(WITHDRAW_MODE) == 1;
+    }
+
+    public static void setWithdrawMode(boolean noted) {
+        if (noted && !isNotedMode()) {
+            MousePackets.queueClickPacket();
+            WidgetPackets.queueWidgetActionPacket(1, 786458, -1, -1);
+        } else if (!noted && isNotedMode()) {
+            MousePackets.queueClickPacket();
+            WidgetPackets.queueWidgetActionPacket(1, 786456, -1, -1);
         }
     }
 }
