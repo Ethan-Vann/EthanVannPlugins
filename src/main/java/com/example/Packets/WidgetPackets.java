@@ -88,4 +88,11 @@ public class WidgetPackets {
         PacketReflection.sendPacket(PacketDef.getResumePausebutton(), widgetId, childId);
     }
 
+    public static void queueResumeCount(int id) {
+        PacketReflection.sendPacket(PacketDef.getResumeCountDialog(), id);
+    }
+
+    public static void queueDragAndDrop(Widget src, Widget dest) {
+        PacketReflection.sendPacket(PacketDef.getOpHeldd(), src.getId(), src.getIndex(), src.getItemId(), dest.getId(), dest.getIndex(), dest.getItemId());
+    }
 }
