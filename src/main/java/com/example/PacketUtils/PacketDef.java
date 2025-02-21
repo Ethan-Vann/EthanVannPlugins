@@ -264,7 +264,7 @@ public class PacketDef {
         return new PacketDef(ObfuscatedNames.RESUME_COUNTDIALOG_OBFUSCATEDNAME, writeData, writeMethods, PacketType.RESUME_COUNTDIALOG);
     }
 
-    public static PacketDef getHeldo() {
+    public static PacketDef getOpHeldd() {
         String[] writeData = new String[]{ObfuscatedNames.OPHELDD_WRITE1, ObfuscatedNames.OPHELDD_WRITE2, ObfuscatedNames.OPHELDD_WRITE3,
                 ObfuscatedNames.OPHELDD_WRITE4, ObfuscatedNames.OPHELDD_WRITE5, ObfuscatedNames.OPHELDD_WRITE6};
         String[][] writeMethods = ObfuscatedNames.OPHELDD_WRITES;
