@@ -320,7 +320,7 @@ public final class ObfuscatedNames {
     public static final String OPNPCT_OBFUSCATEDNAME = "co";
     public static final String OPNPCT_WRITE1 = "slot";
     public static final String OPNPCT_METHOD_NAME1 = "mw";
-    public static final String OPNPCT_WRITE2 = "itemId";
+    public static final String OPNPCT_WRITE2 = "widgetId";
     public static final String OPNPCT_METHOD_NAME2 = "bh";
     public static final String OPNPCT_WRITE3 = "ctrlDown";
     public static final String OPNPCT_METHOD_NAME3 = "do";
