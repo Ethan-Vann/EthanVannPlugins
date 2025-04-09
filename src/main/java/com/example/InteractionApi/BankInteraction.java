@@ -60,16 +60,10 @@ public class BankInteraction {
     public static void withdrawX(Widget item, int amount) {
         setWithdrawMode(EthanApiPlugin.getClient().getVarbitValue(WITHDRAW_AS_VARBIT));
 
-        if (EthanApiPlugin.getClient().getVarbitValue(Varbits.BANK_REQUESTEDQUANTITY) == amount) {
-            MousePackets.queueClickPacket();
-            WidgetPackets.queueWidgetActionPacket(5, item.getId(), item.getItemId(), item.getIndex());
-            return;
-        }
-
         MousePackets.queueClickPacket();
-        WidgetPackets.queueWidgetAction(item, "Withdraw-X");
+        WidgetPackets.queueWidgetActionPacket(4, item.getId(),
+                item.getItemId(), item.getIndex());
         WidgetPackets.queueResumeCount(amount);
-        EthanApiPlugin.getClient().setVarbit(Varbits.BANK_REQUESTEDQUANTITY, amount);
     }
 
     public static boolean useItemIndex(int index, String... actions) {
@@ -131,16 +125,10 @@ public class BankInteraction {
     public static void withdrawX(Widget item, int amount, boolean noted) {
         setWithdrawMode(noted? WITHDRAW_NOTES_MODE : WITHDRAW_ITEM_MODE);
 
-        if (EthanApiPlugin.getClient().getVarbitValue(Varbits.BANK_REQUESTEDQUANTITY) == amount) {
-            MousePackets.queueClickPacket();
-            WidgetPackets.queueWidgetActionPacket(5, item.getId(), item.getItemId(), item.getIndex());
-            return;
-        }
-
         MousePackets.queueClickPacket();
-        WidgetPackets.queueWidgetAction(item, "Withdraw-X");
+        WidgetPackets.queueWidgetActionPacket(4, item.getId(),
+                item.getItemId(), item.getIndex());
         WidgetPackets.queueResumeCount(amount);
-        EthanApiPlugin.getClient().setVarbit(Varbits.BANK_REQUESTEDQUANTITY, amount);
     }
 
     public static boolean useItemIndex(int index, boolean noted, String... actions) {
