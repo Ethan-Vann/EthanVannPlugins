@@ -60,11 +60,15 @@ public class BankInteraction {
     public static void withdrawX(Widget item, int amount) {
         setWithdrawMode(EthanApiPlugin.getClient().getVarbitValue(WITHDRAW_AS_VARBIT));
 
+        if (EthanApiPlugin.getClient().getVarbitValue(Varbits.BANK_REQUESTEDQUANTITY) == amount) {
+            MousePackets.queueClickPacket();
+            WidgetPackets.queueWidgetActionPacket(5, item.getId(), item.getItemId(), item.getIndex());
+            return;
+        }
+
         MousePackets.queueClickPacket();
-        WidgetPackets.queueWidgetActionPacket(5, item.getId(), item.getItemId(), item.getIndex());
-        EthanApiPlugin.getClient().setVarcStrValue(VarClientStr.INPUT_TEXT, Integer.toString(amount));
-        EthanApiPlugin.getClient().setVarcIntValue(VarClientInt.INPUT_TYPE, 7);
-        EthanApiPlugin.getClient().runScript(681);
+        WidgetPackets.queueWidgetAction(item, "Withdraw-X");
+        WidgetPackets.queueResumeCount(amount);
         EthanApiPlugin.getClient().setVarbit(Varbits.BANK_REQUESTEDQUANTITY, amount);
     }
 
@@ -127,11 +131,15 @@ public class BankInteraction {
     public static void withdrawX(Widget item, int amount, boolean noted) {
         setWithdrawMode(noted? WITHDRAW_NOTES_MODE : WITHDRAW_ITEM_MODE);
 
+        if (EthanApiPlugin.getClient().getVarbitValue(Varbits.BANK_REQUESTEDQUANTITY) == amount) {
+            MousePackets.queueClickPacket();
+            WidgetPackets.queueWidgetActionPacket(5, item.getId(), item.getItemId(), item.getIndex());
+            return;
+        }
+
         MousePackets.queueClickPacket();
-        WidgetPackets.queueWidgetActionPacket(5, item.getId(), item.getItemId(), item.getIndex());
-        EthanApiPlugin.getClient().setVarcStrValue(VarClientStr.INPUT_TEXT, Integer.toString(amount));
-        EthanApiPlugin.getClient().setVarcIntValue(VarClientInt.INPUT_TYPE, 7);
-        EthanApiPlugin.getClient().runScript(681);
+        WidgetPackets.queueWidgetAction(item, "Withdraw-X");
+        WidgetPackets.queueResumeCount(amount);
         EthanApiPlugin.getClient().setVarbit(Varbits.BANK_REQUESTEDQUANTITY, amount);
     }
 
