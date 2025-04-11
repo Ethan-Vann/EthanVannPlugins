@@ -18,8 +18,8 @@ public class BankInteraction {
     private static final int WITHDRAW_AS_VARBIT = 3958;
     private static final int WITHDRAW_ITEM_MODE = 0;
     private static final int WITHDRAW_NOTES_MODE = 1;
-    private static final int WITHDRAW_ITEM_MODE_WIDGET = 786454;
-    private static final int WITHDRAW_NOTE_MODE_WIDGET = 786456;
+    private static final int WITHDRAW_ITEM_MODE_WIDGET = 786456;
+    private static final int WITHDRAW_NOTE_MODE_WIDGET = 786458;
 
     private static final String ITEM_MODE_ACTION = "Item";
     private static final String NOTE_MODE_ACTION = "Note";
