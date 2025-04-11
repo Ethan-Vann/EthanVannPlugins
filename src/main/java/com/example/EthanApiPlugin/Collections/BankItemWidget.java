@@ -3,6 +3,7 @@ package com.example.EthanApiPlugin.Collections;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import net.runelite.api.FontTypeFace;
 import net.runelite.api.Point;
+import net.runelite.api.gameval.VarbitID;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 
@@ -436,53 +437,65 @@ public class BankItemWidget implements Widget {
     @Override
     public String[] getActions() {
         String[] actions = new String[10];
-        //0
-        switch (EthanApiPlugin.getClient().getVarbitValue(6590)) {
+        switch (EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_QUANTITY_TYPE)) {
+            default:
             case 0:
                 actions[0] = "Withdraw-1";
+                actions[1] = "Withdraw-5";
+                actions[2] = "Withdraw-10";
+                actions[3] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
+                actions[4] = "Withdraw-X";
+                actions[5] = "Withdraw-All";
+                actions[6] = "Withdraw-All-but-1";
                 break;
             case 1:
                 actions[0] = "Withdraw-5";
+                actions[1] = "Withdraw-1";
+                actions[2] = "Withdraw-10";
+                actions[3] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
+                actions[4] = "Withdraw-X";
+                actions[5] = "Withdraw-All";
+                actions[6] = "Withdraw-All-but-1";
                 break;
             case 2:
                 actions[0] = "Withdraw-10";
+                actions[1] = "Withdraw-1";
+                actions[2] = "Withdraw-5";
+                actions[3] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
+                actions[4] = "Withdraw-X";
+                actions[5] = "Withdraw-All";
+                actions[6] = "Withdraw-All-but-1";
                 break;
             case 3:
-                actions[0] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(3960);
+                actions[0] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
+                actions[1] = "Withdraw-1";
+                actions[2] = "Withdraw-5";
+                actions[3] = "Withdraw-10";
+                actions[4] = "Withdraw-X";
+                actions[5] = "Withdraw-All";
+                actions[6] = "Withdraw-All-but-1";
                 break;
             case 4:
                 actions[0] = "Withdraw-All";
+                actions[1] = "Withdraw-1";
+                actions[2] = "Withdraw-5";
+                actions[3] = "Withdraw-10";
+                actions[4] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
+                actions[5] = "Withdraw-X";
+                actions[6] = "Withdraw-All-but-1";
                 break;
         }
 
-        //1
-        if (EthanApiPlugin.getClient().getVarbitValue(6590) != 0) {
-            actions[1] = "Withdraw-1";
+        if (EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_LEAVEPLACEHOLDERS) == 0) {
+            actions[7] = "Placeholder";
         }
+        // these are null normally, 7 can be placeholder
+        // actions[7] = null;
+        // actions[8] = null;
 
-        //2-3
-        actions[2] = "Withdraw-5";
-        actions[3] = "Withdraw-10";
-
-        //4
-        if (EthanApiPlugin.getClient().getVarbitValue(3960) > 0) {
-            actions[4] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(3960);
-        }
-
-        //5-7
-        actions[5] = "Withdraw-X";
-        actions[6] = "Withdraw-All";
-        actions[7] = "Withdraw-All-but-1";
-
-        //8
-        if (EthanApiPlugin.getClient().getVarbitValue(3755) == 0) {
-            actions[8] = "Placeholder";
-        }
-        //9
         actions[9] = "Examine";
         return actions;
     }
-
 
     @Override
     public Widget createChild(int index, int type) {

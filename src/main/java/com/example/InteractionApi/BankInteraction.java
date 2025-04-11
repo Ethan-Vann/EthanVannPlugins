@@ -5,16 +5,16 @@ import com.example.EthanApiPlugin.Collections.Widgets;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.Packets.MousePackets;
 import com.example.Packets.WidgetPackets;
-import net.runelite.api.VarClientInt;
-import net.runelite.api.VarClientStr;
-import net.runelite.api.Varbits;
+import net.runelite.api.gameval.VarbitID;
 import net.runelite.api.widgets.Widget;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public class BankInteraction {
-    private static final int WITHDRAW_QUANTITY = 3960;
+    private static final Set<Integer> DEFAULT_WITHDRAW_AMOUNTS = Set.of(1, 5, 10);
+
     private static final int WITHDRAW_AS_VARBIT = 3958;
     private static final int WITHDRAW_ITEM_MODE = 0;
     private static final int WITHDRAW_NOTES_MODE = 1;
@@ -58,27 +58,39 @@ public class BankInteraction {
     }
 
     public static void withdrawX(Widget item, int amount) {
-        setWithdrawMode(EthanApiPlugin.getClient().getVarbitValue(WITHDRAW_AS_VARBIT));
+        int quantitySet = EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
 
-        int quantitySet = EthanApiPlugin.getClient().getVarbitValue(Varbits.BANK_REQUESTEDQUANTITY);
-        int actionField = quantitySet > 0 ? 5 : 4;
+        if (DEFAULT_WITHDRAW_AMOUNTS.contains(amount)
+                || quantitySet == amount) {
+            MousePackets.queueClickPacket();
+            WidgetPackets.queueWidgetAction(item, "Withdraw-" + amount);
+            WidgetPackets.queueResumeCount(amount);
+            return;
+        }
 
         MousePackets.queueClickPacket();
-        WidgetPackets.queueWidgetActionPacket(actionField, item.getId(),
-                item.getItemId(), item.getIndex());
+        WidgetPackets.queueWidgetAction(item, "Withdraw-X");
         WidgetPackets.queueResumeCount(amount);
+        EthanApiPlugin.getClient().setVarbit(VarbitID.BANK_REQUESTEDQUANTITY, amount);
     }
 
     public static void withdrawX(Widget item, int amount, boolean noted) {
-        setWithdrawMode(noted? WITHDRAW_NOTES_MODE : WITHDRAW_ITEM_MODE);
+        setWithdrawMode(noted ? WITHDRAW_NOTES_MODE : WITHDRAW_ITEM_MODE);
 
-        int quantitySet = EthanApiPlugin.getClient().getVarbitValue(Varbits.BANK_REQUESTEDQUANTITY);
-        int actionField = quantitySet > 0 ? 5 : 4;
+        int quantitySet = EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
+
+        if (DEFAULT_WITHDRAW_AMOUNTS.contains(amount)
+                || quantitySet == amount) {
+            MousePackets.queueClickPacket();
+            WidgetPackets.queueWidgetAction(item, "Withdraw-" + amount);
+            WidgetPackets.queueResumeCount(amount);
+            return;
+        }
 
         MousePackets.queueClickPacket();
-        WidgetPackets.queueWidgetActionPacket(actionField, item.getId(),
-                item.getItemId(), item.getIndex());
+        WidgetPackets.queueWidgetAction(item, "Withdraw-X");
         WidgetPackets.queueResumeCount(amount);
+        EthanApiPlugin.getClient().setVarbit(VarbitID.BANK_REQUESTEDQUANTITY, amount);
     }
 
     public static boolean useItemIndex(int index, String... actions) {
@@ -158,6 +170,10 @@ public class BankInteraction {
         MousePackets.queueClickPacket();
         WidgetPackets.queueWidgetAction(item, actions);
         return true;
+    }
+
+    public static boolean isNotedMode() {
+        return EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_WITHDRAWNOTES) == 1;
     }
 
     public static boolean setWithdrawMode(int withdrawMode) {

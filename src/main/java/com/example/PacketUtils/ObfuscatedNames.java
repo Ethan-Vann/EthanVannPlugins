@@ -251,7 +251,7 @@ public final class ObfuscatedNames {
     public static final String OPLOCT_OBFUSCATEDNAME = "dd";
     public static final String OPLOCT_WRITE1 = "slot";
     public static final String OPLOCT_METHOD_NAME1 = "bs";
-    public static final String OPLOCT_WRITE2 = "widgetId";
+    public static final String OPLOCT_WRITE2 = "itemId";
     public static final String OPLOCT_METHOD_NAME2 = "eg";
     public static final String OPLOCT_WRITE3 = "worldPointX";
     public static final String OPLOCT_METHOD_NAME3 = "mw";
@@ -259,7 +259,7 @@ public final class ObfuscatedNames {
     public static final String OPLOCT_METHOD_NAME4 = "bc";
     public static final String OPLOCT_WRITE5 = "worldPointY";
     public static final String OPLOCT_METHOD_NAME5 = "bs";
-    public static final String OPLOCT_WRITE6 = "itemId";
+    public static final String OPLOCT_WRITE6 = "widgetId";
     public static final String OPLOCT_METHOD_NAME6 = "ed";
     public static final String OPLOCT_WRITE7 = "objectId";
     public static final String OPLOCT_METHOD_NAME7 = "du";
