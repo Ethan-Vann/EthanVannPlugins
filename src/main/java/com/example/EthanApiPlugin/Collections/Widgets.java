@@ -9,13 +9,17 @@ import java.util.*;
 
 public class Widgets {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
-
+    static int lastSearchIdleTicks = -10;
+    static HashSet<Widget> cachedWidgets = new HashSet<>();
     //It is important to note that this method will return all widgets, including hidden ones.
     //Some widgets are not updated while hidden so there is a chance that the widgets returned contain outdated
     // information.
     //for update critical information make sure the widget is not hidden or use the other query types like inventory,
     // equipment ect as they will only return up-to-date information.
     public static WidgetQuery search() {
+        if(lastSearchIdleTicks==client.getKeyboardIdleTicks()){
+            return new WidgetQuery(cachedWidgets);
+        }
         HashSet<Widget> returnList = new HashSet<>();
         Widget[] currentQueue;
         ArrayList<Widget> buffer = new ArrayList<>();
@@ -63,6 +67,8 @@ public class Widgets {
             currentQueue = buffer.toArray(new Widget[]{});
             buffer.clear();
         }
+        lastSearchIdleTicks = client.getKeyboardIdleTicks();
+        cachedWidgets = returnList;
         return new WidgetQuery(returnList);
     }
 }
