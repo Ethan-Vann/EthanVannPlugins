@@ -252,6 +252,13 @@ public class PacketDef {
         return new PacketDef(ObfuscatedNames.IF_BUTTON10_OBFUSCATEDNAME, writeData, writeMethods, PacketType.IF_BUTTON);
     }
 
+    public static PacketDef getIfSubOp() {
+        String[] writeData = new String[]{ObfuscatedNames.IF_SUBOP_WRITE1, ObfuscatedNames.IF_SUBOP_WRITE2, ObfuscatedNames.IF_SUBOP_WRITE3,
+                ObfuscatedNames.IF_SUBOP_WRITE4, ObfuscatedNames.IF_SUBOP_WRITE5};
+        String[][] writeMethods = ObfuscatedNames.IF_SUBOP_WRITES;
+        return new PacketDef(ObfuscatedNames.IF_SUBOP_OBFUSCATEDNAME, writeData, writeMethods, PacketType.IF_SUBOP);
+    }
+
     public static PacketDef getResumePausebutton() {
         String[] writeData = new String[]{ObfuscatedNames.RESUME_PAUSEBUTTON_WRITE1, ObfuscatedNames.RESUME_PAUSEBUTTON_WRITE2};
         String[][] writeMethods = ObfuscatedNames.RESUME_PAUSEBUTTON_WRITES;

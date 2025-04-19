@@ -5,6 +5,7 @@ public enum PacketType {
     RESUME_COUNTDIALOG,
     RESUME_PAUSEBUTTON,
     IF_BUTTON,
+    IF_SUBOP,
     OPNPC,
     OPPLAYER,
     OPOBJ,

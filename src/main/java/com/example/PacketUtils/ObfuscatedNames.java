@@ -135,6 +135,29 @@ public final class ObfuscatedNames {
             {"r 8", "v"},
             {"r 8", "v"},
     };
+
+    // IF_SUBOP
+    //
+
+    public static final String IF_SUBOP_OBFUSCATEDNAME = "db";
+    public static final String IF_SUBOP_WRITE1 = "widgetId";
+    public static final String IF_SUBOP_METHOD_NAME1 = "bh";
+    public static final String IF_SUBOP_WRITE2 = "slot";
+    public static final String IF_SUBOP_METHOD_NAME2 = "bs";
+    public static final String IF_SUBOP_WRITE3 = "itemId";
+    public static final String IF_SUBOP_METHOD_NAME3 = "bs";
+    public static final String IF_SUBOP_WRITE4 = "menuIndex";
+    public static final String IF_SUBOP_METHOD_NAME4 = "bc";
+    public static final String IF_SUBOP_WRITE5 = "subActionIndex";
+    public static final String IF_SUBOP_METHOD_NAME5 = "bc";
+    public static final String[][] IF_SUBOP_WRITES = new String[][]{
+            {"r 24", "r 16", "r 8", "v"},
+            {"r 8", "v"},
+            {"r 8", "v"},
+            {"v"}, //bc
+            {"v"}
+    };
+
     public static final String IF_BUTTONT_OBFUSCATEDNAME = "bz";
     public static final String IF_BUTTONT_WRITE1 = "sourceSlot";
     public static final String IF_BUTTONT_METHOD_NAME1 = "mw";
