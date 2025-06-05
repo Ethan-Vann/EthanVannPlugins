@@ -436,6 +436,7 @@ public class BankItemWidget implements Widget {
     @Nullable
     @Override
     public String[] getActions() {
+        int xQuantity = EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
         String[] actions = new String[10];
         switch (EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_QUANTITY_TYPE)) {
             default:
@@ -443,31 +444,50 @@ public class BankItemWidget implements Widget {
                 actions[0] = "Withdraw-1";
                 actions[1] = "Withdraw-5";
                 actions[2] = "Withdraw-10";
-                actions[3] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
-                actions[4] = "Withdraw-X";
-                actions[5] = "Withdraw-All";
-                actions[6] = "Withdraw-All-but-1";
+                if (xQuantity > 0) {
+                    actions[3] = "Withdraw-" + xQuantity;
+                    actions[4] = "Withdraw-X";
+                    actions[5] = "Withdraw-All";
+                    actions[6] = "Withdraw-All-but-1";
+                } else {
+                    actions[3] = "Withdraw-X";
+                    actions[4] = "Withdraw-All";
+                    actions[5] = "Withdraw-All-but-1";
+                }
                 break;
             case 1:
                 actions[0] = "Withdraw-5";
                 actions[1] = "Withdraw-1";
                 actions[2] = "Withdraw-10";
-                actions[3] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
-                actions[4] = "Withdraw-X";
-                actions[5] = "Withdraw-All";
-                actions[6] = "Withdraw-All-but-1";
+                if (xQuantity > 0) {
+                    actions[3] = "Withdraw-" + xQuantity;
+                    actions[4] = "Withdraw-X";
+                    actions[5] = "Withdraw-All";
+                    actions[6] = "Withdraw-All-but-1";
+                } else {
+                    actions[3] = "Withdraw-X";
+                    actions[4] = "Withdraw-All";
+                    actions[5] = "Withdraw-All-but-1";
+                }
                 break;
             case 2:
                 actions[0] = "Withdraw-10";
                 actions[1] = "Withdraw-1";
                 actions[2] = "Withdraw-5";
-                actions[3] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
-                actions[4] = "Withdraw-X";
-                actions[5] = "Withdraw-All";
-                actions[6] = "Withdraw-All-but-1";
+                if (xQuantity > 0) {
+                    actions[3] = "Withdraw-" + xQuantity;
+                    actions[4] = "Withdraw-X";
+                    actions[5] = "Withdraw-All";
+                    actions[6] = "Withdraw-All-but-1";
+                } else {
+                    actions[3] = "Withdraw-X";
+                    actions[4] = "Withdraw-All";
+                    actions[5] = "Withdraw-All-but-1";
+                }
                 break;
             case 3:
-                actions[0] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
+                // this can't ever be a thing while this is set to 0
+                actions[0] = "Withdraw-" + xQuantity;
                 actions[1] = "Withdraw-1";
                 actions[2] = "Withdraw-5";
                 actions[3] = "Withdraw-10";
@@ -480,9 +500,14 @@ public class BankItemWidget implements Widget {
                 actions[1] = "Withdraw-1";
                 actions[2] = "Withdraw-5";
                 actions[3] = "Withdraw-10";
-                actions[4] = "Withdraw-" + EthanApiPlugin.getClient().getVarbitValue(VarbitID.BANK_REQUESTEDQUANTITY);
-                actions[5] = "Withdraw-X";
-                actions[6] = "Withdraw-All-but-1";
+                if (xQuantity > 0) {
+                    actions[4] = "Withdraw-" + xQuantity;
+                    actions[5] = "Withdraw-X";
+                    actions[6] = "Withdraw-All-but-1";
+                } else {
+                    actions[4] = "Withdraw-X";
+                    actions[5] = "Withdraw-All-but-1";
+                }
                 break;
         }
 
