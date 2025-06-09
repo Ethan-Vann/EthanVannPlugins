@@ -12,10 +12,12 @@ import lombok.SneakyThrows;
 import net.runelite.api.*;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.events.GameTick;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.RuneLite;
 import net.runelite.client.eventbus.EventBus;
+import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -326,16 +328,17 @@ public class EthanApiPlugin extends Plugin {
 
     public static List<WorldPoint> reachableTiles() {
         boolean[][] visited = new boolean[104][104];
-        int[][] flags = client.getCollisionMaps()[client.getPlane()].getFlags();
+        CollisionData[] collisionData = client.getTopLevelWorldView().getCollisionMaps();
+        int[][] flags = collisionData[client.getTopLevelWorldView().getPlane()].getFlags();
         WorldPoint playerLoc = client.getLocalPlayer().getWorldLocation();
-        int firstPoint = (playerLoc.getX() - client.getBaseX() << 16) | playerLoc.getY() - client.getBaseY();
+        int firstPoint = (playerLoc.getX() - client.getTopLevelWorldView().getBaseX() << 16) | playerLoc.getY() - client.getTopLevelWorldView().getBaseY();
         ArrayDeque<Integer> queue = new ArrayDeque<>();
         queue.add(firstPoint);
         while (!queue.isEmpty()) {
             int point = queue.poll();
             short x = (short) (point >> 16);
             short y = (short) point;
-            if (y < 0 || x < 0 || y > 104 || x > 104) {
+            if ((x - 1) < 0 || (y - 1) < 0 || (x + 1) > 103 || (y + 1) > 103) {
                 continue;
             }
             if ((flags[x][y] & CollisionDataFlag.BLOCK_MOVEMENT_SOUTH) == 0 && (flags[x][y - 1] & CollisionDataFlag.BLOCK_MOVEMENT_FULL) == 0 && !visited[x][y - 1]) {
@@ -355,9 +358,9 @@ public class EthanApiPlugin extends Plugin {
                 visited[x + 1][y] = true;
             }
         }
-        int baseX = client.getBaseX();
-        int baseY = client.getBaseY();
-        int plane = client.getPlane();
+        int baseX = client.getTopLevelWorldView().getBaseX();
+        int baseY = client.getTopLevelWorldView().getBaseY();
+        int plane = client.getTopLevelWorldView().getPlane();
         List<WorldPoint> finalPoints = new ArrayList<>();
         for (int x = 0; x < 104; ++x) {
             for (int y = 0; y < 104; ++y) {
