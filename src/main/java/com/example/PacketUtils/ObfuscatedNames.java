@@ -167,8 +167,8 @@ public final class ObfuscatedNames {
     public static final String MOVE_GAMECLICK_METHOD_NAME4 = "el";
     public static final String[][] MOVE_GAMECLICK_WRITES = new String[][]{
             {"v"},
-            {"a 128", "r 8"},
-            {"s 128"},
+            {"s 0"},
+            {"v", "r 8"},
             {"a 128", "r 8"},
     };
 
