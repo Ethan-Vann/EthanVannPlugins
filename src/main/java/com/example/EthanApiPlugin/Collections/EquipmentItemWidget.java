@@ -721,6 +721,16 @@ public class EquipmentItemWidget implements Widget {
     }
 
     @Override
+    public int getTargetPriority() {
+        return 0;
+    }
+
+    @Override
+    public void setTargetPriority(int priority) {
+
+    }
+
+    @Override
     public boolean getNoClickThrough() {
         return false;
     }
