@@ -155,6 +155,23 @@ public final class ObfuscatedNames {
             {"a 128", "r 8"},
             {"r 8", "v"},
     };
+
+    public static final String IF_BUTTONX_OBFUSCATEDNAME = "dh";
+    public static final String IF_BUTTONX_WRITE1 = "widgetId";
+    public static final String IF_BUTTONX_METHOD_NAME_1 = "lk";
+    public static final String IF_BUTTONX_WRITE2 = "slot";
+    public static final String IF_BUTTONX_METHOD_NAME_2 = "xg";
+    public static final String IF_BUTTONX_WRITE3 = "itemId";
+    public static final String IF_BUTTONX_METHOD_NAME_3 = "xg";
+    public static final String IF_BUTTONX_WRITE4 = "opCode";
+    public static final String IF_BUTTONX_METHOD_NAME_4 = "by";
+    public static final String[][] IF_BUTTONX_WRITES = {
+            {"r 24", "r 16", "r 8", "v"},
+            {"r 8", "v"},
+            {"r 8", "v"},
+            {"v"},
+    };
+
     public static final String MOVE_GAMECLICK_OBFUSCATEDNAME = "cp";
     public static final String MOVE_GAMECLICK_WRITE1 = "5";
     public static final String MOVE_GAMECLICK_METHOD_NAME1 = "by";
