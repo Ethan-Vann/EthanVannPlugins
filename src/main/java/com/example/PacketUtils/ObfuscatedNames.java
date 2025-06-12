@@ -558,9 +558,9 @@ public final class ObfuscatedNames {
     public static final String OPHELDD_OBFUSCATEDNAME = "am";
     public static final String OPHELDD_WRITE1 = "destId";
     public static final String OPHELDD_METHOD_NAME1 = "lk";
-    public static final String OPHELDD_WRITE2 = "destIndex";
+    public static final String OPHELDD_WRITE2 = "destChildIndex";
     public static final String OPHELDD_METHOD_NAME2 = "en";
-    public static final String OPHELDD_WRITE3 = "selectedIndex";
+    public static final String OPHELDD_WRITE3 = "selectedChildIndex";
     public static final String OPHELDD_METHOD_NAME3 = "en";
     public static final String OPHELDD_WRITE4 = "destItemId";
     public static final String OPHELDD_METHOD_NAME4 = "en";
@@ -602,7 +602,7 @@ public final class ObfuscatedNames {
     public static final String getPacketBufferNodeGarbageValue = "6";
     public static final String packetWriterFieldName = "cs";
     public static final String isaacCipherFieldName = "ai";
-    public static final String addNodeMethodName = "xr";
+    public static final String addNodeMethodName = "an";
     public static final String clientPacketClassName = "mg";
     public static final String packetWriterClassName = "dn";
     public static final String classContainingGetPacketBufferNodeName = "ff";
