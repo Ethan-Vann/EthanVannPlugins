@@ -277,4 +277,11 @@ public class PacketDef {
         String[][] writeMethods = ObfuscatedNames.OPHELDD_WRITES;
         return new PacketDef(ObfuscatedNames.OPHELDD_OBFUSCATEDNAME, writeData, writeMethods, PacketType.OPHELDD);
     }
+
+    public static PacketDef getIfButtonX() {
+        String[] writeData = new String[]{ObfuscatedNames.IF_BUTTONX_WRITE1, ObfuscatedNames.IF_BUTTONX_WRITE2, ObfuscatedNames.IF_BUTTONX_WRITE3,
+                ObfuscatedNames.IF_BUTTONX_WRITE4};
+        String[][] writeMethods = ObfuscatedNames.IF_BUTTONX_WRITES;
+        return new PacketDef(ObfuscatedNames.IF_BUTTONX_OBFUSCATEDNAME, writeData, writeMethods, PacketType.IF_BUTTONX);
+    }
 }

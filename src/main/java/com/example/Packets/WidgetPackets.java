@@ -16,38 +16,7 @@ import java.util.stream.Collectors;
 public class WidgetPackets {
     @SneakyThrows
     public static void queueWidgetActionPacket(int actionFieldNo, int widgetId, int itemId, int childId) {
-        switch (actionFieldNo) {
-            case 1:
-                PacketReflection.sendPacket(PacketDef.getIfButton1(), widgetId, childId, itemId);
-                break;
-            case 2:
-                PacketReflection.sendPacket(PacketDef.getIfButton2(), widgetId, childId, itemId);
-                break;
-            case 3:
-                PacketReflection.sendPacket(PacketDef.getIfButton3(), widgetId, childId, itemId);
-                break;
-            case 4:
-                PacketReflection.sendPacket(PacketDef.getIfButton4(), widgetId, childId, itemId);
-                break;
-            case 5:
-                PacketReflection.sendPacket(PacketDef.getIfButton5(), widgetId, childId, itemId);
-                break;
-            case 6:
-                PacketReflection.sendPacket(PacketDef.getIfButton6(), widgetId, childId, itemId);
-                break;
-            case 7:
-                PacketReflection.sendPacket(PacketDef.getIfButton7(), widgetId, childId, itemId);
-                break;
-            case 8:
-                PacketReflection.sendPacket(PacketDef.getIfButton8(), widgetId, childId, itemId);
-                break;
-            case 9:
-                PacketReflection.sendPacket(PacketDef.getIfButton9(), widgetId, childId, itemId);
-                break;
-            case 10:
-                PacketReflection.sendPacket(PacketDef.getIfButton10(), widgetId, childId, itemId);
-                break;
-        }
+        PacketReflection.sendPacket(PacketDef.getIfButtonX(), widgetId, childId, itemId, actionFieldNo & 65535);
     }
 
     @SneakyThrows

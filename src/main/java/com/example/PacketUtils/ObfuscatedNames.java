@@ -155,6 +155,23 @@ public final class ObfuscatedNames {
             {"a 128", "r 8"},
             {"r 8", "v"},
     };
+
+    public static final String IF_BUTTONX_OBFUSCATEDNAME = "dh";
+    public static final String IF_BUTTONX_WRITE1 = "widgetId";
+    public static final String IF_BUTTONX_METHOD_NAME_1 = "lk";
+    public static final String IF_BUTTONX_WRITE2 = "slot";
+    public static final String IF_BUTTONX_METHOD_NAME_2 = "xg";
+    public static final String IF_BUTTONX_WRITE3 = "itemId";
+    public static final String IF_BUTTONX_METHOD_NAME_3 = "xg";
+    public static final String IF_BUTTONX_WRITE4 = "opCode";
+    public static final String IF_BUTTONX_METHOD_NAME_4 = "by";
+    public static final String[][] IF_BUTTONX_WRITES = {
+            {"r 24", "r 16", "r 8", "v"},
+            {"r 8", "v"},
+            {"r 8", "v"},
+            {"v"},
+    };
+
     public static final String MOVE_GAMECLICK_OBFUSCATEDNAME = "cp";
     public static final String MOVE_GAMECLICK_WRITE1 = "5";
     public static final String MOVE_GAMECLICK_METHOD_NAME1 = "by";
@@ -541,9 +558,9 @@ public final class ObfuscatedNames {
     public static final String OPHELDD_OBFUSCATEDNAME = "am";
     public static final String OPHELDD_WRITE1 = "destId";
     public static final String OPHELDD_METHOD_NAME1 = "lk";
-    public static final String OPHELDD_WRITE2 = "destIndex";
+    public static final String OPHELDD_WRITE2 = "destChildIndex";
     public static final String OPHELDD_METHOD_NAME2 = "en";
-    public static final String OPHELDD_WRITE3 = "selectedIndex";
+    public static final String OPHELDD_WRITE3 = "selectedChildIndex";
     public static final String OPHELDD_METHOD_NAME3 = "en";
     public static final String OPHELDD_WRITE4 = "destItemId";
     public static final String OPHELDD_METHOD_NAME4 = "en";
@@ -585,7 +602,7 @@ public final class ObfuscatedNames {
     public static final String getPacketBufferNodeGarbageValue = "6";
     public static final String packetWriterFieldName = "cs";
     public static final String isaacCipherFieldName = "ai";
-    public static final String addNodeMethodName = "xr";
+    public static final String addNodeMethodName = "an";
     public static final String clientPacketClassName = "mg";
     public static final String packetWriterClassName = "dn";
     public static final String classContainingGetPacketBufferNodeName = "ff";

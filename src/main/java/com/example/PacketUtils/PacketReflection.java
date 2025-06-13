@@ -145,6 +145,9 @@ public class PacketReflection {
         if (def.type == PacketType.IF_BUTTON) {
             params = List.of("widgetId", "slot", "itemId");
         }
+        if (def.type == PacketType.IF_BUTTONX) {
+            params = List.of("widgetId", "slot", "itemId", "opCode");
+        }
         if (def.type == PacketType.IF_SUBOP) {
             params = List.of("widgetId", "slot", "itemId", "menuIndex", "subActionIndex");
         }
